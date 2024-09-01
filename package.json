@@ -13,17 +13,24 @@
 		"lint:fix": "eslint . --fix"
 	},
 	"dependencies": {
+		"@vueuse/core": "^11.0.3",
+		"@vueuse/nuxt": "^11.0.3",
+		"normalize.css": "^8.0.1",
 		"nuxt": "latest",
 		"vue": "latest"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^3.0.0",
 		"@nuxtjs/i18n": "^8.5.1",
+		"@unocss/eslint-plugin": "^0.62.3",
+		"@unocss/nuxt": "^0.62.3",
+		"@unocss/postcss": "^0.62.3",
 		"eslint": "^9.9.1",
 		"lint-staged": "^15.2.9",
 		"sass": "^1.77.8",
 		"sass-loader": "^16.0.1",
-		"simple-git-hooks": "^2.11.1"
+		"simple-git-hooks": "^2.11.1",
+		"unocss": "^0.62.3"
 	},
 	"simple-git-hooks": {
 		"pre-commit": "pnpm lint-staged"

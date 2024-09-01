@@ -5,7 +5,7 @@ defineOptions({
 </script>
 
 <template>
-	<footer />
+	<footer class="site-footer"></footer>
 </template>
 
 <style scoped lang="scss">

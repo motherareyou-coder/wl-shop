@@ -5,11 +5,17 @@ defineOptions({
 </script>
 
 <template>
-	<div class="home">
+	<main class="home-container">
 		首页
-	</div>
+	</main>
 </template>
 
 <style scoped lang="scss">
-
+.home-container {
+	flex-grow: 1;
+    flex-shrink: 0;
+	margin: 0 auto;
+    max-width: 2560px;
+    width: 100%;
+}
 </style>

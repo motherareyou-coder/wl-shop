@@ -1,0 +1,19 @@
+body {
+    --cardinal-number: 1;
+    --grid-margin-small-special: var(--grid-gutter-width) 0;
+    --grid-margin-medium: var(--grid-gutter-width);
+    --outline-color: rgba(255, 105, 0, .5);
+    background-color: #f7f7f7;
+    background-color: var(--background-base);
+    color: #191919;
+    color: var(--text-base);
+    font-weight: 400;
+    height: 100%;
+    min-width: 280px;
+    scrollbar-color: #d0d0d0 #fff;
+    scrollbar-width: thin;
+}
+
+body {
+    font-family: 'MiSans Chinese', sans-serif;
+}
