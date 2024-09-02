@@ -1,22 +1,22 @@
 <!--
   * @Author: Reg Zhang<rexag.zhang@gmail.com>
   * @Date: 2024-09-02 10:11:22
-  * @Description: Lifestyle
+  * @Description: Cart
 -->
 <script setup lang='ts'>
-defineOptions({ name: 'Lifestyle' })
+defineOptions({ name: 'Cart' })
 
 const { t } = useI18n()
 useHead({
-	title: `${t('lifestyle')} ${t('appTitle')}`,
+	title: `${t('cart')} ${t('appTitle')}`,
 	meta: [
-		{ name: 'description', content: 'Lifestyle' },
+		{ name: 'description', content: 'Cart' },
 	],
 })
 </script>
 
 <template>
-	<div>{{ $t('lifestyle') }}</div>
+	<div>{{ $t('cart') }}</div>
 </template>
 
 <style scoped lang='scss'></style>

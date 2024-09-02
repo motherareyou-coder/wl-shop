@@ -8,11 +8,19 @@
 defineOptions({
 	name: 'Home',
 })
+
+const { t } = useI18n()
+useHead({
+	title: `${t('home')} ${t('appTitle')}`,
+	meta: [
+		{ name: 'description', content: 'shop home' },
+	],
+})
 </script>
 
 <template>
 	<main class="home-container">
-		首页
+		{{ $t('home') }}
 	</main>
 </template>
 

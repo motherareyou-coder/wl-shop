@@ -6,10 +6,18 @@
 
 <script setup lang='ts'>
 defineOptions({ name: 'Store' })
+
+const { t } = useI18n()
+useHead({
+	title: `${t('store')} ${t('appTitle')}`,
+	meta: [
+		{ name: 'description', content: 'Store' },
+	],
+})
 </script>
 
 <template>
-	<div>Store</div>
+	<div>{{ $t('store') }}</div>
 </template>
 
 <style lang='scss' scoped></style>

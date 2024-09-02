@@ -4,13 +4,31 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	modules: [
 		'@nuxtjs/i18n',
-		'@unocss/nuxt',
 		'@vueuse/nuxt',
 		'@pinia/nuxt',
 	],
 
 	i18n: {
-		vueI18n: './i18n.config.ts',
+		defaultLocale: 'zh',
+		vueI18n: './locales/i18n.config.ts',
+		detectBrowserLanguage: {
+			useCookie: false,
+			alwaysRedirect: false,
+		},
+		locales: [{
+			name: '简体中文',
+			code: 'zh',
+			iso: 'zh-CN',
+			language: 'zh-CN',
+			file: './locales/zh.json',
+		}, {
+			name: 'English',
+			code: 'en',
+			iso: 'en-US',
+			language: 'en-US',
+			file: './locales/en.json',
+		}],
+		strategy: 'prefix_except_default',
 	},
 
 	css: [

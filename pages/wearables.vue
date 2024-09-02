@@ -5,10 +5,18 @@
 -->
 <script setup lang='ts'>
 defineOptions({ name: 'Wearables' })
+
+const { t } = useI18n()
+useHead({
+	title: `${t('wearables')} ${t('appTitle')}`,
+	meta: [
+		{ name: 'description', content: 'Wearables' },
+	],
+})
 </script>
 
 <template>
-	<div>Wearables</div>
+	<div>{{ $t('wearables') }}</div>
 </template>
 
 <style scoped lang='scss'></style>

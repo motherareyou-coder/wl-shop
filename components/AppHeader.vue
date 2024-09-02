@@ -9,43 +9,71 @@ defineOptions({
 	name: 'AppHeader',
 })
 
+const { locale } = useI18n()
+const localePath = useLocalePath()
+
 const classifyList = ref([
-	{ id: '1', name: 'Store', value: 'store', path: '/store' },
-	{ id: '2', name: '手机/平板', value: 'mobilePad', path: '/mobile' },
-	{ id: '3', name: '智能穿戴', value: 'smartWearables', path: '/wearables' },
-	{ id: '4', name: '智能家电', value: 'smartHomeApp', path: '/smart-home' },
-	{ id: '5', name: '潮流生活', value: 'trendylifestyle', path: '/lifestyle' },
-	{ id: '6', name: 'POCO', value: 'poco', path: '/poco' },
+	{ id: '1', value: 'store', path: '/store' },
+	{ id: '2', value: 'mobile', path: '/mobile' },
+	{ id: '3', value: 'wearables', path: '/wearables' },
+	{ id: '4', value: 'smarthome', path: '/smart-home' },
+	{ id: '5', value: 'lifestyle', path: '/lifestyle' },
+])
+
+const rightNavs = ref([
+	{ id: '1', value: 'discover', path: '/discover' },
+	{ id: '2', value: 'support', path: '/support' },
 ])
 </script>
 
 <template>
-	<header class="site-header site-header--sticky is-pc">
-		<nav class="site-container site-header__navigation">
+	<header class="header-container">
+		<nav class="header-wrapper">
 			<div class="logo-container">
-				<div class="logo">
-					SHOP
-				</div>
+				<NuxtLink to="/" class="logo-wrapper">
+					<img class="logo-img" src="../assets/imgs/shop.svg" alt="shop">
+				</NuxtLink>
 			</div>
 			<div class="classify-container">
 				<ul class="classify-wrapper">
 					<li v-for="item in classifyList" :key="item.id" class="classify-item">
-						<NuxtLink :href="item.path" class="classify-link">
+						<NuxtLink :href="localePath(item.path, locale)" class="classify-link">
 							<span class="classify-text">{{ `${$t(item.value)}` }}</span>
 						</NuxtLink>
 					</li>
 				</ul>
 			</div>
 			<div class="navigation__separator"></div>
-			<ul class="navigation__aside"></ul>
-			<ul class="navigation__shortcut"></ul>
+			<ul class="navigation__aside">
+				<li v-for="item in rightNavs" :key="item.id" class="classify-item">
+					<NuxtLink :href="localePath(item.path, locale)" class="classify-link">
+						<span class="classify-text">{{ `${$t(item.value)}` }}</span>
+					</NuxtLink>
+				</li>
+			</ul>
+			<ul class="navigation__shortcut">
+				<li class="classify-item">
+					<img class="logo-img" src="../assets/imgs/search.svg" alt="shop">
+				</li>
+				<li class="classify-item">
+					<img class="logo-img" src="../assets/imgs/cart.svg" alt="shop">
+				</li>
+				<li class="classify-item">
+					<img class="logo-img" src="../assets/imgs/menu.svg" alt="shop">
+				</li>
+				<li class="classify-item">
+					<NuxtLink :href="localePath('/login', locale)" class="classify-link">
+						<img class="logo-img" src="../assets/imgs/user.svg" alt="shop">
+					</NuxtLink>
+				</li>
+			</ul>
 		</nav>
 	</header>
 </template>
 
 <style scoped lang="scss">
-.site-header {
-	width: var(--app-width);
+.header-container {
+	width: 100%;
 	height: var(--header-height);
     transition: .3s cubic-bezier(.5,0,0,.75);
 	background-color: var(--background-white);
@@ -54,24 +82,83 @@ const classifyList = ref([
     top: 0;
     z-index: 20;
 
-	.site-header__navigation {
+	.header-wrapper {
 		align-items: center;
 		box-sizing: border-box;
 		display: flex;
 		height: var(--header-height);
 		justify-content: space-between;
 		margin: 0 auto;
+
+		.logo-container {
+			height: 32px;
+			padding: 0 24px;
+			width: 32px;
+
+			.logo-wrapper {
+				display: block;
+				height: 100%;
+				width: 100%;
+				color: #000;
+
+				.logo-img {
+					display: block;
+					height: 100%;
+					width: 100%;
+				}
+			}
+		}
+
+		.classify-container {
+			height: 100%;
+
+			.classify-wrapper {
+				display: flex;
+
+				.classify-item {
+					list-style: none;
+					color: var(--text-base);
+				}
+			}
+		}
+
+		.navigation__separator {
+			flex: 1;
+		}
+
+		.navigation__aside {
+			display: flex;
+
+			.classify-item {
+				list-style: none;
+			}
+		}
+
+		.navigation__shortcut {
+			display: flex;
+
+			.classify-item {
+				list-style: none;
+				font-size: 14px;
+
+				.logo-img {
+					display: block;
+					height: 32px;
+					width: 32px;
+				}
+			}
+		}
 	}
 }
 
-@media screen and (min-width: 1921px) {
-	#__nuxt .site-container {
-		max-width: 1500px;
-	}
-}
-@media screen and (min-width: 1921px) {
-	.site-header .site-header__navigation {
-		padding: 0 8px;
-	}
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+    #__nuxt .header-wrapper {
+        max-width: 1500px;
+        padding: 0 8px;
+
+		.classify-item {
+			margin: 0 16px;
+		}
+    }
 }
 </style>

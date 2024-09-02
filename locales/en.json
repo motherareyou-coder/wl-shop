@@ -1,0 +1,20 @@
+{
+	"language": "English",
+	"appTitle": "Shop",
+
+	"login": "Login",
+	"register": "Sign up",
+
+	"home": "Home",
+
+	"store": "Store",
+	"mobile": "Mobile",
+	"wearables": "Wearables",
+	"smarthome": "Smart Home",
+	"lifestyle": "Lifestyle",
+
+	"discover": "Discover",
+	"support": "Support",
+
+	"cart": "cart"
+}
