@@ -13,10 +13,11 @@
 		"lint:fix": "eslint . --fix"
 	},
 	"dependencies": {
+		"@pinia/nuxt": "^0.5.4",
 		"@vueuse/core": "^11.0.3",
 		"@vueuse/nuxt": "^11.0.3",
-		"normalize.css": "^8.0.1",
 		"nuxt": "latest",
+		"pinia": "^2.2.2",
 		"vue": "latest"
 	},
 	"devDependencies": {
