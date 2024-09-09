@@ -5,7 +5,8 @@
 	"packageManager": "pnpm@9.4.0",
 	"scripts": {
 		"build": "nuxt build",
-		"dev": "nuxt dev --host 9609",
+		"dev": "nuxt dev",
+		"dev:m": "nuxt dev --host 9609",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
@@ -16,13 +17,17 @@
 		"@pinia/nuxt": "^0.5.4",
 		"@vueuse/core": "^11.0.3",
 		"@vueuse/nuxt": "^11.0.3",
+		"dayjs": "^1.11.13",
 		"nuxt": "latest",
 		"pinia": "^2.2.2",
 		"vue": "latest"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^3.0.0",
+		"@element-plus/nuxt": "^1.0.10",
+		"@nuxt/icon": "^1.5.1",
 		"@nuxtjs/i18n": "^8.5.1",
+		"element-plus": "^2.8.2",
 		"eslint": "^9.9.1",
 		"lint-staged": "^15.2.9",
 		"sass": "^1.77.8",

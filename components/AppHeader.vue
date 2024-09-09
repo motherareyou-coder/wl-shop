@@ -30,14 +30,14 @@ const rightNavs = ref([
 	<header class="header-container">
 		<nav class="header-wrapper">
 			<div class="logo-container">
-				<NuxtLink to="/" class="logo-wrapper">
-					<img class="logo-img" src="../assets/imgs/shop.svg" alt="shop">
+				<NuxtLink :to="localePath('/', locale)" class="logo-wrapper">
+					<Icon name="icon:shop" size="32px" />
 				</NuxtLink>
 			</div>
 			<div class="classify-container">
 				<ul class="classify-wrapper">
 					<li v-for="item in classifyList" :key="item.id" class="classify-item">
-						<NuxtLink :href="localePath(item.path, locale)" class="classify-link">
+						<NuxtLink :to="localePath(item.path, locale)" class="classify-link">
 							<span class="classify-text">{{ `${$t(item.value)}` }}</span>
 						</NuxtLink>
 					</li>
@@ -46,25 +46,30 @@ const rightNavs = ref([
 			<div class="navigation__separator"></div>
 			<ul class="navigation__aside">
 				<li v-for="item in rightNavs" :key="item.id" class="classify-item">
-					<NuxtLink :href="localePath(item.path, locale)" class="classify-link">
+					<NuxtLink :to="localePath(item.path, locale)" class="classify-link">
 						<span class="classify-text">{{ `${$t(item.value)}` }}</span>
 					</NuxtLink>
 				</li>
 			</ul>
 			<ul class="navigation__shortcut">
-				<li class="classify-item">
-					<img class="logo-img" src="../assets/imgs/search.svg" alt="shop">
+				<li class="icon-item">
+					<Icon name="icon:search" />
 				</li>
-				<li class="classify-item">
-					<img class="logo-img" src="../assets/imgs/cart.svg" alt="shop">
-				</li>
-				<li class="classify-item">
-					<img class="logo-img" src="../assets/imgs/menu.svg" alt="shop">
-				</li>
-				<li class="classify-item">
-					<NuxtLink :href="localePath('/login', locale)" class="classify-link">
-						<img class="logo-img" src="../assets/imgs/user.svg" alt="shop">
+				<li class="icon-item">
+					<NuxtLink :to="localePath('/cart', locale)">
+						<Icon name="icon:cart" style="margin-bottom: -2px;" />
 					</NuxtLink>
+				</li>
+				<li class="icon-item show-small">
+					<Icon name="icon:class" />
+				</li>
+				<li class="icon-item show-large">
+					<NuxtLink :to="localePath('/login', locale)">
+						<Icon name="icon:user" />
+					</NuxtLink>
+				</li>
+				<li class="icon-item show-small">
+					<Icon name="icon:menu" />
 				</li>
 			</ul>
 		</nav>
@@ -91,14 +96,15 @@ const rightNavs = ref([
 		margin: 0 auto;
 
 		.logo-container {
-			height: 32px;
-			padding: 0 24px;
-			width: 32px;
+			width: var(--logo-width);
+			height: var(--logo-height);
+			padding: 0 var(--mid-gap);
 
 			.logo-wrapper {
-				display: block;
 				height: 100%;
 				width: 100%;
+				font-size: var(--logo-width);
+				display: block;
 				color: #000;
 
 				.logo-img {
@@ -114,11 +120,7 @@ const rightNavs = ref([
 
 			.classify-wrapper {
 				display: flex;
-
-				.classify-item {
-					list-style: none;
-					color: var(--text-base);
-				}
+				height: 100%;
 			}
 		}
 
@@ -127,38 +129,44 @@ const rightNavs = ref([
 		}
 
 		.navigation__aside {
-			display: flex;
-
-			.classify-item {
-				list-style: none;
-			}
+			height: 100%;
 		}
 
 		.navigation__shortcut {
 			display: flex;
+			height: 100%;
 
-			.classify-item {
-				list-style: none;
-				font-size: 14px;
-
-				.logo-img {
-					display: block;
-					height: 32px;
-					width: 32px;
-				}
+			.icon-item {
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 0 var(--mini-gap);
 			}
 		}
 	}
-}
 
-@media screen and (min-width: 1441px) and (max-width: 1920px) {
-    #__nuxt .header-wrapper {
-        max-width: 1500px;
-        padding: 0 8px;
+	.classify-item {
+		font-size: var(--small-font-size);
+		list-style: none;
+		color: var(--text-base);
 
-		.classify-item {
-			margin: 0 16px;
+		.classify-link {
+			align-items: center;
+			cursor: pointer;
+			display: flex;
+			font-size: var(--small-font-size);
+			height: 100%;
+			padding: 0 var(--mini-gap);
 		}
-    }
+	}
+
+	.classify-item:hover {
+		color: var(--text-primary);
+
+		.classify-link {
+			border-bottom: 3px solid var(--border-primary);
+		}
+	}
 }
 </style>

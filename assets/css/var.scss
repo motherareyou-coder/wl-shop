@@ -6,38 +6,6 @@
 
 
 :root {
-    --skeleton-color: #eee;
-    --brand-orange: #ff6900;
-    --brand-orange-90: #ff7819;
-    --brand-orange-80: #ff8733;
-    --brand-orange-70: #ff964c;
-    --brand-orange-60: #ffa566;
-    --brand-orange-50: #ffb47f;
-    --brand-orange-40: #ffc399;
-    --brand-orange-30: #ffd2b2;
-    --brand-orange-20: #ffe1cc;
-    --brand-orange-10: #fff0e5;
-    --brand-grey: #898989;
-    --brand-grey-90: #949494;
-    --brand-grey-80: #a1a1a1;
-    --brand-grey-70: #acacac;
-    --brand-grey-60: #b8b8b8;
-    --brand-grey-50: #c4c4c4;
-    --brand-grey-40: #d0d0d0;
-    --brand-grey-30: #dbdbdb;
-    --brand-grey-20: #e7e7e7;
-    --brand-grey-10: #f3f3f3;
-    --brand-black: #191919;
-    --brand-black-90: #303030;
-    --brand-black-80: #474747;
-    --brand-black-70: #5e5e5e;
-    --brand-black-60: #757575;
-    --brand-black-50: #8c8c8c;
-    --brand-black-40: #a3a3a3;
-    --brand-black-30: #dbdbdb;
-    --brand-black-20: #d1d1d1;
-    --brand-black-10: #e8e8e8;
-    --brand-reverse: #fff;
     --text-base: #191919;
     --text-reverse: #fff;
     --text-primary: #ff6900;
@@ -59,27 +27,130 @@
     --border-primary: #ff6900;
     --border-secondary: #191919;
     --border-popover: #e0e0e0;
-    --shadow-black-a2: rgba(0, 0, 0, .02);
-    --shadow-black-a5: rgba(0, 0, 0, .05);
-    --shadow-black-a7: rgba(0, 0, 0, .07);
-    --shadow-black-a8: rgba(0, 0, 0, .08);
-    --shadow-black-a10: rgba(0, 0, 0, .1);
-    --shadow-black-a15: rgba(0, 0, 0, .15);
-    --shadow-black-a20: rgba(0, 0, 0, .2);
-    --shadow-black-a25: rgba(0, 0, 0, .25);
-    --shadow-black-a30: rgba(0, 0, 0, .3);
-    --shadow-black-a40: rgba(0, 0, 0, .4);
-    --shadow-black-a50: rgba(0, 0, 0, .5);
-    --shadow-black-a60: rgba(0, 0, 0, .6);
-    --shadow-white-a10: rgba(255, 255, 225, .1);
-    --shadow-white-a20: rgba(255, 255, 225, .2);
-    --shadow-white-a30: rgba(255, 255, 225, .3);
-    --shadow-white-a50: rgba(255, 255, 225, .5);
-    --shadow-white-a80: rgba(255, 255, 225, .8);
-    --shadow-white-a90: rgba(255, 255, 225, .9);
-    --shadow-primary-a10: rgba(255, 105, 0, .1);
-    --shadow-primary-a20: rgba(255, 105, 0, .2);
-    --shadow-primary-a30: rgba(255, 105, 0, .3);
-    --shadow-primary-a40: rgba(255, 105, 0, .4);
-    --shadow-primary-a50: rgba(255, 105, 0, .5);
+}
+
+@media screen and (max-width: 420px) {
+	body {
+		--large-gap: 16px;
+		--mid-gap: 12px;
+		--small-gap: 8px;
+		--mini-gap: 4px;
+
+		--icon-width: 20px;
+		--icon-height: 20px;
+
+		--logo-width: 28px;
+		--logo-height: 28px;
+
+		--large-font-size: 18px;
+		--mid-font-size: 16px;
+		--default-font-size: 14px;
+		--small-font-size: 12px;
+		--mini-font-size: 10px;
+	}
+}
+
+@media screen and (min-width: 421px) and (max-width: 720px) {
+	body {
+		--large-gap: 16px;
+		--mid-gap: 12px;
+		--small-gap: 8px;
+		--mini-gap: 4px;
+
+		--icon-width: 20px;
+		--icon-height: 20px;
+
+		--logo-width: 28px;
+		--logo-height: 28px;
+
+		--large-font-size: 18px;
+		--mid-font-size: 16px;
+		--default-font-size: 14px;
+		--small-font-size: 12px;
+		--mini-font-size: 10px;
+	}
+}
+
+@media screen and (min-width: 721px) and (max-width:1024px) {
+	body {
+		--large-gap: 24px;
+		--mid-gap: 18px;
+		--small-gap: 12px;
+		--mini-gap: 6px;
+
+		--icon-width: 24px;
+		--icon-height: 24px;
+
+		--logo-width: 30px;
+		--logo-height: 30px;
+
+		--large-font-size: 20px;
+		--mid-font-size: 18px;
+		--default-font-size: 16px;
+		--small-font-size: 14px;
+		--mini-font-size: 12px;
+	}
+}
+
+@media screen and (min-width: 1025px) and (max-width:1440px) {
+	body {
+		--large-gap: 24px;
+		--mid-gap: 18px;
+		--small-gap: 12px;
+		--mini-gap: 6px;
+
+		--icon-width: 24px;
+		--icon-height: 24px;
+
+		--logo-width: 30px;
+		--logo-height: 30px;
+
+		--large-font-size: 20px;
+		--mid-font-size: 18px;
+		--default-font-size: 16px;
+		--small-font-size: 14px;
+		--mini-font-size: 12px;
+	}
+}
+
+@media screen and (min-width: 1441px) and (max-width:1920px) {
+	body {
+		--large-gap: 32px;
+		--mid-gap: 24px;
+		--small-gap: 16px;
+		--mini-gap: 8px;
+
+		--icon-width: 26px;
+		--icon-height: 26px;
+
+		--logo-width: 32px;
+		--logo-height: 32px;
+
+		--large-font-size: 22px;
+		--mid-font-size: 20px;
+		--default-font-size: 18px;
+		--small-font-size: 16px;
+		--mini-font-size: 14px;
+	}
+}
+
+@media screen and (min-width: 1921px) {
+	body {
+		--large-gap: 32px;
+		--mid-gap: 24px;
+		--small-gap: 16px;
+		--mini-gap: 8px;
+
+		--icon-width: 26px;
+		--icon-height: 26px;
+
+		--logo-width: 32px;
+		--logo-height: 32px;
+
+		--large-font-size: 22px;
+		--mid-font-size: 20px;
+		--default-font-size: 18px;
+		--small-font-size: 16px;
+		--mini-font-size: 14px;
+	}
 }
