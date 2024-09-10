@@ -74,6 +74,9 @@ const rightNavs = ref([
 			</ul>
 		</nav>
 	</header>
+	<h1 style="display: none; height: 0px; margin: 0px; visibility: hidden;">
+		Shop Web Site
+	</h1>
 </template>
 
 <style scoped lang="scss">

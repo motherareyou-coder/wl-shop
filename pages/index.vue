@@ -20,14 +20,14 @@ useHead({
 
 <template>
 	<main class="home-container">
-		{{ $t('home') }}
+		<section class="home-banner">
+			<AppSwiper />
+		</section>
 	</main>
 </template>
 
 <style scoped lang="scss">
 .home-container {
-	flex-grow: 1;
-    flex-shrink: 0;
 	margin: 0 auto;
     max-width: 2560px;
     width: 100%;

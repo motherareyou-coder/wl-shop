@@ -22,6 +22,10 @@
 				display: none;
 			}
 		}
+
+		.home-banner {
+			--banner-height: 480px
+		}
 	}
 }
 
@@ -53,6 +57,10 @@
 				margin: 0 6px;
 			}
 		}
+
+		.home-banner {
+			--banner-height: 480px
+		}
 	}
 }
 
@@ -83,6 +91,10 @@
 			.icon-item {
 				margin: 0 8px;
 			}
+		}
+
+		.home-banner {
+			--banner-height: 320px
 		}
 	}
 }
@@ -116,6 +128,10 @@
 				margin: 0 12px;
 			}
 		}
+
+		.home-banner {
+			--banner-height: 450px
+		}
 	}
 }
 
@@ -148,6 +164,10 @@
 				margin: 0 16px;
 			}
 		}
+
+		.home-banner {
+			--banner-height: 600px
+		}
 	}
 }
 
@@ -179,6 +199,10 @@
 			.icon-item {
 				margin: 0 16px;
 			}
+		}
+
+		.home-banner {
+			--banner-height: 600px
 		}
 	}
 }
