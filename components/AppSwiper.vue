@@ -3,7 +3,7 @@
   * @Date: 2024-09-10 13:23:34
   * @Description: 轮播图组件
 -->
-<script setup lang='ts'>
+<script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
 import type { PropType } from 'vue'
@@ -18,10 +18,10 @@ const props = defineProps({
 	imgUrls: {
 		type: Array as PropType<UrlTypes[]>,
 		default: () => [
-			{ id: '1', url: '/imgs/test.webp', desc: 'test' },
-			{ id: '2', url: '/imgs/test.webp', desc: 'test' },
-			{ id: '3', url: '/imgs/test.webp', desc: 'test' },
-			{ id: '4', url: '/imgs/test.webp', desc: 'test' },
+			{ id: '1', url: '/imgs/1.jpg', desc: 'test' },
+			{ id: '2', url: '/imgs/2.jpg', desc: 'test' },
+			{ id: '3', url: '/imgs/3.jpg', desc: 'test' },
+			{ id: '4', url: '/imgs/4.jpg', desc: 'test' },
 		],
 	},
 })
@@ -37,7 +37,7 @@ function setControlledSwiper(swiper: any) {
 	controlledSwiper.value = swiper
 }
 
-function onSlideChange() {};
+function onSlideChange() {}
 
 const modules = [A11y, Autoplay, Navigation, Pagination]
 
@@ -76,8 +76,17 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 		@swiper="setControlledSwiper"
 		@slide-change="onSlideChange"
 	>
-		<SwiperSlide v-for="item in props.imgUrls" :key="item.id" style="height: var(--banner-height);">
-			<el-image style="width: 100%; height: 100%;" :src="item.url" :alt="item.desc" fit="cover">
+		<SwiperSlide
+			v-for="item in props.imgUrls"
+			:key="item.id"
+			style="height: var(--banner-height)"
+		>
+			<el-image
+				style="width: 100%; height: 100%"
+				:src="item.url"
+				:alt="item.desc"
+				fit="cover"
+			>
 				<template #placeholder>
 					<div>{{ item.desc }}</div>
 				</template>
@@ -86,7 +95,7 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 	</Swiper>
 </template>
 
-<style lang='scss'>
+<style lang="scss">
 .swiper-container {
 	--swiper-theme-color: #fff;
 
@@ -108,7 +117,7 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 		transition: opacity 0.5s ease-in-out;
 
 		&::after {
-			transform: scale(.5);
+			transform: scale(0.5);
 		}
 
 		&:hover {
@@ -139,7 +148,7 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 
 		&.swiper-pagination-bullet-active {
 			.controller__indicator-wrapper {
-				background:rgba(109, 109, 109, 0.2);
+				background: rgba(109, 109, 109, 0.2);
 				.controller__indicator {
 					height: 2px;
 					width: var(--indicator-width);

@@ -5,17 +5,15 @@
 -->
 
 <script setup lang="ts">
-defineOptions({
-	name: 'AppNotice',
-})
+defineOptions({ name: 'AppNotice' })
 </script>
 
 <template>
-	<aside class="site-top-banner notification"></aside>
+	<aside class="app-top-banner notification" />
 </template>
 
 <style scoped lang="scss">
-.site-top-banner {
+.app-top-banner {
 	background: var(--background-white);
 }
 </style>

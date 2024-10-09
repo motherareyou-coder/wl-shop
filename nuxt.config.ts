@@ -6,7 +6,8 @@ export default defineNuxtConfig({
 	app: {
 		head: {
 			charset: 'utf-8',
-			viewport: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
+			viewport:
+				'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
 		},
 	},
 	modules: [
@@ -24,25 +25,26 @@ export default defineNuxtConfig({
 			useCookie: false,
 			alwaysRedirect: false,
 		},
-		locales: [{
-			name: '简体中文',
-			code: 'zh',
-			iso: 'zh-CN',
-			language: 'zh-CN',
-			file: './locales/zh.json',
-		}, {
-			name: 'English',
-			code: 'en',
-			iso: 'en-US',
-			language: 'en-US',
-			file: './locales/en.json',
-		}],
+		locales: [
+			{
+				name: '简体中文',
+				code: 'zh',
+				iso: 'zh-CN',
+				language: 'zh-CN',
+				file: './locales/zh.json',
+			},
+			{
+				name: 'English',
+				code: 'en',
+				iso: 'en-US',
+				language: 'en-US',
+				file: './locales/en.json',
+			},
+		],
 		strategy: 'prefix_except_default',
 	},
 
-	css: [
-		'@/assets/css/index.scss',
-	],
+	css: ['@/assets/css/index.scss'],
 
 	icon: {
 		class: 'svg-icon',
@@ -53,6 +55,15 @@ export default defineNuxtConfig({
 				dir: './assets/icons',
 			},
 		],
+	},
+	vite: {
+		css: {
+			preprocessorOptions: {
+				scss: {
+					additionalData: `@use "@/assets/css/element.scss" as element;`,
+				},
+			},
+		},
 	},
 	// elementPlus: { /** Options */ }
 })
