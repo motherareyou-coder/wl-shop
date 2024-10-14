@@ -7,8 +7,9 @@ const data = defineModel('data')
 
 <template>
 	<strong class="price">
-		<small>{{ unit }}</small>
+		<small v-if="!isNaN(data)">{{ unit }}</small>
 		{{ data }}
+		<slot></slot>
 	</strong>
 </template>
 
@@ -16,9 +17,7 @@ const data = defineModel('data')
 strong {
 	display: inline-block;
 	margin-inline-end: 4px;
-	font-size: 16px;
 	display: inline-block;
-	font-weight: 400;
 	white-space: nowrap;
 	small {
 		font-size: inherit;

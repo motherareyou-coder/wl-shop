@@ -16,7 +16,7 @@ const localePath = useLocalePath()
 			<div class="classify-container">
 				<AppMenu />
 			</div>
-			<div class="navigation__separator" />
+			<div class="navigation__separator"></div>
 			<ul class="navigation__shortcut">
 				<li class="icon-item">
 					<LanguageSelect />
@@ -33,7 +33,7 @@ const localePath = useLocalePath()
 					<Icon name="icon:class" />
 				</li>
 				<li class="icon-item show-large">
-					<nuxt-link :to="localePath('/usercenter', locale)">
+					<nuxt-link :to="localePath('/user', locale)">
 						<Icon name="icon:user" />
 					</nuxt-link>
 				</li>

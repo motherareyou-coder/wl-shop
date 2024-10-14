@@ -1,5 +1,7 @@
 <script setup>
-const props = defineProps({})
+const props = defineProps({
+	type: { type: String },
+})
 const emit = defineEmits(['mouseenter', 'mouseleave'])
 const list = ref([
 	{ label: '商品1', img: 'imgs/test.webp', id: 1 },
@@ -26,7 +28,7 @@ const onmouseleave = () => emit('mouseleave')
 				<nuxt-link
 					v-for="item in list"
 					:key="item.id"
-					:to="localePath(`/item/detail/${item.id}`, locale)"
+					:to="localePath(`/product/${item.id}`, locale)"
 					class="product-item"
 				>
 					<picture>

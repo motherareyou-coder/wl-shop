@@ -70,7 +70,7 @@ function goCart() {
 		<div class="product__main">
 			<div class="product__container app-grid--vertical-100">
 				<div class="product__aside">
-					<img :src="info.img" alt="" />
+					<img :src="info.img" alt="">
 				</div>
 				<div class="product__article">
 					<section>
@@ -114,12 +114,12 @@ function goCart() {
 										<button
 											:class="{
 												active:
-													data[item.label] ===
-													c.value,
+													data[item.label]
+													=== c.value,
 											}"
 											@click="data[item.label] = c.value"
 										>
-											<img v-if="c.img" :src="c.img" />
+											<img v-if="c.img" :src="c.img">
 											{{ c.label }}
 										</button>
 									</li>
@@ -166,7 +166,7 @@ function goCart() {
 					:src="img"
 					lazy
 					style="width: 100%"
-				/>
+				>
 			</div>
 			<ProductReview
 				v-show="tab === 1"
@@ -328,8 +328,6 @@ function goCart() {
 				.reward {
 					color: #ff9e0d;
 					overflow: hidden;
-					-webkit-user-select: none;
-					-moz-user-select: none;
 					user-select: none;
 					display: inline-block;
 					width: auto;
@@ -440,21 +438,15 @@ function goCart() {
 							flex-flow: row nowrap;
 							height: 100%;
 							justify-content: center;
-							transition:
-								opacity,
-								border,
+							transition: opacity, border,
 								background-color 0.2s linear;
-							-webkit-user-select: none;
-							-moz-user-select: none;
 							user-select: none;
 							cursor: pointer;
 							width: auto;
 							&.active {
 								border-color: #ff6700;
 								color: #424242;
-								transition:
-									opacity,
-									border,
+								transition: opacity, border,
 									background-color 0.2s linear;
 							}
 						}
@@ -484,8 +476,6 @@ function goCart() {
 				color: #fff;
 				overflow: hidden;
 				text-transform: uppercase;
-				-webkit-user-select: none;
-				-moz-user-select: none;
 				user-select: none;
 				cursor: pointer;
 				width: 100%;

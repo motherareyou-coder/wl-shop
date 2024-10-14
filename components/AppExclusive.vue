@@ -178,13 +178,9 @@ function prev() {
 					@media screen and (min-width: 1025px) and (max-width: 1440px) {
 						font-size: 18px;
 					}
-					-webkit-box-orient: vertical;
-					-webkit-line-clamp: 1;
+					line-clamp: 1;
 					color: #191919;
 					display: flex;
-					& {
-						display: -webkit-box;
-					}
 					font-weight: 700;
 					overflow: hidden;
 					text-align: center;
@@ -226,12 +222,8 @@ function prev() {
 				}
 			}
 			.desc {
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 2;
+				line-clamp: 2;
 				display: flex;
-				& {
-					display: -webkit-box;
-				}
 				height: 50px;
 				opacity: 1;
 				overflow: hidden;

@@ -5,11 +5,11 @@ import SubMenu from './SubMenu.vue'
 defineOptions({ name: 'AppMenu' })
 
 const classifyList = ref([
-	{ id: '1', value: 'store', path: '/store' },
-	{ id: '2', value: 'mobile', path: '/mobile' },
-	{ id: '3', value: 'wearables', path: '/wearables' },
-	{ id: '4', value: 'smarthome', path: '/smart-home' },
-	{ id: '5', value: 'lifestyle', path: '/lifestyle' },
+	{ id: '1', value: 'store', path: '/' },
+	{ id: '2', value: 'mobile', path: '/product-list?type=mobile' },
+	{ id: '3', value: 'wearables', path: '/product-list?type=wearables' },
+	{ id: '4', value: 'smarthome', path: '/product-list?type=smarthome' },
+	{ id: '5', value: 'lifestyle', path: '/product-list?type=lifestyle' },
 ])
 const height = ref(0)
 const hoverd = ref()
@@ -104,7 +104,6 @@ function setHoverd(item, i) {
 	top: var(--header-height);
 	width: 100%;
 	.navigation-submenu__cover {
-		-webkit-backdrop-filter: blur(10px);
 		backdrop-filter: blur(10px);
 		background-color: rgba(0, 0, 0, 0.4);
 		height: calc(100vh - var(--header-height));

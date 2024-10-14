@@ -219,7 +219,6 @@ const tab = ref(0)
 			color: #8c8c8c;
 			font-size: 12px;
 			font-weight: 400;
-			-webkit-hyphens: auto;
 			hyphens: auto;
 		}
 	}

@@ -151,7 +151,6 @@ function setSort(t) {
 			margin-bottom: var(--common-distance);
 			font-weight: 400;
 			li {
-				-webkit-margin-end: var(--filter-item-margin-right);
 				color: #898989;
 				color: var(--text-secondary);
 				cursor: pointer;
@@ -216,7 +215,6 @@ function setSort(t) {
 			display: inline-block;
 			cursor: pointer;
 			--item-margin-right: 80px;
-			-webkit-margin-end: var(--item-margin-right);
 			flex-shrink: 0;
 			margin-inline-end: var(--item-margin-right);
 			border-bottom: var(--border-bottom-width) solid transparent;

@@ -206,3 +206,37 @@
 		}
 	}
 }
+
+@media screen and (max-width: 720px) {
+    #__nuxt .site-container {
+        max-width:720px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    #__nuxt .site-container {
+        max-width:1024px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    #__nuxt .site-container {
+        max-width:1440px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    #__nuxt .site-container {
+        max-width:1500px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    #__nuxt .site-container {
+        max-width:1500px
+    }
+}
+
+#__nuxt .site-container-1400 {
+    max-width: var(--max-width-1400)
+}

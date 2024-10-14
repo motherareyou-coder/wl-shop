@@ -1,4 +1,6 @@
 <script setup>
+defineOptions({ name: 'LanguageSelect' })
+
 const items = [
 	{ label: '中文', value: 'zh' },
 	{ label: 'English', value: 'en' },

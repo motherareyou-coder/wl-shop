@@ -1,3 +1,37 @@
+body,html,li,p,ul {
+    margin: 0;
+    padding: 0
+}
+
+li {
+    list-style: none
+}
+
+p,span,strong {
+    white-space: pre-line
+}
+
+input,select,textarea {
+    background-color: #fff;
+    background-color: var(--background-white);
+    border-color: #191919;
+    border-color: var(--text-base);
+    color: #191919;
+    color: var(--text-base)
+}
+
+html {
+    --line-height: 1.25;
+    height: 100%;
+    line-height: 1.25;
+    line-height: var(--line-height,1.25);
+    margin: 0 auto
+}
+
+html[lang=km-KH],html[lang=my-MM],html[lang=th-TH] {
+    --line-height: 1.5
+}
+
 body {
 	--cardinal-number: 1;
 	--grid-margin-small-special: var(--grid-gutter-width) 0;
@@ -12,10 +46,12 @@ body {
 	min-width: 280px;
 	scrollbar-color: #d0d0d0 #fff;
 	scrollbar-width: thin;
+	font-family: 'MiSans Chinese', sans-serif;
 }
 
-body {
-	font-family: 'MiSans Chinese', sans-serif;
+html,
+#__nuxt {
+	height: 100%;
 }
 
 .svg-icon {
@@ -46,8 +82,6 @@ body {
 	--btn-background-white: var(--background-white);
 	--btn-background-black: var(--background-black);
 	--btn-background-primary: var(--background-primary);
-	--btn-ellipsis-lines: 1;
-	--btn-ellipsis-direction: vertical;
 	--btn-background-color: var(--btn-background-black);
 	--link-text-decoration: underline;
 	background-color: var(--btn-background-color);
@@ -56,6 +90,5 @@ body {
 	color: var(--btn-text-base);
 	cursor: pointer;
 	display: inline-block;
-	font-size: var(--btn-font-size);
 	padding: var(--btn-padding);
 }
