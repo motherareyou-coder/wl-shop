@@ -41,7 +41,7 @@ export default defineNuxtConfig({
 				file: './locales/en.json',
 			},
 		],
-		strategy: 'prefix_except_default',
+		strategy: 'prefix',
 	},
 
 	css: ['@/assets/css/index.scss'],
@@ -64,6 +64,33 @@ export default defineNuxtConfig({
 				},
 			},
 		},
+		server: {
+			proxy: {
+				'/app-api': {
+					target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
+					changeOrigin: true,
+				},
+			},
+		},
 	},
 	// elementPlus: { /** Options */ }
+	runtimeConfig: {
+		public: {
+			baseURL: '/app-api',
+			apifoxApiId: '211912811',
+		},
+	},
+	nitro: {
+		// devProxy: {
+		// 	'/app-api': {
+		// 		target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
+		// 		changeOrigin: true,
+		// 	},
+		// },
+		routeRules: {
+			'/app-api': {
+				proxy: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
+			},
+		},
+	},
 })
