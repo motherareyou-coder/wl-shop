@@ -1,114 +1,90 @@
 <script setup lang="ts">
+import './AppHeader.scss'
+import { cloneDeep } from 'lodash-es'
+import type { Category } from '~/types'
+
 defineOptions({ name: 'AppHeader' })
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
+const appStore = useAppStore()
+const sideShow = ref(false)
+const searchShow = ref(false)
+
+const { data: categories } = await useAPI<Category[]>(
+	'product/category/list/top?apifoxApiId=211912811',
+)
+watch(
+	categories,
+	(v) => {
+		appStore.categories = cloneDeep(v)
+		v?.forEach((c, i) =>
+			$api('product/spu/page?apifoxApiId=211495718', {
+				params: {
+					categoryId: c.id,
+					pageNo: 1,
+					pageSize: 5,
+				},
+			}).then((res) => {
+				c.id += i
+				c.children = res.list
+			}),
+		)
+	},
+	{ immediate: true },
+)
+const showMobileMenu = computed(() => appStore.bodyWidth <= 1024)
 </script>
 
 <template>
-	<header class="header-container">
-		<nav class="header-wrapper">
-			<div class="logo-container">
-				<nuxt-link :to="localePath('/', locale)" class="logo-wrapper">
-					<Icon name="icon:shop" size="32px" />
+	<MobileMenu v-if="showMobileMenu" v-model="sideShow" :data="categories" />
+	<header class="site-header site-header--sticky">
+		<nav class="site-container site-header__navigation">
+			<div class="navigation__logo">
+				<nuxt-link class="logo__link" :to="localePath('/', locale)">
+					<Icon name="icon:shop" size="32px" class="logo__mi" />
 				</nuxt-link>
 			</div>
-			<div class="classify-container">
-				<AppMenu />
-			</div>
+			<AppMenu class="navigation__group-wrapper" :data="categories" />
 			<div class="navigation__separator"></div>
-			<ul class="navigation__shortcut">
-				<li class="icon-item">
-					<LanguageSelect />
+			<ul class="navigation__group navigation__shortcut">
+				<li class="navigation__item shortcut__item">
+					<LanguageSelect class="navigation__link" />
 				</li>
-				<li class="icon-item">
-					<Icon name="icon:search" />
+				<li class="navigation__item shortcut__item">
+					<i class="navigation__link" @click="searchShow = true">
+						<Icon name="icon:search" />
+					</i>
 				</li>
-				<li class="icon-item">
-					<nuxt-link :to="localePath('/cart', locale)">
+				<li class="navigation__item shortcut__item">
+					<nuxt-link
+						class="navigation__link"
+						:to="localePath('/cart', locale)"
+					>
 						<Icon name="icon:cart" style="margin-bottom: -2px" />
 					</nuxt-link>
 				</li>
-				<li class="icon-item show-small">
-					<Icon name="icon:class" />
-				</li>
-				<li class="icon-item show-large">
-					<nuxt-link :to="localePath('/user', locale)">
+				<li class="navigation__item shortcut__item">
+					<nuxt-link
+						class="navigation__link"
+						:to="localePath('/user', locale)"
+					>
 						<Icon name="icon:user" />
 					</nuxt-link>
 				</li>
-				<li class="icon-item show-small">
-					<Icon name="icon:menu" />
+				<li
+					v-if="showMobileMenu"
+					class="navigation__item shortcut__item shortcut__item-menu"
+				>
+					<i
+						class="site-slide-menu__controller navigation__link shortcut__item--wrapper"
+						@click="sideShow = true"
+					>
+						<Icon name="icon:menu" />
+					</i>
 				</li>
 			</ul>
 		</nav>
+		<AppSearch v-model="searchShow" />
 	</header>
 </template>
-
-<style scoped lang="scss">
-.header-container {
-	width: 100%;
-	height: var(--header-height);
-	transition: 0.3s cubic-bezier(0.5, 0, 0, 0.75);
-	background-color: var(--background-white);
-	box-shadow: 0 6px 16px 0 rgba(25, 25, 25, 0.06);
-	position: sticky;
-	top: 0;
-	z-index: 20;
-
-	.header-wrapper {
-		align-items: center;
-		box-sizing: border-box;
-		display: flex;
-		height: var(--header-height);
-		max-width: var(--app-body-width);
-		justify-content: space-between;
-		margin: 0 auto;
-
-		.logo-container {
-			width: var(--logo-width);
-			height: var(--logo-height);
-			padding: 0 var(--mid-gap);
-
-			.logo-wrapper {
-				height: 100%;
-				width: 100%;
-				font-size: var(--logo-width);
-				display: block;
-				color: #000;
-
-				.logo-img {
-					display: block;
-					height: 100%;
-					width: 100%;
-				}
-			}
-		}
-
-		.classify-container {
-			height: 100%;
-		}
-
-		.navigation__separator {
-			flex: 1;
-		}
-
-		.navigation__aside {
-			height: 100%;
-		}
-
-		.navigation__shortcut {
-			display: flex;
-			height: 100%;
-
-			.icon-item {
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				margin: 0 var(--mini-gap);
-			}
-		}
-	}
-}
-</style>

@@ -7,7 +7,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 		onRequest({ request, options, error }) {
 			if (!options.params)
 				options.params = {}
-			options.params.apifoxApiId = apifoxApiId
+			// options.params.apifoxApiId = apifoxApiId
 			// if (session.value?.token) {
 			// note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
 			// options.headers.set('Authorization', `Bearer ${session.value?.token}`)

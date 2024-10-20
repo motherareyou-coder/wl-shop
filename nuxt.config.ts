@@ -66,9 +66,10 @@ export default defineNuxtConfig({
 		},
 		server: {
 			proxy: {
-				'/app-api': {
+				'/api': {
 					target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
 					changeOrigin: true,
+					rewrite: path => path.replace('api', 'app-api'),
 				},
 			},
 		},
@@ -76,8 +77,8 @@ export default defineNuxtConfig({
 	// elementPlus: { /** Options */ }
 	runtimeConfig: {
 		public: {
-			baseURL: '/app-api',
-			apifoxApiId: '211912811',
+			baseURL: '/api',
+			// apifoxApiId: '211912811',
 		},
 	},
 	nitro: {

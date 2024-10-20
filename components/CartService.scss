@@ -1,0 +1,417 @@
+.why-buy-from-mi {
+    background-color: #fff;
+    background-color: var(--background-white);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    word-break: break-word
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi {
+        --padding-gap:16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi {
+        --padding-gap:12px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi {
+        --padding-gap:12px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi {
+        --padding-gap:15px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi {
+        --padding-gap:15px
+    }
+}
+
+.why-buy-from-mi .why-buy-from-mi__header {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between
+}
+
+.why-buy-from-mi .why-buy-from-mi__header .why-buy-from-mi__title {
+    font-weight: 500;
+    margin: 0
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__header .why-buy-from-mi__title {
+        font-size:16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__header .why-buy-from-mi__title {
+        font-size:16px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__header .why-buy-from-mi__title {
+        font-size:18px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__header .why-buy-from-mi__title {
+        font-size:24px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__header .why-buy-from-mi__title {
+        font-size:24px
+    }
+}
+
+.why-buy-from-mi .why-buy-from-mi__header .micon {
+    display: block;
+    font-weight: 700;
+    transform: rotate(0deg);
+    transition: transform .35s
+}
+
+.why-buy-from-mi .why-buy-from-mi__list {
+    display: flex;
+    flex-direction: column
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__list {
+        padding:2px 0
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__list {
+        padding:5px 0
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__list {
+        padding:12px 0
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__list {
+        padding:18px 0
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__list {
+        padding:18px 0
+    }
+}
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item {
+    display: flex;
+    flex-direction: row
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item {
+        font-size:12px;
+        margin-top: 20px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item {
+        font-size:12px;
+        margin-top: 16px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item {
+        font-size:14px;
+        margin-top: 16px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item {
+        font-size:14px;
+        margin-top: 20px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item {
+        font-size:14px;
+        margin-top: 20px
+    }
+}
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item:first-child {
+    -webkit-margin-start: 0;
+    margin-inline-start:0;margin-top: 0
+}
+
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-icon {
+    font-size: var(--icon-size);
+    width: var(--icon-size)
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-icon {
+        --icon-size:26px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-icon {
+        --icon-size:22px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-icon {
+        --icon-size:24px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-icon {
+        --icon-size:32px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-icon {
+        --icon-size:32px
+    }
+}
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content {
+        -webkit-margin-start:14px;
+        margin-inline-start:14px}
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content {
+        -webkit-margin-start:16px;
+        margin-inline-start:16px}
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content {
+        -webkit-margin-start:16px;
+        margin-inline-start:16px}
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content {
+        -webkit-margin-start:16px;
+        margin-inline-start:16px}
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content {
+        -webkit-margin-start:16px;
+        margin-inline-start:16px}
+}
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-title {
+    font-weight: 500
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-title {
+        font-size:14px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-title {
+        font-size:14px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-title {
+        font-size:16px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-title {
+        font-size:18px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-title {
+        font-size:18px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-desc {
+        margin-top:5px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-desc {
+        margin-top:6px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-desc {
+        margin-top:6px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-desc {
+        margin-top:6px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item-content .why-buy-from-mi__item-desc {
+        margin-top:6px
+    }
+}
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list .why-buy-from-mi__pay-img {
+    margin-top: 8px;
+    object-fit: contain
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list .why-buy-from-mi__pay-img {
+        -webkit-margin-end:6px;
+        height: 16px;
+        margin-inline-end:6px}
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list .why-buy-from-mi__pay-img {
+        -webkit-margin-end:8px;
+        height: 16px;
+        margin-inline-end:8px}
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list .why-buy-from-mi__pay-img {
+        -webkit-margin-end:8px;
+        height: 16px;
+        margin-inline-end:8px}
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list .why-buy-from-mi__pay-img {
+        -webkit-margin-end:10px;
+        height: 20px;
+        margin-inline-end:10px}
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list .why-buy-from-mi__pay-img {
+        -webkit-margin-end:10px;
+        height: 20px;
+        margin-inline-end:10px}
+}
+
+.why-buy-from-mi .why-buy-from-mi__list .why-buy-from-mi__item .why-buy-from-mi__pay-list .why-buy-from-mi__pay-img:last-child {
+    -webkit-margin-end: 0;
+    margin-inline-end:0}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__tel {
+        font-size:12px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .why-buy-from-mi .why-buy-from-mi__tel {
+        font-size:12px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .why-buy-from-mi .why-buy-from-mi__tel {
+        font-size:16px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .why-buy-from-mi .why-buy-from-mi__tel {
+        font-size:18px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .why-buy-from-mi .why-buy-from-mi__tel {
+        font-size:18px
+    }
+}
+
+.why-buy-from-mi .why-buy-from-mi__tel a {
+    color: #ff6900;
+    color: var(--text-primary);
+    cursor: pointer;
+    white-space: nowrap
+}
+
+.why-buy-from-mi .why-buy-from-mi__tel a:hover {
+    text-decoration: underline
+}
+
+.why-buy-from-mi .why-buy-from-mi__separator {
+    border-top: 1px dotted #dbdbdb;
+    border-top: 1px dotted var(--background-grey);
+    margin: var(--padding-gap) 0;
+    width: 100%
+}
+
+@media screen and (max-width: 720px) {
+    .why-buy-from-mi .why-buy-from-mi__separator {
+        margin:var(--padding) 0
+    }
+}
+
+.why-buy-from-mi.why-buy-from-mi--hidden {
+    display: none
+}
+
+.why-buy-from-mi.why-buy-from-mi--open .why-buy-from-mi__header .micon {
+    transform: rotate(calc(var(--cardinal-number)*-180deg))
+}
+

@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia'
+import type { Category } from '~/types'
 
 export const useAppStore = defineStore('AppStore', {
 	state: () => {
 		return {
 			isPC: true,
 			isMobile: false,
+			bodyWidth: 0,
+			categories: [] as Category[],
 		}
 	},
 	getters: {
@@ -14,9 +17,9 @@ export const useAppStore = defineStore('AppStore', {
 	},
 	actions: {
 		listen() {
-			console.log(window)
 			const onResize = () => {
-				if (document?.body?.clientWidth < 720) {
+				this.bodyWidth = document?.body?.clientWidth
+				if (document?.body?.clientWidth <= 768) {
 					this.isPC = false
 					this.isMobile = true
 				}

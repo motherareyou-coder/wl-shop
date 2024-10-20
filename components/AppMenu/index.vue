@@ -1,133 +1,90 @@
-<script setup lang="jsx">
+<script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
 import SubMenu from './SubMenu.vue'
+import './index.scss'
+import type { Category } from '~/types'
 
 defineOptions({ name: 'AppMenu' })
+const props = defineProps({
+	data: { type: Array as () => Category[] | null, default: () => [] },
+})
+const data = toRef(props, 'data')
+const { locale } = useI18n()
+const localePath = useLocalePath()
 
-const classifyList = ref([
-	{ id: '1', value: 'store', path: '/' },
-	{ id: '2', value: 'mobile', path: '/product-list?type=mobile' },
-	{ id: '3', value: 'wearables', path: '/product-list?type=wearables' },
-	{ id: '4', value: 'smarthome', path: '/product-list?type=smarthome' },
-	{ id: '5', value: 'lifestyle', path: '/product-list?type=lifestyle' },
-])
-const height = ref(0)
+const height = ref('0')
 const hoverd = ref()
-const { start, stop } = useTimeoutFn(() => {
+function hide() {
 	hoverd.value = null
-	height.value = 0
-}, 100)
+	height.value = '0'
+}
+const { start, stop } = useTimeoutFn(hide, 100)
 const wrapRef = ref()
-function setHoverd(item, i) {
+function setHoverd(item: any, i: string | number) {
 	stop()
 	hoverd.value = item
 	if (!wrapRef.value)
 		return
-	height.value = `${wrapRef.value.children[i].offsetHeight}px`
+	const t = wrapRef.value.children[i]
+	height.value = `${
+		t.children[0].children[0].offsetHeight + t.offsetHeight
+	}px`
 }
+
+const deviceType = ref('pc')
+const appStore = useAppStore()
+watch(
+	() => appStore.isMobile,
+	v => v || hide(),
+)
 </script>
 
 <template>
-	<ul class="classify-wrapper" @mouseleave="start" @mouseenter="stop">
-		<li
-			v-for="(item, i) in classifyList"
-			:key="item.id"
-			class="classify-item"
-			@mouseenter="setHoverd(item, i)"
-		>
-			<nuxt-link
-				:to="localePath(item.path, locale)"
-				class="classify-link"
-			>
-				<span class="classify-text">{{ $t(item.value) }}</span>
-			</nuxt-link>
-		</li>
-	</ul>
-	<div class="navigation-submenu">
-		<div class="navigation-submenu__cover" :class="{ show: hoverd }"></div>
-		<div
-			ref="wrapRef"
-			class="navigation-submenu__wrapper"
-			:style="{ height }"
+	<div>
+		<ul
+			class="navigation__group navigation__menu"
 			@mouseleave="start"
 			@mouseenter="stop"
 		>
-			<SubMenu
-				v-for="(item, i) in classifyList"
-				:id="item.id"
+			<li
+				v-for="(item, i) in data"
 				:key="item.id"
-				:class="{ show: item === hoverd }"
-				:title="i"
+				class="navigation__item"
+				@mouseenter="setHoverd(item, i)"
+			>
+				<nuxt-link
+					:to="
+						localePath(`/product-list?category=${item.id}`, locale)
+					"
+					class="navigation__link navigation__link--border"
+					@click="hide"
+				>
+					<span>{{ $t(item.name) }}</span>
+				</nuxt-link>
+			</li>
+		</ul>
+		<div
+			ref="wrapRef"
+			class="navigation-submenu"
+			:class="{ 'navigation-submenu--open': !!hoverd }"
+			:style="{ height }"
+		>
+			<SubMenu
+				v-for="item in data"
+				:key="item.id"
+				:category="item.id"
+				:data="item.children"
+				:class="{
+					[`submenu__wrapper--${deviceType}-show`]: item === hoverd,
+				}"
 				@mouseenter="stop"
 				@mouseleave="start"
+				@link-click="hide"
 			/>
 		</div>
+		<div
+			class="navigation-submenu__cover"
+			:class="{ 'navigation-submenu__cover--show': hoverd }"
+		></div>
 	</div>
 </template>
-
-<style lang="scss" scoped>
-.classify-wrapper {
-	display: flex;
-	height: 100%;
-
-	.classify-item {
-		font-size: var(--small-font-size);
-		list-style: none;
-		color: var(--text-base);
-
-		.classify-link {
-			white-space: nowrap;
-			align-items: center;
-			cursor: pointer;
-			display: flex;
-			font-size: var(--small-font-size);
-			height: 100%;
-			padding: 0 var(--mini-gap);
-			border-bottom: 3px solid transparent;
-			border-top: 3px solid transparent;
-			box-sizing: border-box;
-		}
-	}
-
-	.classify-item:hover {
-		color: var(--text-primary);
-
-		.classify-link {
-			border-bottom: 3px solid var(--border-primary);
-		}
-	}
-}
-.navigation-submenu {
-	position: absolute;
-	left: 0;
-	height: 0;
-	top: var(--header-height);
-	width: 100%;
-	.navigation-submenu__cover {
-		backdrop-filter: blur(10px);
-		background-color: rgba(0, 0, 0, 0.4);
-		height: calc(100vh - var(--header-height));
-		left: 0;
-		opacity: 0;
-		pointer-events: none;
-		position: absolute;
-		transition: 0.35s ease;
-		width: 100%;
-		transition-delay: 0.15s;
-		z-index: 2;
-
-		&.show {
-			opacity: 1;
-		}
-	}
-	.navigation-submenu__wrapper {
-		width: 100%;
-		position: absolute;
-		height: 0;
-		overflow: hidden;
-		transition: 0.3s cubic-bezier(0.5, 0, 0, 0.75);
-		background-color: var(--background-white);
-		z-index: 4;
-	}
-}
-</style>

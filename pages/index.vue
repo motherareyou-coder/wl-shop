@@ -1,10 +1,6 @@
-<!--
- * @Author: Reg Zhang<rexag.zhang@gmail.com>
- * @Date: 2024-09-02 10:07:03
- * @Description: 网站首页
--->
-
 <script setup lang="ts">
+import './index.scss'
+
 defineOptions({ name: 'Home' })
 
 const { t } = useI18n()
@@ -15,21 +11,21 @@ useHead({
 </script>
 
 <template>
-	<main class="home-container">
-		<section class="home-banner">
+	<main class="site-main">
+		<section class="site-grid site-grid--small-top site-grid--full">
 			<AppSwiper />
 		</section>
-		<section class="app-grid--vertical-100">
+		<section class="site-grid site-grid--vertical-100 site-grid--full">
 			<AppFeature />
 		</section>
-		<section class="app-grid--vertical-100">
+		<section class="site-grid site-grid--vertical-100 site-grid--full">
 			<AppExclusive />
 		</section>
 	</main>
 </template>
 
 <style scoped lang="scss">
-.home-container {
+.site-main {
 	margin: 0 auto;
 	max-width: 2560px;
 	width: 100%;

@@ -4,9 +4,10 @@
   * @Description: 轮播图组件
 -->
 <script setup lang="ts">
+import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
-import type { PropType } from 'vue'
+import './AppSwiper.scss'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -14,149 +15,169 @@ import 'swiper/css/pagination'
 
 defineOptions({ name: 'AppSwiper' })
 
-const props = defineProps({
-	imgUrls: {
-		type: Array as PropType<UrlTypes[]>,
-		default: () => [
-			{ id: '1', url: '/imgs/1.jpg', desc: 'test' },
-			{ id: '2', url: '/imgs/2.jpg', desc: 'test' },
-			{ id: '3', url: '/imgs/3.jpg', desc: 'test' },
-			{ id: '4', url: '/imgs/4.jpg', desc: 'test' },
-		],
-	},
-})
+const { data } = await useAPI<Banner[]>(
+	'promotion/banner/list?apifoxApiId=212551460',
+)
 
-interface UrlTypes {
+interface Banner {
 	id: string
+	title: string
 	url: string
-	desc: string
+	picUrl: string
 }
 
-const controlledSwiper = ref(null)
-function setControlledSwiper(swiper: any) {
-	controlledSwiper.value = swiper
+let swiper: SwiperClass | null = null
+const realIndex = ref(0)
+const paused = ref(false)
+function setSwiper(s: SwiperClass) {
+	swiper = s
 }
 
-function onSlideChange() {}
-
-const modules = [A11y, Autoplay, Navigation, Pagination]
-
-const pagination = {
-	clickable: true,
-	renderBullet(index: number, className: string) {
-		return `
-			<button class="${className} controller__indicator-container">
-				<span class="controller__indicator-wrapper">
-					<span class="controller__indicator"></span>
-				</span>
-			</button>`
-	},
+function onSlideChange() {
+	realIndex.value = swiper?.realIndex as number
 }
+function slideTo(i: number) {
+	swiper?.slideTo(i)
+}
+function pause() {
+	if (!swiper)
+		return
+	swiper.autoplay.pause()
+	paused.value = swiper.autoplay.paused
+}
+function resume() {
+	if (!swiper)
+		return
+	swiper.autoplay.resume()
+	paused.value = swiper.autoplay.paused
+}
+function prev() {
+	swiper?.slidePrev()
+}
+function next() {
+	swiper?.slideNext()
+}
+
+const modules = [Autoplay]
 
 const indicatorWidth = ref(0)
 function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 	indicatorWidth.value = 100 - Number.parseInt(`${progress * 100}`, 10)
 }
+function onClick({ id }: Banner) {
+	if (id) {
+		$api('promotion/banner/add-browse-count?apifoxApiId=212551542', {
+			params: { id },
+		})
+	}
+}
 </script>
 
 <template>
-	<Swiper
-		class="swiper-container"
-		:style="{ '--indicator-width': `${indicatorWidth}px` }"
-		:slides-per-view="1"
-		:modules="modules"
-		:loop="true"
-		:autoplay="{
-			delay: 3000,
-			disableOnInteraction: false,
-		}"
-		navigation
-		:pagination="pagination"
-		@autoplay-time-left="onAutoplayTimeLeft"
-		@swiper="setControlledSwiper"
-		@slide-change="onSlideChange"
-	>
-		<SwiperSlide
-			v-for="item in props.imgUrls"
-			:key="item.id"
-			style="height: var(--banner-height)"
-		>
-			<el-image
-				style="width: 100%; height: 100%"
-				:src="item.url"
-				:alt="item.desc"
-				fit="cover"
+	<div class="carousel-banner carousel-banner--light">
+		<div class="carousel-banner__swiper">
+			<Swiper
+				class="swiper-container"
+				:style="{ '--indicator-progress-width': `${indicatorWidth}px` }"
+				:slides-per-view="1"
+				:modules="modules"
+				:loop="true"
+				:autoplay="{
+					delay: 3000,
+					disableOnInteraction: false,
+				}"
+				@autoplay-time-left="onAutoplayTimeLeft"
+				@swiper="setSwiper"
+				@slide-change="onSlideChange"
 			>
-				<template #placeholder>
-					<div>{{ item.desc }}</div>
-				</template>
-			</el-image>
-		</SwiperSlide>
-	</Swiper>
+				<SwiperSlide
+					v-for="(item, i) in data"
+					:key="item.id"
+					style="height: var(--banner-height)"
+				>
+					<div class="carousel-banner__slide">
+						<app-image
+							style="width: 100%; height: 100%"
+							:src="item.picUrl"
+							:alt="item.title"
+							fit="cover"
+							class="slide__background"
+							@click="onClick"
+						>
+							<template #placeholder>
+								<div>{{ item.title }}</div>
+							</template>
+						</app-image>
+						<!-- <div
+							class="slide__content slide__content--vertical-center slide__content--mobile-top"
+						>
+							<div class="slide__info">
+								{{ i }}
+							</div>
+						</div> -->
+					</div>
+				</SwiperSlide>
+				<div
+					class="carousel-banner__swiper-navigator carousel-banner__swiper-navigator--prev"
+				>
+					<button
+						class="controller__button navigator__button navigator__button--prev with-transition"
+						@click="prev"
+					>
+						<i
+							class="micon micon-fill-arrow-left navigator__icon with-transition mirror"
+						>
+							<Icon name="icon:left" />
+						</i>
+					</button>
+				</div>
+				<div
+					class="carousel-banner__swiper-navigator carousel-banner__swiper-navigator--next"
+				>
+					<button
+						class="controller__button navigator__button navigator__button--next with-transition"
+						@click="next"
+					>
+						<i
+							class="micon micon-fill-arrow-right navigator__icon with-transition mirror"
+						>
+							<Icon name="icon:right" />
+						</i>
+					</button>
+				</div>
+				<div class="carousel-banner__swiper-controller-wrapper">
+					<div
+						class="carousel-banner__swiper-controller site-container"
+					>
+						<button
+							v-for="(item, i) in data"
+							:key="item.id"
+							:class="{
+								'controller__bar--current': realIndex === i,
+							}"
+							class="controller__button controller__bar with-transition"
+							@click="slideTo(i)"
+						>
+							<span
+								class="controller__indicator-container with-transition"
+							>
+								<span class="controller__indicator"></span>
+							</span>
+						</button>
+						<button
+							class="controller__button controller__icon-container with-transition"
+						>
+							<el-icon class="controller__icon with-transition">
+								<ElIconVideoPlay
+									v-if="paused"
+									@click="resume"
+								/>
+								<ElIconVideoPause v-else @click="pause" />
+							</el-icon>
+						</button>
+					</div>
+				</div>
+			</Swiper>
+		</div>
+	</div>
 </template>
-
-<style lang="scss">
-.swiper-container {
-	--swiper-theme-color: #fff;
-
-	&:hover {
-		.swiper-button-prev,
-		.swiper-button-next {
-			opacity: 1;
-			transition: opacity 0.5s ease-in-out;
-		}
-	}
-
-	.swiper-button-prev,
-	.swiper-button-next {
-		width: 48px;
-		height: 48px;
-		background: rgba(192, 192, 192, 0.5);
-		border-radius: 18px;
-		opacity: 0;
-		transition: opacity 0.5s ease-in-out;
-
-		&::after {
-			transform: scale(0.5);
-		}
-
-		&:hover {
-			background: silver;
-		}
-	}
-
-	.swiper-button-prev {
-		left: 50px;
-	}
-
-	.swiper-button-next {
-		right: 50px;
-	}
-
-	.controller__indicator-container {
-		width: 100px;
-		height: 20px;
-		background: none;
-
-		.controller__indicator-wrapper {
-			width: 100px;
-			height: 2px;
-			display: block;
-			line-height: 20px;
-			background: rgb(109, 109, 109);
-		}
-
-		&.swiper-pagination-bullet-active {
-			.controller__indicator-wrapper {
-				background: rgba(109, 109, 109, 0.2);
-				.controller__indicator {
-					height: 2px;
-					width: var(--indicator-width);
-					display: block;
-					background: #ff6900;
-				}
-			}
-		}
-	}
-}
-</style>

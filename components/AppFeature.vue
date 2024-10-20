@@ -1,316 +1,121 @@
-<script setup>
+<script setup lang="ts">
+import './AppFeature.scss'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
+
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import type { Category } from '~/types'
+
 defineOptions({ name: 'AppFeature' })
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 
-const children = [
-	{
-		img: '/imgs/1.jpg',
-		subImg: '/imgs/1-1.svg',
-		desc: 'Buy 12GB+256GB/512GB, get free Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-	},
-	{
-		img: '/imgs/2.jpg',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		img: '/imgs/3.jpg',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		img: '/imgs/4.jpg',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		img: '/imgs/4.jpg',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-]
+const { data: categories } = await useAPI<Category[]>(
+	'product/category/list/featured/top?apifoxApiId=211955118',
+	{ params: { num: 5 } },
+)
+watch(categories, (v) => {
+	v?.forEach(async (d) => {
+		$api('product/spu/page?apifoxApiId=211495718', {
+			params: {
+				categoryId: d.id,
+				pageNo: 1,
+				pageSize: 5,
+			},
+		}).then((res) => {
+			d.children = res.list
+		})
+	})
+}, { immediate: true })
 
-const list = ref([
-	{ label: 'Recommended', children },
-	{ label: 'Autumn Sale Round 1', children: [...children].reverse() },
-])
-
-const selected = ref()
-watchEffect(() => {
-	selected.value = list.value[0]
-})
-const unit = ref('$')
+let swiper: SwiperClass | null = null
+const realIndex = ref(0)
+function setSwiper(s: SwiperClass) {
+	swiper = s
+}
+function slideTo(i: number) {
+	if (!swiper)
+		return
+	swiper.slideTo(i)
+	realIndex.value = swiper.realIndex
+}
 </script>
 
 <template>
-	<div class="app-feature">
-		<div class="app-feature-title">
+	<div class="feature-tab feature-tab--full">
+		<div class="feature-tab-title">
 			{{ $t('Featured Products') }}
 		</div>
-		<div class="app-feature-container">
-			<div class="app-feature-tab">
-				<div
-					v-for="item in list"
-					:key="item.label"
-					:class="{ active: selected === item }"
-					class="app-feature-tab-item"
-					@click="selected = item"
-				>
-					{{ item.label }}
+		<div class="feature-tab__container">
+			<div class="feature-tab__header">
+				<div class="tab-header__wrapper">
+					<div
+						v-for="(c, i) in categories"
+						:key="c.id"
+						class="feature-tab__item"
+						:class="{ 'feature-tab--active': realIndex === i }"
+						@click="slideTo(i)"
+					>
+						<div>{{ c.name }}</div>
+					</div>
 				</div>
 			</div>
-			<div class="app-feature-pane-wrapper">
-				<div
-					v-for="item in list"
-					v-show="selected === item"
-					:key="item.label"
-					:name="item.label"
-					:label="item.label"
-					class="app-feature-pane"
+			<div class="feature-tab__pane">
+				<Swiper
+					:slides-per-view="1"
+					:allow-touch-move="false"
+					:simulate-touch="false"
+					@swiper="setSwiper"
 				>
-					<nuxt-link
-						v-for="(c, i) in item.children"
-						:key="c.img"
-						:to="c.url"
-						class="app-feature-item"
+					<SwiperSlide
+						v-for="cat in categories"
+						:key="cat.id"
+						class="swiper-wrapper"
 					>
-						<img :src="c.img" alt="" />
-						<div class="item-info">
-							<img v-if="i === 0" :src="c.subImg" />
-							<span>
-								{{ c.desc }}
-							</span>
-							<div class="item-info__translate">
-								<strong v-if="i !== 0" class="price">
-									<small>{{ unit }}</small>
-									{{ c.price }}
-								</strong>
-								<div class="item-info__button-wrapper">
-									<button>Learn More</button>
+						<div
+							class="feature-tab-content feature-tab-content--1left4 feature-tab-content--1C-4S"
+						>
+							<nuxt-link
+								v-for="(c, i) in cat.children"
+								:key="c.id"
+								:to="localePath(`/product/${c.id}`, locale)"
+								class="feature-tab--item"
+								:class="[
+									i === 0
+										? 'feature-tab--item-main'
+										: 'feature-tab--item-other',
+								]"
+							>
+								<div class="image-block">
+									<app-image
+										class="mi-image item-image"
+										:src="c.picUrl"
+									/>
 								</div>
-							</div>
+								<div class="item-info">
+									<h2 class="item-info__title">
+										{{ c.name }}
+									</h2>
+									<div class="item-info__translate">
+										<product-price
+											v-if="i !== 0"
+											class="mi-price item-info__price"
+											:data="c.price"
+										/>
+										<div class="item-info__button-wrapper">
+											<button class="mi-btn app-button">
+												{{ t('Learn More') }}
+											</button>
+										</div>
+									</div>
+								</div>
+							</nuxt-link>
 						</div>
-					</nuxt-link>
-				</div>
+					</SwiperSlide>
+				</Swiper>
 			</div>
 		</div>
 	</div>
 </template>
-
-<style lang="scss" scoped>
-.app-feature {
-	@media screen and (max-width: 720px) {
-		--grid-gap: 12px;
-		--grid-content-height: auto;
-		--grid-main-row-height: 186px;
-		background-color: #fff;
-		background-color: var(--background-white);
-		padding: 0 var(--app-horizontal-padding);
-		width: unset;
-	}
-
-	@media screen and (min-width: 721px) and (max-width: 1024px) {
-		--grid-gap: 16px;
-		--grid-content-height: 536px;
-		--grid-main-row-height: 260px;
-	}
-
-	@media screen and (min-width: 1025px) and (max-width: 1440px) {
-		--grid-gap: 24px;
-		--grid-content-height: 684px;
-		--grid-main-row-height: 330px;
-	}
-
-	@media screen and (min-width: 1441px) and (max-width: 1920px) {
-		--grid-gap: 24px;
-		--grid-content-height: 684px;
-		--grid-main-row-height: 330px;
-	}
-
-	@media screen and (min-width: 1921px) {
-		--grid-gap: 24px;
-		--grid-content-height: 684px;
-		--grid-main-row-height: 330px;
-	}
-	.app-feature-title {
-		font-weight: 700;
-		margin-bottom: var(--title-content-gap);
-		text-align: center;
-		@media screen and (min-width: 1025px) {
-			font-size: 32px;
-		}
-		@media screen and (min-width: 721px) and (max-width: 1024px) {
-			font-size: 24px;
-		}
-	}
-	.app-feature-container {
-		.app-feature-tab {
-			display: flex;
-			justify-content: center;
-			width: 100%;
-			.app-feature-tab-item {
-				margin: 0 28px;
-				height: 40px;
-				cursor: pointer;
-				--brand-orange: #ff6900;
-				&.active {
-					color: var(--brand-orange);
-					border-bottom: 2px solid var(--brand-orange);
-				}
-			}
-		}
-		.app-feature-pane-wrapper {
-			border-radius: 10px;
-			padding: 24px;
-			background-color: #fff;
-			background-color: var(--background-white);
-			overflow: hidden;
-			display: flex;
-			flex-wrap: wrap;
-			.app-feature-pane {
-				width: 100%;
-				overflow: hidden;
-				grid-template-columns: repeat(4, minmax(0, 1fr));
-				grid-gap: var(--grid-gap,);
-				display: grid;
-				height: var(--grid-content-height);
-				.app-feature-item {
-					background-color: #fafafa;
-					position: relative;
-					overflow: hidden;
-					box-sizing: border-box;
-					&:first-child {
-						grid-column: span 4;
-						grid-gap: var(--grid-gap,);
-						border-radius: 6px;
-						display: grid;
-						align-items: center;
-						display: grid;
-						grid-template-columns: repeat(2, minmax(0, 1fr));
-						height: var(--grid-main-row-height);
-						overflow: hidden;
-						--img-width: 330px;
-						box-sizing: border-box;
-						> * {
-							width: 100%;
-						}
-						.item-info {
-							margin: 0;
-							justify-content: space-between;
-							img {
-								max-width: 400px;
-							}
-							span {
-								font-size: 14px;
-								margin-top: 20px;
-								font-weight: 300;
-							}
-							@media screen and (min-width: 1441px) and (max-width: 1920px) {
-								padding: 16px 140px;
-							}
-							@media screen and (min-width: 1025px) and (max-width: 1440px) {
-								padding: 12px 66px;
-							}
-							@media screen and (min-width: 721px) and (max-width: 1024px) {
-								padding: 10px 24px;
-							}
-							@media screen and (min-width: 1921px) {
-								padding: 16px 148px;
-							}
-							.item-info__translate {
-								height: 40px;
-							}
-						}
-					}
-					&:not(:first-child) {
-						padding: 24px 30px;
-						--img-width: 160px;
-						align-items: center;
-						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-						height: var(--grid-main-row-height);
-						@media screen and (min-width: 721px) and (max-width: 1024px) {
-							--img-width: 110px;
-							padding: 16px 20px;
-						}
-					}
-					> img {
-						height: var(--img-width, 160px);
-						object-fit: cover;
-						object-position: center;
-						width: 100%;
-					}
-					.item-info {
-						margin-top: 12px;
-						text-align: center;
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						position: relative;
-						width: 100%;
-						align-items: center;
-						box-sizing: border-box;
-						grid-column: span 1;
-						flex: 1;
-						span {
-							margin-top: 12px;
-							font-weight: 700;
-						}
-					}
-					.item-info__translate {
-						margin-top: 12px;
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						position: relative;
-						width: 100%;
-						text-align: center;
-						align-items: center;
-					}
-					.item-info__button-wrapper {
-						left: 0;
-						opacity: 0;
-						position: absolute;
-						top: 100%;
-						transition: all 0.3s;
-						width: 100%;
-						button {
-							background-color: #191919;
-							border-radius: 8px;
-							color: #fff;
-							font-size: 12px;
-							padding: 4px 12px;
-							cursor: pointer;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							word-break: break-word;
-							font-size: 12px;
-							width: fit-content;
-						}
-					}
-					.price {
-						transition: all 0.3s;
-					}
-					&:hover {
-						.item-info__button-wrapper {
-							opacity: 1;
-							top: 50%;
-							transform: translateY(-50%);
-							transition-delay: 0.2s;
-						}
-						.price {
-							opacity: 0;
-							transform: translateY(-20%);
-						}
-					}
-				}
-			}
-		}
-	}
-}
-</style>

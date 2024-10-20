@@ -17,7 +17,6 @@ const data = defineModel('data')
 strong {
 	display: inline-block;
 	margin-inline-end: 4px;
-	display: inline-block;
 	white-space: nowrap;
 	small {
 		font-size: inherit;

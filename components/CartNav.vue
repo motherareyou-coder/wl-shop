@@ -19,7 +19,9 @@ const steps = [
 const route = useRoute()
 const activeStep = ref(0)
 watchEffect(() => {
-	activeStep.value = steps.find(s => s.path === route.path)?.value || 0
+	console.log(route)
+
+	activeStep.value = steps.find(s => route.path.includes(s.path))?.value || 0
 })
 </script>
 

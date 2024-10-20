@@ -1,6 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
+import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
+import './AppExclusive.scss'
+import { chunk } from 'lodash-es'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -8,243 +11,112 @@ import 'swiper/css/pagination'
 
 defineOptions({ name: 'AppExclusive' })
 
-const list = ref([
-	{
-		label: 'Daily Picks',
-		img: '/imgs/1.jpg',
-		desc: 'Boost your business with Xiaomi products.',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-	},
-	{
-		label: 'Daily Picks',
-		img: '/imgs/2.jpg',
-		desc: 'Boost your business with Xiaomi products.',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-	},
-	{
-		label: 'Daily Picks',
-		img: '/imgs/3.jpg',
-		desc: 'Boost your business with Xiaomi products.',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-	},
-	{
-		label: 'Daily Picks',
-		img: '/imgs/4.jpg',
-		desc: 'Boost your business with Xiaomi products.',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-	},
-	{
-		label: 'Daily Picks',
-		img: '/imgs/4.jpg',
-		desc: 'Boost your business with Xiaomi products.',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-	},
-])
+interface Bargin {
+	id: number
+	name: string
+	startTime: string
+	endTime: string
+	spuId: number
+	skuId: number
+	stock: number
+	picUrl: string
+	marketPrice: number
+	bargainMinPrice: number
+}
 
-let swiper = null
-const activeIndex = ref(0)
-function setControlledSwiper(d) {
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
+const { data } = await useAsyncData<Bargin[]>(() => $api('promotion/bargain-activity/page?apifoxApiId=212557777').then(res => res.list))
+
+const finalData = computed(() => chunk(data.value, 3))
+
+let swiper: SwiperClass | null = null
+const realIndex = ref(0)
+function setSwiper(d: SwiperClass) {
 	swiper = d
 }
 function next() {
-	swiper?.slideNext()
-	swiper?.slideNext()
-	swiper?.slideNext()
-	activeIndex.value = swiper.activeIndex
+	if (!swiper)
+		return
+	swiper.slideNext()
+	swiper.slideNext()
+	swiper.slideNext()
+	realIndex.value = swiper.realIndex
 }
 function prev() {
-	swiper?.slidePrev()
-	swiper?.slidePrev()
-	swiper?.slidePrev()
-	activeIndex.value = swiper.activeIndex
+	if (!swiper)
+		return
+	swiper.slidePrev()
+	swiper.slidePrev()
+	swiper.slidePrev()
+	realIndex.value = swiper.realIndex
 }
 </script>
 
 <template>
-	<div class="app-exclusive">
-		<div class="header">
-			<div></div>
-			<div class="title">
+	<div class="exclusive-offers exclusive-offers--full">
+		<div class="exclusive-offers__header">
+			<div class="exclusive-offers__header-text">
 				Exclusive Offers
 			</div>
-			<div class="arrow">
-				<el-icon :class="{ disabled: activeIndex === 0 }" @click="prev">
-					<ElIconArrowLeft />
+			<div class="exclusive-offers__header-arrow">
+				<el-icon
+					class="exclusive-offers__header-arrow-left"
+					:class="{ 'swiper-button-disabled': realIndex === 0 }"
+					@click="prev"
+				>
+					<Icon name="icon:left" />
 				</el-icon>
 				<el-icon
-					:class="{ disabled: activeIndex + 3 >= list.length }"
+					class="exclusive-offers__header-arrow-right"
+					:class="{ 'swiper-button-disabled': realIndex >= finalData.length - 1 }"
 					@click="next"
 				>
-					<ElIconArrowRight />
+					<Icon name="icon:right" />
 				</el-icon>
 			</div>
 		</div>
-		<div class="swipper-wrapper">
-			<Swiper
-				:slides-per-view="3"
-				:modules="[A11y, Autoplay, Navigation, Pagination]"
-				:allow-touch-move="false"
-				:simulate-touch="false"
-				@swiper="setControlledSwiper"
-			>
-				<SwiperSlide v-for="item in list" :key="item.img">
-					<nuxt-link :to="item.url">
-						<picture>
-							<img :src="item.img">
-						</picture>
-						<div class="item-info">
-							<div class="title">
-								{{ item.label }}
+		<Swiper
+			:slides-per-view="1"
+			:allow-touch-move="false"
+			:simulate-touch="false"
+			class="exclusive-offers__list"
+			@swiper="setSwiper"
+		>
+			<SwiperSlide v-for="(c, i) in finalData" :key="i">
+				<nuxt-link
+					v-for="item in c"
+					:key="item.id"
+					:to="localePath(`/product/${item.id}`, locale)"
+					class="exclusive-offers__item"
+				>
+					<div class="activity-customize">
+						<div class="activity-customize__content">
+							<app-image
+								:src="item.picUrl"
+								class="activity-customize__content-background"
+							/>
+						</div>
+						<div class="exclusive-offers-footer-bar">
+							<div class="exclusive-offers-footer-bar__title">
+								{{ item.name }}
 							</div>
-							<div class="item-info__translate">
-								<div class="desc">
-									{{ item.desc }}
+							<div class="exclusive-offers-footer-bar__content">
+								<div
+									class="exclusive-offers-footer-bar__content-desc"
+								>
+									{{ item.bargainMinPrice }}
 								</div>
-								<div class="item-info__button-wrapper">
-									<button>Learn More</button>
+								<div
+									class="exclusive-offers-footer-bar__content-button"
+								>
+									{{ t('Learn More') }}
 								</div>
 							</div>
 						</div>
-					</nuxt-link>
-				</SwiperSlide>
-			</Swiper>
-		</div>
+					</div>
+				</nuxt-link>
+			</SwiperSlide>
+		</Swiper>
 	</div>
 </template>
-
-<style lang="scss" scoped>
-.app-exclusive {
-	.header {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 32px;
-		margin-bottom: var(--title-content-gap);
-		position: relative;
-		.title {
-			color: #000;
-			font-weight: 700;
-			line-height: 1;
-			font-size: 32px;
-		}
-		.arrow {
-			position: absolute;
-			right: 0;
-			.el-icon {
-				cursor: pointer;
-				font-size: 16px;
-				width: 30px;
-				height: 30px;
-				background-color: #d1d1d1;
-				border-radius: 10px;
-				color: var(--text-reverse);
-				margin-inline-start: 25px;
-				&.disabled {
-					background-color: #e1e1e1;
-					cursor: auto;
-				}
-			}
-		}
-	}
-	.swipper-wrapper {
-		.swiper-slide {
-			display: inline-block;
-			background-color: #fff;
-			flex-shrink: 0;
-			margin-inline-end: 20px;
-			width: calc(33.3333% - 14px) !important;
-			position: relative;
-			padding: 16px;
-			box-sizing: border-box;
-			img {
-				--mi-image-height: 258px;
-				border-radius: 10px;
-				transition: 0.5s;
-				height: var(--mi-image-height);
-				object-fit: cover;
-				object-position: center;
-				width: 100%;
-				@media screen and (min-width: 1025px) and (max-width: 1440px) {
-					height: 258px;
-				}
-			}
-			.item-info {
-				text-align: center;
-				margin-top: 32px;
-				@media screen and (min-width: 1025px) and (max-width: 1440px) {
-					margin-top: 32px;
-				}
-				.title {
-					@media screen and (min-width: 1025px) and (max-width: 1440px) {
-						font-size: 18px;
-					}
-					line-clamp: 1;
-					color: #191919;
-					display: flex;
-					font-weight: 700;
-					overflow: hidden;
-					text-align: center;
-					text-overflow: ellipsis;
-					word-break: break-word;
-					z-index: 2;
-				}
-			}
-			.item-info__translate {
-				margin-top: 12px;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				position: relative;
-				width: 100%;
-				text-align: center;
-				align-items: center;
-			}
-			.item-info__button-wrapper {
-				left: 0;
-				opacity: 0;
-				position: absolute;
-				top: 100%;
-				transition: all 0.3s;
-				width: 100%;
-				button {
-					background: #191919;
-					border-radius: 10.5px;
-					color: #fff;
-					display: inline-block;
-					font-weight: 700;
-					margin-top: 7px;
-					padding: 6px 12px;
-					transition: 0.3s;
-					cursor: pointer;
-					@media screen and (min-width: 1025px) and (max-width: 1440px) {
-						font-size: 12px;
-					}
-				}
-			}
-			.desc {
-				line-clamp: 2;
-				display: flex;
-				height: 50px;
-				opacity: 1;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				transition: 0.3s;
-				word-break: break-word;
-				z-index: 1;
-			}
-			&:hover {
-				.item-info__button-wrapper {
-					opacity: 1;
-					top: 50%;
-					transform: translateY(-50%);
-					transition-delay: 0.2s;
-				}
-				.desc {
-					opacity: 0;
-					transform: translateY(-10px);
-				}
-			}
-		}
-	}
-}
-</style>

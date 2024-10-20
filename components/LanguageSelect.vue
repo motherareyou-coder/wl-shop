@@ -13,7 +13,9 @@ const items = [
 		<template #dropdown>
 			<ElDropdownMenu>
 				<ElDropdownItem v-for="o in items" :key="o.value">
-					{{ o.label }}
+					<SwitchLocalePathLink :locale="o.value">
+						{{ o.label }}
+					</SwitchLocalePathLink>
 				</ElDropdownItem>
 			</ElDropdownMenu>
 		</template>

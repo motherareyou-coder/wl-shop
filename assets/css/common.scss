@@ -61,21 +61,6 @@ html,
 	cursor: pointer;
 }
 
-.app-grid--vertical-100 {
-	margin: var(--margin-vertical, 0) auto;
-	max-width: var(--app-body-width);
-	width: 100%;
-	padding: 0 var(--app-horizontal-padding);
-}
-
-.site-container {
-	box-sizing: border-box;
-	margin: var(--margin-vertical, 0) auto;
-	max-width: var(--app-max-width);
-	width: 100%;
-	padding: 0 var(--app-horizontal-padding);
-}
-
 .app-button {
 	--btn-padding: var(--btn-padding-vertical, 10px) var(--btn-padding-horizontal, 10px);
 	--btn-text-base: var(--text-reverse);
