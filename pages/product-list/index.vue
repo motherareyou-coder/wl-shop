@@ -1,149 +1,184 @@
-<script setup>
-import ProductItem from './components/ProductItem.vue'
+<script setup lang="ts">
+import Mobile from './components/Mobile.vue'
+import PC from './components/PC.vue'
+import type { Category } from '~/types'
+import './index.scss'
 
-const data = ref([
-	{
-		id: 1,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		id: 2,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		id: 3,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		id: 4,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		id: 5,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		id: 6,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-	{
-		id: 7,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi Pad 6',
-		url: 'https://www.mi.com/uk/product/xiaomi-14t-pro/',
-		price: 29.99,
-	},
-])
+const { t } = useI18n()
+const appStore = useAppStore()
+const { data: categories } = await useAPI<Category[]>(
+	'product/category/list?apifoxApiId=217665537',
+)
 
-const categories = ref([
-	{ id: '1', value: 'store' },
-	{ id: '2', value: 'mobile' },
-	{ id: '3', value: 'wearables' },
-	{ id: '4', value: 'smarthome' },
-	{ id: '5', value: 'lifestyle' },
-])
+const route = useRoute()
+const categoryId = ref()
+const query = ref()
+const keyword = ref()
+watch(
+	() => route.fullPath,
+	() => {
+		if (route.query.categoryId)
+			categoryId.value = route.query.categoryId
+		if (route.query.query)
+			query.value = route.query.query
+	},
+	{ immediate: true },
+)
+const sortField = ref('Relevance')
+const sortAsc = ref(true)
 
-const category = ref()
-const expand = ref(false)
-const sort = ref('')
-const priceSort = ref(false)
-function setSort(t) {
-	switch (t) {
+const params = computed(() => {
+	const obj = {
+		categoryId: categoryId.value,
+		keyword: keyword.value,
+	}
+	switch (sortField.value) {
+		case 'Relevance':
+			break
+		case 'new':
+			obj.sortAsc = false
+			break
 		case 'price':
-			if (sort.value === t)
-				priceSort.value = !priceSort.value
-			else sort.value = t
+			obj.sortField = sortField.value
+			obj.sortAsc = sortAsc.value
 			break
-		default:
-			sort.value = t
-			priceSort.value = false
+		case 'salesCount':
+			obj.sortField = sortField.value
+			obj.sortAsc = false
 			break
+	}
+	return obj
+})
+
+const fileds = [
+	{ label: t('Relevance'), value: 'Relevance' },
+	{ label: t('New'), value: 'new' },
+	{ label: t('Price'), value: 'price' },
+	{ label: t('Sales'), value: 'salesCount' },
+]
+
+function setSort(t: string) {
+	if (sortField.value === t && t === 'price') {
+		sortAsc.value = !sortAsc.value
+	}
+	else {
+		sortField.value = t
+		sortAsc.value = true
 	}
 }
 </script>
 
 <template>
-	<div class="app-product-list">
-		<section class="filter app-grid--vertical-100">
-			<div class="condition-list">
-				<li class="category-filter" @click="expand = !expand">
-					Categoris
-					<ElIcon :class="{ expand }">
-						<ElIconArrowUp />
-					</ElIcon>
-				</li>
-				<li
-					:class="{ active: sort === 'Relevance' }"
-					@click="setSort('Relevance')"
-				>
-					Relevance
-				</li>
-				<li class="separator"></li>
-				<li :class="{ active: sort === 'New' }" @click="setSort('New')">
-					New
-				</li>
-				<li class="separator"></li>
-				<li
-					class="price"
-					:class="{ active: sort === 'price' }"
-					@click="setSort('price')"
-				>
-					Price
-					<ElIcon :class="{ expand: priceSort }">
-						<Icon name="icon:up" />
-					</ElIcon>
-				</li>
+	<main class="product-list">
+		<div class="product-list__container site-container-1400">
+			<div class="product-filter">
+				<ul class="condition-list">
+					<li class="category-filter">
+						<el-select
+							v-model="categoryId"
+							:placeholder="$t('Categoris')"
+						>
+							<el-option
+								v-for="c in categories"
+								:key="c.id"
+								:label="c.name"
+								:value="c.id"
+							/>
+						</el-select>
+					</li>
+					<template v-for="(f, i) in fileds" :key="f.value">
+						<li
+							class="price"
+							:class="{ active: sortField === f.value }"
+							@click="setSort(f.value)"
+						>
+							{{ f.label }}
+							<ElIcon
+								v-if="f.value === 'price'"
+								:class="{ expand: sortAsc }"
+							>
+								<Icon name="icon:up" />
+							</ElIcon>
+						</li>
+						<li
+							v-if="i !== fileds.length - 1"
+							class="separator"
+						></li>
+					</template>
+					<li class="">
+						<el-input
+							v-model="query"
+							clearable
+							@keydown.enter="keyword = query"
+						/>
+					</li>
+				</ul>
 			</div>
-			<div class="category-list" :class="{ expand }">
-				<div
-					v-for="item in categories"
-					:key="item.id"
-					class="category-item"
-					:class="{ active: category === item.value }"
-					@click="category = item.value"
-				>
-					{{ $t(item.value) }}
-				</div>
-			</div>
-		</section>
-		<section class="app-grid--vertical-100">
-			<div class="product-list">
-				<ProductItem v-for="item in data" :key="item.id" :data="item" />
-			</div>
-		</section>
-		<section class="app-grid--vertical-100">
-			<el-pagination />
-		</section>
-	</div>
+			<Mobile v-if="appStore.isMobile" :params="params" />
+			<PC v-else :params="params" />
+		</div>
+	</main>
 </template>
 
 <style lang="scss" scoped>
-.app-product-list {
-	--margin-vertical: 20px;
-	.filter {
+.product-list {
+	@media screen and (max-width: 720px) {
+		--grid-columns: 1;
+		--grid-gap: 16px;
+		--category-filter-width: 100px;
+		--filter-font-size: 12px;
+		--filter-item-margin-right: 8px;
+		--cat-padding-horizontal: 6px;
+	}
+	@media screen and (min-width: 721px) and (max-width: 1024px) {
+		--grid-columns: 3;
+		--grid-gap: 8px;
+		--category-filter-width: 100px;
+		--filter-font-size: 18px;
+		--filter-item-margin-right: 24px;
+		--cat-padding-horizontal: 8px;
+	}
+	@media screen and (min-width: 1025px) and (max-width: 1440px) {
+		--grid-columns: 4;
+		--grid-gap: 12px;
+		--category-filter-width: 120px;
+		--filter-font-size: 18px;
+		--filter-item-margin-right: 24px;
+		--cat-padding-horizontal: 8px;
+	}
+	@media screen and (min-width: 1441px) and (max-width: 1920px) {
+		--grid-columns: 4;
+		--grid-gap: 12px;
+		--category-filter-width: 150px;
+		--filter-font-size: 18px;
+		--filter-item-margin-right: 24px;
+		--cat-padding-horizontal: 10px;
+	}
+	@media screen and (min-width: 1921px) {
+		--grid-columns: 4;
+		--grid-gap: 16px;
+		--category-filter-width: 180px;
+		--filter-font-size: 18px;
+		--filter-item-margin-right: 24px;
+		--cat-padding-horizontal: 14px;
+	}
+	.product-list__container {
+		margin: var(--grid-gap) auto;
+		position: relative;
+		@media screen and (max-width: 720px) {
+			margin: 0 auto;
+		}
+	}
+	.product-filter {
+		padding: var(--grid-gap);
+		box-sizing: border-box;
+		@media screen and (max-width: 720px) {
+			padding: 0;
+			position: sticky;
+		}
 		.condition-list {
-			padding: 32px;
+			padding: var(--cat-padding-horizontal);
 			background-color: #fff;
-			--filter-font-size: 20px;
-			--filter-item-margin-right: 40px;
 			align-items: center;
 			display: flex;
 			flex-wrap: wrap;
@@ -154,6 +189,8 @@ function setSort(t) {
 				color: #898989;
 				color: var(--text-secondary);
 				cursor: pointer;
+				margin-top: calc(var(--filter-item-margin-right) / 4);
+				margin-bottom: calc(var(--filter-item-margin-right) / 4);
 				margin-inline-end: var(--filter-item-margin-right);
 				&:hover,
 				&.active {
@@ -170,73 +207,23 @@ function setSort(t) {
 					display: inline-flex;
 					align-items: center;
 				}
-				&.category-filter {
-					display: inline-flex;
-					align-items: center;
+				&.category-filter .el-select {
+					width: var(--category-filter-width) !important;
 				}
 				.el-icon {
 					margin-inline-start: 8px;
 					font-size: var(--filter-font-size);
 					display: inline-block;
 					transition: all 0.2s;
-					transform: rotate(0);
+					transform: rotate(180deg);
 					transform-origin: 50% 50%;
 					color: inherit;
 					&.expand {
-						transform: rotate(180deg);
+						transform: rotate(0);
 					}
 				}
 			}
 		}
-	}
-	.category-list {
-		background-color: #fff;
-		--border-color: transparent;
-		--item-margin-bottom: 24px;
-		--item-font-size: 18px;
-		--group-margin-bottom: 40px;
-		border-top: 2px solid var(--border-color);
-		box-sizing: border-box;
-		font-size: 18px;
-		height: 0;
-		max-height: 0;
-		overflow: hidden;
-		padding: 0 64px;
-		transition: all 0.3s;
-		&.expand {
-			--cat-padding-top: var(--cat-padding-vertical);
-			--cat-padding-bottom: var(--cat-padding-vertical);
-			--border-color: var(--background-base);
-			height: auto;
-			max-height: 2000px;
-			padding: 32px 64px;
-		}
-		.category-item {
-			display: inline-block;
-			cursor: pointer;
-			--item-margin-right: 80px;
-			flex-shrink: 0;
-			margin-inline-end: var(--item-margin-right);
-			border-bottom: var(--border-bottom-width) solid transparent;
-			padding-bottom: var(--padding-bottom);
-			transition: all 0.2s;
-			&.active {
-				border-bottom-color: var(--brand-orange, #ff6900);
-			}
-			@media screen and (min-width: 1921px) {
-				--padding-bottom: 12px;
-				--item-font-size: 24px;
-				--border-bottom-width: 4px;
-			}
-		}
-	}
-	.product-list {
-		--grid-columns: 4;
-		--grid-gap: 16px;
-		grid-gap: var(--grid-gap);
-		display: grid;
-		gap: var(--grid-gap);
-		grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
 	}
 }
 </style>

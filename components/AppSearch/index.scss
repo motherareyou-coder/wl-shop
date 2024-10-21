@@ -31,6 +31,12 @@
     margin: 0 auto
 }
 
+@media screen and (max-width:720px) {
+    .search-modal .search-base__container {
+        padding-top: 48px;
+        width: 65%
+    }
+}
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .search-modal .search-base__container {
         padding-top: 48px;

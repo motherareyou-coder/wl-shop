@@ -7,7 +7,6 @@ export const useAppStore = defineStore('AppStore', {
 			isPC: true,
 			isMobile: false,
 			bodyWidth: 0,
-			categories: [] as Category[],
 		}
 	},
 	getters: {
@@ -19,7 +18,7 @@ export const useAppStore = defineStore('AppStore', {
 		listen() {
 			const onResize = () => {
 				this.bodyWidth = document?.body?.clientWidth
-				if (document?.body?.clientWidth <= 768) {
+				if (document?.body?.clientWidth <= 720) {
 					this.isPC = false
 					this.isMobile = true
 				}
