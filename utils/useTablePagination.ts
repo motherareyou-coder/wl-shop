@@ -7,7 +7,7 @@ function useTablePagination<T>(fetch: (p: any) => Promise<Res<T>>, immediate = t
 	const data: Ref<T[]> = ref([])
 	const pagination = reactive({
 		currentPage: 1,
-		pageSize: 3,
+		pageSize: 10,
 		total: 0,
 	})
 	const loading = ref(false)
@@ -34,6 +34,7 @@ function useTablePagination<T>(fetch: (p: any) => Promise<Res<T>>, immediate = t
 		pagination.currentPage = 1
 		pagination.total = 0
 		data.value = []
+		getData()
 	}
 
 	if (immediate)

@@ -7,8 +7,6 @@ const props = defineProps({
 })
 const emit = defineEmits(['mouseenter', 'mouseleave', 'link-click'])
 const data = toRef(props, 'data')
-const { t, locale } = useI18n()
-const localePath = useLocalePath()
 
 const onmouseenter = () => emit('mouseenter')
 const onmouseleave = () => emit('mouseleave')
@@ -26,7 +24,7 @@ const onmouseleave = () => emit('mouseleave')
 					<nuxt-link
 						v-for="item in data"
 						:key="item.id"
-						:to="localePath(`/product/${item.id}`, locale)"
+						:to="$path(`/product/${item.id}`)"
 						class="header-product-item"
 						@click="emit('link-click')"
 					>
@@ -44,15 +42,10 @@ const onmouseleave = () => emit('mouseleave')
 				<div class="submenu-footer">
 					<nuxt-link
 						class="submenu-footer__item"
-						:to="
-							localePath(
-								`/product-list?category=${props.category}`,
-								locale,
-							)
-						"
+						:to="$path(`/product-list?categoryId=${props.category}`)"
 						@click="emit('link-click')"
 					>
-						{{ t('All Products') }}
+						{{ $t('All Products') }}
 						<el-icon>
 							<ElIconArrowRight />
 						</el-icon>

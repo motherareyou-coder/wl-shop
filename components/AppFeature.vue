@@ -9,8 +9,6 @@ import 'swiper/css/pagination'
 import type { Category } from '~/types'
 
 defineOptions({ name: 'AppFeature' })
-const { t, locale } = useI18n()
-const localePath = useLocalePath()
 
 const { data: categories } = await useAPI<Category[]>(
 	'product/category/list/featured/top?apifoxApiId=211955118',
@@ -80,7 +78,7 @@ function slideTo(i: number) {
 							<nuxt-link
 								v-for="(c, i) in cat.children"
 								:key="c.id"
-								:to="localePath(`/product/${c.id}`, locale)"
+								:to="$path(`/product/${c.id}`)"
 								class="feature-tab--item"
 								:class="[
 									i === 0
@@ -106,7 +104,7 @@ function slideTo(i: number) {
 										/>
 										<div class="item-info__button-wrapper">
 											<button class="mi-btn app-button">
-												{{ t('Learn More') }}
+												{{ $t('Learn More') }}
 											</button>
 										</div>
 									</div>

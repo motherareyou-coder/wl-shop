@@ -11,13 +11,7 @@ const { data, pagination, getData, resetData } = useTablePagination<Product>(
 			params: { ...p, ...props.params },
 		}),
 )
-watch(
-	() => props.params,
-	() => {
-		resetData()
-		getData()
-	},
-)
+watch(() => props.params, resetData)
 </script>
 
 <template>
@@ -34,10 +28,10 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-.el-pagination {
+.mi-pagination {
 	margin: calc(var(--grid-gap) * 2) var(--grid-gap);
 	justify-content: center;
-	--el-pagination-bg-color: transparent;
-	--el-pagination-button-disabled-bg-color: transparent;
+	--mi-pagination-bg-color: transparent;
+	--mi-pagination-button-disabled-bg-color: transparent;
 }
 </style>

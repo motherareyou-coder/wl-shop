@@ -362,7 +362,7 @@ ul::-webkit-scrollbar-thumb {
     font-size: var(--content-font-size);
     gap: var(--margin-gap);
     margin: var(--margin-gap) auto 0;
-    max-width: var(--app-body-width);
+    max-width: var(--max-width-1400);
     width: 100%
 }
 
@@ -1527,6 +1527,7 @@ ul::-webkit-scrollbar-thumb {
     }
 }
 
+.checkout-pay .checkout-pay__item.is-checked,
 .checkout-pay .checkout-pay__item:hover {
     border: 1px solid #ff6900;
     border: 1px solid var(--border-primary)
@@ -2356,6 +2357,7 @@ ul::-webkit-scrollbar-thumb {
     color: var(--text-primary)
 }
 
+.mi-radio__item .radio-wrapper.is-checked,
 .mi-radio__item .radio-wrapper.mi-radio__item--button:hover,
 .mi-radio__item .radio-wrapper.mi-radio__item--card:hover {
     border: 1px solid #ff6900;
@@ -3431,7 +3433,12 @@ ul::-webkit-scrollbar-thumb {
     align-items: center;
     display: flex;
     flex-direction: column;
-    width: 100%
+    width: 100%;
+    &.hide-more {
+        .user-address__card:not(.user-address__card--selected){
+            display: none;
+        }
+    }
 }
 
 @media screen and (max-width: 720px) {
@@ -3581,7 +3588,8 @@ ul::-webkit-scrollbar-thumb {
     gap: var(--margin-gap);
     padding: 0 var(--padding);
     position: relative;
-    width: 100%
+    width: 100%;
+    box-sizing: content-box;
 }
 
 @media screen and (max-width: 720px) {
@@ -7704,7 +7712,7 @@ body.mi-date-time-modal__body--overflow-hidden {
     }
 
     .site-checkout .checkout-product-overview.checkout-product-overview--summary {
-        // display: none
+        display: none
     }
 }
 
@@ -12430,7 +12438,7 @@ body.coupons-drawer__body--overflow-hidden {
     color: var(--brand-grey);
     font-size: var(--footnote-font-size);
     margin: 0 auto;
-    max-width: var(--app-body-width);
+    max-width: var(--max-width-1400);
     padding: var(--padding);
     width: 100%
 }

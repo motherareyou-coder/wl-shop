@@ -1,54 +1,62 @@
-<script setup>
-const data = defineModel()
-const selected = defineModel('coupon', { default: () => [] })
+<script setup lang="ts">
+import type { Coupon } from '~/types'
 
-watchEffect(() => {
-	selected.value = selected.value?.slice(-1)
+const visible = defineModel('visible', { default: false })
+const coupon = defineModel<Coupon>({ default: () => null })
+const coupons = defineModel<Coupon[]>('list', { default: () => [] })
+
+const selected = ref<number[]>([])
+const active = ref<Coupon>()
+watch(selected, (v) => {
+	if (v.length > 1) {
+		return selected.value = v.slice(-1)
+	}
+	active.value = availableList.value.find(c => c.id === selected.value[0])
+})
+watch(coupon, (v) => {
+	selected.value = v ? [v.id] : []
 })
 
-const list = ref([
-	{
-		id: 1,
-		name: 'Xiaomi 14T Pro Mi Fans',
-		price: '10%off',
-		timerange: ['06/10/2024 16:15:02', '13/10/2024 16:15:02'],
-		desc: 'Apply for Xiaomi 14T Pro on mi.com/uk',
-	},
-	{
-		id: 2,
-		name: 'Xiaomi 14T Pro New Users',
-		price: '£50',
-		timerange: ['06/10/2024 16:15:02', '13/10/2024 16:15:02'],
-		desc: 'Apply for Xiaomi 14T Pro on mi.com/uk',
-	},
-	{
-		id: 3,
-		name: 'Xiaomi 14T Pro New Users',
-		price: '£50',
-		timerange: ['06/10/2024 16:15:02', '13/10/2024 16:15:02'],
-		desc: 'Apply for Xiaomi 14T Pro on mi.com/uk',
-	},
-	{
-		id: 4,
-		name: 'Xiaomi 14T Pro Mi Fans',
-		price: '10%off',
-		timerange: ['06/10/2024 16:15:02', '13/10/2024 16:15:02'],
-		desc: 'Apply for Xiaomi 14T Pro on mi.com/uk',
-	},
-])
+const { data } = await useAsyncData<Coupon[]>(() =>
+	$api('promotion/coupon/page?apifoxApiId=221192399').then(res => res.list),
+)
 
+const availableList = computed(
+	() => data.value || [], // ?.filter(d => d.status === 1) || [],
+)
+const disabledList = computed(
+	() => data.value?.filter(d => d.status !== 1) || [],
+)
+watch(availableList, v => (coupons.value = v || []))
 const tab = ref(0)
+
+const appStore = useAppStore()
+
+function handleConfirm() {
+	coupon.value = availableList.value.find(c => c.id === selected.value[0])
+	visible.value = false
+	console.log(visible)
+}
+watch(coupons, (v) => {
+	console.log(v)
+})
 </script>
 
 <template>
-	<el-drawer v-model="data" title="My Coupon" class="coupon-drawer">
+	<el-drawer
+		v-model="visible"
+		:title="$t('My Coupon')"
+		class="coupon-drawer"
+		append-to-body
+		:direction="appStore.isMobile ? 'btt' : 'rtl'"
+	>
 		<template #header="{ titleId, titleClass }">
 			<div>
 				<h2 :id="titleId" :class="titleClass">
-					My coupon
+					{{ $t('My Coupon') }}
 				</h2>
 				<p class="subtitle">
-					Only one coupon can be used per purchase
+					{{ $t('Only one coupon can be used per purchase') }}
 				</p>
 			</div>
 		</template>
@@ -57,37 +65,42 @@ const tab = ref(0)
 				<ul class="header">
 					<li :class="{ active: tab === 0 }" @click="tab = 0">
 						<div class="mi-tabs__item-content">
-							Available
-							<template v-if="list.length">
-								({{ list.length }})
+							{{ $t('Available') }}
+							<template v-if="coupons.length">
+								({{ coupons.length }})
 							</template>
 						</div>
 					</li>
 					<li :class="{ active: tab === 1 }" @click="tab = 1">
 						<div class="mi-tabs__item-content">
-							Unavailable
+							{{ $t('Unavailable') }}
 						</div>
 					</li>
 				</ul>
 				<div v-if="tab === 0" class="pane">
 					<ul class="coupons-list">
-						<li v-for="item in list" :key="item.id">
+						<li v-for="item in availableList" :key="item.id">
 							<el-checkbox
 								v-model="selected"
 								class="coupons-item"
-								:value="item"
+								:value="item.id"
 							>
 								<div class="name">
-									{{ [item.price, item.name].join(' | ') }}
+									{{ [item.discountPrice, item.name].join(' | ') }}
 								</div>
 								<div class="price">
-									{{ item.price }}
+									<ProductPrice :data="item.discountPrice" />
 								</div>
 								<div class="timerange">
-									{{ item.timerange.join(' - ') }}
+									{{
+										[
+											item.validStartTime,
+											item.validEndTime,
+										].join(' - ')
+									}}
 								</div>
 								<div class="desc">
-									{{ item.desc }}
+									{{ item.description }}
 								</div>
 							</el-checkbox>
 						</li>
@@ -95,24 +108,24 @@ const tab = ref(0)
 				</div>
 				<div v-if="tab === 1" class="pane">
 					<ul class="coupons-list disabled">
-						<li v-for="item in list" :key="item.id">
-							<el-checkbox
-								v-model="selected"
-								class="coupons-item"
-								:value="item"
-								disabled
-							>
+						<li v-for="item in disabledList" :key="item.id">
+							<el-checkbox class="coupons-item" disabled>
 								<div class="name">
-									{{ [item.price, item.name].join(' | ') }}
+									{{ [item.discountPrice, item.name].join(' | ') }}
 								</div>
 								<div class="price">
-									{{ item.price }}
+									<ProductPrice :data="item.discountPrice" />
 								</div>
 								<div class="timerange">
-									{{ item.timerange.join(' - ') }}
+									{{
+										[
+											item.validStartTime,
+											item.validEndTime,
+										].join(' - ')
+									}}
 								</div>
 								<div class="desc">
-									{{ item.desc }}
+									{{ item.description }}
 								</div>
 							</el-checkbox>
 						</li>
@@ -123,12 +136,15 @@ const tab = ref(0)
 		<footer class="footer">
 			<div class="note">
 				<Icon name="icon:coupon" class="highlight" />
-				<span v-if="selected.length">{{ selected.length }} selected save <span class="highlight">{{ selected[0].price }}</span></span>
-				<span v-else>Select 1 coupon to get discount</span>
+				<span v-if="active">
+					1 {{ $t('selected save') }}
+					<ProductPrice :data="active.discountPrice" class="highlight" />
+				</span>
+				<span v-else>{{ $t('Select 1 coupon to get discount') }}</span>
 			</div>
 			<div class="action">
-				<button class="app-button">
-					Confrim
+				<button class="app-button" @click="handleConfirm">
+					{{ $t('Confrim') }}
 				</button>
 			</div>
 		</footer>
@@ -201,7 +217,7 @@ const tab = ref(0)
 		--font-size-button: 18px;
 		--button-padding: 12px;
 	}
-	.el-drawer__title {
+	.mi-drawer__title {
 		font-size: var(--font-size-heading);
 		font-weight: 500;
 	}
@@ -222,7 +238,7 @@ const tab = ref(0)
 			hyphens: auto;
 		}
 	}
-	.el-drawer__close-btn {
+	.mi-drawer__close-btn {
 		background-color: #a3a3a3;
 		padding: 3px;
 		border-radius: 6px;
@@ -235,7 +251,7 @@ const tab = ref(0)
 			}
 		}
 	}
-	.el-drawer__body {
+	.mi-drawer__body {
 		display: flex;
 		justify-content: space-between;
 		flex-direction: column;
@@ -268,7 +284,7 @@ const tab = ref(0)
 						padding: 0 20px;
 						cursor: pointer;
 						&.active {
-							color: var(--el-color-warning);
+							color: var(--mi-color-warning);
 						}
 					}
 				}
@@ -319,7 +335,7 @@ const tab = ref(0)
 								width: 100%;
 								display: flex;
 							}
-							.el-checkbox__input {
+							.mi-checkbox__input {
 								align-items: center;
 								border-radius: 8px;
 								box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.08);
@@ -351,7 +367,7 @@ const tab = ref(0)
 									padding: 0 20px;
 								}
 							}
-							.el-checkbox__label {
+							.mi-checkbox__label {
 								flex: 1;
 								background-color: #fff;
 								background-color: var(--background-white);
@@ -457,10 +473,10 @@ const tab = ref(0)
 			margin: 0 calc(var(--content-padding) * -1);
 			width: 100%;
 			.highlight {
-				color: var(--el-color-warning);
+				color: var(--mi-color-warning);
 			}
 			svg {
-				color: var(--el-color-warning);
+				color: var(--mi-color-warning);
 				margin-inline-end: 6px;
 				--icon-width: var(--font-size);
 				--icon-height: var(--font-size);

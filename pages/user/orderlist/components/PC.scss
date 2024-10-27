@@ -4,13 +4,12 @@
     margin-right: 30px
 }
 
-.miv4 .order-list__nav,
-.miv4 .user-order-list-container_title {
+.miv4 .order-list__nav,.miv4 .user-order-list-container_title {
     margin-top: 0
 }
 
 .miv4 .order-list--no-order {
-    color: #b0b0b0 !important;
+    color: #b0b0b0!important;
     font-size: 14px;
     margin-top: 50px
 }
@@ -37,7 +36,7 @@
 .user-layout__container {
     display: flex;
     margin: 30px auto;
-    width: var(--app-body-width);
+    width: 1226px
 }
 
 .user-layout__breadcrumbs {
@@ -84,8 +83,7 @@
     padding: 8px 0
 }
 
-.column-group__list-item.active,
-.column-group__list-item:hover {
+.column-group__list-item.active,.column-group__list-item:hover {
     background: #eee;
     background: var(--button-select);
     color: #ff6700;
@@ -152,6 +150,7 @@
 
 .user-main {
     background-color: #fff;
+    background-color: var(--title-primary-variant-2);
     flex: 1 1;
     margin-left: 12px;
     padding: 50px
@@ -214,14 +213,13 @@
 }
 
 .miv4 .info-left {
-    flex: inherit !important;
+    flex: inherit!important;
     padding-left: 12px
 }
 
 .miv4 .order-item-goodslist.trade-in-list .information {
     -webkit-margin-start: 20px;
-    margin-inline-start: 20px
-}
+    margin-inline-start:20px}
 
 .miv4 .order-item-goodslist.trade-in-list .goods-list-gooods-info__information-sub {
     align-items: center
@@ -287,28 +285,23 @@
     text-indent: 2
 }
 
-.order-item--paying,
-.order-item--waiting {
+.order-item--paying,.order-item--waiting {
     border-left: 2px solid #ff6700
 }
 
-.order-item--paying .show-tag,
-.order-item--waiting .show-tag {
+.order-item--paying .show-tag,.order-item--waiting .show-tag {
     color: #ff6700
 }
 
-.order-item--paid,
-.order-item--ship {
+.order-item--paid,.order-item--ship {
     border-left: 2px solid #83c44e
 }
 
-.order-item--paid .show-tag,
-.order-item--ship .show-tag {
+.order-item--paid .show-tag,.order-item--ship .show-tag {
     color: #83c44e
 }
 
-.order-item--close,
-.order-item-delivered {
+.order-item--close,.order-item-delivered {
     border-left: 2px solid #e0e0e0
 }
 
@@ -603,14 +596,14 @@
 }
 
 .mi-modal.mi-modal--desktop .mi-modal__overlay {
-    z-index: 20 !important
+    z-index: 20!important
 }
 
 .mi-modal__content.split-payment-modal.split-payment-modal--desktop {
     display: flex;
     flex-flow: column nowrap;
     padding: 40px 0 0;
-    width: 640px !important
+    width: 640px!important
 }
 
 .mi-modal__content.split-payment-modal.split-payment-modal--desktop header {
@@ -621,8 +614,7 @@
     padding: 0 40px
 }
 
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop header .mi-modal__title,
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop header .mi-modal__title-wrap {
+.mi-modal__content.split-payment-modal.split-payment-modal--desktop header .mi-modal__title,.mi-modal__content.split-payment-modal.split-payment-modal--desktop header .mi-modal__title-wrap {
     height: unset;
     line-height: 1.25;
     margin: 0
@@ -640,9 +632,7 @@
     padding: 0 40px 40px
 }
 
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__link,
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__message,
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__subtitle {
+.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__link,.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__message,.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__subtitle {
     color: #898989;
     font-size: 16px;
     line-height: 20px;
@@ -715,8 +705,7 @@
     border-color: #ff4e4e
 }
 
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:focus:invalid,
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:not(:placeholder-shown):invalid {
+.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:focus:invalid,.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:not(:placeholder-shown):invalid {
     border-color: #ff4e4e
 }
 
@@ -725,8 +714,7 @@
     cursor: not-allowed
 }
 
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:disabled,
-.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:read-only {
+.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:disabled,.mi-modal__content.split-payment-modal.split-payment-modal--desktop .split-payment-modal__form .split-payment-modal__form-input input:read-only {
     background-color: #eee;
     cursor: not-allowed
 }
@@ -853,7 +841,7 @@
 }
 
 .alert-modal.alert-modal--desktop .alert-modal-common__overlay {
-    z-index: 20 !important
+    z-index: 20!important
 }
 
 .alert-modal.alert-modal--desktop .alert-modal__title {
@@ -924,8 +912,7 @@
     line-height: 30px
 }
 
-.order-view-cancel-dialog__content-dropdown,
-.order-view-cancel-dialog__content-textarea {
+.order-view-cancel-dialog__content-dropdown,.order-view-cancel-dialog__content-textarea {
     background: transparent;
     border: 1px solid #e0e0e0;
     box-sizing: border-box;
@@ -934,13 +921,10 @@
     outline: none;
     padding: 5px 16px;
     resize: vertical;
-    width: 100% !important
+    width: 100%!important
 }
 
-.order-view-cancel-dialog__content-dropdown i,
-.order-view-cancel-dialog__content-dropdown select,
-.order-view-cancel-dialog__content-textarea i,
-.order-view-cancel-dialog__content-textarea select {
+.order-view-cancel-dialog__content-dropdown i,.order-view-cancel-dialog__content-dropdown select,.order-view-cancel-dialog__content-textarea i,.order-view-cancel-dialog__content-textarea select {
     font-size: 16px
 }
 
@@ -1052,8 +1036,7 @@
     white-space: pre-line
 }
 
-.orderview-bank-check__content-input,
-.orderview-bank-check__content-select {
+.orderview-bank-check__content-input,.orderview-bank-check__content-select {
     background: transparent;
     border: 1px solid #e0e0e0;
     box-sizing: border-box;
@@ -1256,7 +1239,7 @@
 }
 
 .bank-list-container__item {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
     align-items: center;
     cursor: pointer;
     display: flex;

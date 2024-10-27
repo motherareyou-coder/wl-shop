@@ -7,6 +7,12 @@ export default defineNuxtPlugin((nuxtApp) => {
 		onRequest({ request, options, error }) {
 			if (!options.params)
 				options.params = {}
+			if (options.params) {
+				Object.keys(options.params).forEach((k) => {
+					if (options.params[k] === '' || options.params[k] === null)
+						delete options.params[k]
+				})
+			}
 			// options.params.apifoxApiId = apifoxApiId
 			// if (session.value?.token) {
 			// note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile

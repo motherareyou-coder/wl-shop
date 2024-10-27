@@ -1636,7 +1636,14 @@
     visibility: hidden;
 }
 
-.address-form .address-form__item-bang .mi-form-item__right .mi-form-item__input .mi-form-input {
+.address-form .address-form__item-bang .mi-form-item__content {
+    width: 100%;
+    >* {
+        width: 100%;
+    }
+}
+
+.address-form .address-form__item-bang .mi-form-item__content .mi-form-item__input .mi-form-input {
     background-color: #f3f3f3;
     background-color: var(--brand-grey-10);
 }
@@ -1704,7 +1711,7 @@
     border-color: #ff4e4e;
 }
 
-.address-form .address-form__item.address-form__item--group .mi-form-item__right .mi-form-item__input .mi-form-input {
+.address-form .address-form__item.address-form__item--group .mi-form-item__content .mi-form-item__input .mi-form-input {
     overflow: unset;
 }
 
@@ -2485,7 +2492,7 @@
     }
 }
 
-.mi-form .mi-form-item .mi-form-item__right {
+.mi-form .mi-form-item .mi-form-item__content {
     flex: 1 1;
     width: 100%;
 }

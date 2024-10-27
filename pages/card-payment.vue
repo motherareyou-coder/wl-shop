@@ -1,10 +1,11 @@
 <script setup>
 import './card-payment.scss'
 
-const { t } = useI18n()
+const route = useRoute()
+const orderId = route.query.orderId
 
 const orderinfo = ref({
-	order_id: '5241014713660078',
+	orderId: '5241014713660078',
 	order_status_info: {
 		apply_refund_info: '',
 		apply_refund_status: '',
@@ -270,6 +271,8 @@ const orderinfo = ref({
 	trade_in_weu_rebate: false,
 	show_invoice_apply_type: 0,
 })
+
+const data = ref({})
 </script>
 
 <template>
@@ -277,21 +280,21 @@ const orderinfo = ref({
 		<main class="card-container">
 			<div class="card-order-detail">
 				<h2 class="order-summary">
-					{{ t('Order summary') }}
+					{{ $t('Order summary') }}
 				</h2>
 				<table class="order-message">
 					<tbody>
 						<tr class="order-message__item">
 							<td class="title">
-								{{ t('Reference') }}:
+								{{ $t('Reference') }}:
 							</td>
 							<td class="info">
-								{{ orderinfo.order_id }}
+								{{ orderinfo.orderId }}
 							</td>
 						</tr>
 						<tr class="order-message__item">
 							<td class="title">
-								{{ t('Description') }}:
+								{{ $t('Description') }}:
 							</td>
 							<td class="info">
 								Xiaomi(uk)LTD order#5241014713660078
@@ -299,7 +302,7 @@ const orderinfo = ref({
 						</tr>
 						<tr class="order-message__item">
 							<td class="title">
-								{{ t('Amount(GBP)') }}:
+								{{ $t('Amount(GBP)') }}:
 							</td>
 							<td class="info">
 								{{ orderinfo.goods_amount_txt }}
@@ -314,12 +317,16 @@ const orderinfo = ref({
 						label-position="top"
 						class="adyen-checkout__card__form"
 					>
-						<el-form-item
-							label="Card number"
+						<div
 							class="adyen-checkout__field adyen-checkout__field--cardNumber"
 						>
-							<el-input placeholder="1234 5678 9012 3456" />
-						</el-form-item>
+							<el-form-item prop="" label="Card number">
+								<el-input
+									v-model="data.cardNumber"
+									placeholder="1234 5678 9012 3456"
+								/>
+							</el-form-item>
+						</div>
 						<div
 							class="adyen-checkout__card__exp-cvc adyen-checkout__field-wrapper"
 						>
@@ -337,17 +344,13 @@ const orderinfo = ref({
 							</el-form-item>
 						</div>
 					</el-form>
-					<button
-						class="app-button adyen-checkout__button adyen-checkout__button--pay"
-					>
-						<span class="adyen-checkout__button__content">
+					<button class="app-button">
+						<span class="flex items-center justify-center">
 							<img
-								class="adyen-checkout__button__icon"
 								src="https://checkoutshopper-live.adyen.com/checkoutshopper/images/components/lock.svg"
-								alt=""
-								aria-hidden="true"
 							>
-							<span class="adyen-checkout__button__text">Pay
+							<span class="ml-2">
+								{{ $t('Pay') }}
 							</span>
 						</span>
 					</button>
@@ -357,4 +360,15 @@ const orderinfo = ref({
 	</div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.mi-form {
+	:deep {
+		.mi-form-item__content {
+			width: 100%;
+			> * {
+				width: 100%;
+			}
+		}
+	}
+}
+</style>

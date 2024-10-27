@@ -3,8 +3,6 @@ import './index.scss'
 
 defineOptions({ name: 'AppFooter' })
 
-const { t } = useI18n()
-
 const form = ref({ email: '' })
 const rules = {
 	email: [{ type: 'email' }],
@@ -138,7 +136,7 @@ function submit() {
 					<div class="site-footer__aside">
 						<div class="site-footer__follow">
 							<h3 class="site-footer__title">
-								{{ t('Follow Us') }}
+								{{ $t('Follow Us') }}
 							</h3>
 							<ul class="site-footer__follow-list">
 								<li class="site-footer__follow-item">
@@ -198,14 +196,13 @@ function submit() {
 										placeholder="Enter email address"
 										value=""
 									>
-									<span class="site-footer__submit">
-										<ElIcon
+									<button
+										class="mi-btn--icon mi-btn--normal mi-btn--dark site-footer__submit"
+									>
+										<i
 											class="micon micon-forward submit__icon"
-											@click="submit"
-										>
-											<ElIconArrowRight />
-										</ElIcon>
-									</span>
+										></i>
+									</button>
 								</div>
 							</div>
 						</div>

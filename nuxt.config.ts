@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	devtools: { enabled: true },
-
+	ssr: process.env.NODE_ENV === 'production',
 	app: {
 		head: {
 			charset: 'utf-8',
@@ -14,9 +14,22 @@ export default defineNuxtConfig({
 		'@nuxtjs/i18n',
 		'@vueuse/nuxt',
 		'@pinia/nuxt',
+		'@nuxt/ui',
 		'@nuxt/icon',
 		'@element-plus/nuxt',
 	],
+	imports: {
+		presets: [
+			{
+				from: 'lodash-es',
+				imports: ['cloneDeep'],
+			},
+		],
+	},
+	// @nuxt/ui
+	colorMode: {
+		preference: 'light',
+	},
 
 	i18n: {
 		defaultLocale: 'zh',
@@ -60,7 +73,7 @@ export default defineNuxtConfig({
 		css: {
 			preprocessorOptions: {
 				scss: {
-					additionalData: `@use "@/assets/css/element.scss" as element;`,
+					additionalData: `@use "@/assets/css/element.scss" as *;`,
 				},
 			},
 		},
@@ -74,7 +87,9 @@ export default defineNuxtConfig({
 			},
 		},
 	},
-	// elementPlus: { /** Options */ }
+	// elementPlus: {
+	// 	namespace: 'mi',
+	// },
 	runtimeConfig: {
 		public: {
 			baseURL: '/api',

@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import './AppHeader.scss'
-import { cloneDeep } from 'lodash-es'
 import type { Category } from '~/types'
 
 defineOptions({ name: 'AppHeader' })
 
-const { locale } = useI18n()
-const localePath = useLocalePath()
 const appStore = useAppStore()
 const sideShow = ref(false)
 const searchShow = ref(false)
@@ -14,10 +11,11 @@ const searchShow = ref(false)
 const { data: categories } = await useAPI<Category[]>(
 	'product/category/list/top?apifoxApiId=211912811',
 )
+console.log(categories)
+
 watch(
 	categories,
 	(v) => {
-		appStore.categories = cloneDeep(v)
 		v?.forEach((c, i) =>
 			$api('product/spu/page?apifoxApiId=211495718', {
 				params: {
@@ -41,7 +39,7 @@ const showMobileMenu = computed(() => appStore.bodyWidth <= 1024)
 	<header class="site-header site-header--sticky">
 		<nav class="site-container site-header__navigation">
 			<div class="navigation__logo">
-				<nuxt-link class="logo__link" :to="localePath('/', locale)">
+				<nuxt-link class="logo__link" :to="$path('/')">
 					<Icon name="icon:shop" size="32px" class="logo__mi" />
 				</nuxt-link>
 			</div>
@@ -59,7 +57,7 @@ const showMobileMenu = computed(() => appStore.bodyWidth <= 1024)
 				<li class="navigation__item shortcut__item">
 					<nuxt-link
 						class="navigation__link"
-						:to="localePath('/cart', locale)"
+						:to="$path('/cart')"
 					>
 						<Icon name="icon:cart" style="margin-bottom: -2px" />
 					</nuxt-link>
@@ -67,7 +65,7 @@ const showMobileMenu = computed(() => appStore.bodyWidth <= 1024)
 				<li class="navigation__item shortcut__item">
 					<nuxt-link
 						class="navigation__link"
-						:to="localePath('/user', locale)"
+						:to="$path('/user')"
 					>
 						<Icon name="icon:user" />
 					</nuxt-link>

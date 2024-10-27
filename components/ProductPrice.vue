@@ -1,15 +1,16 @@
 <script setup>
 defineOptions({ name: 'ProductPrice' })
 
-const unit = ref('$')
+const unit = ref('£')
 const data = defineModel('data')
 </script>
 
 <template>
 	<strong class="price">
-		<small v-if="!isNaN(data)">{{ unit }}</small>
-		{{ data }}
-		<slot></slot>
+		<small v-if="data != void 0 && !isNaN(data)">{{ unit }}</small>
+		<slot>
+			{{ data }}
+		</slot>
 	</strong>
 </template>
 

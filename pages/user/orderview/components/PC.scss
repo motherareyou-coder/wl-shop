@@ -194,7 +194,7 @@
 .user-layout__container {
     display: flex;
     margin: 30px auto;
-    width: var(--app-body-width);
+    width: var(--max-width-1400);
 }
 
 .user-layout__breadcrumbs {
@@ -950,7 +950,8 @@
 }
 
 .package-detail .product-item .product-info-item {
-    padding: 30px 0
+    padding: 30px 0;
+    box-sizing: content-box;
 }
 
 .package-detail .product-item .product-info-item .product-info-item__energy {
@@ -2603,13 +2604,6 @@
     white-space: nowrap
 }
 
-.orderview-bank-check__content-select i.xiaomi {
-    color: #888;
-    flex-shrink: 0;
-    font-size: 14px;
-    margin-left: 24px
-}
-
 .orderview-bank-check__content-item {
     position: relative;
     width: 800px
@@ -2744,13 +2738,6 @@
 .search-input-component__inner-content-input::placeholder {
     color: #757575;
     color: var(--button-base)
-}
-
-.search-input-component__inner-content i.xiaomi {
-    color: #888;
-    color: var(--content-delivery-info);
-    flex-shrink: 0;
-    float: left
 }
 
 .search-input-component__inner-content .icon-close {

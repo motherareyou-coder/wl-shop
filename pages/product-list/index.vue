@@ -4,7 +4,6 @@ import PC from './components/PC.vue'
 import type { Category } from '~/types'
 import './index.scss'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const { data: categories } = await useAPI<Category[]>(
 	'product/category/list?apifoxApiId=217665537',
@@ -51,10 +50,10 @@ const params = computed(() => {
 })
 
 const fileds = [
-	{ label: t('Relevance'), value: 'Relevance' },
-	{ label: t('New'), value: 'new' },
-	{ label: t('Price'), value: 'price' },
-	{ label: t('Sales'), value: 'salesCount' },
+	{ label: $t('Relevance'), value: 'Relevance' },
+	{ label: $t('New'), value: 'new' },
+	{ label: $t('Price'), value: 'price' },
+	{ label: $t('Sales'), value: 'salesCount' },
 ]
 
 function setSort(t: string) {
@@ -93,12 +92,11 @@ function setSort(t: string) {
 							@click="setSort(f.value)"
 						>
 							{{ f.label }}
-							<ElIcon
+							<i
 								v-if="f.value === 'price'"
+								class="micon micon-arrow-up condition-list__icon"
 								:class="{ expand: sortAsc }"
-							>
-								<Icon name="icon:up" />
-							</ElIcon>
+							></i>
 						</li>
 						<li
 							v-if="i !== fileds.length - 1"
@@ -114,8 +112,7 @@ function setSort(t: string) {
 					</li>
 				</ul>
 			</div>
-			<Mobile v-if="appStore.isMobile" :params="params" />
-			<PC v-else :params="params" />
+			<component :is="appStore.isPC ? PC : Mobile" :params="params" />
 		</div>
 	</main>
 </template>
@@ -207,10 +204,10 @@ function setSort(t: string) {
 					display: inline-flex;
 					align-items: center;
 				}
-				&.category-filter .el-select {
+				&.category-filter .mi-select {
 					width: var(--category-filter-width) !important;
 				}
-				.el-icon {
+				.mi-icon {
 					margin-inline-start: 8px;
 					font-size: var(--filter-font-size);
 					display: inline-block;

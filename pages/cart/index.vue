@@ -1,382 +1,513 @@
 <script setup lang="ts">
-import Coupon from './components/Coupon.vue'
+import CouponDialog from './components/CouponDialog.vue'
+import QtyInput from './components/QtyInput.vue'
 import Recommends from './components/Recommends.vue'
+import { useCheckOut } from './utils'
+import type { CartItem, Coupon } from '~/types'
+
+import './index.scss'
 
 defineOptions({ name: 'Cart' })
 definePageMeta({ layout: 'cart' })
 
-const { t } = useI18n()
 useHead({
-	title: `${t('cart')} ${t('appTitle')}`,
+	title: `${$t('cart')} ${$t('appTitle')}`,
 	meta: [{ name: 'description', content: 'Cart' }],
 })
 
 const router = useRouter()
-function handleNext() {
-	router.push('/checkout')
+function handleSubmit() {
+	router.push($path('/checkout'))
 }
 
-const goods = ref([
-	{
-		id: 1,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi 14 Black 12 GB + 256 GB',
-		price: 849.99,
-		qty: 1,
-		src: 'https://www.mi.com/uk/product/xiaomi-14/?skupanel=1&gid=4223703657',
-	},
-	{
-		id: 2,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi 14 Black 12 GB + 256 GB',
-		price: 849.99,
-		qty: 1,
-		src: 'https://www.mi.com/uk/product/xiaomi-14/?skupanel=1&gid=4223703657',
-	},
-	{
-		id: 3,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi 14 Black 12 GB + 256 GB',
-		price: 849.99,
-		qty: 1,
-		src: 'https://www.mi.com/uk/product/xiaomi-14/?skupanel=1&gid=4223703657',
-	},
-	{
-		id: 4,
-		img: '/imgs/5.png',
-		desc: 'Xiaomi 14 Black 12 GB + 256 GB',
-		price: 849.99,
-		qty: 1,
-		src: 'https://www.mi.com/uk/product/xiaomi-14/?skupanel=1&gid=4223703657',
-	},
-])
-const drawerShow = ref(false)
+const loading = ref(false)
+provide('loading', loading)
+function warpLoading(p) {
+	if (p instanceof Promise) {
+		loading.value = true
+		p.finally(() => {
+			loading.value = false
+		})
+	}
+}
+
+const validList = ref<CartItem[]>([])
+const invalidList = ref<CartItem[]>([])
+function getCartList() {
+	warpLoading(
+		$api('trade/cart/list?apifoxApiId=218994931').then((res) => {
+			validList.value = res.validList as CartItem[]
+			invalidList.value = res.invalidList as CartItem[]
+			invalidList.value.forEach((d) => {
+				d.disabled = true
+			})
+			updateCheckAll()
+		}),
+	)
+}
+getCartList()
+
+const finalList = computed(() => [...validList.value, ...invalidList.value])
+
+const appStore = useAppStore()
+
+const couponShow = ref(false)
+const coupons = ref<Coupon[]>([])
+const coupon = ref<Coupon>()
+
+const productList = computed(
+	() => validList.value?.filter(d => d.selected) || [],
+)
+
+const { info, getInfo } = useCheckOut(productList, coupon)
+
+const open1 = ref(false)
+
+function handleAdd(g: CartItem) {
+	warpLoading(
+		$api('trade/cart/add?apifoxApiId=218995477', {
+			method: 'post',
+			body: { id: g.id },
+		}).then(getCartList),
+	)
+}
+
+function handleDelete(g: CartItem) {
+	ElMessageBox.confirm(
+		$t('Are you sure to remove this product from shopping cart?'),
+	).then(() =>
+		warpLoading(
+			$api('trade/cart/delete?apifoxApiId=218995484', {
+				method: 'delete',
+				body: { ids: [g.id] },
+			}).then(() => {
+				const index1 = validList.value.findIndex(d => d.id === g.id)
+				if (index1 !== -1) {
+					return validList.value.splice(
+						validList.value.findIndex(d => d.id === g.id),
+						1,
+					)
+				}
+				const index2 = invalidList.value.findIndex(d => d.id === g.id)
+				if (index2 !== -1) {
+					invalidList.value.splice(
+						invalidList.value.findIndex(d => d.id === g.id),
+						1,
+					)
+				}
+				updateCheckAll()
+			}),
+		),
+	)
+}
+
+function handleDeleteAll() {
+	ElMessageBox.confirm(
+		$t('Are you sure to remove this product from shopping cart?'),
+	).then(() =>
+		warpLoading(
+			$api('trade/cart/delete?apifoxApiId=218995484', {
+				method: 'delete',
+				body: {
+					ids: finalList.value
+						.filter(d => d.selected)
+						.map(d => d.id),
+				},
+			}).then(() => {
+				getCartList()
+			}),
+		),
+	)
+}
+
+function updateCount(g: CartItem, count: number) {
+	warpLoading(
+		$api('trade/cart/update-count?apifoxApiId=218995472', {
+			method: 'put',
+			body: { id: g.id, count },
+		}).then(() => {
+			g.count = count
+		}),
+	)
+}
+
+const checkAll = ref(false)
+function checkChange(g: CartItem, v: boolean) {
+	warpLoading(
+		$api('trade/cart/update-selected?apifoxApiId=218995467', {
+			method: 'put',
+			body: { ids: [g.id], selected: v },
+		})
+			.then(() => {
+				g.selected = v
+			})
+			.catch(() => {
+				g.selected = !v
+			})
+			.finally(updateCheckAll),
+	)
+}
+function updateCheckAll() {
+	checkAll.value
+		= validList.value.length > 0 && validList.value.every(d => d.selected)
+}
+function checkAllChange(selected: any) {
+	if (validList.value.length) {
+		warpLoading(
+			$api('trade/cart/update-selected?apifoxApiId=218995467', {
+				method: 'put',
+				body: {
+					ids: validList.value.map(d => d.id),
+					selected,
+				},
+			}).then(() => {
+				validList.value.forEach((d) => {
+					d.selected = selected
+				})
+			}),
+		)
+	}
+}
 </script>
 
 <template>
-	<main class="app-cart app-grid--vertical-100">
-		<article class="detail">
-			<header class="top">
-				<ElCheckbox>All</ElCheckbox>
-				<button>Delete</button>
-			</header>
-			<section class="group">
-				<div v-for="g in goods" :key="g.id" class="item">
-					<ElCheckbox />
-					<div>
-						<nuxt-link :to="g.src">
-							<img :src="g.img" alt="">
-						</nuxt-link>
-					</div>
-					<div class="info">
-						<div class="desc">
-							<nuxt-link :to="g.src">
-								{{ g.desc }}
-							</nuxt-link>
+	<el-form :disabled="loading">
+		<main class="site-cart">
+			<div class="site-cart__container">
+				<article class="site-cart__detail">
+					<header
+						class="site-cart__card site-cart__header cart-header"
+					>
+						<el-checkbox
+							v-model="checkAll"
+							class="cart-header__checkbox"
+							@change="checkAllChange"
+						>
+							{{ $t('All') }}
+						</el-checkbox>
+						<button
+							class="cart-header__delete"
+							@click="handleDeleteAll"
+						>
+							{{ $t('Delete') }}
+						</button>
+					</header>
+					<aside v-if="appStore.isMobile" class="cart-delivery">
+						<div class="cart-delivery__info">
+							<i class="cart-delivery__cart-icon">
+								<Icon />
+							</i>
+							<span class="cart-delivery__title">{{
+								$t('Free shipping')
+							}}</span>
 						</div>
-						<ProductPrice :data="g.price" />
-					</div>
-					<div class="qty">
-						<el-input-number v-model="g.qty" :min="1" />
-						<el-icon><ElIconDelete /></el-icon>
-					</div>
-				</div>
-			</section>
-		</article>
-		<article class="summary">
-			<main class="area">
-				<section>
-					<div class="total">
-						<h3>ToTal</h3>
-						<ProductPrice class="orange" :data="2386.99" />
-					</div>
-					<ul class="list">
-						<li>
-							<span>Subtotal</span>
-							<span>£2,386.99</span>
-						</li>
-						<li>
-							<span>Shipping fee</span>
-							<span class="orange">Free</span>
-						</li>
-						<li>
-							<div class="message">
-								Pay £99.46/mo. for 24 months at 0.0% interest.
-								<nuxt-link
-									to="#paypalCreditModal"
-									target="_blank"
-									class="orange"
-								>
-									Learn more
-								</nuxt-link>
-							</div>
-						</li>
-					</ul>
-					<footer>
-						<div class="coupon">
-							<div>
-								<Icon name="icon:coupon" />
-								<span class="title">Coupons</span>
-								<span class="highlight">
-									(Save up to £64.90)
-								</span>
-							</div>
-							<button @click="drawerShow = true">
-								<span> 4 optionals </span>
-								<el-icon>
-									<ElIconArrowRight />
-								</el-icon>
-							</button>
-						</div>
-						<div>
-							<button
-								class="app-button submit-button"
-								@click="handleNext"
+						<div class="cart-delivery__spacer"></div>
+						<button class="mi-btn--link cart-delivery__delete">
+							{{ $t('Delete') }}
+						</button>
+					</aside>
+					<section
+						v-for="g in finalList"
+						:key="g.id"
+						class="site-cart__card site-cart__group cart-group"
+					>
+						<article
+							class="site-cart__item cart-group__item cart-item"
+						>
+							<section
+								class="cart-item__grid cart-item__goods"
+								:class="{
+									'cart-item__goods--invalid': g.disabled,
+								}"
 							>
-								Checkout
-							</button>
-						</div>
-					</footer>
+								<div class="cart-item__checkbox">
+									<el-checkbox
+										v-model="g.selected"
+										@change="(v) => checkChange(g, v)"
+									/>
+								</div>
+								<div class="cart-item__gap"></div>
+								<div class="cart-item__image">
+									<nuxt-link :to="$path(`/product/${g.id}`)">
+										<app-image
+											class="cart-item__image-content"
+											:src="g.spu.picUrl"
+										/>
+									</nuxt-link>
+								</div>
+								<div class="cart-item__gap"></div>
+								<div class="cart-item__detail">
+									<div class="cart-item__product">
+										<nuxt-link
+											:to="$path(`/product/${g.id}`)"
+										>
+											<h3
+												class="cart-item__product-title"
+											>
+												{{ g.spu.name }}
+											</h3>
+										</nuxt-link>
+										<div
+											v-if="appStore.isPC"
+											class="cart-item__price"
+										>
+											<ProductPrice
+												:data="g.sku.price"
+												class="cart-item__price-expect"
+											/>
+										</div>
+									</div>
+									<div class="cart-item__action">
+										<div
+											v-if="appStore.isMobile"
+											class="cart-item__price"
+										>
+											<ProductPrice
+												:data="g.sku.price"
+												class="cart-item__price-expect"
+											/>
+										</div>
+										<div class="quantity-section">
+											<QtyInput
+												v-model="g.count"
+												:max="g.sku.stock"
+												class="quantity-section__content"
+												:disabled="g.disabled"
+												@change="
+													(v) => updateCount(g, v)
+												"
+											/>
+										</div>
+										<div class="action-section">
+											<button class="mi-btn--icon">
+												<el-icon
+													style="
+														color: var(
+															--brand-black-30
+														);
+													"
+													@click="handleDelete(g)"
+												>
+													<ElIconDelete />
+												</el-icon>
+											</button>
+										</div>
+									</div>
+								</div>
+							</section>
+						</article>
+					</section>
+				</article>
+				<article class="site-cart__summary">
+					<main class="site-cart__summary-area">
+						<section
+							class="site-cart__card site-cart__summary cart-summary"
+						>
+							<div class="cart-summary__total">
+								<h3>{{ $t('Total') }}</h3>
+								<ProductPrice
+									class="orange"
+									:data="info?.price.totalPrice"
+								/>
+							</div>
+							<ul class="cart-summary__list">
+								<li class="cart-summary__item">
+									<span>{{ $t('Subtotal') }}</span>
+									<ProductPrice
+										:data="info?.price.totalPrice"
+									/>
+								</li>
+								<li
+									v-if="info?.price.couponPrice"
+									class="cart-summary__item cart-summary__item--saved"
+									:class="{
+										'cart-summary__item--open': open1,
+									}"
+								>
+									<span>{{ $t('Saved') }}</span>
+									<span
+										class="cart-summary__item-fee cart-summary__item-fee--highlight notranslate"
+									>
+										-<ProductPrice
+											:data="info?.price.couponPrice"
+										/>
+										<button
+											class="mi-btn mi-btn--icon mi-btn--normal mi-btn--light cart-summary__item-more"
+										>
+											<el-icon
+												class="cart-summary__item-more-icon"
+												@click="open1 = !open1"
+											>
+												<ElIconArrowDown />
+											</el-icon>
+										</button>
+									</span>
+									<div class="cart-summary__box">
+										<ul class="cart-summary__detail">
+											<li class="cart-summary__item">
+												<span>{{ $t('Coupons') }}</span>
+												<span
+													class="cart-summary__item-fee notranslate"
+												>
+													-<ProductPrice
+														:data="
+															info?.price
+																.couponPrice
+														"
+													/>
+												</span>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li
+									class="cart-summary__item cart-summary__item--shipping"
+								>
+									<span class="cart-summary__item-title">
+										{{ $t('Shipping fee') }}
+									</span>
+									<span class="cart-summary__item-fee">
+										<ProductPrice
+											:data="info?.price.deliveryPrice"
+										/>
+									</span>
+								</li>
+								<!-- <li class="cart-summary__item">
+									<div class="paypal-message">
+										<p
+											class="paypal-message__paypal-credit paypal-message--left"
+										>
+											Pay £99.46/mo. for 24 months at 0.0%
+											interest.
+											<nuxt-link
+												to="#paypalCreditModal"
+												target="_blank"
+												class="orange"
+											>
+												{{ $t('Learn more') }}
+											</nuxt-link>
+										</p>
+									</div>
+								</li> -->
+							</ul>
+							<footer class="site-cart__footer cart-footer">
+								<section class="cart-footer__coupon-area">
+									<div class="cart-coupons__left">
+										<el-icon class="cart-coupons__icon">
+											<Icon name="icon:coupon" />
+										</el-icon>
+										<span class="cart-coupons__title">
+											{{ $t('Coupons') }}
+										</span>
+										<span
+											v-if="coupon"
+											class="cart-coupons__tip"
+										>
+											({{ $t('Selected') }})
+										</span>
+										<span
+											v-else-if="coupons.length"
+											class="cart-coupons__tip"
+										>
+											({{ $t('Save up to') }}
+											<ProductPrice
+												:data="
+													Math.max(
+														...coupons.map(
+															(d) =>
+																d.discountPrice,
+														),
+													)
+												"
+											>)
+											</ProductPrice></span>
+									</div>
+									<button
+										class="mi-btn mi-btn--link mi-btn--normal mi-btn--light mi-btn--arrow-pc mi-btn--arrow-m cart-coupons__btn cart-coupons__highlight"
+										@click="couponShow = true"
+									>
+										{{ coupons.length }}
+										{{ $t('optionals') }}
+										<el-icon class="micon micon-link-arrow">
+											<ElIconArrowRight />
+										</el-icon>
+									</button>
+								</section>
+								<section class="cart-footer__submit-area">
+									<el-button
+										class="mi-btn mi-btn--primary cart-footer__submit"
+										:disabled="!info?.price.totalPrice"
+										@click="handleSubmit"
+									>
+										{{ $t('Checkout') }}
+									</el-button>
+								</section>
+							</footer>
+						</section>
+						<CartService
+							class="site-cart__card site-cart__support-service"
+						/>
+					</main>
+				</article>
+				<Recommends
+					class="site-cart__recommend cart-recommend"
+					@add="handleAdd"
+				/>
+			</div>
+			<footer
+				v-if="appStore.isMobile"
+				class="site-cart__footer cart-footer cart-footer--page"
+			>
+				<section class="cart-footer__coupon-area">
+					<div class="cart-coupons__left">
+						<i class="cart-coupons__icon">
+							<Icon name="icon:coupon" />
+						</i>
+						<span class="cart-coupons__title">
+							{{ $t('Coupons') }}
+						</span>
+					</div>
+					<button
+						class="cart-coupons__btn flex align-center"
+						@click="couponShow = true"
+					>
+						{{ $t('View more') }}
+						<el-icon class="micon-link-arrow">
+							<ElIconArrowRight />
+						</el-icon>
+					</button>
 				</section>
-				<CartService />
-			</main>
-		</article>
-		<Recommends />
-	</main>
-	<Coupon v-model="drawerShow" />
+				<section class="cart-footer__submit-area">
+					<div class="cart-footer__total">
+						<el-checkbox
+							v-model="checkAll"
+							class="cart-footer__checkbox"
+							@change="checkAllChange"
+						/>
+						<div class="cart-footer__price">
+							<div class="cart-footer__price-total">
+								<div class="mi-price">
+									<span>{{ $t('Total') }}: </span>
+									<ProductPrice :data="totalPrice" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<el-button
+						class="mi-btn mi-btn--primary cart-footer__submit"
+						small
+						:disabled="!info?.price.totalPrice"
+						@click="handleSubmit"
+					>
+						{{ $t('Checkout') }}
+					</el-button>
+				</section>
+			</footer>
+		</main>
+		<CouponDialog
+			v-model:visible="couponShow"
+			v-model="coupon"
+			v-model:list="coupons"
+		/>
+	</el-form>
 </template>
-
-<style scoped lang="scss">
-.app-cart {
-	display: grid;
-	width: 100%;
-	--margin-vertical: 12px;
-	--margin-gap: 12px;
-	--border-radius: 12px;
-	--padding: 24px;
-	--action-icon: 24px;
-	--grid-images-area: 140px;
-	--image-width: 140px;
-	--image-height: 140px;
-	@media screen and (max-width: 720px) {
-		gap: var(--margin-gap);
-		grid-template-columns: 1fr;
-	}
-
-	@media screen and (min-width: 721px) and (max-width: 1024px) {
-		gap: 0 var(--margin-gap);
-		grid-template-columns: 1fr 284px;
-	}
-
-	@media screen and (min-width: 1025px) and (max-width: 1440px) {
-		gap: 0 var(--margin-gap);
-		grid-template-columns: 1fr 388px;
-	}
-
-	@media screen and (min-width: 1441px) and (max-width: 1920px) {
-		gap: 0 var(--margin-gap);
-		grid-template-columns: 1fr 518px;
-	}
-
-	@media screen and (min-width: 1921px) {
-		gap: 0 var(--margin-gap);
-		grid-template-columns: 1fr 518px;
-	}
-	.detail {
-		align-content: start;
-		display: grid;
-		gap: var(--margin-gap);
-		.top {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 12px var(--padding);
-			font-size: 14px;
-			background-color: var(--background-white);
-			border-radius: var(--border-radius);
-			box-sizing: border-box;
-			width: 100%;
-			button {
-				align-items: center;
-				border-radius: initial;
-				display: inline-flex;
-				line-height: unset;
-				padding: 0;
-				border: none;
-				cursor: pointer;
-				background-color: transparent;
-			}
-		}
-		.group {
-			align-content: start;
-			display: grid;
-			gap: var(--margin-gap);
-			.item {
-				background-color: var(--background-white);
-				border-radius: var(--border-radius);
-				box-sizing: border-box;
-				padding: var(--padding);
-				width: 100%;
-				display: grid;
-				grid-gap: 16px;
-				grid-auto-flow: column;
-				grid-template-columns: auto auto 1fr auto;
-				.el-checkbox {
-					align-self: center;
-				}
-				img {
-					object-fit: cover;
-					object-position: center;
-					width: var(--image-width);
-					height: var(--image-height);
-				}
-				.qty {
-					display: flex;
-					flex-direction: column;
-					align-items: end;
-					.el-input-number {
-						width: auto;
-						border: none;
-						--el-fill-color-light: transparent;
-						--el-border-color: transparent;
-						--el-border: none;
-						:deep {
-							.el-input__inner {
-								background: #f0f0f0 !important;
-								border-radius: 5px;
-								font-size: 14px;
-								width: 30px;
-								line-height: 30px;
-							}
-							.el-input__wrapper {
-								box-shadow: none !important;
-								padding-left: 32px;
-								padding-right: 32px;
-							}
-						}
-					}
-					.el-icon {
-						font-size: 20px;
-						color: #dbdbdb;
-						cursor: pointer;
-						margin-top: 12px;
-						&:hover {
-							color: var(--text-base);
-						}
-					}
-				}
-			}
-		}
-	}
-	.summary {
-		--summary-box-margin: 34px;
-		--footnote-font-size: 16px;
-		grid-row: span 2;
-		.area {
-			grid-gap: var(--margin-gap);
-			align-content: start;
-			display: grid;
-			gap: var(--margin-gap);
-			grid-template-columns: 1fr;
-			position: sticky;
-			top: calc(var(--margin-gap) + var(--header-height));
-		}
-		section {
-			background-color: var(--background-white);
-			border-radius: var(--border-radius);
-			box-sizing: border-box;
-			padding: var(--padding);
-			width: 100%;
-		}
-		.total {
-			font-size: 20px;
-			align-items: center;
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: space-between;
-			h3 {
-				font-weight: 500;
-				margin: 0;
-			}
-			strong {
-				font-size: 20px;
-				font-weight: 600;
-			}
-		}
-		.orange {
-			color: var(--text-primary);
-		}
-		.list {
-			font-size: 16px;
-			gap: 24px;
-			display: grid;
-			grid-template-columns: 1fr;
-			margin-top: var(--summary-box-margin);
-
-			li {
-				align-items: center;
-				display: flex;
-				flex-flow: row nowrap;
-				gap: 0 8px;
-				justify-content: space-between;
-				position: relative;
-			}
-		}
-		.coupon {
-			align-items: center;
-			background-color: var(--brand-orange-10, #fff0e5);
-			border: 1px solid var(--background-white, #fff);
-			border-radius: var(--border-radius);
-			box-sizing: border-box;
-			display: flex;
-			flex-flow: row nowrap;
-			font-size: var(--font-size);
-			justify-content: space-between;
-			--font-size: 14px;
-			--margin-gap: 8px;
-			padding: 10px 16px;
-			margin-top: 26px;
-			> div {
-				align-items: center;
-				display: flex;
-				flex-flow: row wrap;
-				justify-content: flex-start;
-				margin-inline-end: var(--margin-gap);
-				flex-wrap: nowrap;
-				white-space: nowrap;
-				font-size: 14px;
-				color: var(--text-base);
-				> * {
-					margin-inline-end: var(--margin-gap);
-				}
-				.svg-icon {
-					color: var(--text-primary);
-					font-size: 24px;
-				}
-				.highlight {
-					color: #8c8c8c;
-				}
-			}
-			button {
-				font-size: 12px;
-				white-space: nowrap;
-				border: none;
-				cursor: pointer;
-				background: transparent;
-				align-items: center;
-				border-radius: initial;
-				display: inline-flex;
-				color: #757575;
-				padding: 0;
-				span {
-					color: var(--el-color-warning);
-				}
-			}
-		}
-		.submit-button {
-			width: 100%;
-			margin-top: 12px;
-		}
-	}
-}
-</style>

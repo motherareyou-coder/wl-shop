@@ -1,17 +1,17 @@
 <script setup>
 const steps = [
 	{
-		label: 'ShoppingCart',
+		label: $t('ShoppingCart'),
 		path: '/cart',
 		value: 0,
 	},
 	{
-		label: 'Checkout',
+		label: $t('Checkout'),
 		path: '/checkout',
 		value: 1,
 	},
 	{
-		label: 'Review',
+		label: $t('Review'),
 		path: '/review',
 		value: 2,
 	},
@@ -19,8 +19,6 @@ const steps = [
 const route = useRoute()
 const activeStep = ref(0)
 watchEffect(() => {
-	console.log(route)
-
 	activeStep.value = steps.find(s => route.path.includes(s.path))?.value || 0
 })
 </script>

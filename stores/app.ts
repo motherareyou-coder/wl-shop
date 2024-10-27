@@ -4,7 +4,7 @@ import type { Category } from '~/types'
 export const useAppStore = defineStore('AppStore', {
 	state: () => {
 		return {
-			isPC: true,
+			isPC: false,
 			isMobile: false,
 			bodyWidth: 0,
 		}

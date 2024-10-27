@@ -7,8 +7,6 @@ const props = defineProps({
 	data: { type: Array as () => Category[] | null, default: () => [] },
 })
 const data = toRef(props, 'data')
-const { locale } = useI18n()
-const localePath = useLocalePath()
 
 const currentCat = ref()
 
@@ -56,10 +54,7 @@ watch(
 					</div>
 				</div>
 				<div class="site-slide-menu__content">
-					<nuxt-link
-						:to="localePath('/user', locale)"
-						class="content__user"
-					>
+					<nuxt-link :to="$path('/user')" class="content__user">
 						<div
 							class="content__user-info content__user-info--logged-in"
 						>
@@ -102,12 +97,7 @@ watch(
 											v-for="item in c.children"
 											:key="item.id"
 											class="header-product-item header-product-item-mobile"
-											:to="
-												localePath(
-													`/product/${item.id}`,
-													locale,
-												)
-											"
+											:to="$path(`/product/${item.id}`)"
 											@click="hide"
 										>
 											<app-image

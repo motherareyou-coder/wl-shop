@@ -1,0 +1,1603 @@
+.mi-btn,.mi-btn.mi-button{
+    --btn-padding: var(--btn-padding-vertical) var(--btn-padding-horizontal);
+    --btn-text-base: var(--text-base);
+    --btn-background-white: var(--background-white);
+    --btn-background-black: var(--background-black);
+    --btn-background-primary: var(--background-primary);
+    --btn-ellipsis-lines: 1;
+    --btn-ellipsis-direction: vertical;
+    --btn-background-color: transparent;
+    --link-text-decoration: underline;
+    background-color: var(--btn-background-color);
+    border: none;
+    border-radius: var(--btn-border-radius);
+    color: var(--btn-text-base);
+    cursor: pointer;
+    display: inline-block;
+    font-size: var(--btn-font-size);
+    padding: var(--btn-padding);
+    // height:auto !important;
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn {
+        --btn-padding-vertical:8px;
+        --btn-padding-horizontal: 20px;
+        --btn-font-size: 12px;
+        --btn-border-radius: 8px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn {
+        --btn-padding-vertical:10px;
+        --btn-padding-horizontal: 16px;
+        --btn-font-size: 1.5625vw;
+        --btn-border-radius: 8px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn {
+        --btn-padding-vertical:.8333333333vw;
+        --btn-padding-horizontal: 1.6666666667vw;
+        --btn-font-size: 16px;
+        --btn-border-radius: 8px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn {
+        --btn-padding-vertical:.625vw;
+        --btn-padding-horizontal: 2.0833333333vw;
+        --btn-font-size: 1.25vw;
+        --btn-border-radius: 12px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn {
+        --btn-padding-vertical:12px;
+        --btn-padding-horizontal: 40px;
+        --btn-font-size: 24px;
+        --btn-border-radius: 14px
+    }
+}
+
+.mi-btn .micon-link-arrow {
+    display: none
+}
+
+.mi-btn:focus {
+    outline: none
+}
+
+.mi-btn .mi-btn__text {
+    -webkit-box-orient: var(--btn-ellipsis-direction);
+    -webkit-line-clamp: var(--btn-ellipsis-lines);
+    display: box;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word
+}
+
+.mi-btn.mi-btn--default {
+    --btn-background-color: transparent;
+    border: 1px solid #191919;
+    border: 1px solid var(--border-secondary)
+}
+
+.mi-btn.mi-btn--default:hover {
+    --btn-text-base: #666;
+    border-color: #666
+}
+
+.mi-btn.mi-btn--default:focus-visible {
+    outline: 2px solid #f7f7f7;
+    outline: 2px solid var(--background-base);
+    outline-offset: 0
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--default.mi-btn--highlight-m {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+
+    .mi-btn.mi-btn--default.mi-btn--highlight-m:hover {
+        --btn-text-base: var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+
+    .mi-btn.mi-btn--default.mi-btn--highlight-m:focus-visible {
+        outline: 2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+.mi-btn.mi-btn--default.mi-btn--dark {
+    --btn-text-base: var(--text-reverse);
+    border-color: #fff;
+    border-color: var(--text-reverse)
+}
+
+.mi-btn.mi-btn--default.mi-btn--dark:hover {
+    --btn-text-base: #d0d0d0;
+    border-color: #d0d0d0
+}
+
+.mi-btn.mi-btn--default:focus-visible {
+    outline: 1px solid var(--btn-text-base);
+    outline-offset: -4px
+}
+
+.mi-btn.mi-btn--primary {
+    --btn-text-base: var(--text-reverse);
+    --btn-background-color: var(--btn-background-black);
+    border: 1px solid transparent
+}
+
+.mi-btn.mi-btn--primary:hover {
+    --btn-background-color: #444
+}
+
+.mi-btn.mi-btn--primary:focus-visible {
+    outline: 2px solid #f7f7f7;
+    outline: 2px solid var(--background-base);
+    outline-offset: -4px
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--primary.mi-btn--highlight-m {
+        --btn-background-color:var(--btn-background-primary)
+    }
+
+    .mi-btn.mi-btn--primary.mi-btn--highlight-m:hover {
+        --btn-background-color: #ff781a
+    }
+}
+
+.mi-btn.mi-btn--primary.mi-btn--dark {
+    --btn-text-base: var(--text-base);
+    --btn-background-color: var(--btn-background-white);
+    border: 1px solid transparent
+}
+
+.mi-btn.mi-btn--primary.mi-btn--dark:hover {
+    --btn-background-color: #e1e1e1
+}
+
+.mi-btn.mi-btn--link {
+    align-items: center;
+    border-radius: initial;
+    display: inline-flex;
+    font-size: var(--link-font-size);
+    line-height: unset;
+    padding: 0
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--link {
+        --link-font-size:12px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link {
+        --link-font-size:1.5625vw
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link {
+        --link-font-size:16px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link {
+        --link-font-size:1.25vw
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--link {
+        --link-font-size:24px
+    }
+}
+
+.mi-btn.mi-btn--link:hover .mi-btn__text {
+    -webkit-text-decoration: var(--link-text-decoration);
+    text-decoration: var(--link-text-decoration)
+}
+
+.mi-btn.mi-btn--link:focus-visible {
+    outline: 4px solid var(--outline-color);
+    outline-offset: 0
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--link.mi-btn--highlight-m {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+.mi-btn.mi-btn--link.mi-btn--dark {
+    --btn-text-base: #fff
+}
+
+.mi-btn.mi-btn--link.mi-btn--disabled {
+    border: none
+}
+
+.mi-btn.mi-btn--link.mi-btn--disabled:hover .mi-btn__text {
+    --link-text-decoration: none
+}
+
+.mi-btn.mi-btn--arrow-m .micon,.mi-btn.mi-btn--arrow-pc .micon {
+    font-size: inherit;
+    transform: scaleX(var(--cardinal-number))
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
+        display:inline-block
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
+        display:inline-block
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
+        display:inline-block
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
+        display:inline-block
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--arrow-m .micon-link-arrow {
+        display:inline-block
+    }
+}
+
+.mi-btn.mi-btn--icon {
+    --icon-background-color: transparent;
+    align-items: center;
+    background-color: var(--icon-background-color);
+    display: inline-flex;
+    justify-content: center;
+    padding: 0
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--icon {
+        --icon-font-size:24px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--icon {
+        --icon-font-size:20px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--icon {
+        --icon-font-size:2.2222222222vw
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--icon {
+        --icon-font-size:1.6666666667vw
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--icon {
+        --icon-font-size:32px
+    }
+}
+
+.mi-btn.mi-btn--icon:hover {
+    --btn-text-base: #444
+}
+
+.mi-btn.mi-btn--icon:focus-visible {
+    outline: 4px solid var(--outline-color);
+    outline-offset: 0!important
+}
+
+.mi-btn.mi-btn--icon .micon {
+    font-size: var(--icon-font-size)
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
+        --btn-text-base:#ff781a
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
+        --btn-text-base:#ff781a
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
+        --btn-text-base:#ff781a
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
+        --btn-text-base:#ff781a
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--icon.mi-btn--highlight-m {
+        --btn-text-base:var(--text-primary)
+    }
+
+    .mi-btn.mi-btn--icon.mi-btn--highlight-m:hover {
+        --btn-text-base: #ff781a
+    }
+
+    .mi-btn.mi-btn--icon.mi-btn--highlight-m:focus-visible {
+        outline-offset: -4px
+    }
+}
+
+.mi-btn.mi-btn--icon.mi-btn--dark {
+    --btn-text-base: var(--text-reverse);
+    border-color: #fff;
+    border-color: var(--text-reverse)
+}
+
+.mi-btn.mi-btn--icon.mi-btn--dark:hover {
+    --btn-text-base: #e1e1e1
+}
+
+.mi-btn.mi-btn--icon.mi-btn--disabled {
+    --btn-text-base: var(--text-secondary);
+    border: none
+}
+
+.mi-btn.mi-btn--icon.mi-btn--disabled:hover {
+    --btn-text-base: var(--text-secondary)
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--link-default {
+        --btn-background-color:transparent;
+        border: 1px solid #191919;
+        border: 1px solid var(--border-secondary)
+    }
+
+    .mi-btn.mi-btn--link-default:hover {
+        --btn-text-base: #666;
+        border-color: #666
+    }
+
+    .mi-btn.mi-btn--link-default:focus-visible {
+        outline: 2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: 0
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (max-width: 720px)and (max-width:720px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-m {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-m:hover {
+        --btn-text-base: var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-m:focus-visible {
+        outline: 2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--link-default.mi-btn--dark {
+        --btn-text-base:var(--text-reverse);
+        border-color: #fff;
+        border-color: var(--text-reverse)
+    }
+
+    .mi-btn.mi-btn--link-default.mi-btn--dark:hover {
+        --btn-text-base: #d0d0d0;
+        border-color: #d0d0d0
+    }
+
+    .mi-btn.mi-btn--link-default .micon-link-arrow {
+        display: none
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--link-default {
+        align-items:center;
+        border-radius: initial;
+        display: inline-flex;
+        font-size: var(--link-font-size);
+        line-height: unset;
+        padding: 0
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:720px) {
+    .mi-btn.mi-btn--link-default {
+        --link-font-size:12px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-default {
+        --link-font-size:1.5625vw
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-default {
+        --link-font-size:16px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-default {
+        --link-font-size:1.25vw
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-default {
+        --link-font-size:24px
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--link-default:hover .mi-btn__text {
+        -webkit-text-decoration:var(--link-text-decoration);
+        text-decoration: var(--link-text-decoration)
+    }
+
+    .mi-btn.mi-btn--link-default:focus-visible {
+        outline: 4px solid var(--outline-color);
+        outline-offset: 0
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:720px) {
+    .mi-btn.mi-btn--link-default.mi-btn--highlight-m {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--link-default.mi-btn--dark {
+        --btn-text-base:#fff
+    }
+
+    .mi-btn.mi-btn--link-default.mi-btn--disabled {
+        --btn-text-base: var(--text-secondary);
+        --btn-background-color: transparent;
+        border: none
+    }
+
+    .mi-btn.mi-btn--link-default.mi-btn--disabled:hover .mi-btn__text {
+        --link-text-decoration: none
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--default-link {
+        align-items:center;
+        border-radius: initial;
+        display: inline-flex;
+        font-size: var(--link-font-size);
+        line-height: unset;
+        padding: 0
+    }
+}
+
+@media screen and (max-width: 720px)and (max-width:720px) {
+    .mi-btn.mi-btn--default-link {
+        --link-font-size:12px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default-link {
+        --link-font-size:1.5625vw
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default-link {
+        --link-font-size:16px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default-link {
+        --link-font-size:1.25vw
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--default-link {
+        --link-font-size:24px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--default-link:hover .mi-btn__text {
+        -webkit-text-decoration:var(--link-text-decoration);
+        text-decoration: var(--link-text-decoration)
+    }
+
+    .mi-btn.mi-btn--default-link:focus-visible {
+        outline: 4px solid var(--outline-color);
+        outline-offset: 0
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (max-width:720px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-m {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--default-link.mi-btn--dark {
+        --btn-text-base:#fff
+    }
+
+    .mi-btn.mi-btn--default-link.mi-btn--disabled {
+        --btn-text-base: var(--text-secondary);
+        --btn-background-color: transparent;
+        border: none
+    }
+
+    .mi-btn.mi-btn--default-link.mi-btn--disabled:hover .mi-btn__text {
+        --link-text-decoration: none
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--default-link {
+        --btn-background-color:transparent;
+        border: 1px solid #191919;
+        border: 1px solid var(--border-secondary)
+    }
+
+    .mi-btn.mi-btn--default-link:hover {
+        --btn-text-base: #666;
+        border-color: #666
+    }
+
+    .mi-btn.mi-btn--default-link:focus-visible {
+        outline: 2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: 0
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
+        outline:2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:720px) {
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-m {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-primary);
+        border: 1px solid transparent
+    }
+
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-m:hover {
+        --btn-text-base: var(--text-reverse);
+        --btn-background-color: #ff781a;
+        border-color: transparent
+    }
+
+    .mi-btn.mi-btn--default-link.mi-btn--highlight-m:focus-visible {
+        outline: 2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--default-link.mi-btn--dark {
+        --btn-text-base:var(--text-reverse);
+        border-color: #fff;
+        border-color: var(--text-reverse)
+    }
+
+    .mi-btn.mi-btn--default-link.mi-btn--dark:hover {
+        --btn-text-base: #d0d0d0;
+        border-color: #d0d0d0
+    }
+
+    .mi-btn.mi-btn--default-link .micon-link-arrow {
+        display: none
+    }
+}
+
+.mi-btn.mi-btn--default-link:focus-visible {
+    outline: 1px solid var(--btn-text-base);
+    outline-offset: -4px
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--link-primary {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-black);
+        border: 1px solid transparent
+    }
+
+    .mi-btn.mi-btn--link-primary:hover {
+        --btn-background-color: #444
+    }
+
+    .mi-btn.mi-btn--link-primary:focus-visible {
+        outline: 2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (max-width: 720px)and (max-width:720px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-m {
+        --btn-background-color:var(--btn-background-primary)
+    }
+
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-m:hover {
+        --btn-background-color: #ff781a
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--dark {
+        --btn-text-base:var(--text-base);
+        --btn-background-color: var(--btn-background-white);
+        border: 1px solid transparent
+    }
+
+    .mi-btn.mi-btn--link-primary.mi-btn--dark:hover {
+        --btn-background-color: #e1e1e1
+    }
+
+    .mi-btn.mi-btn--link-primary .micon-link-arrow {
+        display: none
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--link-primary {
+        align-items:center;
+        border-radius: initial;
+        display: inline-flex;
+        font-size: var(--link-font-size);
+        line-height: unset;
+        padding: 0
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:720px) {
+    .mi-btn.mi-btn--link-primary {
+        --link-font-size:12px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-primary {
+        --link-font-size:1.5625vw
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-primary {
+        --link-font-size:16px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-primary {
+        --link-font-size:1.25vw
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-primary {
+        --link-font-size:24px
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--link-primary:hover .mi-btn__text {
+        -webkit-text-decoration:var(--link-text-decoration);
+        text-decoration: var(--link-text-decoration)
+    }
+
+    .mi-btn.mi-btn--link-primary:focus-visible {
+        outline: 4px solid var(--outline-color);
+        outline-offset: 0
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:720px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--highlight-m {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--link-primary.mi-btn--dark {
+        --btn-text-base:#fff
+    }
+
+    .mi-btn.mi-btn--link-primary.mi-btn--disabled {
+        --btn-text-base: var(--text-secondary);
+        --btn-background-color: transparent;
+        border: none
+    }
+
+    .mi-btn.mi-btn--link-primary.mi-btn--disabled:hover .mi-btn__text {
+        --link-text-decoration: none
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--primary-link {
+        align-items:center;
+        border-radius: initial;
+        display: inline-flex;
+        font-size: var(--link-font-size);
+        line-height: unset;
+        padding: 0
+    }
+}
+
+@media screen and (max-width: 720px)and (max-width:720px) {
+    .mi-btn.mi-btn--primary-link {
+        --link-font-size:12px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary-link {
+        --link-font-size:1.5625vw
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary-link {
+        --link-font-size:16px
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary-link {
+        --link-font-size:1.25vw
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--primary-link {
+        --link-font-size:24px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--primary-link:hover .mi-btn__text {
+        -webkit-text-decoration:var(--link-text-decoration);
+        text-decoration: var(--link-text-decoration)
+    }
+
+    .mi-btn.mi-btn--primary-link:focus-visible {
+        outline: 4px solid var(--outline-color);
+        outline-offset: 0
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (min-width:1921px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px)and (max-width:720px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-m {
+        --btn-text-base:var(--text-primary)
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--dark {
+        --btn-text-base:#fff
+    }
+
+    .mi-btn.mi-btn--primary-link.mi-btn--disabled {
+        --btn-text-base: var(--text-secondary);
+        --btn-background-color: transparent;
+        border: none
+    }
+
+    .mi-btn.mi-btn--primary-link.mi-btn--disabled:hover .mi-btn__text {
+        --link-text-decoration: none
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--primary-link {
+        --btn-text-base:var(--text-reverse);
+        --btn-background-color: var(--btn-background-black);
+        border: 1px solid transparent
+    }
+
+    .mi-btn.mi-btn--primary-link:hover {
+        --btn-background-color: #444
+    }
+
+    .mi-btn.mi-btn--primary-link:focus-visible {
+        outline: 2px solid #f7f7f7;
+        outline: 2px solid var(--background-base);
+        outline-offset: -4px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
+        --btn-background-color:var(--btn-background-primary)
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
+        --btn-background-color:#ff781a
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 721px)and (min-width:1921px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
+        outline-offset:-4px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:720px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-m {
+        --btn-background-color:var(--btn-background-primary)
+    }
+
+    .mi-btn.mi-btn--primary-link.mi-btn--highlight-m:hover {
+        --btn-background-color: #ff781a
+    }
+}
+
+@media screen and (min-width: 721px) {
+    .mi-btn.mi-btn--primary-link.mi-btn--dark {
+        --btn-text-base:var(--text-base);
+        --btn-background-color: var(--btn-background-white);
+        border: 1px solid transparent
+    }
+
+    .mi-btn.mi-btn--primary-link.mi-btn--dark:hover {
+        --btn-background-color: #e1e1e1
+    }
+
+    .mi-btn.mi-btn--primary-link .micon-link-arrow {
+        display: none
+    }
+}
+
+.mi-btn.mi-btn--disabled,.mi-btn:disabled {
+    --btn-text-base: var(--text-reverse);
+    --btn-background-color: var(--brand-grey-40);
+    border: 1px solid transparent;
+    cursor: not-allowed
+}
+
+.mi-btn.mi-btn--disabled:hover,.mi-btn:disabled:hover {
+    --btn-background-color: var(--brand-grey-40);
+    --btn-text-base: var(--text-reverse);
+    border-color: transparent
+}
+
+.mi-btn.mi-btn--disabled:focus-visible,.mi-btn:disabled:focus-visible {
+    outline: none!important
+}
+
+.mi-btn.mi-btn--highlight-m.mi-btn--disabled,.mi-btn.mi-btn--highlight-m.mi-btn--disabled:hover,.mi-btn.mi-btn--highlight-pc.mi-btn--disabled,.mi-btn.mi-btn--highlight-pc.mi-btn--disabled:hover {
+    --btn-background-color: var(--brand-grey-40);
+    --btn-text-base: var(--text-reverse)
+}
+
+.mi-btn.mi-btn--link.mi-btn--disabled,.mi-btn.mi-btn--link.mi-btn--disabled:hover {
+    --btn-background-color: transparent;
+    --btn-text-base: var(--text-secondary)
+}
+
+@media screen and (max-width: 720px) {
+    .mi-link__arrow.mi-link__arrow--pc-only {
+        display:none
+    }
+}
+
+.mi-link__arrow.mi-link__arrow--m-only {
+    display: none
+}
+
+@media screen and (max-width: 720px) {
+    .mi-link__arrow.mi-link__arrow--m-only {
+        display:block
+    }
+}

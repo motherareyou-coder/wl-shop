@@ -9,8 +9,7 @@ const props = defineProps({
 	data: { type: Array as () => Category[] | null, default: () => [] },
 })
 const data = toRef(props, 'data')
-const { locale } = useI18n()
-const localePath = useLocalePath()
+console.log(data)
 
 const height = ref('0')
 const hoverd = ref()
@@ -54,12 +53,12 @@ watch(
 			>
 				<nuxt-link
 					:to="
-						localePath(`/product-list?category=${item.id}`, locale)
+						$path(`/product-list?categoryId=${item.id}`)
 					"
 					class="navigation__link navigation__link--border"
 					@click="hide"
 				>
-					<span>{{ $t(item.name) }}</span>
+					<span>{{ item.name }}</span>
 				</nuxt-link>
 			</li>
 		</ul>

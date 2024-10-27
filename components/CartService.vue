@@ -89,42 +89,42 @@ defineOptions({ name: 'CartService' })
 	padding: var(--padding, 24px);
 	width: 100%;
 	box-sizing: border-box;
-	.el-collapse {
-		--el-collapse-border-color: transparent;
+	.mi-collapse {
+		--mi-collapse-border-color: transparent;
 	}
 
 	:deep {
-		.el-collapse-item__header {
+		.mi-collapse-item__header {
 			font-weight: 500;
 			margin: 0;
 		}
 
 		@media screen and (max-width: 720px) {
-			.el-collapse-item__header {
+			.mi-collapse-item__header {
 				font-size: 16px;
 			}
 		}
 
 		@media screen and (min-width: 721px) and (max-width: 1024px) {
-			.el-collapse-item__header {
+			.mi-collapse-item__header {
 				font-size: 16px;
 			}
 		}
 
 		@media screen and (min-width: 1025px) and (max-width: 1440px) {
-			.el-collapse-item__header {
+			.mi-collapse-item__header {
 				font-size: 18px;
 			}
 		}
 
 		@media screen and (min-width: 1441px) and (max-width: 1920px) {
-			.el-collapse-item__header {
+			.mi-collapse-item__header {
 				font-size: 24px;
 			}
 		}
 
 		@media screen and (min-width: 1921px) {
-			.el-collapse-item__header {
+			.mi-collapse-item__header {
 				font-size: 24px;
 			}
 		}

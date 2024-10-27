@@ -24,9 +24,11 @@ interface Bargin {
 	bargainMinPrice: number
 }
 
-const { t, locale } = useI18n()
-const localePath = useLocalePath()
-const { data } = await useAsyncData<Bargin[]>(() => $api('promotion/bargain-activity/page?apifoxApiId=212557777').then(res => res.list))
+const { data } = await useAsyncData<Bargin[]>(() =>
+	$api('promotion/bargain-activity/page?apifoxApiId=212557777').then(
+		res => res.list,
+	),
+)
 
 const finalData = computed(() => chunk(data.value, 3))
 
@@ -69,7 +71,10 @@ function prev() {
 				</el-icon>
 				<el-icon
 					class="exclusive-offers__header-arrow-right"
-					:class="{ 'swiper-button-disabled': realIndex >= finalData.length - 1 }"
+					:class="{
+						'swiper-button-disabled':
+							realIndex >= finalData.length - 1,
+					}"
 					@click="next"
 				>
 					<Icon name="icon:right" />
@@ -87,7 +92,7 @@ function prev() {
 				<nuxt-link
 					v-for="item in c"
 					:key="item.id"
-					:to="localePath(`/product/${item.id}`, locale)"
+					:to="$path(`/product/${item.id}`)"
 					class="exclusive-offers__item"
 				>
 					<div class="activity-customize">
@@ -110,7 +115,7 @@ function prev() {
 								<div
 									class="exclusive-offers-footer-bar__content-button"
 								>
-									{{ t('Learn More') }}
+									{{ $t('Learn More') }}
 								</div>
 							</div>
 						</div>

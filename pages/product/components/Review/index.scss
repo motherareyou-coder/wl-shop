@@ -1,0 +1,531 @@
+.review-container {
+    margin: 0 auto;
+}
+
+.review-tags {
+    background: #fff;
+    margin: 30px 0;
+    padding: 30px 48px
+}
+
+.review-tags .review-tag {
+    border: 1px solid #ddd;
+    color: #999;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 20px;
+    padding: 0 15px
+}
+
+.review-tags .review-tag.active {
+    border-color: #ff6700;
+    color: #ff6700
+}
+
+.review-tags.isLoading .review-tag {
+    cursor: no-drop
+}
+
+@media screen and (max-width: 720px) {
+    .review-container {
+        width: 100%;
+    }
+
+    .review-tags {
+        margin: 0;
+        padding: 20px;
+    }
+}
+
+.comment {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 33px
+}
+
+.comment-info {
+    border-right: 1px solid #eee;
+    color: #757575;
+    flex: 1;
+    margin: 40px 0 30px;
+    padding: 0 62px 0 48px
+}
+
+.comment-info-top {
+    display: flex;
+    justify-content: space-between
+}
+
+.comment dl {
+    margin: 0
+}
+
+.comment-goods,
+.comment-time {
+    color: #b0b0b0;
+    font-size: 14px
+}
+
+.comment-goods {
+    line-height: 20px
+}
+
+.comment-content {
+    color: #757575;
+    font-size: 16px;
+    line-height: 28px;
+    margin-top: 10px;
+    overflow: hidden;
+    word-break: break-word
+}
+
+.comment-content:hover {
+    color: #757575
+}
+
+.comment .readmore {
+    color: #ff6700;
+    cursor: pointer;
+    text-decoration: underline
+}
+
+.comment-multimedia {
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 30px;
+    position: relative
+}
+
+.comment-multimedia.hasBorder {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px
+}
+
+.comment-video {
+    background-color: #b6b6b6;
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+    position: relative
+}
+
+.comment-video,
+.comment-video video {
+    height: 90px;
+    width: 90px
+}
+
+.comment-video-playbtn {
+    background-image: url(//i01.appmifile.com/webfile/globalimg/review/play-icon1.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    height: 34px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 34px
+}
+
+.comment-image {
+    cursor: zoom-in;
+    display: inline-block;
+    height: 90px;
+    margin-right: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+    width: 90px
+}
+
+.comment-additional {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px;
+    padding-top: 20px
+}
+
+.comment-additional-time {
+    color: #b0b0b0;
+    float: right;
+    font-size: 14px
+}
+
+.comment-additional-content {
+    color: #757575;
+    font-size: 14px;
+    margin: 20px 0
+}
+
+.comment-middle {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px
+}
+
+.comment-middle .text {
+    font-size: 14px;
+    margin-right: 15px;
+    vertical-align: bottom
+}
+
+.comment-middle i {
+    color: #b0b0b0;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+    text-align: center;
+    width: 20px
+}
+
+.comment .social-share.comment-share-list.comment-share-list--desktop {
+    --social-icon-size: 20px;
+    display: inline-flex
+}
+
+.comment .social-share.comment-share-list.comment-share-list--desktop .comment-share-item i {
+    background-color: transparent;
+    color: #b0b0b0;
+    font-size: 18px;
+    padding: 0
+}
+
+.comment .social-share.comment-share-list.comment-share-list--desktop .comment-share-item span {
+    display: none
+}
+
+.comment-like {
+    color: #b0b0b0;
+    cursor: pointer;
+    font-size: 14px
+}
+
+.comment-like i {
+    font-size: 14px;
+    transform: rotateY(180deg)
+}
+
+.comment .active,
+.comment .active i {
+    color: #ff6700
+}
+
+.commenter-info {
+    padding: 0 55px 0 48px
+}
+
+.commenter-info-private {
+    border-bottom: 1px solid #e0e0e0;
+    height: 58px;
+    padding: 32px 0 22px 100px;
+    position: relative;
+    box-sizing: content-box;
+}
+
+.commenter-info-private .orange-border {
+    border-top: 1px solid #ff6700;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 60px
+}
+
+.commenter-info-image {
+    border-radius: 50%;
+    height: 63px;
+    left: 0;
+    position: absolute;
+    top: 30px;
+    width: 63px
+}
+
+.commenter-info-name {
+    color: #424242;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0
+}
+
+.commenter-info .commenter-review {
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    padding-bottom: 15px;
+    padding-top: 14px
+}
+
+.commenter-info .commenter-review-title {
+    color: #b0b0b0;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 22px;
+    width: 120px
+}
+
+.commenter-info .commenter-review-content {
+    color: #424242;
+    font-size: 14px;
+    line-height: 22px;
+    width: 135px
+}
+
+.commenter-info .commenter-review-content i {
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    color: #e0e0e0;
+    display: inline-block;
+    font-size: 14px;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 5px;
+    text-align: center;
+    transform: rotateY(180deg);
+    width: 25px
+}
+
+.user_review {
+    background-color: #fff;
+    overflow: hidden;
+    padding: .9375rem .9375rem 0;
+    position: relative
+}
+
+.user_review .read-more {
+    text-decoration: underline
+}
+
+.user_review--review_info {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .9375rem
+}
+
+.user_review--review_info--user_info {
+    display: flex
+}
+
+.user_review--review_info--user_avatar {
+    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem
+}
+
+.user_review--review_info--user_msg {
+    margin-left: .625rem
+}
+
+.user_review--review_info--user_nickname {
+    color: #424242;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.125rem
+}
+
+.user_review--review_info--submit_time {
+    color: #b0b0b0;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: .90625rem;
+    margin-top: .25rem
+}
+
+.user_review--review_info--stars {
+    display: flex;
+    margin: 0
+}
+
+.user_review--review_content {
+    color: #757575;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.3125rem
+}
+
+.user_review--review_content--link {
+    display: block;
+    margin-bottom: .9375rem;
+    text-decoration: none
+}
+
+.user_review--comment_media {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: .9375rem
+}
+
+.user_review--comment_media--item {
+    align-items: center;
+    border-radius: .3125rem 0 0 .3125rem;
+    display: flex;
+    height: 6.5625rem;
+    justify-content: center;
+    margin-right: .46875rem;
+    margin-top: .46875rem;
+    position: relative;
+    width: 6.5625rem
+}
+
+.user_review--comment_media--item:nth-child(-n+3) {
+    margin-top: 0
+}
+
+.user_review--comment_media--item:nth-child(3n) {
+    margin-right: 0
+}
+
+.user_review--comment_media--image,
+.user_review--comment_media--video {
+    display: block;
+    max-height: 100%;
+    max-width: 100%
+}
+
+.user_review--comment_media--videoplay {
+    height: 2.8125rem;
+    left: 1.875rem;
+    position: absolute;
+    top: 1.875rem;
+    width: 2.8125rem
+}
+
+.user_review--additional {
+    border-top: .03125rem solid #eee
+}
+
+.user_review--additional--comment_detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .46875rem;
+    margin-top: .9375rem
+}
+
+.user_review--additional--afterdays {
+    color: #424242;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.0625rem
+}
+
+.user_review--additional--addtime {
+    color: #b0b0b0;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: .90625rem
+}
+
+.user_review--additional--content {
+    color: #757575;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.3125rem
+}
+
+.user_review--additional--content--link {
+    display: block;
+    margin-bottom: .9375rem;
+    text-decoration: none
+}
+
+.user_review--additional--comment_media {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: .9375rem
+}
+
+.user_review--additional--comment_media--item {
+    align-items: center;
+    border-radius: .3125rem 0 0 .3125rem;
+    display: flex;
+    height: 6.5625rem;
+    justify-content: center;
+    margin-right: .46875rem;
+    margin-top: .46875rem;
+    position: relative;
+    width: 6.5625rem
+}
+
+.user_review--additional--comment_media--item:nth-child(-n+3) {
+    margin-top: 0
+}
+
+.user_review--additional--comment_media--item:nth-child(3n) {
+    margin-right: 0
+}
+
+.user_review--additional--comment_media--image,
+.user_review--additional--comment_media--video {
+    display: block;
+    max-height: 100%;
+    max-width: 100%
+}
+
+.user_review--additional--comment_media--videoplay {
+    height: 2.8125rem;
+    left: 1.875rem;
+    position: absolute;
+    top: 1.875rem;
+    width: 2.8125rem
+}
+
+.user_review--operation {
+    color: #b0b0b0;
+    display: flex;
+    font-size: .75rem;
+    font-weight: 400;
+    justify-content: space-between;
+    line-height: .90625rem;
+    margin-bottom: .9375rem
+}
+
+.user_review--operation--product_name {
+    padding-right: .9375rem
+}
+
+.user_review--operation--action {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0
+}
+
+.user_review--operation--thumb_up {
+    align-items: center;
+    display: flex;
+    margin-right: .53125rem
+}
+
+.user_review--operation--thumb_up.up {
+    color: #ff6700
+}
+
+.user_review--operation--icon_thumb_up {
+    font-size: .90625rem
+}
+
+.user_review--operation--up_num {
+    margin-left: .3125rem
+}
+
+.user_review--operation--reply {
+    display: flex;
+    margin-right: .5625rem
+}
+
+.user_review--operation--icon_reply {
+    font-size: .90625rem
+}
+
+.user_review--operation--reply_num {
+    margin-left: .3125rem
+}
+
+.user_review--operation--icon_share {
+    font-size: .90625rem
+}
