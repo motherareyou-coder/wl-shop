@@ -41,9 +41,9 @@ function addToCart(r) {
 								<ProductPrice :data="r.price" />
 							</div>
 						</div>
-						<button class="cart-recommend__cart" @click="addToCart(r)">
+						<i class="cart-recommend__cart" @click="addToCart(r)">
 							<Icon name="icon:cart" />
-						</button>
+						</i>
 					</div>
 				</div>
 			</li>

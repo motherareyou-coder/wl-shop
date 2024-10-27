@@ -29,9 +29,7 @@ const data = computed(() => props.data)
 				<section class="expressInfo">
 					<h2
 						class="deliver-status-title"
-						:class="[
-							`deliver-status-title--${data.status}`,
-						]"
+						:class="[`deliver-status-title--${data.status}`]"
 					>
 						{{ props.statusText }}
 					</h2>
@@ -59,7 +57,11 @@ const data = computed(() => props.data)
 												class="product-item--image product-info-item"
 											>
 												<nuxt-link
-													:to="$path(`/product/${g.id}`)"
+													:to="
+														$path(
+															`/product/${g.id}`,
+														)
+													"
 													target="blank"
 												>
 													<app-image
@@ -74,7 +76,11 @@ const data = computed(() => props.data)
 													class="product-item--name__wrap"
 												>
 													<nuxt-link
-														:to="$path(`/product/${g.id}`)"
+														:to="
+															$path(
+																`/product/${g.id}`,
+															)
+														"
 													>
 														<span
 															class="product-item__product-name"
@@ -127,12 +133,17 @@ const data = computed(() => props.data)
 				<section class="order-total-container">
 					<ul class="order-price">
 						<li>
-							<ProductPrice :data="data.totalPrice" />
+							<span>
+								<ProductPrice :data="data.totalPrice" />
+							</span>
 							<span>{{ $t('Subtotal') }}: </span>
 						</li>
 						<li>
-							<ProductPrice :data="data.deliveryPrice" />
-							<span class="shipping-help">{{ $t('Shipping') }}: </span>
+							<span>
+								<ProductPrice :data="data.deliveryPrice" />
+							</span>
+							<span class="shipping-help">{{ $t('Shipping') }}:
+							</span>
 						</li>
 						<li>
 							<span>
@@ -142,8 +153,14 @@ const data = computed(() => props.data)
 							<span>{{ $t('Promotion') }}: </span>
 						</li>
 						<li>
-							<ProductPrice class="order-total-count" :data="data.payPrice" />
-							<span class="total__label">{{ $t('Total') }}: </span>
+							<span>
+								<ProductPrice
+									class="order-total-count"
+									:data="data.payPrice"
+								/>
+							</span>
+							<span class="total__label">{{ $t('Total') }}:
+							</span>
 						</li>
 					</ul>
 				</section>

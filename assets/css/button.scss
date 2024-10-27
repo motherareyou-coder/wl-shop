@@ -1,4 +1,4 @@
-.mi-btn,.mi-btn.mi-button{
+.mi-btn{
     --btn-padding: var(--btn-padding-vertical) var(--btn-padding-horizontal);
     --btn-text-base: var(--text-base);
     --btn-background-white: var(--background-white);
@@ -16,6 +16,26 @@
     display: inline-block;
     font-size: var(--btn-font-size);
     padding: var(--btn-padding);
+    // height:auto !important;
+}
+.mi-btn.mi-button{
+    --btn-padding: var(--btn-padding-vertical) var(--btn-padding-horizontal);
+    --btn-text-base: var(--text-base);
+    --btn-background-white: var(--background-white);
+    --btn-background-black: var(--background-black);
+    --btn-background-primary: var(--background-primary);
+    --btn-ellipsis-lines: 1;
+    --btn-ellipsis-direction: vertical;
+    --btn-background-color: transparent;
+    --link-text-decoration: underline;
+    background-color: var(--btn-background-color) !important;
+    border: none !important;
+    border-radius: var(--btn-border-radius) !important;
+    color: var(--btn-text-base) !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+    font-size: var(--btn-font-size) !important;
+    padding: var(--btn-padding) !important;
     // height:auto !important;
 }
 

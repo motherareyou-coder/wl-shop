@@ -197,9 +197,9 @@ function checkAllChange(selected: any) {
 							<i class="cart-delivery__cart-icon">
 								<Icon />
 							</i>
-							<span class="cart-delivery__title">{{
-								$t('Free shipping')
-							}}</span>
+							<span class="cart-delivery__title">
+								{{ $t('Free shipping') }}
+							</span>
 						</div>
 						<div class="cart-delivery__spacer"></div>
 						<button class="mi-btn--link cart-delivery__delete">
@@ -331,16 +331,13 @@ function checkAllChange(selected: any) {
 										-<ProductPrice
 											:data="info?.price.couponPrice"
 										/>
-										<button
-											class="mi-btn mi-btn--icon mi-btn--normal mi-btn--light cart-summary__item-more"
-										>
-											<el-icon
-												class="cart-summary__item-more-icon"
+										<div class="inline-block cursor-pointer cart-summary__item-more">
+											<i
+												class="micon micon-down cart-summary__item-more-icon"
 												@click="open1 = !open1"
 											>
-												<ElIconArrowDown />
-											</el-icon>
-										</button>
+											</i>
+										</div>
 									</span>
 									<div class="cart-summary__box">
 										<ul class="cart-summary__detail">
@@ -419,19 +416,17 @@ function checkAllChange(selected: any) {
 														),
 													)
 												"
-											>)
-											</ProductPrice></span>
+											/>)
+										</span>
 									</div>
-									<button
-										class="mi-btn mi-btn--link mi-btn--normal mi-btn--light mi-btn--arrow-pc mi-btn--arrow-m cart-coupons__btn cart-coupons__highlight"
+									<span
+										class="cursor-pointer inline-block cart-coupons__btn cart-coupons__highlight"
 										@click="couponShow = true"
 									>
 										{{ coupons.length }}
 										{{ $t('optionals') }}
-										<el-icon class="micon micon-link-arrow">
-											<ElIconArrowRight />
-										</el-icon>
-									</button>
+										<i class="micon micon-link-arrow"></i>
+									</span>
 								</section>
 								<section class="cart-footer__submit-area">
 									<el-button
@@ -472,9 +467,7 @@ function checkAllChange(selected: any) {
 						@click="couponShow = true"
 					>
 						{{ $t('View more') }}
-						<el-icon class="micon-link-arrow">
-							<ElIconArrowRight />
-						</el-icon>
+						<i class="micon micon-link-arrow"></i>
 					</button>
 				</section>
 				<section class="cart-footer__submit-area">
@@ -488,7 +481,7 @@ function checkAllChange(selected: any) {
 							<div class="cart-footer__price-total">
 								<div class="mi-price">
 									<span>{{ $t('Total') }}: </span>
-									<ProductPrice :data="totalPrice" />
+									<ProductPrice :data="info?.price.totalPrice" />
 								</div>
 							</div>
 						</div>
