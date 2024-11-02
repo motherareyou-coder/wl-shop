@@ -1,3 +1,11 @@
+.translate {
+    transform: translateY(-200%)
+}
+
+.transition {
+    transition: all .9s ease
+}
+
 .product_v4 .xm-navbar {
     background: #fff;
     min-width: auto;
@@ -10,7 +18,7 @@
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 999
+    z-index: 20;
 }
 
 .xm-navbar__container {
@@ -7184,39 +7192,11 @@ body.mi-dialog-v4__Body--overflow-hidden {
 }
 
 .quantity-section-v4__content.quantity-section-v4__content--desktop {
-    border: 1px solid #dbdbdb;
+    // border: 1px solid #dbdbdb;
     box-sizing: border-box;
     display: inline-flex;
     max-width: 122px;
     overflow: hidden
-}
-
-@media screen and (min-width: 721px)and (max-width:1024px) {
-    .quantity-section-v4__content.quantity-section-v4__content--desktop {
-        border-radius: .9722222222vw;
-        height: 2.2222222222vw
-    }
-}
-
-@media screen and (min-width: 1025px)and (max-width:1440px) {
-    .quantity-section-v4__content.quantity-section-v4__content--desktop {
-        border-radius: .9722222222vw;
-        height: 2.2222222222vw
-    }
-}
-
-@media screen and (min-width: 1441px)and (max-width:1920px) {
-    .quantity-section-v4__content.quantity-section-v4__content--desktop {
-        border-radius: .546875vw;
-        height: 1.5625vw
-    }
-}
-
-@media screen and (min-width: 1921px) {
-    .quantity-section-v4__content.quantity-section-v4__content--desktop {
-        border-radius: .546875vw;
-        height: 1.5625vw
-    }
 }
 
 .quantity-section-v4__content.quantity-section-v4__content--desktop .quantity-section-v4__button {
@@ -7239,6 +7219,7 @@ body.mi-dialog-v4__Body--overflow-hidden {
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .quantity-section-v4__content.quantity-section-v4__content--desktop .quantity-section-v4__button {
+        --mi-input-border-radius: .9722222222vw;
         height: 2.2222222222vw;
         line-height: 2.2222222222vw;
         width: 2.2222222222vw
@@ -7247,6 +7228,7 @@ body.mi-dialog-v4__Body--overflow-hidden {
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .quantity-section-v4__content.quantity-section-v4__content--desktop .quantity-section-v4__button {
+        --mi-input-border-radius: .9722222222vw;
         height: 2.2222222222vw;
         line-height: 2.2222222222vw;
         width: 2.2222222222vw
@@ -7255,6 +7237,7 @@ body.mi-dialog-v4__Body--overflow-hidden {
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .quantity-section-v4__content.quantity-section-v4__content--desktop .quantity-section-v4__button {
+        --mi-input-border-radius: .546875vw;
         height: 1.5625vw;
         line-height: 1.5625vw;
         width: 1.5625vw
@@ -7263,6 +7246,7 @@ body.mi-dialog-v4__Body--overflow-hidden {
 
 @media screen and (min-width: 1921px) {
     .quantity-section-v4__content.quantity-section-v4__content--desktop .quantity-section-v4__button {
+        --mi-input-border-radius: .546875vw;
         height: 1.5625vw;
         line-height: 1.5625vw;
         width: 1.5625vw

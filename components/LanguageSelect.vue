@@ -8,16 +8,16 @@ const items = [
 </script>
 
 <template>
-	<ElDropdown :popper="{ placement: 'bottom-start' }">
+	<el-dropdown :popper="{ placement: 'bottom-start' }" :hide-on-click="true">
 		<Icon name="icon:language" style="outline: none" />
 		<template #dropdown>
-			<ElDropdownMenu>
-				<ElDropdownItem v-for="o in items" :key="o.value">
-					<SwitchLocalePathLink :locale="o.value">
+			<el-dropdown-menu>
+				<SwitchLocalePathLink v-for="o in items" :key="o.value" :locale="o.value" style="width:100%">
+					<el-dropdown-item>
 						{{ o.label }}
-					</SwitchLocalePathLink>
-				</ElDropdownItem>
-			</ElDropdownMenu>
+					</el-dropdown-item>
+				</SwitchLocalePathLink>
+			</el-dropdown-menu>
 		</template>
-	</ElDropdown>
+	</el-dropdown>
 </template>

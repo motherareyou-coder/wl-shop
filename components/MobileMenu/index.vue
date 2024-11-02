@@ -36,9 +36,10 @@ watch(
 		<div class="site-slide-menu__wrapper">
 			<div class="site-slide-menu__card">
 				<div
-					class="site-slide-menu__header site-slide-menu__header--verbose"
+					class="site-slide-menu__header "
+					:class="{ 'site-slide-menu__header--verbose': !!currentCat }"
 				>
-					<div class="header__content">
+					<div class="header__content text-2xl">
 						<div class="header__back" @click="currentCat = null">
 							<el-icon><ElIconArrowLeft /></el-icon>
 							<span class="back__content">
@@ -46,7 +47,7 @@ watch(
 							</span>
 						</div>
 						<el-icon
-							class="mi-btn mi-btn--icon mi-btn--light header__close"
+							class="mi-btn mi-btn--icon mi-btn--light header__close "
 							@click="hide"
 						>
 							<ElIconClose />
@@ -54,18 +55,21 @@ watch(
 					</div>
 				</div>
 				<div class="site-slide-menu__content">
-					<nuxt-link :to="$path('/user')" class="content__user">
+					<nuxt-link
+						:to="$path('/user')" class="content__user"
+						@click.stop="hide"
+					>
 						<div
 							class="content__user-info content__user-info--logged-in"
 						>
 							<div class="user-info__avatar-wrapper">
-								<app-image
+								<img
 									class="user-info__avatar"
-									:src="userStore.avatar"
-								/>
+									:src="userStore.avatar || '/avatar.png'"
+								>
 							</div>
 							<span class="user-info__nickname">
-								{{ useState.name }}
+								{{ userStore.nickname || $t('Login') }}
 							</span>
 						</div>
 						<el-icon><ElIconArrowRight /></el-icon>
@@ -78,7 +82,12 @@ watch(
 								class="nav__link"
 								@click="currentCat = m"
 							>
-								{{ m.name }}
+								<nuxt-link
+									:to="$path(`/product-list?categoryId=${m.id}`)"
+									@click.stop="hide"
+								>
+									{{ m.name }}
+								</nuxt-link>
 								<el-icon><ElIconArrowRight /></el-icon>
 							</li>
 						</ul>

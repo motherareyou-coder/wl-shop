@@ -14,10 +14,7 @@ const appStore = useAppStore()
 			{{ productList.length > 1 ? $t('items') : $t('item') }}
 		</h2>
 		<div v-if="productList?.length > 2" class="product-overview__action">
-			<el-button
-				text
-				@click="drawerShow = true"
-			>
+			<el-button text @click="drawerShow = true">
 				<u class="text-underline">{{ $t('View shopping cart') }}</u>
 			</el-button>
 		</div>
@@ -32,7 +29,7 @@ const appStore = useAppStore()
 				:key="d.id"
 				class="product-info__thumb-item"
 			>
-				<app-image :src="d.sku.picUrl || d.spu.picUrl" />
+				<app-image :src="d.sku?.picUrl || d.spu?.picUrl || d.picUrl" />
 			</li>
 		</ul>
 		<ul v-else class="product-info__list">
@@ -42,7 +39,7 @@ const appStore = useAppStore()
 					<div class="product-other">
 						<ul class="product-params">
 							<li class="product-params__name">
-								{{ d.spu.name }}
+								{{ d.spu?.name || d.spuName }}
 							</li>
 							<li class="product-params__count">
 								{{ $t('Quantity') }} : {{ d.count }}
@@ -52,7 +49,7 @@ const appStore = useAppStore()
 						</ul>
 						<ul class="product-price">
 							<div class="mi-price">
-								<product-price :data="d.sku.price" />
+								<product-price :data="d.sku?.price || d.price" />
 							</div>
 						</ul>
 					</div>
@@ -80,7 +77,7 @@ const appStore = useAppStore()
 						<div class="product-other">
 							<ul class="product-params">
 								<li class="product-params__name">
-									{{ d.spu.name }}
+									{{ d.spu?.name || d.spuName }}
 								</li>
 								<li class="product-params__count">
 									{{ $t('Quantity') }} : {{ d.count }}
@@ -90,7 +87,7 @@ const appStore = useAppStore()
 							</ul>
 							<ul class="product-price">
 								<div class="mi-price">
-									<product-price :data="d.sku.price" />
+									<product-price :data="d.sku?.price || d.price" />
 								</div>
 							</ul>
 						</div>

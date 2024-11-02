@@ -1,27 +1,22 @@
-<script setup>
+<script setup lang="ts">
 import BgImg from '@/assets/imgs/user-center-bg.jpg'
 import './index.scss'
 
-const user = ref({
-	nickname: '8268540278',
-	headimgurl:
-		'https://i02.appmifile.com/815_operatorx_operatorx_opx/24/11/2021/3ca208cec434b2f128fb21b7cf9cb5e6.png',
-	sex: '',
-	birthdayMonth: 0,
-	birthdayDay: 0,
-	uid: 8268540278,
-	phone: '',
-	email: 'linchuo****@outlook.com',
-	password: '',
-	showBirthday: true,
-	security: 2,
-	fbid: '',
-	greeting_message: 'Good Morning',
-	is_agreed_tc: false,
-	isLimitBirthdayUpdateFrequency: true,
-	nextEditBirthdayTimestamp: 31507200,
-	nextEditBirthdayTime: '31/12/1970 17:00:00',
-	isAllowUpdateBirthInfo: true,
+const appStore = useAppStore()
+const userStore = useUserStore()
+
+const user = userStore.$state // await userStore.getInfo()
+
+const formState = reactive({
+	visible: false,
+	loading: false,
+	file: null,
+	data: {
+		nickname: user.nickname,
+		avatar: user.avatar,
+		sex: user.sex,
+		birthday: user.birthday,
+	},
 })
 
 const linkList = [
@@ -62,7 +57,7 @@ const linkList = [
 		tips: 'Shopping to earn and redeem for coupons',
 		icon: 'https://i05.appmifile.com/143_operatorx_operatorx_opx/06/06/2024/d1a5a49897e12ddf746db4461c696812.png',
 		icon_desc: '',
-		url: 'https://mobile.mi.com/uk/user/mi-club',
+		// url: 'https://mobile.mi.com/uk/user/mi-club',
 		login: true,
 		pc_icon:
 			'https://i05.appmifile.com/143_operatorx_operatorx_opx/06/06/2024/d1a5a49897e12ddf746db4461c696812.png',
@@ -107,7 +102,7 @@ const linkList = [
 		tips: 'Signing in and security or reset password',
 		icon: 'https://i05.appmifile.com/681_operatorx_operatorx_opx/06/06/2024/ebccf17dd62553652278d76353868aa4.png',
 		icon_desc: '',
-		url: 'https://account.xiaomi.com/fe/service/account?bizFlag=mi_i18n_global',
+		// url: 'https://account.xiaomi.com/fe/service/account?bizFlag=mi_i18n_global',
 		login: true,
 		pc_icon:
 			'https://i05.appmifile.com/681_operatorx_operatorx_opx/06/06/2024/ebccf17dd62553652278d76353868aa4.png',
@@ -147,7 +142,48 @@ const linkList = [
 	},
 ]
 
-const appStore = useAppStore()
+function handleEdit() {
+	formState.file = null
+	formState.data = {
+		nickname: user.nickname,
+		avatar: user.avatar,
+		sex: user.sex,
+		birthday: user.birthday,
+	}
+	formState.visible = true
+}
+
+const uploadRef = ref()
+function handleChangeAvatar(p) {
+	const form = new FormData()
+	form.append('file', p.file)
+	return $api('infra/file/upload?apifoxApiId=228906663', {
+		method: 'post',
+		body: form,
+	}).then((res) => {
+		formState.data.avatar = res
+		uploadRef.value?.clearFiles()
+	})
+}
+function handleSubmit() {
+	formState.loading = true
+	$api('member/user/update?apifoxApiId=221160017', {
+		mdthod: 'put',
+		body: formState.data,
+	}).finally(() => {
+		formState.loading = false
+	})
+}
+
+const router = useRouter()
+function logout() {
+	$api('member/auth/logout?apifoxApiId=221136607', { method: 'post' }).then(
+		() => {
+			userStore.logout()
+			router.replace($path('/'))
+		},
+	)
+}
 </script>
 
 <template>
@@ -162,20 +198,34 @@ const appStore = useAppStore()
 						<section class="account-avatar-wrapper">
 							<app-image
 								class="account-avatar"
-								:src="user.headimgurl"
+								:src="user.avatar"
 							/>
 						</section>
 						<div class="info-box">
 							<ul class="info-box__list">
 								<li class="info-box__item greetings">
-									{{ user.greeting_message }},
 									{{ user.nickname }}
 								</li>
-								<li class="info-box__item email">
-									{{ user.email }}
+								<li
+									class="info-box__item email"
+								>
+									<span class="email-content">
+										<!-- {{ $t('Email') }}: {{ user.email }} -->
+									</span>
+									<el-icon
+										v-if="appStore.isMobile"
+										class="icon-forward"
+										@click="handleEdit"
+									>
+										<ElIconEdit />
+									</el-icon>
 								</li>
 							</ul>
-							<a class="edit-info__link">
+							<a
+								v-if="appStore.isPC"
+								class="edit-info__link"
+								@click="handleEdit"
+							>
 								<span>
 									{{ $t('Edit information') }}
 								</span>
@@ -193,69 +243,78 @@ const appStore = useAppStore()
 			class="user-account__orders user-center__section"
 		>
 			<div class="orders__header">
-				<span class="container__title">{{ $t('My orders') }}</span>
-				<a
-					href="//ams-m.buy.mi.com/uk/user/orderlist/"
-					class="mi-btn mi-btn--link mi-btn--normal mi-btn--light mi-btn--arrow-pc mi-btn--arrow-m more-order__link"
-					style="display: flex !important;"
+				<span class="container__title">{{ $t('My Orders') }}</span>
+				<nuxt-link
+					:to="$path('/user/orderlist')"
+					style="display: flex !important"
+					class="flex items-center"
 				>
 					<span class="mi-btn__text">{{ $t('All orders') }}</span>
-					<i class="micon micon-link-arrow"></i>
-				</a>
+					<el-icon class="micon micon-link-arrow">
+						<ElIconArrowRight />
+					</el-icon>
+				</nuxt-link>
 			</div>
 			<section
 				class="orders-swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode"
 			>
-				<ul
-					class="swiper-wrapper orders-nav"
-					style="transform: translate3d(0px, 0px, 0px)"
-				>
+				<ul class="swiper-wrapper orders-nav flex justify-around">
 					<li
 						class="swiper-slide orders-nav__item swiper-slide-active"
-						style="width: 107.75px"
 					>
-						<a
-							href="https://ams-m.buy.mi.com/uk/user/orderlist/?type=7"
-						>
+						<nuxt-link :to="$path('/user/orderlist?type=0')">
 							<img
 								class="orders-nav__icon"
 								src="https://i02.appmifile.com/321_operatorx_operatorx_opx/09/12/2021/51e6d2dc6305cc3250d71be3fad1c40c.png"
 								alt="Unpaid"
 							>
-							<span class="orders-item__title">Unpaid</span>
-						</a>
+							<span class="orders-item__title">{{
+								$t('Unpaid')
+							}}</span>
+						</nuxt-link>
 					</li>
 					<li
 						role="row"
 						class="swiper-slide orders-nav__item swiper-slide-next"
-						style="width: 107.75px"
 					>
-						<a
-							href="https://ams-m.buy.mi.com/uk/user/orderlist/?type=8"
-						>
+						<nuxt-link :to="$path('/user/orderlist?type=20')">
 							<img
 								class="orders-nav__icon"
 								src="https://i02.appmifile.com/614_operatorx_operatorx_opx/09/12/2021/9f29b095aee59d25f488324878e80f31.png"
 								alt="Shipping"
 							>
-							<span class="orders-item__title">Shipping</span>
-						</a>
+							<span class="orders-item__title">{{
+								$t('Shipping')
+							}}</span>
+						</nuxt-link>
 					</li>
-					<li
-						role="row"
-						class="swiper-slide orders-nav__item"
-						style="width: 107.75px"
-					>
-						<a
-							href="https://ams-m.buy.mi.com/uk/user/reviewsappredirect/"
-						>
+					<li role="row" class="swiper-slide orders-nav__item">
+						<nuxt-link :to="$path('/user/orderlist?type=30')">
 							<img
 								class="orders-nav__icon"
 								src="https://i02.appmifile.com/213_operatorx_operatorx_opx/09/12/2021/bdfa2888681dc590f4e20ee6545549b2.png"
 								alt="Reviews"
 							>
-							<span class="orders-item__title">Reviews</span>
-						</a>
+							<span class="orders-item__title">{{
+								$t('Reviews')
+							}}</span>
+						</nuxt-link>
+					</li>
+					<li
+						role="row"
+						tabindex="0"
+						class="swiper-slide orders-nav__item"
+					>
+						<nuxt-link :to="$path('/user/aftersale')">
+							<img
+								class="orders-nav__icon"
+								src="https://i02.appmifile.com/613_operatorx_operatorx_opx/09/12/2021/e355c76f8bbaddcfb285e03454bdf2ed.png"
+								alt="Returns"
+							>
+							<span class="orders-item__title">{{
+								$t('Returns')
+							}}</span>
+						</nuxt-link>
 					</li>
 				</ul>
 			</section>
@@ -279,5 +338,79 @@ const appStore = useAppStore()
 				</el-icon>
 			</nuxt-link>
 		</section>
+		<button v-if="appStore.isMobile" class="sign-out__item" @click="logout">
+			<el-icon class="sign-out__icon">
+				<ElIconSwitchButton />
+			</el-icon>
+			<p class="sign-out__title">
+				{{ $t('Sign out') }}
+			</p>
+		</button>
+		<app-modal
+			v-model="formState.visible"
+			:title="$t('Edit information')"
+			class="edit-modal-main"
+			destroy-on-close
+			:show-close="false"
+		>
+			<el-form :model="formState.data" labe-position="top">
+				<el-form-item class="m-0">
+					<div class="w-full flex justify-center">
+						<el-upload
+							ref="uploadRef"
+							accept=".jpg,.jpeg,.png,.gif"
+							:limit="1"
+							:http-request="handleChangeAvatar"
+							:show-file-list="false"
+						>
+							<div class="edit-modal__avatar m-0">
+								<app-image
+									class="responsive-image clip-image clip-image--shadow avatar-img"
+									:src="formState.data.avatar"
+								/>
+								<div class="edit-modal-avatar_edit">
+									<el-icon class="upload-avatar__icon">
+										<ElIconEdit />
+									</el-icon>
+								</div>
+							</div>
+						</el-upload>
+					</div>
+				</el-form-item>
+				<el-form-item :label="$t('ID')">
+					<el-input v-model="user.id" disabled />
+				</el-form-item>
+				<el-form-item :label="$t('Nickname')" prop="nickname">
+					<el-input v-model="formState.data.nickname" />
+				</el-form-item>
+				<el-form-item :label="$t('Birthday')" prop="birthday">
+					<el-date-picker
+						v-model="formState.data.birthday"
+						value-format="YYYY-MM-DD"
+						style="width: 100%"
+						:placement="appStore.isMobile ? 'top' : ''"
+					/>
+				</el-form-item>
+				<el-form-item :label="$t('Sex')" prop="sex">
+					<el-select
+						v-model="formState.data.sex"
+						:placement="appStore.isMobile ? 'top' : ''"
+					>
+						<el-option :value="0" :label="$t('Male')" />
+						<el-option :value="1" :label="$t('Female')" />
+					</el-select>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<div class="flex">
+					<el-button class="w-2/4" @click="formState.visible = false">
+						{{ $t('Cancel') }}
+					</el-button>
+					<el-button class="w-2/4" type="info" @click="handleSubmit">
+						{{ $t('Save') }}
+					</el-button>
+				</div>
+			</template>
+		</app-modal>
 	</div>
 </template>

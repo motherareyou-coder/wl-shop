@@ -1,3 +1,66 @@
+/**
+ * UserInfo，用户 APP - 用户个人信息 Response VO
+ */
+export interface UserInfo {
+	/**
+	 * 用户头像
+	 */
+	avatar: string
+	/**
+	 * 是否成为推广员
+	 */
+	brokerageEnabled: boolean
+	/**
+	 * 经验值
+	 */
+	experience: number
+	/**
+	 * 用户编号
+	 */
+	id: number
+	level?: Level
+	/**
+	 * 用户手机号
+	 */
+	mobile: string
+	/**
+	 * 用户昵称
+	 */
+	nickname: string
+	/**
+	 * 积分
+	 */
+	point: number
+	/**
+	 * 用户性别
+	 */
+	sex: number
+	[property: string]: any
+}
+
+/**
+ * Level，用户 App - 会员等级
+ */
+export interface Level {
+	/**
+	 * 等级图标
+	 */
+	icon?: string
+	/**
+	 * 等级编号
+	 */
+	id: number
+	/**
+	 * 等级
+	 */
+	level: number
+	/**
+	 * 等级名称
+	 */
+	name: string
+	[property: string]: any
+}
+
 export interface Product {
 	id: number
 	name: string
@@ -551,5 +614,20 @@ export interface AppProductPropertyValueDetailRespVO {
 	 * 属性值的名称
 	 */
 	valueName: string
+	[property: string]: any
+}
+
+/**
+ * ExpressTrack，用户 App - 快递查询的轨迹 Response VO
+ */
+export interface ExpressTrack {
+	/**
+	 * 快递状态
+	 */
+	content: string
+	/**
+	 * 发生时间
+	 */
+	time: string
 	[property: string]: any
 }

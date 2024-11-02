@@ -17,5 +17,9 @@
 	"support": "Support",
 
 	"cart": "cart",
-	"All Order": "All"
+	"All Order": "All",
+	"CancelOrder": "Cancel",
+	"ReceiveOrder": "Confrim Receive",
+	"DeleteOrder": "Delete",
+	"ReceiverName": "Name"
 }

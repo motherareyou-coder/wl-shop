@@ -1,33 +1,33 @@
 <script setup lang="tsx">
-import { omit, pick } from 'lodash-es'
+import { pick } from 'lodash-es'
 import { useCheckOut } from '../cart/utils'
 import CouponDialog from '../cart/components/CouponDialog.vue'
 import AddressList from './components/AddressList.vue'
+import Address from './components/Address.vue'
 import ProductInfoList from './components/ProductInfoList.vue'
 import './index.scss'
 import { useAppStore } from '@/stores/app'
 import type { CartItem, Coupon, OrderSettlement } from '~/types'
 
-definePageMeta({ layout: 'cart' })
-
 const route = useRoute()
 const orderId = route.query.orderId
 const productList = ref<CartItem[]>([])
 if (orderId) {
-	// $api('trade/order/get-detail?apifoxApiId=219799959', {
-	// 	params: { id: orderId },
-	// }).then((res) => {
-	// 	console.log(res)
-	// 	productList.value = res.items
-	// 	info.value = omit(res, ['items'])
-	// 	coupon.value = res.couponId
-	// 		? { id: res.couponId, discountPrice: res.couponPrice }
-	// 		: null
-	// })
+	$api('trade/order/get-detail?apifoxApiId=219799959', {
+		params: { id: orderId },
+	}).then((res) => {
+		const { items = [], ...data } = res
+		console.log(11, items, data)
+		productList.value = items
+		info.value = data
+		// coupon.value = res.couponId
+		// 	? { id: res.couponId, discountPrice: res.couponPrice }
+		// 	: null
+	})
 }
 else {
 	$api('trade/cart/list?apifoxApiId=218994931', {}).then((res) => {
-		productList.value = res.validList // .filter((d: CartItem) => d.selected)
+		productList.value = res.validList.filter((d: CartItem) => d.selected)
 	})
 }
 
@@ -36,29 +36,23 @@ const data = ref({
 	addressId: null,
 	receiverName: '',
 	receiverMobile: '',
-	pointStatus: false,
-	remark: '这是一个测试备注',
+	pointStatus: true,
+	remark: '',
 	payKey: 'cards',
 	agreed: false,
 })
 
-const address = ref()
-const addressList = ref([])
-watch(addressList, (v) => {
-	console.log(v)
-	if (v.length && !address.value) {
-		address.value = v.find?.(d => d.defaultStatus)
-	}
-})
-watch(address, (v) => {
+function onSelectAddress(v) {
 	data.value.addressId = v?.id
-})
+	data.value.receiverName = v?.name
+	data.value.receiverMobile = v?.mobile
+}
 
 const shipOptions = ref([
 	{
-		name: 'Standard delivery',
+		name: $t('Standard delivery'),
 		type: 1, // 快递发货
-		expect_time: 'Expected to be delivered within 2 ~ 5 working days',
+		expect_time: $t('Expected to be delivered within 2 ~ 5 working days'),
 		tips: 'In case of weather or holiday-related disruptions, delivery may be delayed',
 		money: '4.9',
 		self_lifting_list: null,
@@ -90,7 +84,7 @@ const shipOptions = ref([
 // )
 const payOptions = ref([
 	{
-		title: 'Credit / Debit Card',
+		title: `${$t('Credit')} / ${$t('Debit Card')}`,
 		subtitle: '',
 		enable: true,
 		infotitle: '',
@@ -139,7 +133,7 @@ const payOptions = ref([
 		subtitle: '',
 		enable: true,
 		infotitle: '',
-		info: 'Pay in 3 installments interest-free via Paypal',
+		info: $t('Pay in 3 installments interest-free via Paypal'),
 		image: 'https://i02.appmifile.com/639_updatepdf_in/10/05/2022/047f28c0f62ee7866a1a060a1dc2c695.png',
 		key: 'paypalnew',
 		subOptions: null,
@@ -180,12 +174,42 @@ const couponVisible = ref(false)
 const coupon = ref<Coupon>()
 const coupons = ref<Coupon[]>([])
 
-const { info, getInfo, items } = useCheckOut(productList, coupon)
+const { info, getInfo, items } = useCheckOut(productList, coupon, data)
+if (!orderId) {
+	watch(items, getInfo, { immediate: true, deep: true })
+	watch(coupon, getInfo, { immediate: true, deep: true })
+	watch(() => data.value.pointStatus, getInfo)
+	watch(() => data.value.addressId, getInfo)
+	getInfo()
+}
 
-const localePath = useLocalePath()
 const router = useRouter()
+const loading = ref(false)
+watch(
+	() => route.fullPath,
+	(v) => {
+		if (route.query.orderId)
+			router.push($path(`/user/card-payment?orderId=${info.value.id}`))
+	},
+)
+const msg = $t('Please select a address.')
 function handleSubmit() {
+	const fn = () => {
+		if (!info?.value?.payOrderId)
+			return
+		if (data.value.payKey === 'cards') {
+			router.replace($path(`/user/checkout?orderId=${info.value.id}`))
+		}
+		// else {
+		// 	router.push($path(`/user/review?orderId=${info.value.payOrderId}`))
+		// }
+	}
 	if (!orderId) {
+		if (!data.value.addressId)
+			return ElMessage.info(msg)
+		if (loading.value)
+			return
+		loading.value = true
 		$api('trade/order/create?apifoxApiId=219379935', {
 			method: 'post',
 			body: {
@@ -199,13 +223,20 @@ function handleSubmit() {
 					'remark',
 				]),
 			},
-		}).then((res) => {
-			console.log(1111, res)
-			if (data.value.payKey === 'cards')
-				router.push(localePath(`/card-payment?orderId=${res.payOrderId}`))
-			else
-				router.push(localePath(`/review?orderId=${res.payOrderId}`))
 		})
+			.then((res) => {
+				if (info?.value) {
+					info.value.id = res.id
+					info.value.payOrderId = res.payOrderId
+				}
+			})
+			.then(fn)
+			.finally(() => {
+				// loading.value = false
+			})
+	}
+	else {
+		fn()
 	}
 }
 
@@ -243,13 +274,9 @@ function PayPalButton() {
 	)
 }
 
-watch(coupon, getInfo)
 function clearCoupon() {
 	coupon.value = null
 }
-watch(coupons, (v) => {
-	console.log(v)
-})
 
 const showMore = ref(false)
 
@@ -267,6 +294,7 @@ function CheckoutTerms() {
 							By placing an order, you have read and agreed to
 							Mi.com's
 							<a
+								class="mx-2"
 								target="_blank"
 								href="//www.mi.com/uk/support/terms/terms-of-use"
 							>
@@ -274,17 +302,19 @@ function CheckoutTerms() {
 							</a>
 							and
 							<a
+								class="mx-2"
 								target="_blank"
 								href="//www.mi.com/uk/support/policy/privacy"
 							>
 								Privacy Policy
 							</a>
-							. PayPal is unregulated credit. T&amp;Cs &amp;
-							late fees apply. Visit www.paypal.com/uk/
+							. PayPal is unregulated credit. T&amp;Cs &amp; late
+							fees apply. Visit www.paypal.com/uk/
 						</p>
 						<p class="checkout-terms__item">
 							I have read and agreed
 							<a
+								class="mx-2"
 								target="_blank"
 								href="//www.mi.com/uk/service/warranty/?v=0#warrant"
 							>
@@ -298,6 +328,11 @@ function CheckoutTerms() {
 		</div>
 	)
 }
+
+const open1 = ref(false)
+
+const payOpen = ref(true)
+const shipOpen = ref(true)
 </script>
 
 <template>
@@ -324,19 +359,42 @@ function CheckoutTerms() {
 								</div>
 							</div>
 						</div>
-						<div class="address-content" :class="{ 'hide-more': !showMore }">
-							<AddressList
-								v-model="address"
-								v-model:list="addressList"
-								class="show-address-content"
-								:addable="!orderId"
-							/>
-							<div v-if="showMore" class="show-more" role="button" @click="showMore = false">
-								Close <i class="show-more micon micon-up"></i>
-							</div>
-							<div v-else class="show-more" role="button" @click="showMore = true">
-								More <i class="show-more micon micon-down"></i>
-							</div>
+						<div
+							class="address-content"
+							:class="{ 'hide-more': !!orderId || !showMore }"
+						>
+							<Address v-if="orderId" :data="info" />
+							<template v-else>
+								<AddressList
+									class="show-address-content"
+									:is-checkout="true"
+									@select="onSelectAddress"
+								/>
+								<template v-if="appStore.isPC">
+									<div
+										v-if="showMore"
+										class="show-more"
+										role="button"
+										@click="showMore = false"
+									>
+										{{ $t('Close') }}
+										<el-icon class="micon micon-up">
+											<ElIconArrowUp />
+										</el-icon>
+									</div>
+									<div
+										v-else
+										class="show-more"
+										role="button"
+										@click="showMore = true"
+									>
+										{{ $t('More') }}
+										<el-icon class="micon micon-down">
+											<ElIconArrowDown />
+										</el-icon>
+									</div>
+								</template>
+							</template>
 						</div>
 					</section>
 					<section
@@ -357,6 +415,7 @@ function CheckoutTerms() {
 								v-model="data.remark"
 								rows="5"
 								type="textarea"
+								:disabled="!!orderId"
 							/>
 						</div>
 					</section>
@@ -364,13 +423,24 @@ function CheckoutTerms() {
 						class="checkout-delivery checkout-module"
 						:class="[`checkout-module--${deviceType}`]"
 					>
-						<div class="checkout-head">
-							<div class="checkout-head__box">
+						<div
+							class="checkout-head"
+							@click="shipOpen = !shipOpen"
+						>
+							<div
+								class="checkout-head__box"
+								:class="{
+									'checkout-head__box--open': shipOpen,
+								}"
+							>
 								<div class="checkout-head__title-box">
 									<span class="checkout-head__title">
 										{{ $t('Shipping method') }}
 									</span>
 								</div>
+								<el-icon v-if="appStore.isMobile" class="checkout-head__icon">
+									<ElIconArrowRight />
+								</el-icon>
 							</div>
 						</div>
 						<el-radio-group
@@ -378,50 +448,54 @@ function CheckoutTerms() {
 							class="checkout-delivery__content"
 							style="display: block"
 						>
-							<section
-								v-for="o in shipOptions"
-								:key="o.type"
-								class="checkout-delivery-item"
-							>
-								<div
-									class="mi-radio__item"
-									@click="data.deliveryType = o.type"
+							<template v-for="o in shipOptions" :key="o.type">
+								<section
+									v-if="appStore.isPC || shipOpen || data.deliveryType === o.type"
+									class="checkout-delivery-item"
 								>
 									<div
-										class="radio-wrapper mi-radio__item--card mi-radio__item--left item-box"
-										:class="{
-											'is-checked':
-												data.deliveryType === o.type,
-										}"
+										class="mi-radio__item"
+										@click="data.deliveryType = o.type"
 									>
-										<el-radio
-											:value="o.type"
-											style="margin-right: 0"
-										/>
-										<div class="radio__content">
-											<div class="item-flex">
-												<div class="item-context">
-													<div class="item-title">
-														{{ o.name }}
+										<div
+											class="radio-wrapper mi-radio__item--card mi-radio__item--left item-box"
+											:class="{
+												'is-checked':
+													data.deliveryType
+													=== o.type,
+											}"
+										>
+											<el-radio
+												:value="o.type"
+												style="margin-right: 0"
+											/>
+											<div class="radio__content">
+												<div class="item-flex">
+													<div class="item-context">
+														<div class="item-title">
+															{{ o.name }}
+														</div>
+														<div
+															class="item-content"
+														>
+															<span
+																class="item-date"
+															>{{
+																o.expect_time
+															}}</span>
+														</div>
 													</div>
-													<div class="item-content">
-														<span
-															class="item-date"
-														>{{
-															o.expect_time
-														}}</span>
+													<div class="item-price">
+														<span>
+															{{ $t('Free') }}
+														</span>
 													</div>
-												</div>
-												<div class="item-price">
-													<span>
-														{{ $t('Free') }}
-													</span>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</section>
+								</section>
+							</template>
 						</el-radio-group>
 					</section>
 					<section
@@ -434,13 +508,19 @@ function CheckoutTerms() {
 						class="checkout-pay checkout-module checkout-module--widescreen"
 						:class="[`checkout-module--${deviceType}`]"
 					>
-						<div class="checkout-head">
-							<div class="checkout-head__box">
+						<div class="checkout-head" @click="payOpen = !payOpen">
+							<div
+								class="checkout-head__box"
+								:class="{ 'checkout-head__box--open': payOpen }"
+							>
 								<div class="checkout-head__title-box">
 									<span class="checkout-head__title">
 										{{ $t('Payment method') }}
 									</span>
 								</div>
+								<el-icon v-if="appStore.isMobile" class="checkout-head__icon">
+									<ElIconArrowRight />
+								</el-icon>
 							</div>
 						</div>
 						<div class="checkout-pay__body">
@@ -449,52 +529,55 @@ function CheckoutTerms() {
 								class="mi-radio__group"
 								style="display: block"
 							>
-								<div
-									v-for="p in payOptions"
-									:key="p.key"
-									class="mi-radio__item radio-wrapper mi-radio__item--card mi-radio__item--left checkout-pay__item pay-item"
-									:class="{
-										'is-checked': data.payKey === p.key,
-									}"
-									@click="data.payKey = p.key"
-								>
-									<el-radio
-										:value="p.key"
-										style="margin-right: 0"
-									/>
-									<div class="radio__content">
-										<article class="pay-item__right">
-											<div class="pay-item__logo">
-												<app-image :src="p.image" />
-											</div>
-											<div class="pay-item__content">
-												<div class="pay-item__title">
-													{{ p.title }}
+								<template v-for="p in payOptions" :key="p.key">
+									<div
+										v-if="appStore.isPC || payOpen || data.payKey === p.key"
+										class="mi-radio__item radio-wrapper mi-radio__item--card mi-radio__item--left checkout-pay__item pay-item"
+										:class="{
+											'is-checked': data.payKey === p.key,
+										}"
+										@click="data.payKey = p.key"
+									>
+										<el-radio
+											:value="p.key"
+											style="margin-right: 0"
+										/>
+										<div class="radio__content">
+											<article class="pay-item__right">
+												<div class="pay-item__logo">
+													<app-image :src="p.image" />
 												</div>
-
-												<div
-													v-if="p.cards?.length"
-													class="cards__info pay-item__tips"
-												>
-													<img
-														v-for="c in p.cards"
-														:key="c.name"
-														:src="c.img"
-														:alt="c.name"
+												<div class="pay-item__content">
+													<div
+														class="pay-item__title"
 													>
+														{{ p.title }}
+													</div>
+
+													<div
+														v-if="p.cards?.length"
+														class="cards__info pay-item__tips"
+													>
+														<img
+															v-for="c in p.cards"
+															:key="c.name"
+															:src="c.img"
+															:alt="c.name"
+														>
+													</div>
+													<div
+														v-else
+														class="pay-pal__info pay-item__tips"
+													>
+														<p>
+															{{ p.info }}
+														</p>
+													</div>
 												</div>
-												<div
-													v-else
-													class="pay-pal__info pay-item__tips"
-												>
-													<p>
-														{{ p.info }}
-													</p>
-												</div>
-											</div>
-										</article>
+											</article>
+										</div>
 									</div>
-								</div>
+								</template>
 							</el-radio-group>
 						</div>
 					</section>
@@ -516,7 +599,11 @@ function CheckoutTerms() {
 					<section class="price-summary">
 						<div class="price-summary__total">
 							<h3>{{ $t('Total') }}</h3>
-							<ProductPrice :data="info?.price.totalPrice" />
+							<ProductPrice
+								:data="
+									info?.price?.totalPrice || info?.totalPrice
+								"
+							/>
 						</div>
 						<ul class="price-summary__list">
 							<li class="price-summary__item">
@@ -524,8 +611,68 @@ function CheckoutTerms() {
 									{{ $t('Subtotal') }}
 								</span>
 								<ProductPrice
-									:data="info?.price.discountPrice"
+									:data="
+										info?.price?.payPrice || info?.payPrice
+									"
 								/>
+							</li>
+							<li
+								class="price-summary__item price-summary__item--saved"
+								:class="{ 'price-summary__item--open': open1 }"
+							>
+								<span>{{ $t('Discount') }}</span>
+								<span>
+									<ProductPrice
+										:data="
+											info?.price?.discountPrice
+												|| info?.discountPrice
+										"
+									/>
+									<button class="price-summary__item-more">
+										<el-icon
+											class="cursor-pointer price-summary__item-more-icon"
+											@click="open1 = !open1"
+										>
+											<ElIconArrowDown />
+										</el-icon>
+									</button>
+								</span>
+								<div class="price-summary__box">
+									<ul class="price-summary__detail">
+										<li
+											v-if="
+												info?.price?.couponPrice
+													|| info?.couponPrice
+											"
+											class="price-summary__item"
+										>
+											<span>{{ $t('Coupons') }}</span>
+											<ProductPrice
+												class="price-summary__item-fee"
+												:data="
+													info?.price?.couponPrice
+														|| info?.couponPrice
+												"
+											/>
+										</li>
+										<li
+											v-if="
+												info?.price?.pointPrice
+													|| info?.pointPrice
+											"
+											class="price-summary__item"
+										>
+											<span>{{ $t('Points') }}</span>
+											<ProductPrice
+												class="price-summary__item-fee"
+												:data="
+													info?.price?.pointPrice
+														|| info?.pointPrice
+												"
+											/>
+										</li>
+									</ul>
+								</div>
 							</li>
 							<li
 								class="price-summary__item price-summary__shipment"
@@ -533,7 +680,9 @@ function CheckoutTerms() {
 								<span class="">{{ $t('Shipping fee') }}</span>
 								<ProductPrice
 									:data="
-										info?.price.deliveryPrice || $t('Free')
+										info?.price?.deliveryPrice
+											|| info?.deliveryPrice
+											|| $t('Free')
 									"
 									class="price-summary__item-fee"
 								/>
@@ -541,13 +690,12 @@ function CheckoutTerms() {
 							<li class="price-summary__item"></li>
 						</ul>
 					</section>
-					<section class="coupons-info">
+					<section v-if="!orderId" class="coupons-info">
 						<div class="coupons-info__header">
 							<h2 class="coupons-info__title">
 								{{ $t('Coupons') }}
 							</h2>
 							<button
-								v-if="!orderId"
 								class="mi-button--text coupons-info__view"
 								@click="couponVisible = true"
 							>
@@ -562,9 +710,10 @@ function CheckoutTerms() {
 							</button>
 						</div>
 						<span
-							v-if="coupons && !orderId"
+							v-if="coupons.length && !orderId"
 							class="coupons-info__tip"
-						>{{ coupons.length }}
+						>
+							{{ coupons.length }}
 							{{ $t('coupons available') }}</span>
 						<div class="coupons-list">
 							<template v-if="coupon">
@@ -581,7 +730,10 @@ function CheckoutTerms() {
 												:data="coupon.discountPrice"
 											/>
 										</li>
-										<li class="coupon-time card-item">
+										<li
+											v-if="coupon.validStartTime"
+											class="coupon-time card-item"
+										>
 											{{ $t('Expiry') }}:
 											{{ coupon.validStartTime }} -
 											{{ coupon.validEndTime }}
@@ -599,10 +751,13 @@ function CheckoutTerms() {
 									The best coupon has been selected.
 								</strong> -->
 							</template>
-							<span v-else class="no-used-coupon">No coupon used</span>
+							<span
+								v-if="!orderId && !coupons.length"
+								class="no-used-coupon"
+							>{{ $t('No coupon used') }}</span>
 						</div>
 					</section>
-					<section class="points-info">
+					<section v-if="!orderId" class="points-info">
 						<h2 class="points-info__title">
 							{{ $t('Points') }}
 						</h2>
@@ -611,44 +766,60 @@ function CheckoutTerms() {
 							<span style="margin: 0 0.5rem">
 								{{ $t('Points saved') }}
 							</span>
-							<ProductPrice :data="info?.price.pointPrice" />
+							<ProductPrice
+								:data="
+									info?.price?.pointPrice || info?.pointPrice
+								"
+							/>
 						</div>
 					</section>
-					<button
+					<el-button
 						v-if="appStore.isPC && data.payKey === 'cards'"
-						class="app-button checkout-footer__submit--pc checkout-footer"
-						:disbaled="!info?.price.totalPrice"
-						@click="handleSubmit"
+						type="info"
+						class="checkout-footer__submit--pc checkout-footer"
+						:disabled="
+							loading
+								|| !(info?.price?.totalPrice || info?.totalPrice)
+						"
+						@click.prevent="handleSubmit"
 					>
-						{{ $t('Pay now') }}
-					</button>
+						{{ $t('Pay Now') }}
+					</el-button>
 					<PayPalButton v-if="data.payKey === 'paypalnew'" />
-					<CheckoutTerms v-if="appStore.isPC" />
+					<!-- <CheckoutTerms v-if="appStore.isPC" /> -->
 				</div>
 				<CartService
 					class="site-checkout__support-service"
 					:class="{ 'site-checkout__card': appStore.isPC }"
 				/>
 			</aside>
-			<CheckoutTerms v-if="appStore.isMobile" />
+			<!-- <CheckoutTerms v-if="appStore.isMobile" /> -->
 			<div class="checkout-footer__submit--m checkout-footer">
 				<div
 					class="checkout-footer__submit--total checkout-footer__price notranslate"
 				>
 					<div class="checkout-footer__price-total">
 						<div class="mi-price">
-							<span>{{ $t('Total') }}: </span><ProductPrice :data="info?.price.totalPrice" />
+							<span>{{ $t('Total') }}: </span><ProductPrice
+								:data="
+									info?.price?.totalPrice || info?.totalPrice
+								"
+							/>
 						</div>
 					</div>
 				</div>
-				<button
+				<el-button
 					v-if="data.payKey === 'cards'"
-					class="app-button checkout-footer__submit--pay"
-					:disbaled="!info?.price.totalPrice"
+					type="info"
+					class="checkout-footer__submit--pay"
+					:disabled="
+						loading
+							|| !(info?.price?.totalPrice || info?.totalPrice)
+					"
 					@click="handleSubmit"
 				>
-					{{ $t('Pay now') }}
-				</button>
+					{{ $t('Pay Now') }}
+				</el-button>
 				<PayPalButton
 					v-if="data.payKey === 'paypalnew'"
 					style="min-width: 150px"
@@ -657,6 +828,7 @@ function CheckoutTerms() {
 		</main>
 	</div>
 	<CouponDialog
+		v-if="!orderId"
 		v-model:visible="couponVisible"
 		v-model="coupon"
 		v-model:list="coupons"

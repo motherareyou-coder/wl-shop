@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import type { Category } from '~/types'
 
 export const useAppStore = defineStore('AppStore', {
 	state: () => {
@@ -11,7 +10,7 @@ export const useAppStore = defineStore('AppStore', {
 	},
 	getters: {
 		deviceType(state) {
-			return state.isPC ? 'pc' : 'mobile'
+			return state.isPC ? 'pc' : state.isMobile ? 'mobile' : ''
 		},
 	},
 	actions: {

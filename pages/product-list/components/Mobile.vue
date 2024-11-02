@@ -4,15 +4,29 @@ import type { Product } from '~/types'
 
 const props = defineProps({
 	params: { type: Object, default: () => ({}) },
+	scopeValues: { type: Array },
 })
 
-const { data, load, reset } = useInfiteLoad<Product>(params =>
-	$api('product/spu/page?apifoxApiId=211495718', {
-		params: { ...params, ...props.params },
-	}),
+const { data, load, reset } = useInfiteLoad<Product>(p =>
+	props.scopeValues?.length
+		? $api('product/spu/list-by-ids?apifoxApiId=221196568', {
+			params: {
+				...props.params,
+				ids: props.scopeValues,
+			},
+		}).then((res) => {
+			return {
+				list: res,
+				total: res.length,
+			}
+		})
+		: $api('product/spu/page?apifoxApiId=211495718', {
+			params: { ...p, ...props.params },
+		}),
 )
 
 watch(() => props.params, reset)
+watch(() => props.scopeValues, reset)
 </script>
 
 <template>

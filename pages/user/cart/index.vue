@@ -8,16 +8,10 @@ import type { CartItem, Coupon } from '~/types'
 import './index.scss'
 
 defineOptions({ name: 'Cart' })
-definePageMeta({ layout: 'cart' })
-
-useHead({
-	title: `${$t('cart')} ${$t('appTitle')}`,
-	meta: [{ name: 'description', content: 'Cart' }],
-})
 
 const router = useRouter()
 function handleSubmit() {
-	router.push($path('/checkout'))
+	router.push($path('/user/checkout'))
 }
 
 const loading = ref(false)
@@ -40,6 +34,7 @@ function getCartList() {
 			invalidList.value = res.invalidList as CartItem[]
 			invalidList.value.forEach((d) => {
 				d.disabled = true
+				d.selected = false
 			})
 			updateCheckAll()
 		}),
@@ -59,7 +54,9 @@ const productList = computed(
 	() => validList.value?.filter(d => d.selected) || [],
 )
 
-const { info, getInfo } = useCheckOut(productList, coupon)
+const { info, getInfo, items } = useCheckOut(productList, coupon)
+watch(items, getInfo, { immediate: true, deep: true })
+watch(coupon, getInfo, { immediate: true, deep: true })
 
 const open1 = ref(false)
 
@@ -72,10 +69,14 @@ function handleAdd(g: CartItem) {
 	)
 }
 
+const delMsg = $t('Are you sure to remove this product from shopping cart?')
+function delMsgBox() {
+	return ElMessageBox.confirm(delMsg, {
+		confirmButtonClass: 'mi-button--info',
+	})
+}
 function handleDelete(g: CartItem) {
-	ElMessageBox.confirm(
-		$t('Are you sure to remove this product from shopping cart?'),
-	).then(() =>
+	delMsgBox().then(() =>
 		warpLoading(
 			$api('trade/cart/delete?apifoxApiId=218995484', {
 				method: 'delete',
@@ -102,9 +103,7 @@ function handleDelete(g: CartItem) {
 }
 
 function handleDeleteAll() {
-	ElMessageBox.confirm(
-		$t('Are you sure to remove this product from shopping cart?'),
-	).then(() =>
+	delMsgBox().then(() =>
 		warpLoading(
 			$api('trade/cart/delete?apifoxApiId=218995484', {
 				method: 'delete',
@@ -186,23 +185,23 @@ function checkAllChange(selected: any) {
 							{{ $t('All') }}
 						</el-checkbox>
 						<button
-							class="cart-header__delete"
-							@click="handleDeleteAll"
+							class="cursor-pointer cart-header__delete"
+							@click.prevent="handleDeleteAll"
 						>
 							{{ $t('Delete') }}
 						</button>
 					</header>
 					<aside v-if="appStore.isMobile" class="cart-delivery">
 						<div class="cart-delivery__info">
-							<i class="cart-delivery__cart-icon">
+							<!-- <i class="cart-delivery__cart-icon">
 								<Icon />
 							</i>
 							<span class="cart-delivery__title">
 								{{ $t('Free shipping') }}
-							</span>
+							</span> -->
 						</div>
 						<div class="cart-delivery__spacer"></div>
-						<button class="mi-btn--link cart-delivery__delete">
+						<button class="mi-btn--link cart-delivery__delete" @click.prevent="handleDeleteAll">
 							{{ $t('Delete') }}
 						</button>
 					</aside>
@@ -331,12 +330,15 @@ function checkAllChange(selected: any) {
 										-<ProductPrice
 											:data="info?.price.couponPrice"
 										/>
-										<div class="inline-block cursor-pointer cart-summary__item-more">
-											<i
+										<div
+											class="inline-block cursor-pointer cart-summary__item-more"
+										>
+											<el-icon
 												class="micon micon-down cart-summary__item-more-icon"
 												@click="open1 = !open1"
 											>
-											</i>
+												<ElIconArrowDown />
+											</el-icon>
 										</div>
 									</span>
 									<div class="cart-summary__box">
@@ -425,7 +427,9 @@ function checkAllChange(selected: any) {
 									>
 										{{ coupons.length }}
 										{{ $t('optionals') }}
-										<i class="micon micon-link-arrow"></i>
+										<el-icon class="micon micon-link-arrow">
+											<ElIconArrowRight />
+										</el-icon>
 									</span>
 								</section>
 								<section class="cart-footer__submit-area">
@@ -462,13 +466,15 @@ function checkAllChange(selected: any) {
 							{{ $t('Coupons') }}
 						</span>
 					</div>
-					<button
+					<div
 						class="cart-coupons__btn flex align-center"
 						@click="couponShow = true"
 					>
 						{{ $t('View more') }}
-						<i class="micon micon-link-arrow"></i>
-					</button>
+						<el-icon class="micon micon-link-arrow">
+							<ElIconArrowRight />
+						</el-icon>
+					</div>
 				</section>
 				<section class="cart-footer__submit-area">
 					<div class="cart-footer__total">
@@ -481,7 +487,9 @@ function checkAllChange(selected: any) {
 							<div class="cart-footer__price-total">
 								<div class="mi-price">
 									<span>{{ $t('Total') }}: </span>
-									<ProductPrice :data="info?.price.totalPrice" />
+									<ProductPrice
+										:data="info?.price.totalPrice"
+									/>
 								</div>
 							</div>
 						</div>

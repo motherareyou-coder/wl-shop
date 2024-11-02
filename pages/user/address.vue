@@ -1,5 +1,5 @@
 <script setup>
-import AddressList from '../checkout/components/AddressList.vue'
+import AddressList from './checkout/components/AddressList.vue'
 import './address.scss'
 </script>
 

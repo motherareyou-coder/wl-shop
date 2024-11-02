@@ -471,8 +471,11 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    overflow: scroll;
-    padding: .73611rem 0 .56944rem
+    overflow: auto;
+    padding: .73611rem 0 .56944rem;
+    @media screen and (min-width:721px){
+        font-size: 20px;
+    }
 }
 
 .order-express .express-box:empty {

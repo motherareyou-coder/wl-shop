@@ -26,12 +26,20 @@
 				)
 		),
 	$text-color: ('primary': '#191919'),
-	// $border-radius: (
-	// 'base': 12px,
-	// 'small': 8px,
-	//  'round': 20px,
-	//  'circle': 100%,
+	// $font-size: (
+	// 	'extra-large': 20px,
+	// 	'large': 18px,
+	// 	'medium': 16px,
+	// 	'base': var(--mi-color-primary),
+	// 	'small': 13px,
+	// 	'extra-small': 12px
 	// )
+	// $border-radius: (
+// 'base': 12px,
+// 'small': 8px,
+//  'round': 20px,
+//  'circle': 100%,
+// )
 );
 
 @use 'element-plus/theme-chalk/src/index.scss' as *;
@@ -48,4 +56,10 @@
 .mi-button {
 	height: auto;
 	--mi-button-disabled-bg-color: var(--brand-grey-40);
+}
+
+.mi-drawer .mi-drawer__header {
+	@media screen and (max-width: 720px) {
+		margin-bottom: 12px !important;
+	}
 }

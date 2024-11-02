@@ -1,20 +1,26 @@
 <script setup lang="ts">
+import Big from 'big.js'
 import Coupon from './Coupon.vue'
 import Review from './Review/index.vue'
-import type { ProductDetail, Property } from '~/types'
+import type { ProductDetail, Property, SKU } from '~/types'
 import './PC.scss'
 
 const props = defineProps({
 	info: { type: Object as () => ProductDetail, required: true },
 	star: { type: Boolean },
+	sku: { type: Object },
 	properties: { type: Array as () => ProductDetail['propertyList'] },
 })
 const emit = defineEmits(['star', 'submit'])
-const data = defineModel<Record<string, any>>({
-	default: () => ({}),
-})
+const count = defineModel('count')
 const info = computed(() => props.info)
+const sku = defineModel<SKU>('sku')
+const selected = defineModel('selected')
 const tab = ref(0)
+const totalPrice = computed(() => {
+	const price = new Big(sku.value?.price || info.value.price)
+	return count.value ? price.times(new Big(count.value)).toFixed(2) : '0.00'
+})
 </script>
 
 <template>
@@ -57,7 +63,7 @@ const tab = ref(0)
 						<div class="product__image">
 							<app-image
 								class="product__image-content"
-								:src="info.picUrl"
+								:src="sku?.picUrl || info.picUrl"
 							/>
 						</div>
 					</section>
@@ -81,14 +87,16 @@ const tab = ref(0)
 								{{ info.description }}
 							</div>
 							<div class="information-section__product-price">
-								<ProductPrice :data="info.price" />
+								<ProductPrice
+									:data="sku?.price || info.price"
+								/>
 							</div>
 						</div>
 					</section>
 					<section
 						class="product__section product__section-spacer events-info"
 					>
-						<Coupon v-model="data.coupon" />
+						<Coupon />
 					</section>
 					<section
 						class="product__section product__section--desktop sku-section-v4 sku-section-v4--desktop"
@@ -104,9 +112,14 @@ const tab = ref(0)
 									v-for="v in p.values"
 									:key="v.id"
 									class="sku-section-v4__icon-item"
+									@click="selected[p.id] = v.id"
 								>
 									<button
-										class="sku-section-v4__button sku-section-v4__button--active"
+										class="sku-section-v4__button"
+										:class="{
+											'sku-section-v4__button--active':
+												selected[p.id] === v.id,
+										}"
 									>
 										<span>{{ v.name }}</span>
 									</button>
@@ -119,14 +132,12 @@ const tab = ref(0)
 							{{ $t('Quantity') }}
 						</h3>
 						<div class="quantity-section__container">
-							<div
-								class="quantity-section-v4__content quantity-section-v4__content--desktop"
-							>
+							<div class="quantity-section-v4__content">
 								<el-input-number
-									v-model="data.qty"
+									v-model="count"
 									:step="1"
 									:min="1"
-									size="small"
+									:max="sku?.stock"
 								/>
 							</div>
 						</div>
@@ -134,18 +145,18 @@ const tab = ref(0)
 					<section class="product__section order-list-section">
 						<ul class="order-list-section__list">
 							<li class="order-list-section__item">
-								<span> {{ info.name }}*{{ data.qty }} </span>
+								<span> {{ info.name }} * {{ count }} </span>
 								<div
 									class="order-list-section__item-spacer"
 								></div>
-								<ProductPrice :data="info.price * data.qty" />
+								<ProductPrice :data="totalPrice" />
 							</li>
 							<li class="order-list-section__item">
 								<span>{{ $t('Total') }}:</span>
 								<div
 									class="order-list-section__item-spacer"
 								></div>
-								<ProductPrice :data="info.price * data.qty" />
+								<ProductPrice :data="totalPrice" />
 							</li>
 						</ul>
 					</section>
@@ -164,14 +175,16 @@ const tab = ref(0)
 				</article>
 			</div>
 		</main>
-		<div v-if="tab === 0" class="site-container" style="margin: 0 auto">
-			<app-image
-				v-for="img in info.sliderPicUrls"
-				:key="img"
-				:src="img"
-				style="width: 100%"
-			/>
-		</div>
-		<Review v-if="tab === 1" />
+		<keep-alive>
+			<div v-if="tab === 0" class="site-container" style="margin: 0 auto">
+				<app-image
+					v-for="img in info.sliderPicUrls"
+					:key="img"
+					:src="img"
+					style="width: 100%"
+				/>
+			</div>
+			<Review v-else-if="tab === 1" />
+		</keep-alive>
 	</div>
 </template>

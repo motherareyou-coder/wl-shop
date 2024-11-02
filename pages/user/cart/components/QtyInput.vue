@@ -29,24 +29,28 @@ function increase() {
 function handleChange() {
 	if (props.disabled)
 		return
-	if (Number.isNaN(data.value) || data.value < props.min || data.value > props.max)
-		return data.value = qty.value
+	if (
+		Number.isNaN(data.value)
+		|| data.value < props.min
+		|| data.value > props.max
+	) {
+		return (data.value = qty.value)
+	}
 	emit('change', data.value)
 }
 </script>
 
 <template>
 	<div>
-		<button
+		<div
 			class="quantity-section__button"
 			:class="{ 'quantity-section__button--disabled': data <= 1 }"
-			aria-label="Reduce the quantity"
 			@click="decrease"
 		>
-			<el-icon class="micon micon-quantity-decrease">
+			<el-icon class="micon-quantity-decrease">
 				<ElIconMinus />
 			</el-icon>
-		</button>
+		</div>
 		<input
 			v-model.number="data"
 			:min="props.min"
@@ -56,7 +60,7 @@ function handleChange() {
 			:disabled="props.disabled"
 			@change="handleChange"
 		>
-		<button
+		<div
 			class="quantity-section__button"
 			:class="{
 				'quantity-section__button--disabled': data >= props.max,
@@ -67,6 +71,6 @@ function handleChange() {
 			<el-icon class="micon micon-quantity-increase">
 				<ElIconPlus />
 			</el-icon>
-		</button>
+		</div>
 	</div>
 </template>

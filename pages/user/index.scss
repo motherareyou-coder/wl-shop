@@ -68,7 +68,7 @@
 
 @media screen and (min-width: 1921px) {
     .user-center__container .user-center__section {
-        max-width: 2104px;
+        max-width: 82.1875vw;
     }
 }
 
@@ -481,7 +481,7 @@
 
 @media screen and (min-width: 1921px) {
     .user-account__overview .account-overview-main {
-        max-width: 2104px;
+        max-width: 82.1875vw;
     }
 }
 
@@ -1610,7 +1610,7 @@
     .marquee-wrapper {
         height: 80px;
         line-height: 80px;
-        width: 2104px;
+        width: 82.1875vw;;
     }
 }
 
@@ -1685,13 +1685,7 @@
     }
 }
 
-.edit-modal-main {
-    align-items: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-}
+
 
 @media screen and (max-width: 720px) {
     .edit-modal-main {
@@ -2426,7 +2420,7 @@ button.swiper-pagination-bullet {
 @media screen and (min-width: 1921px) {
     .swiper-box {
         margin-bottom: 80px;
-        max-width: 2104px;
+        max-width: 82.1875vw;
     }
 }
 
@@ -2512,7 +2506,7 @@ button.swiper-pagination-bullet {
 
 @media screen and (min-width: 1921px) {
     .swiper-box .goods-delivery__info .track__copy-icon {
-        font-size: 36px;
+        font-size: max(1.40625vw, 12px);
         height: 36px;
         width: 36px;
     }
@@ -2712,7 +2706,7 @@ button.swiper-pagination-bullet {
 
 @media screen and (min-width: 1921px) {
     .swiper-box .goods-delivery__info .goods-delivery__desc .delivery-desc__item span {
-        font-size: 36px;
+        font-size: max(1.40625vw, 12px);
     }
 }
 
@@ -2736,7 +2730,7 @@ button.swiper-pagination-bullet {
 
 @media screen and (min-width: 1921px) {
     .swiper-box .goods-delivery__info .goods-delivery__desc .delivery-desc__item strong {
-        font-size: 36px;
+        font-size: max(1.40625vw, 12px);
     }
 }
 
@@ -3666,7 +3660,7 @@ button.swiper-pagination-bullet {
 @media screen and (min-width: 1921px) {
     .use-center-nav__entries {
         grid-gap: 16px;
-        font-size: 36px;
+        font-size: max(1.40625vw, 12px);
         margin-bottom: 80px;
     }
 }

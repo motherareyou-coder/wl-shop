@@ -46,7 +46,10 @@ const appStore = useAppStore()
 			class="infinite-scroll"
 			:class="{ 'infinite-scroll--mobile': appStore.isMobile }"
 		>
-			<component :is="appStore.isPC ? PC : Mobile" :data="data" />
+			<component
+				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
+				:data="data"
+			/>
 		</div>
 	</div>
 </template>

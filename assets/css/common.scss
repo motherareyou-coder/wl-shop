@@ -53,21 +53,25 @@ body {
 	color: var(--text-base);
 	font-weight: 400;
 	height: 100% !important;
-	width: 100% !important;
+	// width: 100% !important;
 	min-width: 280px;
 	scrollbar-color: #d0d0d0 #fff;
 	scrollbar-width: thin;
 	font-family: 'MiSans Chinese', sans-serif;
 }
+@media screen and (max-width: 720px) {
+	body {
+		width: 100% !important;
+	}
+}
 
 #__nuxt {
 	height: 100%;
-	overflow: auto;
 }
 
 .svg-icon {
-	width: max(var(--icon-width), 1em);
-	height: max(var(--icon-height), 1em);
+	width: min(max(var(--icon-width), 1em), 28px);
+	height: min(max(var(--icon-height), 1em), 28px);
 	color: inherit;
 	cursor: pointer;
 }

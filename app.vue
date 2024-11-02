@@ -1,11 +1,9 @@
-<!--
-  * @Author: Reg Zhang<rexag.zhang@gmail.com>
-  * @Date: 2024-09-02 15:55:41
-  * @Description: 请输入描述
--->
 <script setup lang="ts">
+import zh from 'element-plus/es/locale/lang/zh-cn'
+import en from 'element-plus/es/locale/lang/en'
+
 const route = useRoute()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const head = useLocaleHead({
 	addDirAttribute: true,
@@ -27,8 +25,6 @@ useSeoMeta({
 	//   ogImage: 'https://example.com/image.png',
 	//   twitterCard: 'summary_large_image',
 })
-
-const { locale } = useI18n()
 </script>
 
 <template>
@@ -54,7 +50,7 @@ const { locale } = useI18n()
 		<Body>
 			<NuxtLayout>
 				<el-config-provider :locale="{ en, zh }[locale]" namespace="mi">
-					<NuxtPage />
+					<NuxtPage :keepalive="{ include: 'OrderListCache,ProductListCache' }" />
 				</el-config-provider>
 			</NuxtLayout>
 		</Body>

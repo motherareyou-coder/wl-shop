@@ -2,29 +2,29 @@
 const steps = [
 	{
 		label: $t('ShoppingCart'),
-		path: '/cart',
-		value: 0,
-	},
-	{
-		label: $t('Checkout'),
-		path: '/checkout',
+		key: 'cart',
 		value: 1,
 	},
 	{
-		label: $t('Review'),
-		path: '/review',
+		label: $t('Checkout'),
+		key: 'checkout',
 		value: 2,
+	},
+	{
+		label: $t('Review'),
+		key: 'review',
+		value: 3,
 	},
 ]
 const route = useRoute()
 const activeStep = ref(0)
 watchEffect(() => {
-	activeStep.value = steps.find(s => route.path.includes(s.path))?.value || 0
+	activeStep.value = steps.find(s => route.path.includes(s.key))?.value
 })
 </script>
 
 <template>
-	<nav class="shopping-nav">
+	<nav v-if="activeStep" class="shopping-nav">
 		<div class="shopping-nav__wrapper">
 			<div
 				v-for="s in steps"

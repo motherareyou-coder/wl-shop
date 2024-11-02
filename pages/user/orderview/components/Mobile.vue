@@ -1,29 +1,17 @@
 <script setup lang="ts">
-import type { OrderDetail } from '~/types'
+import { statusText } from '../../orderlist/utils'
+import type { ExpressTrack, OrderDetail } from '~/types'
 import './Mobile.scss'
 
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
-	statusText: { type: String },
+	tracks: { type: Object as () => ExpressTrack[] },
 })
+const data = computed(() => props.data)
 
 useHead({
 	style: ['html{ font-size: 45.5px }'],
 })
-
-const info = computed(() => props.data)
-
-const steps = [
-	{ label: $t('Order placed'), value: 0 },
-	{ label: $t('Paid'), value: 10 },
-	{ label: $t('Processed'), value: 20 },
-	{ label: $t('Shipped'), value: 30 },
-	{ label: $t('Delivered'), value: 30 },
-]
-
-const index = computed(() =>
-	steps.findIndex(s => s.value === info.value.status),
-)
 </script>
 
 <template>
@@ -34,62 +22,46 @@ const index = computed(() =>
 					<p class="order-info__id">
 						<span class="">{{ $t('Order ID') }}: </span>
 						<span class="order-info__text">
-							{{ info.no }}
+							{{ data.no }}
 						</span>
 					</p>
-					<p class="order-info__status">
-						{{ props.statusText }}
+					<p class="order-info__status whitesapce-nowrap">
+						{{ statusText[data.status] && $t(statusText[data.status]) }}
 					</p>
 				</div>
 				<div class="order-info__wrap">
 					<p class="order-info__date">
-						{{ info.createTime }}
+						{{ data.createTime }}
 					</p>
 				</div>
 			</section>
 			<section class="order-address--mobile">
 				<div class="container">
-					<i class="micon micon-location address-icon"> </i>
+					<el-icon class="micon micon-location address-icon">
+						<ElIconLocation />
+					</el-icon>
 					<div class="address-info">
-						<span class="address-info__name">{{
-							info.receiverName
-						}}</span>
-						<span class="address-info__tel">{{
-							info.receiverMobile
-						}}</span>
+						<span class="address-info__name">
+							{{ data.receiverName }}
+						</span>
+						<span class="address-info__tel">
+							{{ data.receiverMobile }}
+						</span>
 						<p class="address-info__detail">
-							{{ info.receiverDetailAddress }}
+							{{ data.receiverDetailAddress }}
 						</p>
 					</div>
 				</div>
 			</section>
-			<section class="order-express">
-				<ul class="express-box">
-					<li
-						v-for="(s, i) in steps"
-						:key="s.value"
-						class="express-item"
-						:class="[
-							index >= i
-								? 'express-item--active'
-								: 'express-item--normal',
-						]"
+			<section v-if="props.tracks?.length" class="order-express p-2 pb-0">
+				<el-timeline>
+					<el-timeline-item
+						v-for="(s, i) in props.tracks"
+						:key="i" :timestamp="s.time"
 					>
-						<div class="express-description">
-							<span class="whitespace-nowrap">{{ s.label }}</span>
-						</div>
-						<div class="express-progress">
-							<div class="express-progress__point-line">
-								<p class="express-progress__line"></p>
-								<p class="express-progress__point"></p>
-							</div>
-						</div>
-						<div class="express-time">
-							<span class="express-time__day">10/27</span>
-							<span class="express-time__hour">17:02</span>
-						</div>
-					</li>
-				</ul>
+						{{ s.content }}
+					</el-timeline-item>
+				</el-timeline>
 			</section>
 			<section class="orderview-product">
 				<div class="product-info__titleWrap">
@@ -98,7 +70,7 @@ const index = computed(() =>
 					</p>
 				</div>
 				<div
-					v-for="item in info.items"
+					v-for="item in data.items"
 					:key="item.id"
 					class="product-info__item"
 				>
@@ -138,24 +110,24 @@ const index = computed(() =>
 				<ul class="order-total">
 					<li>
 						<span>{{ $t('Subtotal') }}:</span>
-						<ProductPrice :data="info.totalPrice" />
+						<ProductPrice :data="data.totalPrice" />
 					</li>
 					<li>
 						<span>{{ $t('Shipping') }}:</span>
-						<ProductPrice :data="info.deliveryPrice" />
+						<ProductPrice :data="data.deliveryPrice" />
 					</li>
 					<li>
 						<span>{{ $t('Promotion') }}:</span>
 						<span>
 							-
-							<ProductPrice :data="info.discountPrice" />
+							<ProductPrice :data="data.discountPrice" />
 						</span>
 					</li>
 					<li>
 						<span>{{ $t('Total') }}:</span>
 						<ProductPrice
 							class="order-total__amount"
-							:data="info.payPrice"
+							:data="data.payPrice"
 						/>
 					</li>
 				</ul>

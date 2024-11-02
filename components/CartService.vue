@@ -100,8 +100,14 @@ defineOptions({ name: 'CartService' })
 		}
 
 		@media screen and (max-width: 720px) {
+			.mi-collapse{
+				--mi-collapse-header-height: 30px;
+			}
 			.mi-collapse-item__header {
 				font-size: 16px;
+			}
+			.mi-collapse-item__content{
+				padding-bottom: 0
 			}
 		}
 

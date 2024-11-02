@@ -4,14 +4,28 @@ import type { Product } from '~/types'
 
 const props = defineProps({
 	params: { type: Object, default: () => ({}) },
+	scopeValues: { type: Array },
 })
-const { data, pagination, getData, resetData } = useTablePagination<Product>(
+const { data, pagination, resetData } = useTablePagination<Product>(
 	(p = {}) =>
-		$api('product/spu/page?apifoxApiId=211495718', {
-			params: { ...p, ...props.params },
-		}),
+		props.scopeValues?.length
+			? $api('product/spu/list-by-ids?apifoxApiId=221196568', {
+				params: {
+					...props.params,
+					ids: props.scopeValues,
+				},
+			}).then((res) => {
+				return {
+					list: res,
+					total: res.length,
+				}
+			})
+			: $api('product/spu/page?apifoxApiId=211495718', {
+				params: { ...p, ...props.params },
+			}),
 )
 watch(() => props.params, resetData)
+watch(() => props.scopeValues, resetData)
 </script>
 
 <template>
@@ -19,6 +33,7 @@ watch(() => props.params, resetData)
 		<ProductItem v-for="item in data" :key="item.id" :data="item" />
 	</div>
 	<el-pagination
+		v-if="!scopeValues.length"
 		v-model:current-page="pagination.currentPage"
 		v-model:page-size="pagination.pageSize"
 		:total="pagination.total"

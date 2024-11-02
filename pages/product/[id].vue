@@ -15,7 +15,34 @@ const { data: info } = await useAPI<ProductDetail>(
 	'product/spu/get-detail?apifoxApiId=218881713',
 	{ params: { id } },
 )
+const curSku = ref()
+const selected = ref({})
+watch(
+	info,
+	(v) => {
+		v?.skus.forEach((s) => {
+			s.propertyMap = s.properties.reduce((t, p) => {
+				t[p.propertyId] = p.valueId
+				return t
+			}, {})
+		})
+		console.log(v)
+	},
+	{ immediate: true },
+)
 
+watch(
+	selected,
+	(v) => {
+		info.value?.skus.find((s) => {
+			if (Object.entries(v).every(([k, v]) => s.propertyMap[k] === v)) {
+				curSku.value = s
+			}
+		})
+		console.log(v, curSku.value)
+	},
+	{ deep: true },
+)
 const properties = computed(() => {
 	if (!info.value)
 		return []
@@ -24,7 +51,7 @@ const properties = computed(() => {
 	}
 	if (isArray(info.value.propertyList))
 		return info.value.propertyList
-	const arr = info.value.skus.map(sku => sku.properties).flat()
+	const arr = info.value.skus.map(s => s.properties).flat()
 	const map: Record<any, any> = {}
 	arr.forEach((c) => {
 		const { propertyId, propertyName, valueId, valueName } = c
@@ -37,6 +64,9 @@ const properties = computed(() => {
 		property.values = uniqBy(property.values, 'id')
 		map[propertyId] = property
 	})
+	Object.entries(map).forEach(([k, v]) => {
+		selected.value[k] = v.values[0]?.id
+	})
 	return Object.values(map)
 })
 
@@ -45,10 +75,7 @@ const { data: stared } = await useAPI<boolean>(
 	{ params: { spuId: id } },
 )
 
-const data = ref({
-	skuId: 3,
-	count: 2,
-})
+const count = ref(1)
 
 function toggleStar() {
 	if (stared.value) {
@@ -70,8 +97,11 @@ function toggleStar() {
 function goCart() {
 	$api('trade/cart/add?apifoxApiId=218995477', {
 		method: 'post',
-		body: data.value,
-	}).then(() => router.push($path('/cart')))
+		body: {
+			count: count.value,
+			skuId: curSku.value?.id,
+		},
+	}).then(() => router.push($path('/user/cart')))
 }
 
 const appStore = useAppStore()
@@ -81,8 +111,10 @@ const appStore = useAppStore()
 	<div class="product_v4">
 		<div v-if="info" class="xm-page-area">
 			<component
-				:is="appStore.isPC ? PC : Mobile"
-				v-model="data"
+				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
+				v-model:count="count"
+				v-model:sku="curSku"
+				v-model:selected="selected"
 				:info="info"
 				:star="stared"
 				:properties="properties"

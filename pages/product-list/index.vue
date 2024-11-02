@@ -4,25 +4,38 @@ import PC from './components/PC.vue'
 import type { Category } from '~/types'
 import './index.scss'
 
-const appStore = useAppStore()
-const { data: categories } = await useAPI<Category[]>(
-	'product/category/list?apifoxApiId=217665537',
-)
-
+defineOptions({ name: 'ProductListCache' })
 const route = useRoute()
+const productScopeValues = ref([])
 const categoryId = ref()
 const query = ref()
-const keyword = ref()
 watch(
 	() => route.fullPath,
 	() => {
-		if (route.query.categoryId)
-			categoryId.value = route.query.categoryId
-		if (route.query.query)
-			query.value = route.query.query
+		categoryId.value = route.query.categoryId
+		query.value = route.query.query
+		productScopeValues.value
+			= route.query.productScopeValues?.split(',') || []
 	},
 	{ immediate: true },
 )
+
+const appStore = useAppStore()
+const categories = ref<Category[]>([])
+function refreshCategories() {
+	$api('product/category/list?apifoxApiId=217665537', {
+		params: { ids: productScopeValues.value },
+	}).then((res) => {
+		categories.value.splice(0, categories.value.length, ...res)
+		// if (!categories.value.find(c => c.id === categoryId.value))
+		// 	categoryId.value = null
+	})
+}
+refreshCategories()
+
+watch(productScopeValues, refreshCategories)
+
+const keyword = ref()
 const sortField = ref('Relevance')
 const sortAsc = ref(true)
 
@@ -112,7 +125,11 @@ function setSort(t: string) {
 					</li>
 				</ul>
 			</div>
-			<component :is="appStore.isPC ? PC : Mobile" :params="params" />
+			<component
+				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
+				:params="params"
+				:scope-values="productScopeValues"
+			/>
 		</div>
 	</main>
 </template>

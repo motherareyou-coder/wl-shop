@@ -36,7 +36,8 @@
 .user-layout__container {
     display: flex;
     margin: 30px auto;
-    width: 1226px
+    width: var(--max-width-1400);
+    max-width: 100%;
 }
 
 .user-layout__breadcrumbs {

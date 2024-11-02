@@ -1,19 +1,19 @@
-import { pick } from 'lodash-es'
 import type { CartItem, Coupon, OrderSettlement } from '~/types'
 
 export function useCheckOut(
 	productList: Ref<CartItem[] | null | undefined>,
 	coupon: Ref<Coupon | null | undefined>,
+	data?: any,
 ) {
 	const info = ref<OrderSettlement>()
 
 	const items = computed(() =>
 		(productList.value || []).map(d => ({
-			skuId: d.sku.id,
+			skuId: d.sku?.id || d.skuId,
 			count: d.count,
 			productId: d.id,
-			productPrice: d.sku.price,
-			categoryId: d.spu.categoryId,
+			productPrice: d.sku?.price || d.price,
+			categoryId: d.spu?.categoryId,
 		})),
 	)
 	function getInfo() {
@@ -23,6 +23,9 @@ export function useCheckOut(
 				params: {
 					items: items.value,
 					couponId: coupon.value?.id,
+					pointStatus: data?.value?.pointStatus || false,
+					deliveryType: data?.value?.deliveryType || 1,
+					addressId: data?.value?.addressId,
 				},
 			}).then((res) => {
 				info.value = res
@@ -32,8 +35,6 @@ export function useCheckOut(
 			info.value = null
 		}
 	}
-	watch(items, getInfo, { immediate: true, deep: true })
-	watch(coupon, getInfo, { immediate: true, deep: true })
 
 	return {
 		info,

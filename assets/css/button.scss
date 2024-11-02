@@ -1,12 +1,12 @@
 .mi-btn{
     --btn-padding: var(--btn-padding-vertical) var(--btn-padding-horizontal);
-    --btn-text-base: var(--text-base);
+    --btn-text-base: var(--text-reverse);
     --btn-background-white: var(--background-white);
     --btn-background-black: var(--background-black);
     --btn-background-primary: var(--background-primary);
     --btn-ellipsis-lines: 1;
     --btn-ellipsis-direction: vertical;
-    --btn-background-color: transparent;
+    --btn-background-color: var(--btn-background-black);
     --link-text-decoration: underline;
     background-color: var(--btn-background-color);
     border: none;
@@ -40,47 +40,52 @@
 }
 
 @media screen and (max-width: 720px) {
-    .mi-btn {
+   .mi-button, .mi-btn {
         --btn-padding-vertical:8px;
         --btn-padding-horizontal: 20px;
         --btn-font-size: 12px;
-        --btn-border-radius: 8px
+        --btn-border-radius: 8px;
+        --mi-border-radius-base:8px;
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
-    .mi-btn {
+   .mi-button, .mi-btn {
         --btn-padding-vertical:10px;
         --btn-padding-horizontal: 16px;
         --btn-font-size: 1.5625vw;
-        --btn-border-radius: 8px
+        --btn-border-radius: 8px;
+        --mi-border-radius-base:8px;
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
-    .mi-btn {
+   .mi-button, .mi-btn {
         --btn-padding-vertical:.8333333333vw;
         --btn-padding-horizontal: 1.6666666667vw;
         --btn-font-size: 16px;
-        --btn-border-radius: 8px
+        --btn-border-radius: 8px;
+        --mi-border-radius-base:8px;
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
-    .mi-btn {
+   .mi-button, .mi-btn {
         --btn-padding-vertical:.625vw;
         --btn-padding-horizontal: 2.0833333333vw;
         --btn-font-size: 1.25vw;
-        --btn-border-radius: 12px
+        --btn-border-radius: 12px;
+        --mi-border-radius-base:12px;
     }
 }
 
 @media screen and (min-width: 1921px) {
-    .mi-btn {
+   .mi-button, .mi-btn {
         --btn-padding-vertical:12px;
         --btn-padding-horizontal: 40px;
         --btn-font-size: 24px;
-        --btn-border-radius: 14px
+        --btn-border-radius: 14px;
+        --mi-border-radius-base:14px;
     }
 }
 

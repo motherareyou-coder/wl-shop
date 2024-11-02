@@ -184,8 +184,8 @@
 	.navigation__item
 	.navigation__link:focus-visible {
 	border-radius: 0;
-	outline: 4px solid var(--outline-color);
-	outline-offset: -4px !important;
+	// outline: 4px solid var(--outline-color);
+	// outline-offset: -4px !important;
 }
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {

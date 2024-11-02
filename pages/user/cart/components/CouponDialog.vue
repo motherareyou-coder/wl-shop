@@ -2,14 +2,31 @@
 import type { Coupon } from '~/types'
 
 const visible = defineModel('visible', { default: false })
-const coupon = defineModel<Coupon>({ default: () => null })
-const coupons = defineModel<Coupon[]>('list', { default: () => [] })
+const coupon = defineModel<Coupon>()
+const coupons = defineModel<Coupon[]>('list')
 
 const selected = ref<number[]>([])
 const active = ref<Coupon>()
+
+const { data } = await useAsyncData<Coupon[]>(() =>
+	$api('promotion/coupon/page?apifoxApiId=221192399').then(res => res.list),
+)
+
+const availableList = computed(
+	() => data.value, // ?.filter(d => d.status === 1) || [],
+)
+const disabledList = computed(
+	() => data.value?.filter(d => d.status !== 1) || [],
+)
+const tab = ref(0)
+
+watch(availableList, (v) => {
+	coupons.value = v || []
+}, { immediate: true })
+
 watch(selected, (v) => {
 	if (v.length > 1) {
-		return selected.value = v.slice(-1)
+		return (selected.value = v.slice(-1))
 	}
 	active.value = availableList.value.find(c => c.id === selected.value[0])
 })
@@ -17,29 +34,12 @@ watch(coupon, (v) => {
 	selected.value = v ? [v.id] : []
 })
 
-const { data } = await useAsyncData<Coupon[]>(() =>
-	$api('promotion/coupon/page?apifoxApiId=221192399').then(res => res.list),
-)
-
-const availableList = computed(
-	() => data.value || [], // ?.filter(d => d.status === 1) || [],
-)
-const disabledList = computed(
-	() => data.value?.filter(d => d.status !== 1) || [],
-)
-watch(availableList, v => (coupons.value = v || []))
-const tab = ref(0)
-
 const appStore = useAppStore()
 
 function handleConfirm() {
 	coupon.value = availableList.value.find(c => c.id === selected.value[0])
 	visible.value = false
-	console.log(visible)
 }
-watch(coupons, (v) => {
-	console.log(v)
-})
 </script>
 
 <template>
@@ -66,8 +66,8 @@ watch(coupons, (v) => {
 					<li :class="{ active: tab === 0 }" @click="tab = 0">
 						<div class="mi-tabs__item-content">
 							{{ $t('Available') }}
-							<template v-if="coupons.length">
-								({{ coupons.length }})
+							<template v-if="availableList.length">
+								({{ availableList.length }})
 							</template>
 						</div>
 					</li>
@@ -86,7 +86,11 @@ watch(coupons, (v) => {
 								:value="item.id"
 							>
 								<div class="name">
-									{{ [item.discountPrice, item.name].join(' | ') }}
+									{{
+										[item.discountPrice, item.name].join(
+											' | ',
+										)
+									}}
 								</div>
 								<div class="price">
 									<ProductPrice :data="item.discountPrice" />
@@ -111,7 +115,11 @@ watch(coupons, (v) => {
 						<li v-for="item in disabledList" :key="item.id">
 							<el-checkbox class="coupons-item" disabled>
 								<div class="name">
-									{{ [item.discountPrice, item.name].join(' | ') }}
+									{{
+										[item.discountPrice, item.name].join(
+											' | ',
+										)
+									}}
 								</div>
 								<div class="price">
 									<ProductPrice :data="item.discountPrice" />
@@ -138,7 +146,10 @@ watch(coupons, (v) => {
 				<Icon name="icon:coupon" class="highlight" />
 				<span v-if="active">
 					1 {{ $t('selected save') }}
-					<ProductPrice :data="active.discountPrice" class="highlight" />
+					<ProductPrice
+						:data="active.discountPrice"
+						class="highlight"
+					/>
 				</span>
 				<span v-else>{{ $t('Select 1 coupon to get discount') }}</span>
 			</div>

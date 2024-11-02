@@ -60,52 +60,50 @@ const appStore = useAppStore()
 			</div>
 		</div>
 	</div>
-	<el-dialog
+	<app-modal
 		v-model="isOpen"
 		class="mi-modal-v4__content coupon-list-modal"
 		:title="$t('Rewards')"
 	>
-		<main class="mi-modal-v4__main">
-			<div v-infinite-scroll="load" class="coupon-list__wrapper">
-				<div class="coupon-list__title">
-					<div class="coupon-list__label">
-						<span> {{ $t('Get Coupons') }}</span>
-					</div>
+		<div v-infinite-scroll="load" class="h-full coupon-list__wrapper">
+			<div class="coupon-list__title">
+				<div class="coupon-list__label">
+					<span> {{ $t('Get Coupons') }}</span>
 				</div>
-				<ul>
-					<li
-						v-for="c in data"
-						:key="c.id"
-						class="coupon-list__item coupon-list__item--get-coupon coupon-list--yellow"
-					>
-						<div class="coupon-list__item--left">
-							<div class="coupon-list__item--tag">
-								<strong>{{ c.name }}</strong>
-							</div>
-							<div class="coupon-list__item--desc">
-								<h6 class="coupon-list__item--name">
-									{{ c.name }}
-								</h6>
-								<p class="coupon-list__item--date">
-									{{ c.validStartTime }} -
-									{{ c.validEndTime }}
-								</p>
-								<p class="coupon-list__item--range">
-									{{ c.description }}
-								</p>
-							</div>
-						</div>
-						<div class="coupon-list__item--right">
-							<div
-								class="coupon-list__item--collect"
-								@click="getCoupon(c)"
-							>
-								{{ $t('Get Now') }}
-							</div>
-						</div>
-					</li>
-				</ul>
 			</div>
-		</main>
-	</el-dialog>
+			<ul>
+				<li
+					v-for="c in data"
+					:key="c.id"
+					class="coupon-list__item coupon-list__item--get-coupon coupon-list--yellow"
+				>
+					<div class="coupon-list__item--left">
+						<div class="coupon-list__item--tag">
+							<strong>{{ c.name }}</strong>
+						</div>
+						<div class="coupon-list__item--desc">
+							<h6 class="coupon-list__item--name">
+								{{ c.name }}
+							</h6>
+							<p class="coupon-list__item--date">
+								{{ c.validStartTime }} -
+								{{ c.validEndTime }}
+							</p>
+							<p class="coupon-list__item--range">
+								{{ c.description }}
+							</p>
+						</div>
+					</div>
+					<div class="coupon-list__item--right">
+						<div
+							class="coupon-list__item--collect"
+							@click="getCoupon(c)"
+						>
+							{{ $t('Get Now') }}
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</app-modal>
 </template>

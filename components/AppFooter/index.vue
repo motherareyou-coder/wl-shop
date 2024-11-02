@@ -5,12 +5,12 @@ defineOptions({ name: 'AppFooter' })
 
 const form = ref({ email: '' })
 const rules = {
-	email: [{ type: 'email' }],
+	email: [{ type: 'email' }, { required: true }],
 }
 
 const list = [
 	{
-		label: 'SUPPORT',
+		label: $t('SUPPORT'),
 		children: [
 			{ label: 'Mi Points FAQ', src: 'https://www.mi.com/uk/' },
 			{ label: 'Where to Buy', src: 'https://www.mi.com/uk/' },
@@ -19,7 +19,7 @@ const list = [
 		],
 	},
 	{
-		label: 'ABOUT US',
+		label: $t('ABOUT US'),
 		children: [
 			{ label: 'Xiaomi', src: 'https://www.mi.com/uk/' },
 			{ label: 'Leadership Team', src: 'https://www.mi.com/uk/' },
@@ -30,7 +30,7 @@ const list = [
 		],
 	},
 	{
-		label: 'CONTRACT US',
+		label: $t('CONTRACT US'),
 		children: [
 			{ label: 'Twitter', src: 'https://www.mi.com/uk/' },
 			{ label: 'Youtube', src: 'https://www.mi.com/uk/' },
@@ -186,25 +186,37 @@ function submit() {
 								Enter your email address to subscribe to our
 								newsletters
 							</h3>
-							<div class="site-footer__form">
-								<div class="site-footer__input">
+							<el-form
+								ref="formRef"
+								:show-message="false"
+								:model="form"
+								:rules="rules"
+								class="site-footer__form"
+							>
+								<el-form-item
+									class="site-footer__input"
+									prop="email"
+								>
 									<input
 										id="email"
+										v-model="form.email"
 										type="email"
 										name="email"
 										class="site-footer__email"
-										placeholder="Enter email address"
-										value=""
+										:placeholder="$t('Enter email address')"
 									>
 									<button
-										class="mi-btn--icon mi-btn--normal mi-btn--dark site-footer__submit"
+										class="site-footer__submit"
+										@click.prevent="submit"
 									>
-										<i
-											class="micon micon-forward submit__icon"
-										></i>
+										<el-icon
+											class="micon-forward submit__icon"
+										>
+											<ElIconArrowRight />
+										</el-icon>
 									</button>
-								</div>
-							</div>
+								</el-form-item>
+							</el-form>
 						</div>
 					</div>
 				</section>

@@ -3,11 +3,15 @@ import type { Coupon } from '~/types'
 import './index.scss'
 
 const route = useRoute()
-const type = route.query.type
+const type = Number(route.query.type)
 
-const status = ref(type)
+const status = ref(type || 0)
 
-const tags = ref(['unused', 'used', 'expired', 'Use coupon code'])
+const tags = ref([
+	{ label: $t('unused'), value: 0 },
+	{ label: $t('used'), value: 1 },
+	{ label: $t('expired'), value: 2 },
+])
 
 const { data, load, reset } = useInfiteLoad<Coupon>(params =>
 	$api('promotion/coupon/page?apifoxApiId=221192399', {
@@ -30,13 +34,13 @@ watch(status, reset)
 				<ul class="mi-tabs__header">
 					<li
 						v-for="t in tags"
-						:key="t"
+						:key="t.value"
 						class="mi-tabs__item mi-tabs__item--separator"
-						:class="{ 'mi-tabs__item--active': status === t }"
-						@click="status = t"
+						:class="{ 'mi-tabs__item--active': status === t.value }"
+						@click="status = t.value"
 					>
 						<div class="mi-tabs__item-content">
-							{{ t }}
+							{{ t.label }}
 						</div>
 					</li>
 				</ul>
@@ -64,7 +68,7 @@ watch(status, reset)
 						</p>
 					</div>
 					<div class="user-coupon__item--btn">
-						<nuxt-link class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn">
+						<nuxt-link :to="$path(`/product-list?productScope=${c.productScope}&productScopeValues=${c.productScopeValues}`)" class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn">
 							<span class="mi-btn__text">
 								{{ $t('Use now') }}
 							</span>

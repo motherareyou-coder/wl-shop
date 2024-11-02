@@ -5,13 +5,15 @@ import type { Category } from '~/types'
 defineOptions({ name: 'AppHeader' })
 
 const appStore = useAppStore()
+const userStore = useUserStore()
 const sideShow = ref(false)
 const searchShow = ref(false)
+
+userStore.getInfo()
 
 const { data: categories } = await useAPI<Category[]>(
 	'product/category/list/top?apifoxApiId=211912811',
 )
-console.log(categories)
 
 watch(
 	categories,
@@ -31,7 +33,20 @@ watch(
 	},
 	{ immediate: true },
 )
-const showMobileMenu = computed(() => appStore.bodyWidth <= 1024)
+const showMobileMenu = computed(
+	() => appStore.bodyWidth && appStore.bodyWidth <= 1024,
+)
+const route = useRoute()
+const router = useRouter()
+function logout() {
+	$api('member/auth/logout?apifoxApiId=221136607', { method: 'post' }).then(
+		() => {
+			userStore.logout()
+			if (route.path.includes('user'))
+				router.replace($path('/'))
+		},
+	)
+}
 </script>
 
 <template>
@@ -55,18 +70,42 @@ const showMobileMenu = computed(() => appStore.bodyWidth <= 1024)
 					</i>
 				</li>
 				<li class="navigation__item shortcut__item">
-					<nuxt-link
-						class="navigation__link"
-						:to="$path('/cart')"
-					>
+					<nuxt-link class="navigation__link" :to="$path('/user/cart')">
 						<Icon name="icon:cart" style="margin-bottom: -2px" />
 					</nuxt-link>
 				</li>
-				<li class="navigation__item shortcut__item">
+				<el-dropdown
+					v-if="appStore.isPC"
+					class="navigation__item shortcut__item"
+				>
 					<nuxt-link
-						class="navigation__link"
+						class="navigation__link outline-none"
 						:to="$path('/user')"
 					>
+						<Icon name="icon:user" />
+					</nuxt-link>
+					<template #dropdown>
+						<el-dropdown-menu>
+							<template v-if="userStore.nickname">
+								<nuxt-link :to="$path('/user/orderlist')">
+									<el-dropdown-item>
+										{{ $t('My orders') }}
+									</el-dropdown-item>
+								</nuxt-link>
+								<el-dropdown-item @click="logout">
+									{{ $t('Sign out') }}
+								</el-dropdown-item>
+							</template>
+							<nuxt-link v-else :to="$path('/login')">
+								<el-dropdown-item>
+									{{ $t('Sign in') }}
+								</el-dropdown-item>
+							</nuxt-link>
+						</el-dropdown-menu>
+					</template>
+				</el-dropdown>
+				<li v-else class="navigation__item shortcut__item">
+					<nuxt-link class="navigation__link" :to="$path('/user')">
 						<Icon name="icon:user" />
 					</nuxt-link>
 				</li>

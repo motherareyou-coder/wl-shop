@@ -3,7 +3,15 @@ import { statusOptions, statusText } from '../utils'
 import type { OrderDetail } from '~/types'
 import './PC.scss'
 
-const status = ref('')
+const statusClass = {
+	0: 'paying',
+	10: 'waiting',
+	20: 'ship',
+	30: 'delivered',
+	40: 'close',
+}
+const route = useRoute()
+const status = ref(route.query.type || '')
 const {
 	data: orderList,
 	pagination,
@@ -11,6 +19,18 @@ const {
 } = useTablePagination<OrderDetail>((p = {}) =>
 	$api('trade/order/page?apifoxApiId=219807468', {
 		params: { ...p, status: status.value },
+	}).then((res) => {
+		res.list.forEach((o) => {
+			if (status.value === 0) {
+				o.status = 0
+			}
+			else {
+				o.status
+					= status.value
+					|| [0, 10, 20, 30, 40][Math.ceil(Math.random() * 5)]
+			}
+		})
+		return res
 	}),
 )
 watch(status, resetData)
@@ -49,14 +69,19 @@ watch(status, resetData)
 								<li
 									class="order-item"
 									:class="[
-										`order-item--${statusText[o.status]?.toLowerCase()}`,
+										`order-item--${statusClass[
+											o.status
+										]?.toLowerCase()}`,
 									]"
 								>
 									<div class="order-item-header">
 										<p
 											class="order-item-header--title show-tag"
 										>
-											{{ statusText[o.status] && $t(statusText[o.status]) }}
+											{{
+												statusText[o.status]
+													&& $t(statusText[o.status])
+											}}
 										</p>
 										<p class="info"></p>
 									</div>
@@ -65,9 +90,9 @@ watch(status, resetData)
 											<li class="info-left_time">
 												{{ o.createTime }}
 											</li>
-											<li class="info-left-name">
+											<!-- <li class="info-left-name">
 												{{ o.receiverName }}
-											</li>
+											</li> -->
 											<li
 												class="info-left-order-id order-id"
 											>
@@ -96,6 +121,17 @@ watch(status, resetData)
 										class="order-item-goodslist goods-list"
 									>
 										<div class="goods-list-order-btn">
+											<nuxt-link
+												v-if="o.status === 0"
+												:to="
+													$path(
+														`/user/checkout?orderId=${o.id}`,
+													)
+												"
+												class="goods-list-order-btn--orange order-btn"
+											>
+												{{ $t('Pay Now') }}
+											</nuxt-link>
 											<nuxt-link
 												:to="
 													$path(
@@ -165,5 +201,3 @@ watch(status, resetData)
 		</div>
 	</div>
 </template>
-
-<style lang="scss" scoped></style>

@@ -10487,7 +10487,7 @@ body.mi-date-time-modal__body--overflow-hidden {
 
 @media screen and (max-width: 720px) {
     .price-summary .price-summary__list .price-summary__item-more {
-        display: none
+        // display: none
     }
 }
 
@@ -10620,7 +10620,7 @@ body.mi-date-time-modal__body--overflow-hidden {
     .price-summary .price-summary__list .price-summary__item.price-summary__item--saved .price-summary__detail {
         --detail-gap: 10px;
         border-radius: 6px;
-        display: none !important;
+        // display: none !important;
         font-size: 12px;
         padding: 8px
     }

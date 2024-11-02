@@ -2,11 +2,11 @@
 
 export const statusOptions = [
 	{ value: '', label: 'All Order' },
-	{ value: 0, label: 'Awaiting payment' },
-	{ value: 10, label: 'Awaiting ship' },
-	{ value: 20, label: 'Shipping' },
-	{ value: 30, label: 'Done' },
-	{ value: 40, label: 'Cancel' },
+	{ value: '0', label: 'Awaiting payment' },
+	{ value: '10', label: 'Awaiting ship' },
+	{ value: '20', label: 'Shipping' },
+	{ value: '30', label: 'Done' },
+	{ value: '40', label: 'Canceled' },
 ]
 
 export const statusText = statusOptions.reduce((o, c) => {

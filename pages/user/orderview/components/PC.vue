@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { OrderDetail } from '~/types'
+import { statusText } from '../../orderlist/utils'
+import type { ExpressTrack, OrderDetail } from '~/types'
 import './PC.scss'
 
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
-	statusText: { type: String },
+	tracks: { type: Object as () => ExpressTrack[] },
 })
 const data = computed(() => props.data)
 </script>
@@ -31,7 +32,7 @@ const data = computed(() => props.data)
 						class="deliver-status-title"
 						:class="[`deliver-status-title--${data.status}`]"
 					>
-						{{ props.statusText }}
+						{{ statusText[data.status] && $t(statusText[data.status]) }}
 					</h2>
 					<section v-if="data.status === 0" class="showPayInfo">
 						<div class="order-express__pay-countdown">
@@ -39,6 +40,16 @@ const data = computed(() => props.data)
 						</div>
 					</section>
 					<section class="deliver-status-descp"></section>
+				</section>
+				<section v-if="props.tracks?.length">
+					<el-timeline>
+						<el-timeline-item
+							v-for="(s, i) in props.tracks"
+							:key="i" :timestamp="s.time"
+						>
+							{{ s.content }}
+						</el-timeline-item>
+					</el-timeline>
 				</section>
 				<section class="package-detail">
 					<ul class="package-detail__list">
@@ -110,23 +121,23 @@ const data = computed(() => props.data)
 					<div class="address-info">
 						<div class="message-info--name message-info__item">
 							<span class="message-info__item-label">
-								{{ $t('Name') }}
+								{{ $t('ReceiverName') }}
 							</span>
-							<span class="message-info__item-info">{{
-								data.consignee
-							}}</span>
+							<span class="message-info__item-info">
+								{{ data.receiverName }}
+							</span>
 						</div>
 						<div class="message-info--address message-info__item">
 							<span class="message-info__item-label">
 								{{ $t('Address') }}
 							</span>
-							<span class="message-info__item-info">erger casdae 2654684</span>
+							<span class="message-info__item-info">{{ data.receiverAreaName }} {{ data.receiverDetailAddress }}</span>
 						</div>
 						<div class="message-info--address message-info__item">
 							<span class="message-info__item-label">
 								{{ $t('Phone') }}
 							</span>
-							<span class="message-info__item-info">465****419</span>
+							<span class="message-info__item-info">{{ data.receiverMobile }}</span>
 						</div>
 					</div>
 				</section>

@@ -496,8 +496,10 @@ body.body--overflow-hidden {
     box-shadow: 0 0 .27778rem 0 var(--shadow-black-a5);
     box-sizing: border-box;
     margin-top: .55556rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
     padding: .41667rem;
-    width: 9.16667rem;
+    width: 100%;
 }
 
 .order-item--mobile:first-child {

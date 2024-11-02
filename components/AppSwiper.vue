@@ -17,6 +17,15 @@ defineOptions({ name: 'AppSwiper' })
 
 const { data } = await useAPI<Banner[]>(
 	'promotion/banner/list?apifoxApiId=212551460',
+	{ params: { position: 1 } },
+)
+watch(
+	data,
+	(v) => {
+		if (v && v.length < 3)
+			data.value = [...v, ...v]
+	},
+	{ immediate: true },
 )
 
 interface Banner {
@@ -43,19 +52,22 @@ function pause() {
 	if (!swiper)
 		return
 	swiper.autoplay.pause()
-	paused.value = swiper.autoplay.paused
 }
 function resume() {
 	if (!swiper)
 		return
 	swiper.autoplay.resume()
-	paused.value = swiper.autoplay.paused
 }
 function prev() {
 	swiper?.slidePrev()
 }
 function next() {
 	swiper?.slideNext()
+}
+function updatePause() {
+	if (!swiper)
+		return
+	paused.value = swiper.autoplay.paused
 }
 
 const modules = [Autoplay]
@@ -64,10 +76,15 @@ const indicatorWidth = ref(0)
 function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 	indicatorWidth.value = 100 - Number.parseInt(`${progress * 100}`, 10)
 }
+
+const router = useRouter()
 function onClick({ id }: Banner) {
 	if (id) {
 		$api('promotion/banner/add-browse-count?apifoxApiId=212551542', {
+			method: 'put',
 			params: { id },
+		}).then(() => {
+			router.push($path(`/product/${id}`))
 		})
 	}
 }
@@ -86,14 +103,17 @@ function onClick({ id }: Banner) {
 					delay: 3000,
 					disableOnInteraction: false,
 				}"
+				@autoplay-pause="updatePause"
+				@autoplay-resume="updatePause"
 				@autoplay-time-left="onAutoplayTimeLeft"
 				@swiper="setSwiper"
 				@slide-change="onSlideChange"
 			>
 				<SwiperSlide
-					v-for="(item, i) in data"
+					v-for="item in data"
 					:key="item.id"
 					style="height: var(--banner-height)"
+					@click.prevent="onClick(item)"
 				>
 					<div class="carousel-banner__slide">
 						<app-image
@@ -102,12 +122,7 @@ function onClick({ id }: Banner) {
 							:alt="item.title"
 							fit="cover"
 							class="slide__background"
-							@click="onClick"
-						>
-							<template #placeholder>
-								<div>{{ item.title }}</div>
-							</template>
-						</app-image>
+						/>
 						<!-- <div
 							class="slide__content slide__content--vertical-center slide__content--mobile-top"
 						>
