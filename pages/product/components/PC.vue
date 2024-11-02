@@ -165,7 +165,7 @@ const totalPrice = computed(() => {
 							<div class="add-cart-section__submit-group">
 								<button
 									class="add-cart-section__btn add-cart-section__submit add-cart-section__submit--main"
-									@click="emit('submit')"
+									@click.prevent="emit('submit')"
 								>
 									{{ $t('BUY NOW') }}
 								</button>

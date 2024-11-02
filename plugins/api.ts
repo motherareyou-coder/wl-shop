@@ -1,5 +1,3 @@
-let reconnectattempts = 0
-
 export default defineNuxtPlugin(() => {
 	// const { session } = useUserSession()
 	const token = localStorage.getItem('access-token')
@@ -23,31 +21,13 @@ export default defineNuxtPlugin(() => {
 			}
 		},
 		onResponse({ response }) {
-			reconnectattempts = 0
 			if (response._data?.data)
 				response._data = response._data?.data
+			refreshToken()
 		},
 		async onResponseError({ request, response }) {
 			if (response.status === 401) {
-				const refreshToken = localStorage.getItem('refresh-token')
-				if (refreshToken) {
-					if (reconnectattempts > 5) {
-						await nuxtApp.runWithContext(() => navigateTo('/login'))
-						return
-					}
-					const res: AuthToken = await api(
-						'member/auth/refresh-token?apifoxApiId=221136003',
-						{ method: 'post', params: { refreshToken } },
-					)
-					userStore.setToken(res)
-					await userStore.getInfo()
-					reconnectattempts++
-					// 重发
-					await api(request)
-				}
-				else {
-					await nuxtApp.runWithContext(() => navigateTo('/login'))
-				}
+				await nuxtApp.runWithContext(() => navigateTo('/login'))
 			}
 			else {
 				ElMessage.error(
@@ -56,6 +36,26 @@ export default defineNuxtPlugin(() => {
 			}
 		},
 	})
+
+	let refreshing = false
+	function refreshToken() {
+		if (refreshing)
+			return
+		const { refreshToken, expiresTime } = userStore.$state
+		if (expiresTime > new Date().getTime() + 3600 * 1000)
+			return
+		if (refreshToken) {
+			refreshing = true
+			api(
+				'member/auth/refresh-token?apifoxApiId=221136003',
+				{ method: 'post', params: { refreshToken } },
+			).then((res) => {
+				userStore.setToken(res as AuthToken)
+			}).finally(() => {
+				refreshing = false
+			})
+		}
+	}
 
 	// Expose to useNuxtApp().$api
 	return {

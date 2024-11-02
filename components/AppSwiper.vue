@@ -171,7 +171,7 @@ function onClick({ id }: Banner) {
 								'controller__bar--current': realIndex === i,
 							}"
 							class="controller__button controller__bar with-transition"
-							@click="slideTo(i)"
+							@click.prevent="slideTo(i)"
 						>
 							<span
 								class="controller__indicator-container with-transition"
@@ -185,9 +185,9 @@ function onClick({ id }: Banner) {
 							<el-icon class="controller__icon with-transition">
 								<ElIconVideoPlay
 									v-if="paused"
-									@click="resume"
+									@click.prevent="resume"
 								/>
-								<ElIconVideoPause v-else @click="pause" />
+								<ElIconVideoPause v-else @click.prevent="pause" />
 							</el-icon>
 						</button>
 					</div>

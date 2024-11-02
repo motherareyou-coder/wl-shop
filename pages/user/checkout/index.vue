@@ -17,7 +17,6 @@ if (orderId) {
 		params: { id: orderId },
 	}).then((res) => {
 		const { items = [], ...data } = res
-		console.log(11, items, data)
 		productList.value = items
 		info.value = data
 		// coupon.value = res.couponId

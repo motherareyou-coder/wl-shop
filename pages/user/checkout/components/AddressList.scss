@@ -2411,19 +2411,19 @@
     margin-top: 0;
 }
 
-.mi-form .mi-form-item {
+.address-form .mi-form-item {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-.mi-form .mi-form-item .mi-form-item__label {
+.address-form .mi-form-item .mi-form-item__label {
     flex-shrink: 0;
 }
 
 @media screen and (max-width: 720px) {
-    .mi-form .mi-form-item .mi-form-item__label {
+    .address-form .mi-form-item .mi-form-item__label {
         color: #191919;
         color: var(--text-base);
         font-size: 12px;
@@ -2431,7 +2431,7 @@
 }
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {
-    .mi-form .mi-form-item .mi-form-item__label {
+    .address-form .mi-form-item .mi-form-item__label {
         color: #191919;
         color: var(--text-base);
         font-size: 14px;
@@ -2439,7 +2439,7 @@
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
-    .mi-form .mi-form-item .mi-form-item__label {
+    .address-form .mi-form-item .mi-form-item__label {
         color: #898989;
         color: var(--text-secondary);
         font-size: 14px;
@@ -2447,7 +2447,7 @@
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
-    .mi-form .mi-form-item .mi-form-item__label {
+    .address-form .mi-form-item .mi-form-item__label {
         color: #898989;
         color: var(--text-secondary);
         font-size: 16px;
@@ -2455,7 +2455,7 @@
 }
 
 @media screen and (min-width: 1921px) {
-    .mi-form .mi-form-item .mi-form-item__label {
+    .address-form .mi-form-item .mi-form-item__label {
         color: #898989;
         color: var(--text-secondary);
         font-size: 16px;
@@ -2463,48 +2463,48 @@
 }
 
 @media screen and (max-width: 720px) {
-    .mi-form .mi-form-item .mi-form-item__input {
+    .address-form .mi-form-item .mi-form-item__input {
         margin: 6px 0 4px;
     }
 }
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {
-    .mi-form .mi-form-item .mi-form-item__input {
+    .address-form .mi-form-item .mi-form-item__input {
         margin: 8px 0 6px;
     }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
-    .mi-form .mi-form-item .mi-form-item__input {
+    .address-form .mi-form-item .mi-form-item__input {
         margin: 8px 0;
     }
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
-    .mi-form .mi-form-item .mi-form-item__input {
+    .address-form .mi-form-item .mi-form-item__input {
         margin: 8px 0;
     }
 }
 
 @media screen and (min-width: 1921px) {
-    .mi-form .mi-form-item .mi-form-item__input {
+    .address-form .mi-form-item .mi-form-item__input {
         margin: 8px 0;
     }
 }
 
-.mi-form .mi-form-item .mi-form-item__content {
+.address-form .mi-form-item .mi-form-item__content {
     flex: 1 1;
     width: 100%;
 }
 
-.mi-form .mi-form-item .mi-form-item__explain {
+.address-form .mi-form-item .mi-form-item__explain {
     color: #ff4e4e;
     height: auto;
     white-space: normal;
 }
 
 @media screen and (max-width: 720px) {
-    .mi-form .mi-form-item .mi-form-item__explain {
+    .address-form .mi-form-item .mi-form-item__explain {
         font-size: 12px;
         margin-bottom: 12px;
         margin-top: 6px;
@@ -2512,7 +2512,7 @@
 }
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {
-    .mi-form .mi-form-item .mi-form-item__explain {
+    .address-form .mi-form-item .mi-form-item__explain {
         font-size: 14px;
         margin-bottom: 14px;
         margin-top: 6px;
@@ -2520,7 +2520,7 @@
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
-    .mi-form .mi-form-item .mi-form-item__explain {
+    .address-form .mi-form-item .mi-form-item__explain {
         font-size: 14px;
         margin-bottom: 16px;
         margin-top: 8px;
@@ -2528,7 +2528,7 @@
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
-    .mi-form .mi-form-item .mi-form-item__explain {
+    .address-form .mi-form-item .mi-form-item__explain {
         font-size: 16px;
         margin-bottom: 16px;
         margin-top: 8px;
@@ -2536,75 +2536,75 @@
 }
 
 @media screen and (min-width: 1921px) {
-    .mi-form .mi-form-item .mi-form-item__explain {
+    .address-form .mi-form-item .mi-form-item__explain {
         font-size: 16px;
         margin-bottom: 16px;
         margin-top: 8px;
     }
 }
 
-.mi-form .mi-form-item .mi-form-item__explain-hide {
+.address-form .mi-form-item .mi-form-item__explain-hide {
     height: 0;
     opacity: 0;
     transform: translateZ(0);
 }
 
 @media screen and (max-width: 720px) {
-    .mi-form .mi-form-item .mi-form-item__explain-hide {
+    .address-form .mi-form-item .mi-form-item__explain-hide {
         margin-top: -6px;
     }
 }
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {
-    .mi-form .mi-form-item .mi-form-item__explain-hide {
+    .address-form .mi-form-item .mi-form-item__explain-hide {
         margin-top: -8px;
     }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
-    .mi-form .mi-form-item .mi-form-item__explain-hide {
+    .address-form .mi-form-item .mi-form-item__explain-hide {
         margin-top: -8px;
     }
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
-    .mi-form .mi-form-item .mi-form-item__explain-hide {
+    .address-form .mi-form-item .mi-form-item__explain-hide {
         margin-top: -8px;
     }
 }
 
 @media screen and (min-width: 1921px) {
-    .mi-form .mi-form-item .mi-form-item__explain-hide {
+    .address-form .mi-form-item .mi-form-item__explain-hide {
         margin-top: -8px;
     }
 }
 
 @media screen and (max-width: 720px) {
-    .mi-form .mi-form-item .mi-form-item__tip {
+    .address-form .mi-form-item .mi-form-item__tip {
         font-size: 10px;
     }
 }
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {
-    .mi-form .mi-form-item .mi-form-item__tip {
+    .address-form .mi-form-item .mi-form-item__tip {
         font-size: 12px;
     }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
-    .mi-form .mi-form-item .mi-form-item__tip {
+    .address-form .mi-form-item .mi-form-item__tip {
         font-size: 14px;
     }
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
-    .mi-form .mi-form-item .mi-form-item__tip {
+    .address-form .mi-form-item .mi-form-item__tip {
         font-size: 16px;
     }
 }
 
 @media screen and (min-width: 1921px) {
-    .mi-form .mi-form-item .mi-form-item__tip {
+    .address-form .mi-form-item .mi-form-item__tip {
         font-size: 16px;
     }
 }

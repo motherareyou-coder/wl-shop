@@ -13,6 +13,7 @@ const router = useRouter()
 function handleSubmit() {
 	router.push($path('/user/checkout'))
 }
+const paramsStore = useParamsStore()
 
 const loading = ref(false)
 provide('loading', loading)
@@ -41,6 +42,14 @@ function getCartList() {
 	)
 }
 getCartList()
+watch(
+	validList,
+	(v) => {
+		if (v)
+			paramsStore.setCartCount(v.length)
+	},
+	{ immediate: true },
+)
 
 const finalList = computed(() => [...validList.value, ...invalidList.value])
 
@@ -201,7 +210,10 @@ function checkAllChange(selected: any) {
 							</span> -->
 						</div>
 						<div class="cart-delivery__spacer"></div>
-						<button class="mi-btn--link cart-delivery__delete" @click.prevent="handleDeleteAll">
+						<button
+							class="mi-btn--link cart-delivery__delete"
+							@click.prevent="handleDeleteAll"
+						>
 							{{ $t('Delete') }}
 						</button>
 					</aside>
@@ -278,15 +290,16 @@ function checkAllChange(selected: any) {
 											/>
 										</div>
 										<div class="action-section">
-											<button class="mi-btn--icon">
-												<el-icon
-													style="
-														color: var(
-															--brand-black-30
-														);
-													"
-													@click="handleDelete(g)"
-												>
+											<button
+												class="mi-btn--icon"
+												style="
+													color: var(
+														--brand-black-30
+													);
+												"
+												@click.prevent="handleDelete(g)"
+											>
+												<el-icon>
 													<ElIconDelete />
 												</el-icon>
 											</button>

@@ -150,7 +150,7 @@ function login() {
 			class="login-form max-w-full"
 			:model="form"
 			:rules="rules"
-			label-position="left"
+			label-position="top"
 			hide-required-asterisk
 			:show-message="false"
 		>
@@ -229,9 +229,6 @@ function login() {
 			.mi-radio__label {
 				color: #191919;
 			}
-			.mi-form-item__label {
-				width: 6rem;
-			}
 			.code-input {
 				.mi-input__wrapper {
 					padding-right: 1px;
@@ -255,9 +252,6 @@ function login() {
 		padding: 30px;
 		.login-form {
 			width: 16rem;
-			:deep .mi-form-item__label {
-				width: 4rem;
-			}
 		}
 	}
 }
@@ -265,9 +259,6 @@ function login() {
 	.login-container {
 		.login-form {
 			min-width: 500px;
-			:deep .mi-form-item__label {
-				width: 8rem;
-			}
 		}
 	}
 }

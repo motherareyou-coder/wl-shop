@@ -154,7 +154,7 @@ function handleConfirm() {
 				<span v-else>{{ $t('Select 1 coupon to get discount') }}</span>
 			</div>
 			<div class="action">
-				<button class="app-button" @click="handleConfirm">
+				<button class="app-button" @click.prevent="handleConfirm">
 					{{ $t('Confrim') }}
 				</button>
 			</div>

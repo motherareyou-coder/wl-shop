@@ -28,7 +28,7 @@ function onClick() {
 						class="mi-price item__price"
 						:data="data.price"
 					/>
-					<button @click="onClick">
+					<button @click.prevent="onClick">
 						{{ $t('Shop Now') }}
 					</button>
 				</div>

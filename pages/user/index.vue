@@ -338,7 +338,7 @@ function logout() {
 				</el-icon>
 			</nuxt-link>
 		</section>
-		<button v-if="appStore.isMobile" class="sign-out__item" @click="logout">
+		<button v-if="appStore.isMobile" class="sign-out__item" @click.prevent="logout">
 			<el-icon class="sign-out__icon">
 				<ElIconSwitchButton />
 			</el-icon>

@@ -3527,19 +3527,19 @@ ul::-webkit-scrollbar-thumb {
     transform: scaleX(var(--cardinal-number))
 }
 
-.checkout-address .address-content .mi-form .mi-form-item .mi-form-item__label {
+.checkout-address .address-content .address-form .mi-form-item .mi-form-item__label {
     font-size: var(--content-font-size)
 }
 
 @media screen and (max-width: 720px) {
-    .checkout-address .address-content .mi-form .mi-form-item .mi-form-item__explain {
+    .checkout-address .address-content .address-form .mi-form-item .mi-form-item__explain {
         margin-bottom: 8px;
         margin-top: 4px
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
-    .checkout-address .address-content .mi-form .mi-form-item .mi-form-item__explain {
+    .checkout-address .address-content .address-form .mi-form-item .mi-form-item__explain {
         font-size: 10px;
         margin-bottom: 9px;
         margin-top: 6px
@@ -3547,7 +3547,7 @@ ul::-webkit-scrollbar-thumb {
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
-    .checkout-address .address-content .mi-form .mi-form-item .mi-form-item__explain {
+    .checkout-address .address-content .address-form .mi-form-item .mi-form-item__explain {
         font-size: 12px;
         margin-bottom: 9px;
         margin-top: 6px
@@ -3555,7 +3555,7 @@ ul::-webkit-scrollbar-thumb {
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
-    .checkout-address .address-content .mi-form .mi-form-item .mi-form-item__explain {
+    .checkout-address .address-content .address-form .mi-form-item .mi-form-item__explain {
         font-size: 12px;
         margin-bottom: 12px;
         margin-top: 6px
@@ -3563,7 +3563,7 @@ ul::-webkit-scrollbar-thumb {
 }
 
 @media screen and (min-width: 1921px) {
-    .checkout-address .address-content .mi-form .mi-form-item .mi-form-item__explain {
+    .checkout-address .address-content .address-form .mi-form-item .mi-form-item__explain {
         font-size: 12px;
         margin-bottom: 12px;
         margin-top: 6px
