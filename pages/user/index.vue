@@ -109,7 +109,7 @@ function handleChangeAvatar(p) {
 function handleSubmit() {
 	formState.loading = true
 	$api('member/user/update?apifoxApiId=221160017', {
-		mdthod: 'put',
+		method: 'put',
 		body: formState.data,
 	}).finally(() => {
 		formState.loading = false
