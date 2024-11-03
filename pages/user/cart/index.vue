@@ -8,6 +8,9 @@ import type { CartItem, Coupon } from '~/types'
 import './index.scss'
 
 defineOptions({ name: 'Cart' })
+useHead({
+	title: `${$t('cart')} ${$t('appTitle')}`,
+})
 
 const router = useRouter()
 function handleSubmit() {

@@ -19,7 +19,7 @@
 	"cart": "cart",
 	"All Order": "All",
 	"CancelOrder": "Cancel",
-	"ReceiveOrder": "Confrim Receive",
+	"ReceiveOrder": "Receive",
 	"DeleteOrder": "Delete",
 	"ReceiverName": "Name"
 }

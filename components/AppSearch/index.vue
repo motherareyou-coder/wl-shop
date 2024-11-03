@@ -16,15 +16,23 @@ function goSearch() {
 </script>
 
 <template>
-	<div class="search-modal" :class="[show ? 'search-modal--show' : 'search-modal--hidden']" @click="show = false">
-		<div class="search-base" @click.stop>
-			<div class="search-base__container">
-				<el-input v-model="query" class="search-input" clearable @keydown.enter="goSearch">
-					<template #prefix>
-						<el-icon><ElIconSearch /></el-icon>
-					</template>
-				</el-input>
-			</div>
+	<el-drawer
+		v-model="show"
+		direction="ttb"
+		:show-close="false"
+		append-to-body
+	>
+		<div class="search-base__container">
+			<el-input
+				v-model="query"
+				class="search-input"
+				clearable
+				@keydown.enter="goSearch"
+			>
+				<template #prefix>
+					<el-icon><ElIconSearch /></el-icon>
+				</template>
+			</el-input>
 		</div>
-	</div>
+	</el-drawer>
 </template>

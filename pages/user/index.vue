@@ -2,6 +2,9 @@
 import BgImg from '@/assets/imgs/user-center-bg.jpg'
 import './index.scss'
 
+useHead({
+	title: `${$t('user')} ${$t('appTitle')}`,
+})
 const appStore = useAppStore()
 const userStore = useUserStore()
 

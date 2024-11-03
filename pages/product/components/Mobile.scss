@@ -2583,44 +2583,6 @@ body.mi-dialog__Body--overflow-hidden {
     color: #ff4e4e
 }
 
-.mi-dropdown {
-    align-items: center;
-    border: .03125rem solid #e0e0e0;
-    color: #e0e0e0;
-    display: flex;
-    font-size: .8125rem;
-    height: 2.1875rem;
-    justify-content: space-between;
-    width: 6.1875rem
-}
-
-.mi-dropdown,
-.mi-dropdown>select {
-    box-sizing: border-box;
-    position: relative
-}
-
-.mi-dropdown>select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: none;
-    border: none;
-    color: #888;
-    flex: 1 1;
-    height: 100%;
-    outline: none;
-    padding: 0 .5rem
-}
-
-.mi-dropdown i {
-    color: #999;
-    font-size: .625rem;
-    padding-right: .3125rem;
-    position: absolute;
-    right: 0
-}
-
 .product--mobile .shipAddress-container {
     font-size: .75rem;
     line-height: 1.2;

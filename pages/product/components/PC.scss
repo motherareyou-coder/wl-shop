@@ -6993,42 +6993,6 @@ body.mi-dialog-v4__Body--overflow-hidden {
     text-align: center
 }
 
-.mi-dropdown {
-    align-items: center;
-    border: 1px solid #e0e0e0;
-    color: #e0e0e0;
-    display: flex;
-    height: 44px;
-    justify-content: space-between;
-    width: 198px
-}
-
-.mi-dropdown,
-.mi-dropdown>select {
-    box-sizing: border-box;
-    position: relative
-}
-
-.mi-dropdown>select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: none;
-    border: none;
-    color: #888;
-    flex: 1 1;
-    height: 100%;
-    outline: none;
-    padding: 0 16px
-}
-
-.mi-dropdown i {
-    color: #999;
-    padding-right: 16px;
-    position: absolute;
-    right: 0
-}
-
 .product--pc .address-section {
     --section-border: 1px solid #eee;
     border-bottom: var(--section-border);

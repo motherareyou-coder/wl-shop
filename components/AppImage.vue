@@ -4,7 +4,7 @@ defineOptions({ name: 'AppImage' })
 const props = defineProps({
 	src: { type: String },
 })
-const src = computed(() => '/imgs/product.png' || props.src)
+const src = computed(() => props.src)
 </script>
 
 <template>

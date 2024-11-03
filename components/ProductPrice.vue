@@ -17,7 +17,7 @@ const data = defineModel('data')
 <style lang="scss" scoped>
 strong {
 	display: inline-block;
-	margin-inline-end: 4px;
+	// margin-inline-end: 4px;
 	white-space: nowrap;
 	small {
 		font-size: inherit;

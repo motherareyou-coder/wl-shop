@@ -15,6 +15,9 @@ const { data: info } = await useAPI<ProductDetail>(
 	'product/spu/get-detail?apifoxApiId=218881713',
 	{ params: { id } },
 )
+useHead({
+	title: `${info.value?.name} ${$t('appTitle')}`,
+})
 const curSku = ref()
 const selected = ref({})
 watch(

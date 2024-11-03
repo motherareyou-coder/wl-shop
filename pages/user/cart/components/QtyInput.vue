@@ -47,7 +47,7 @@ function handleChange() {
 			:class="{ 'quantity-section__button--disabled': data <= 1 }"
 			@click="decrease"
 		>
-			<el-icon class="micon-quantity-decrease">
+			<el-icon class="micon micon-quantity-decrease">
 				<ElIconMinus />
 			</el-icon>
 		</div>
