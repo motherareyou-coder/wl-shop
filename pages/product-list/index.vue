@@ -7,8 +7,8 @@ import './index.scss'
 defineOptions({ name: 'ProductListCache' })
 const route = useRoute()
 const productScopeValues = ref([])
-const categoryId = ref()
-const query = ref()
+const categoryId = ref(route.query.categoryId)
+const query = ref(route.query.query)
 watch(
 	() => route.fullPath,
 	() => {
@@ -19,6 +19,9 @@ watch(
 	},
 	{ immediate: true },
 )
+useHead({
+	title: `${$t('Product List')} ${$t('appTitle')}`,
+})
 
 const appStore = useAppStore()
 const categories = ref<Category[]>([])

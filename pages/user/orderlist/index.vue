@@ -7,6 +7,9 @@ definePageMeta({
 	keepalive: true,
 	name: 'OrderListCache',
 })
+useHead({
+	title: `${$t('OrderList')} ${$t('appTitle')}`,
+})
 
 const appStore = useAppStore()
 </script>

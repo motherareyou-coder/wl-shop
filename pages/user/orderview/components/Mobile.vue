@@ -6,9 +6,10 @@ import './Mobile.scss'
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
 	tracks: { type: Object as () => ExpressTrack[] },
+	loading: { type: Boolean },
 })
+const emit = defineEmits(['command'])
 const data = computed(() => props.data)
-
 useHead({
 	style: ['html{ font-size: 45.5px }'],
 })
@@ -26,7 +27,10 @@ useHead({
 						</span>
 					</p>
 					<p class="order-info__status whitesapce-nowrap">
-						{{ statusText[data.status] && $t(statusText[data.status]) }}
+						{{
+							statusText[data.status]
+								&& $t(statusText[data.status])
+						}}
 					</p>
 				</div>
 				<div class="order-info__wrap">
@@ -57,7 +61,8 @@ useHead({
 				<el-timeline>
 					<el-timeline-item
 						v-for="(s, i) in props.tracks"
-						:key="i" :timestamp="s.time"
+						:key="i"
+						:timestamp="s.time"
 					>
 						{{ s.content }}
 					</el-timeline-item>
@@ -94,13 +99,19 @@ useHead({
 								</nuxt-link>
 							</div>
 							<div class="product-info__numwrap">
-								<ProductPrice
+								<span
 									class="product-info__price"
-									:data="item.payPrice"
-								/>
+								>
+									<ProductPrice
+										:data="item.payPrice"
+									/>
+								</span>
 								<span class="product-info__num">
 									x{{ item.count }}
 								</span>
+								<el-button :disabled="props.loading" @click="emit('command', 'aftersale', item)">
+									{{ $t('After Sale') }}
+								</el-button>
 							</div>
 						</div>
 					</div>
@@ -132,6 +143,40 @@ useHead({
 					</li>
 				</ul>
 			</section>
+			<section class="order-action-container sticky b-0">
+				<div class="flex justify-end p-1">
+					<el-button
+						v-if="data.status === 0 || data.status === 10"
+						:disabled="props.loading"
+						type="info"
+						@click="emit('command', 'cancel')"
+					>
+						{{ $t('CancelOrder') }}
+					</el-button>
+					<el-button
+						v-if="data.status === 40 || data.status === 30"
+						:disabled="props.loading"
+						type="info"
+						@click="emit('command', 'delete')"
+					>
+						{{ $t('DeleteOrder') }}
+					</el-button>
+					<el-button
+						v-if="data.status === 20"
+						:disabled="props.loading"
+						type="info"
+						@click="emit('command', 'receive')"
+					>
+						{{ $t('ReceiveOrder') }}
+					</el-button>
+				</div>
+			</section>
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+.order-action-container {
+	box-shadow: 0 -2px 4px 0 rgba(25, 25, 25, 0.08);
+}
+</style>

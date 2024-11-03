@@ -66,7 +66,7 @@ watch(status, reset)
 					</div>
 					<div class="order-item__content">
 						<nuxt-link
-							:to="$path(`/user/orderview?orderId=${order.id}`)"
+							:to="$path(`/user/orderview/${order.id}`)"
 						>
 							<div
 								v-for="item in order.items"
@@ -89,7 +89,7 @@ watch(status, reset)
 						</div>
 						<div class="order-item__footer__right">
 							<nuxt-link
-								:to="$path(`/user/orderview?orderId=${order.id}`)"
+								:to="$path(`/user/orderview/${order.id}`)"
 								class="goods-list-order-btn--white order-btn"
 							>
 								{{ $t('ORDER DETAILS') }}

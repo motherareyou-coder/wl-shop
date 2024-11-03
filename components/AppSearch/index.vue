@@ -5,11 +5,10 @@ defineOptions({ name: 'AppSearch' })
 
 const show = defineModel()
 const query = ref('')
-const localePath = useLocalePath()
 
 const router = useRouter()
 function goSearch() {
-	router.push(localePath(`/product-list?query=${query.value}`))
+	router.replace($path(`/product-list?query=${query.value}`))
 	show.value = false
 	query.value = ''
 }

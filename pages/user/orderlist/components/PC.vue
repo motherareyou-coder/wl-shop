@@ -135,7 +135,7 @@ watch(status, resetData)
 											<nuxt-link
 												:to="
 													$path(
-														`/user/orderview?orderId=${o.id}`,
+														`/user/orderview/${o.id}`,
 													)
 												"
 												class="goods-list-order-btn--white order-btn"

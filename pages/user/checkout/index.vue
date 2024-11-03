@@ -184,24 +184,23 @@ if (!orderId) {
 
 const router = useRouter()
 const loading = ref(false)
-watch(
-	() => route.fullPath,
-	(v) => {
-		if (route.query.orderId)
-			router.push($path(`/user/card-payment?orderId=${info.value.id}`))
-	},
-)
+// watch(
+// 	() => route.fullPath,
+// 	(v) => {
+// 		if (route.query.orderId)
+// 			router.push($path(`/user/card-payment?orderId=${info.value.id}`))
+// 	},
+// )
 const msg = $t('Please select a address.')
 function handleSubmit() {
 	const fn = () => {
-		if (!info?.value?.payOrderId)
-			return
-		if (data.value.payKey === 'cards') {
-			router.replace($path(`/user/checkout?orderId=${info.value.id}`))
+		if (info.value?.payOrderId) {
+			router.push(
+				$path(
+					`/user/review/${info.value.id}?payOrderId=${info.value.payOrderId}`,
+				),
+			)
 		}
-		// else {
-		// 	router.push($path(`/user/review?orderId=${info.value.payOrderId}`))
-		// }
 	}
 	if (!orderId) {
 		if (!data.value.addressId)
@@ -227,6 +226,9 @@ function handleSubmit() {
 				if (info?.value) {
 					info.value.id = res.id
 					info.value.payOrderId = res.payOrderId
+					router.push(
+						$path(`/user/checkout?orderId=${res.id}`),
+					)
 				}
 			})
 			.then(fn)
@@ -437,7 +439,10 @@ const shipOpen = ref(true)
 										{{ $t('Shipping method') }}
 									</span>
 								</div>
-								<el-icon v-if="appStore.isMobile" class="checkout-head__icon">
+								<el-icon
+									v-if="appStore.isMobile"
+									class="checkout-head__icon"
+								>
 									<ElIconArrowRight />
 								</el-icon>
 							</div>
@@ -449,7 +454,11 @@ const shipOpen = ref(true)
 						>
 							<template v-for="o in shipOptions" :key="o.type">
 								<section
-									v-if="appStore.isPC || shipOpen || data.deliveryType === o.type"
+									v-if="
+										appStore.isPC
+											|| shipOpen
+											|| data.deliveryType === o.type
+									"
 									class="checkout-delivery-item"
 								>
 									<div
@@ -517,7 +526,10 @@ const shipOpen = ref(true)
 										{{ $t('Payment method') }}
 									</span>
 								</div>
-								<el-icon v-if="appStore.isMobile" class="checkout-head__icon">
+								<el-icon
+									v-if="appStore.isMobile"
+									class="checkout-head__icon"
+								>
 									<ElIconArrowRight />
 								</el-icon>
 							</div>
@@ -530,7 +542,11 @@ const shipOpen = ref(true)
 							>
 								<template v-for="p in payOptions" :key="p.key">
 									<div
-										v-if="appStore.isPC || payOpen || data.payKey === p.key"
+										v-if="
+											appStore.isPC
+												|| payOpen
+												|| data.payKey === p.key
+										"
 										class="mi-radio__item radio-wrapper mi-radio__item--card mi-radio__item--left checkout-pay__item pay-item"
 										:class="{
 											'is-checked': data.payKey === p.key,
