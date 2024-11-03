@@ -45,11 +45,12 @@ if (payOrderId && !info.value?.payTime) {
 
 const appStore = useAppStore()
 const loading = ref(false)
-const msg1 = $t('Are you confirm to cancel?')
-const msg2 = $t('Are you confirm to delete?')
-const msg3 = $t('Are you confirm to receive?')
+const { t } = useI18n()
+const msg1 = 'Are you confirm to cancel?'
+const msg2 = 'Are you confirm to delete?'
+const msg3 = 'Are you confirm to receive?'
 function delMsgBox(delMsg: string) {
-	return ElMessageBox.confirm(delMsg, {
+	return ElMessageBox.confirm(t(delMsg), {
 		confirmButtonClass: 'mi-button--info',
 	})
 }
@@ -99,9 +100,8 @@ function handleCommand(type: string, data: any) {
 			router.push($path(`/user/checkout?orderId=${id}`))
 			break
 		case 'aftersale':
-			console.log(data)
-			localStorage.setItem('after-sale-apply', JSON.stringify(data))
-			router.push($path('/user/aftersale/apply'))
+			localStorage.setItem('after-sale-apply', JSON.stringify(info.value))
+			router.push($path(`/user/aftersale/apply?item=${data.id}`))
 			break
 	}
 }

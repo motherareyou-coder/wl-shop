@@ -422,7 +422,7 @@ export interface OrderDetail {
 	 * 订单编号
 	 */
 	id: number
-	items?: AppTradeOrderItemRespVO[]
+	items?: OrderItem[]
 	/**
 	 * 发货物流公司编号
 	 */
@@ -541,7 +541,7 @@ export interface OrderDetail {
 /**
  * AppTradeOrderItemRespVO，用户 App - 订单交易项 Response VO
  */
-export interface AppTradeOrderItemRespVO {
+export interface OrderItem {
 	/**
 	 * 售后编号
 	 */

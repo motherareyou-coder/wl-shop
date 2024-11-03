@@ -2,14 +2,14 @@
 
 export const statusOptions = [
 	{ value: '', label: 'All Order' },
-	{ value: '0', label: 'Awaiting payment' },
-	{ value: '10', label: 'Awaiting ship' },
-	{ value: '20', label: 'Shipping' },
-	{ value: '30', label: 'Done' },
-	{ value: '40', label: 'Canceled' },
+	{ value: 0, label: 'Awaiting payment' },
+	{ value: 10, label: 'Awaiting ship' },
+	{ value: 20, label: 'Shipping' },
+	{ value: 30, label: 'Done' },
+	{ value: 40, label: 'Canceled' },
 ]
 
 export const statusText = statusOptions.reduce((o, c) => {
-	o[c.value] = c.label
+	o[`${c.value}`] = c.label
 	return o
 }, {} as Record<number | string, string>)

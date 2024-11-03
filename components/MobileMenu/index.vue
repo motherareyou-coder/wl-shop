@@ -36,8 +36,10 @@ watch(
 		<div class="site-slide-menu__wrapper">
 			<div class="site-slide-menu__card">
 				<div
-					class="site-slide-menu__header "
-					:class="{ 'site-slide-menu__header--verbose': !!currentCat }"
+					class="site-slide-menu__header"
+					:class="{
+						'site-slide-menu__header--verbose': !!currentCat,
+					}"
 				>
 					<div class="header__content text-2xl">
 						<div class="header__back" @click="currentCat = null">
@@ -47,7 +49,7 @@ watch(
 							</span>
 						</div>
 						<el-icon
-							class="mi-btn mi-btn--icon mi-btn--light header__close "
+							class="mi-btn mi-btn--icon mi-btn--light header__close"
 							@click="hide"
 						>
 							<ElIconClose />
@@ -56,7 +58,8 @@ watch(
 				</div>
 				<div class="site-slide-menu__content">
 					<nuxt-link
-						:to="$path('/user')" class="content__user"
+						:to="$path('/user')"
+						class="content__user"
 						@click.stop="hide"
 					>
 						<div
@@ -83,7 +86,11 @@ watch(
 								@click="currentCat = m"
 							>
 								<nuxt-link
-									:to="$path(`/product-list?categoryId=${m.id}`)"
+									:to="
+										$path(
+											`/product-list?categoryId=${m.id}`,
+										)
+									"
 									@click.stop="hide"
 								>
 									{{ m.name }}

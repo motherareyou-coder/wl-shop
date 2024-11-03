@@ -56,6 +56,9 @@
 .order-view-main .order-message--button-groups section {
     display: inline-block
 }
+.order-view-main .order-message--button-groups button {
+    border-radius: 0;
+}
 
 .order-view-main .order-message__tag {
     background-color: #ff6700;

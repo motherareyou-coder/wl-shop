@@ -195,9 +195,18 @@ const msg = $t('Please select a address.')
 function handleSubmit() {
 	const fn = () => {
 		if (info.value?.payOrderId) {
-			router.push(
-				$path(
-					`/user/review/${info.value.id}?payOrderId=${info.value.payOrderId}`,
+			$api('pay/order/submit?apifoxApiId=219797603', {
+				method: 'post',
+				body: {
+					id: info.value?.payOrderId,
+					channelCode: 'mock',
+					channelExtras: {},
+				},
+			}).then(() =>
+				router.push(
+					$path(
+						`/user/review/${info.value.id}?payOrderId=${info.value.payOrderId}`,
+					),
 				),
 			)
 		}
@@ -226,9 +235,7 @@ function handleSubmit() {
 				if (info?.value) {
 					info.value.id = res.id
 					info.value.payOrderId = res.payOrderId
-					router.push(
-						$path(`/user/checkout?orderId=${res.id}`),
-					)
+					router.push($path(`/user/checkout?orderId=${res.id}`))
 				}
 			})
 			.then(fn)

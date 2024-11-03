@@ -148,10 +148,17 @@ useHead({
 					<el-button
 						v-if="data.status === 0 || data.status === 10"
 						:disabled="props.loading"
-						type="info"
 						@click="emit('command', 'cancel')"
 					>
 						{{ $t('CancelOrder') }}
+					</el-button>
+					<el-button
+						v-if="data.status === 0"
+						:disabled="props.loading"
+						type="info"
+						@click="emit('command', 'pay')"
+					>
+						{{ $t('Pay Now') }}
 					</el-button>
 					<el-button
 						v-if="data.status === 40 || data.status === 30"

@@ -81,9 +81,9 @@ function handleAdd(g: CartItem) {
 	)
 }
 
-const delMsg = $t('Are you sure to remove this product from shopping cart?')
+const { t } = useI18n()
 function delMsgBox() {
-	return ElMessageBox.confirm(delMsg, {
+	return ElMessageBox.confirm(t('Are you sure to remove this product from shopping cart?'), {
 		confirmButtonClass: 'mi-button--info',
 	})
 }

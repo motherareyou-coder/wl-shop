@@ -57,7 +57,8 @@ watch(status, resetData)
 							>
 								<span
 									:class="{
-										'title-active': status === t.value,
+										'title-active':
+											`${status}` === `${t.value}`,
 									}"
 								>
 									{{ $t(t.label) }}

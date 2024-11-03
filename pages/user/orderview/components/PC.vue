@@ -6,7 +6,9 @@ import './PC.scss'
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
 	tracks: { type: Object as () => ExpressTrack[] },
+	loading: { type: Boolean },
 })
+const emit = defineEmits(['command'])
 const data = computed(() => props.data)
 </script>
 
@@ -23,7 +25,40 @@ const data = computed(() => props.data)
 						{{ $t('Order number') }} {{ data.no }}
 					</div>
 					<div class="order-message--button-groups">
-						<section></section>
+						<el-button
+							v-if="data.status === 0"
+							class="btn"
+							:disabled="props.loading"
+							type="info"
+							@click="emit('command', 'pay')"
+						>
+							{{ $t('Pay Now') }}
+						</el-button>
+						<el-button
+							v-if="data.status === 0 || data.status === 10"
+							class="btn"
+							:disabled="props.loading"
+							@click="emit('command', 'cancel')"
+						>
+							{{ $t('CancelOrder') }}
+						</el-button>
+						<el-button
+							v-if="data.status === 40 || data.status === 30"
+							class="btn"
+							:disabled="props.loading"
+							@click="emit('command', 'delete')"
+						>
+							{{ $t('DeleteOrder') }}
+						</el-button>
+						<el-button
+							v-if="data.status === 20"
+							class="btn"
+							type="info"
+							:disabled="props.loading"
+							@click="emit('command', 'receive')"
+						>
+							{{ $t('ReceiveOrder') }}
+						</el-button>
 					</div>
 				</div>
 				<div class="placeholder-dom"></div>
@@ -32,7 +67,10 @@ const data = computed(() => props.data)
 						class="deliver-status-title"
 						:class="[`deliver-status-title--${data.status}`]"
 					>
-						{{ statusText[data.status] && $t(statusText[data.status]) }}
+						{{
+							statusText[data.status]
+								&& $t(statusText[data.status])
+						}}
 					</h2>
 					<section v-if="data.status === 0" class="showPayInfo">
 						<div class="order-express__pay-countdown">
@@ -45,7 +83,8 @@ const data = computed(() => props.data)
 					<el-timeline>
 						<el-timeline-item
 							v-for="(s, i) in props.tracks"
-							:key="i" :timestamp="s.time"
+							:key="i"
+							:timestamp="s.time"
 						>
 							{{ s.content }}
 						</el-timeline-item>
@@ -131,13 +170,17 @@ const data = computed(() => props.data)
 							<span class="message-info__item-label">
 								{{ $t('Address') }}
 							</span>
-							<span class="message-info__item-info">{{ data.receiverAreaName }} {{ data.receiverDetailAddress }}</span>
+							<span class="message-info__item-info">
+								{{ `${data.receiverAreaName} ${data.receiverDetailAddress}` }}
+							</span>
 						</div>
 						<div class="message-info--address message-info__item">
 							<span class="message-info__item-label">
 								{{ $t('Phone') }}
 							</span>
-							<span class="message-info__item-info">{{ data.receiverMobile }}</span>
+							<span class="message-info__item-info">
+								{{ data.receiverMobile }}
+							</span>
 						</div>
 					</div>
 				</section>
