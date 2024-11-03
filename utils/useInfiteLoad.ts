@@ -3,6 +3,7 @@ function useInfiteLoad<T>(
 		pageNo: number
 		pageSize: number
 	}) => Promise<{ total: number, list: T[] }>,
+	uniqKey = 'id',
 ) {
 	const data: Ref<T[]> = ref([])
 	const total = ref(Infinity)
@@ -19,12 +20,25 @@ function useInfiteLoad<T>(
 		fetch(pagination.value)
 			.then((res) => {
 				if (Array.isArray(res)) {
-					data.value.push(...res)
+					data.value = res
 					total.value = data.value.length
 				}
 				else {
 					total.value = res.total || Infinity
-					data.value.push(...res.list)
+					if (uniqKey) {
+						res.list.forEach((d) => {
+							if (
+								!data.value.find(
+									dd => dd[uniqKey] === d[uniqKey],
+								)
+							) {
+								data.value.push(d)
+							}
+						})
+					}
+					else {
+						data.value.push(...res.list)
+					}
 				}
 			})
 			.finally(() => {
@@ -54,6 +68,7 @@ function useInfiteLoad<T>(
 		getData,
 		load,
 		reset,
+		loading,
 	}
 }
 

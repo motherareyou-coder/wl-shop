@@ -84,6 +84,7 @@ function toggleStar() {
 	if (stared.value) {
 		$api('product/favorite/delete?apifoxApiId=218963891', {
 			method: 'delete',
+			body: { spuId: id },
 		}).then(() => {
 			stared.value = false
 		})
@@ -91,6 +92,7 @@ function toggleStar() {
 	else {
 		$api('product/favorite/create?apifoxApiId=218963858', {
 			method: 'post',
+			body: { spuId: id },
 		}).then(() => {
 			stared.value = true
 		})

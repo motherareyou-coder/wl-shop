@@ -7,7 +7,7 @@ const props = defineProps({
 	scopeValues: { type: Array },
 })
 
-const { data, load, reset } = useInfiteLoad<Product>(p =>
+const { data, load, reset, loading } = useInfiteLoad<Product>(p =>
 	props.scopeValues?.length
 		? $api('product/spu/list-by-ids?apifoxApiId=221196568', {
 			params: {

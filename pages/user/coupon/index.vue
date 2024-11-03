@@ -13,7 +13,7 @@ const tags = ref([
 	{ label: $t('expired'), value: 2 },
 ])
 
-const { data, load, reset } = useInfiteLoad<Coupon>(params =>
+const { data, load, reset, loading } = useInfiteLoad<Coupon>(params =>
 	$api('promotion/coupon/page?apifoxApiId=221192399', {
 		params: { ...params, status: status.value },
 	}),
@@ -76,6 +76,7 @@ watch(status, reset)
 					</div>
 				</li>
 			</ul>
+			<div v-loading="loading"></div>
 		</div>
 	</section>
 </template>
