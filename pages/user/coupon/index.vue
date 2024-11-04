@@ -3,9 +3,11 @@ import type { Coupon } from '~/types'
 import './index.scss'
 
 const route = useRoute()
-const type = Number(route.query.type)
-
-const status = ref(type || 0)
+const status = ref(0)
+watchEffect(() => {
+	const type = Number(route.query.type)
+	status.value = Number.isNaN(type) ? 0 : type
+})
 
 const tags = ref([
 	{ label: $t('unused'), value: 0 },
@@ -33,14 +35,14 @@ watch(status, reset)
 			<div class="mi-tabs">
 				<ul class="mi-tabs__header">
 					<li
-						v-for="t in tags"
-						:key="t.value"
+						v-for="tag in tags"
+						:key="tag.value"
 						class="mi-tabs__item mi-tabs__item--separator"
-						:class="{ 'mi-tabs__item--active': status === t.value }"
-						@click="status = t.value"
+						:class="{ 'mi-tabs__item--active': status === tag.value }"
+						@click="status = tag.value"
 					>
 						<div class="mi-tabs__item-content">
-							{{ t.label }}
+							{{ tag.label }}
 						</div>
 					</li>
 				</ul>
@@ -49,26 +51,26 @@ watch(status, reset)
 		<div class="user-coupon__list--content">
 			<ul v-infinite-scroll="load" class="user-coupon__list">
 				<li
-					v-for="c in data"
-					:key="c.id"
+					v-for="coupon in data"
+					:key="coupon.id"
 					class="user-coupon__item--wrapper"
 				>
 					<div class="user-coupon__item in">
 						<p class="user-coupon__item--name">
-							{{ c.name }} | {{ c.productScope }}
+							{{ coupon.name }} | {{ coupon.productScope }}
 						</p>
 						<p class="user-coupon__item--value">
-							<ProductPrice :data="c.discountPrice" />
+							<ProductPrice :data="coupon.discountPrice" />
 						</p>
 						<p class="user-coupon__item--time">
-							{{ [c.validStartTime, c.validEndTime].join('-') }}
+							{{ [coupon.validStartTime, coupon.validEndTime].join('-') }}
 						</p>
 						<p class="user-coupon__item--desc">
-							<span>{{ $t('Apply for') }} {{ c.productScope }}</span>
+							<span>{{ $t('Apply for') }} {{ coupon.productScope }}</span>
 						</p>
 					</div>
 					<div class="user-coupon__item--btn">
-						<nuxt-link :to="$path(`/product-list?productScope=${c.productScope}&productScopeValues=${c.productScopeValues}`)" class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn">
+						<nuxt-link :to="$path(`/product-list?productScope=${coupon.productScope}&productScopeValues=${coupon.productScopeValues}`)" class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn">
 							<span class="mi-btn__text">
 								{{ $t('Use now') }}
 							</span>

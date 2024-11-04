@@ -13,8 +13,6 @@ const selected = defineModel()
 const addressList = ref<Address[]>([])
 
 watch(selected, (v) => {
-	console.log('select', v)
-
 	emit('select', v)
 })
 watch(

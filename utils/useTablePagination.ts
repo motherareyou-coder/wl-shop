@@ -22,7 +22,6 @@ function useTablePagination<T>(fetch: (p: any) => Promise<Res<T>>, immediate = t
 		})
 			.then((res: Res<T>) => {
 				const { list, total } = res
-				console.log(list)
 				data.value = list
 				pagination.total = total
 			})

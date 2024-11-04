@@ -32,7 +32,7 @@ watchEffect(() => {
 				class="shopping-nav__step"
 				:class="{ active: activeStep >= s.value }"
 			>
-				<strong>{{ s.value + 1 }}</strong>
+				<strong>{{ s.value }}</strong>
 				<span>{{ s.label }}</span>
 			</div>
 		</div>

@@ -82,76 +82,60 @@ const data = computed(() => props.data)
 				<section v-if="props.tracks?.length">
 					<el-timeline>
 						<el-timeline-item
-							v-for="(s, i) in props.tracks"
+							v-for="(track, i) in props.tracks"
 							:key="i"
-							:timestamp="s.time"
+							:timestamp="track.time"
 						>
-							{{ s.content }}
+							{{ track.content }}
 						</el-timeline-item>
 					</el-timeline>
 				</section>
 				<section class="package-detail">
-					<ul class="package-detail__list">
-						<li class="package-detail__item">
-							<ul class="package-detail__product-list">
-								<div
-									v-for="g in data.items"
-									:key="g.id"
-									class="product-item__wrapper"
-								>
-									<div
-										class="product-main--item product-item"
-									>
-										<div class="product-item__wrap">
-											<span
-												class="product-item--image product-info-item"
-											>
-												<nuxt-link
-													:to="
-														$path(
-															`/product/${g.id}`,
-														)
-													"
-													target="blank"
-												>
-													<app-image
-														:src="g.picUrl"
-													/>
-												</nuxt-link>
-											</span>
-											<div
-												class="product-item--name product-info-item"
-											>
-												<div
-													class="product-item--name__wrap"
-												>
-													<nuxt-link
-														:to="
-															$path(
-																`/product/${g.id}`,
-															)
-														"
-													>
-														<span
-															class="product-item__product-name"
-														>
-															{{ g.spuName }}
-														</span>
-													</nuxt-link>
-												</div>
-											</div>
-											<span class="product-item--price">
-												<ProductPrice
-													:data="g.payPrice"
-													class="price"
-												/>
-											</span>
-										</div>
-									</div>
+					<div class="flex flex-col">
+						<div
+							v-for="item in data.items"
+							:key="item.id"
+							class="flex py-2"
+						>
+							<nuxt-link
+								:to="$path(`/product/${item.id}`)"
+								target="blank"
+								class="flex mr-5"
+							>
+								<app-image class="h-20 w-20" :src="item.picUrl" />
+							</nuxt-link>
+							<div class="flex flex-col justify-between flex-1">
+								<div>
+									<nuxt-link :to="$path(`/product/${item.id}`)">
+										{{ item.spuName }}
+									</nuxt-link>
 								</div>
-							</ul>
-						</li>
-					</ul>
+								<div class="text-xs" style="color: #b4b4be">
+									{{
+										item.properties
+											?.map((p) => p.valueName)
+											.join(' ')
+									}}
+								</div>
+								<div>
+									<ProductPrice :data="item.payPrice" />
+									<span style="color: #b4b4be">
+										{{ ` x ${item.count}` }}
+									</span>
+								</div>
+							</div>
+							<div>
+								<el-button
+									v-if="data.status === 10 || data.status === 20"
+									style="padding: 6px; font-size: 12px;border-radius: 0;"
+									:disabled="props.loading"
+									@click="emit('command', 'aftersale', item)"
+								>
+									{{ $t('After Sale') }}
+								</el-button>
+							</div>
+						</div>
+					</div>
 				</section>
 				<section class="message-info order-address">
 					<h3 class="message-info__title">
@@ -171,7 +155,9 @@ const data = computed(() => props.data)
 								{{ $t('Address') }}
 							</span>
 							<span class="message-info__item-info">
-								{{ `${data.receiverAreaName} ${data.receiverDetailAddress}` }}
+								{{
+									`${data.receiverAreaName} ${data.receiverDetailAddress}`
+								}}
 							</span>
 						</div>
 						<div class="message-info--address message-info__item">

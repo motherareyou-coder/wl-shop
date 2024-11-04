@@ -48,11 +48,11 @@ useSeoMeta({
 			</template>
 		</Head>
 		<Body>
-			<NuxtLayout>
-				<el-config-provider :locale="{ en, zh }[locale]" namespace="mi">
-					<NuxtPage :keepalive="{ include: 'OrderListCache,ProductListCache' }" />
-				</el-config-provider>
-			</NuxtLayout>
+			<el-config-provider :locale="{ en, zh }[locale]" namespace="mi">
+				<NuxtLayout>
+					<NuxtPage :keepalive="{ include: 'OrderListCache,ProductListCache,AftersaleListCache' }" />
+				</NuxtLayout>
+			</el-config-provider>
 		</Body>
 	</Html>
 </template>

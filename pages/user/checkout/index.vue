@@ -547,41 +547,41 @@ const shipOpen = ref(true)
 								class="mi-radio__group"
 								style="display: block"
 							>
-								<template v-for="p in payOptions" :key="p.key">
+								<template v-for="o in payOptions" :key="o.key">
 									<div
 										v-if="
 											appStore.isPC
 												|| payOpen
-												|| data.payKey === p.key
+												|| data.payKey === o.key
 										"
 										class="mi-radio__item radio-wrapper mi-radio__item--card mi-radio__item--left checkout-pay__item pay-item"
 										:class="{
-											'is-checked': data.payKey === p.key,
+											'is-checked': data.payKey === o.key,
 										}"
-										@click="data.payKey = p.key"
+										@click="data.payKey = o.key"
 									>
 										<el-radio
-											:value="p.key"
+											:value="o.key"
 											style="margin-right: 0"
 										/>
 										<div class="radio__content">
 											<article class="pay-item__right">
 												<div class="pay-item__logo">
-													<app-image :src="p.image" />
+													<app-image :src="o.image" />
 												</div>
 												<div class="pay-item__content">
 													<div
 														class="pay-item__title"
 													>
-														{{ p.title }}
+														{{ o.title }}
 													</div>
 
 													<div
-														v-if="p.cards?.length"
+														v-if="o.cards?.length"
 														class="cards__info pay-item__tips"
 													>
 														<img
-															v-for="c in p.cards"
+															v-for="c in o.cards"
 															:key="c.name"
 															:src="c.img"
 															:alt="c.name"
@@ -592,7 +592,7 @@ const shipOpen = ref(true)
 														class="pay-pal__info pay-item__tips"
 													>
 														<p>
-															{{ p.info }}
+															{{ o.info }}
 														</p>
 													</div>
 												</div>

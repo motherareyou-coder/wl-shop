@@ -9,7 +9,6 @@ const props = defineProps({
 	data: { type: Array as () => Category[] | null, default: () => [] },
 })
 const data = toRef(props, 'data')
-console.log(data)
 
 const height = ref('0')
 const hoverd = ref()

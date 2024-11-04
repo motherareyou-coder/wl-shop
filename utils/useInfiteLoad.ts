@@ -27,12 +27,14 @@ function useInfiteLoad<T>(
 					total.value = res.total || Infinity
 					if (uniqKey) {
 						res.list.forEach((d) => {
-							if (
-								!data.value.find(
-									dd => dd[uniqKey] === d[uniqKey],
-								)
-							) {
+							const index = data.value.findIndex(
+								dd => dd[uniqKey] === d[uniqKey],
+							)
+							if (index === -1) {
 								data.value.push(d)
+							}
+							else {
+								data.value.splice(index, 1, d)
 							}
 						})
 					}

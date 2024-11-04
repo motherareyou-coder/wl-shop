@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { statusText } from '../utils'
 import type { OrderDetail } from '~/types'
-import './Mobile.scss'
 
-useHead({
-	style: ['html{ font-size: 45.5px }'],
-})
 const statusOptions = [
 	{ value: '', label: $t('All Order') },
 	{ value: 0, label: $t('Awaiting payment') },
@@ -13,87 +9,111 @@ const statusOptions = [
 	{ value: 20, label: $t('Shipping') },
 	{ value: 30, label: $t('Awaiting review') },
 ]
+const statusClass = {
+	0: 'paying',
+	10: 'waiting',
+	20: 'ship',
+	30: 'delivered',
+	40: 'close',
+}
 
 const route = useRoute()
-const status = ref(route.query.type || '')
-const { data, load, reset } = useInfiteLoad<OrderDetail>(params =>
-	$api('trade/order/page?apifoxApiId=219807468', {
-		params: { ...params, status: status.value },
-	}),
-)
+const status = ref('')
+watchEffect(() => {
+	status.value = (route.query.type as string) || ''
+})
+const { data, load, reset } = useInfiteLoad<OrderDetail>((params) => {
+	const p = {
+		...params,
+		status: status.value,
+	}
+	if (status.value === 30)
+		p.commentStatus = false
+	return $api('trade/order/page?apifoxApiId=219807468', {
+		params: p,
+	})
+})
 watch(status, reset)
+
+const router = useRouter()
+function goDetail({ id }: OrderDetail) {
+	router.push($path(`/user/orderview/${id}`))
+}
 </script>
 
 <template>
-	<div class="order-list-wrapper">
+	<div class="order-list-wrapper--mobile">
 		<div class="order-list-header--mobile overflow-y-auto">
-			<ul class="flex my-1 ">
+			<ul class="flex my-1">
 				<li
-					v-for="o in statusOptions"
-					:key="o.value"
-					class="mi-tabs__item whitespace-nowrap"
-					:class="{ 'is-active': status === o.value }"
-					@click="status = o.value"
+					v-for="option in statusOptions"
+					:key="option.value"
+					class="whitespace-nowrap"
+					:class="{ 'is-active': `${status}` === `${option.value}` }"
+					@click="status = option.value"
 				>
-					{{ o.label }}
+					{{ option.label }}
 				</li>
 			</ul>
 		</div>
 		<div
 			v-infinite-scroll="load"
-			class="infinite-scroll infinite-scroll--mobile order-list__wrapper miv4"
+			class="infinite-scroll infinite-scroll--mobile"
 		>
-			<ul class="order-list">
+			<ul>
 				<li
 					v-for="order in data"
 					:key="order.id"
-					class="order-item--mobile"
+					class="my-4 p-4 bg-white"
+					:class="[
+						`order--${statusClass[order.status]?.toLowerCase()}`,
+					]"
 				>
-					<div class="order-item__header">
-						<div class="order-item__header__left">
-							<span class="order-item__time">
-								{{ order.createTime }}
-							</span>
+					<div class="flex justify-between">
+						<div>
+							{{ `${$t('Order number')} ${order.no}` }}
 						</div>
-						<div class="order-item__header__right">
-							<span class="order-item__status">
-								{{
-									statusText[order.status]
-										&& $t(statusText[order.status])
-								}}
-							</span>
+						<div class="status">
+							{{
+								statusText[order.status]
+									&& $t(statusText[order.status])
+							}}
 						</div>
 					</div>
-					<div class="order-item__content">
-						<nuxt-link
-							:to="$path(`/user/orderview/${order.id}`)"
-						>
+					<div
+						class="my-2 py-3"
+						style="
+							border-top: 1px solid var(--border-light-variant);
+							border-bottom: 1px solid var(--border-light-variant);
+						"
+					>
+						<nuxt-link :to="$path(`/user/orderview/${order.id}`)">
 							<div
 								v-for="item in order.items"
 								:key="item.id"
-								class="commodity-item"
+								class="flex"
 							>
-								<div class="commodity-item__image">
-									<app-image :src="item.picUrl" />
-								</div>
-								<div class="commodity-item__info">
+								<app-image
+									class="mr-5 w-16 h-16"
+									:src="item.picUrl"
+								/>
+								<div>
 									<p>{{ item.spuName }}</p>
 								</div>
 							</div>
 						</nuxt-link>
 					</div>
-					<div class="order-item__footer">
-						<div class="order-item__footer__left">
-							<span class="order-item__totalprice">{{ $t('Total') }}
-								<ProductPrice :data="order.payPrice" /></span>
+					<div class="flex justify-between items-center">
+						<div>
+							<span>
+								{{ $t('Total') }}
+								<ProductPrice :data="order.payPrice" />
+							</span>
 						</div>
-						<div class="order-item__footer__right">
-							<nuxt-link
-								:to="$path(`/user/orderview/${order.id}`)"
-								class="goods-list-order-btn--white order-btn"
-							>
+						<div>
+							<el-button @click="goDetail(order)">
 								{{ $t('ORDER DETAILS') }}
-							</nuxt-link>
+							</el-button>
 						</div>
 					</div>
 				</li>
@@ -115,6 +135,26 @@ watch(status, reset)
 	}
 	.mi-tabs__item {
 		padding: 0 20px !important;
+	}
+	li {
+		margin: 10px 16px;
+	}
+	.is-active {
+		color: var(--text-primary);
+	}
+}
+.order-list-wrapper--mobile {
+	.status {
+		color: #616161;
+	}
+	.order--paying .status,
+	.order--waiting .status {
+		color: #ff6700;
+	}
+
+	.order--paid .status,
+	.order--ship .status {
+		color: #83c44e;
 	}
 }
 </style>

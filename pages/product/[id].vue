@@ -29,7 +29,6 @@ watch(
 				return t
 			}, {})
 		})
-		console.log(v)
 	},
 	{ immediate: true },
 )

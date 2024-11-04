@@ -55,7 +55,6 @@ function delMsgBox(delMsg: string) {
 	})
 }
 function handleCommand(type: string, data: any) {
-	console.log(type)
 	switch (type) {
 		case 'cancel':
 			delMsgBox(msg1).then(() => {

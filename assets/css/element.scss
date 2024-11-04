@@ -35,31 +35,11 @@
 	// 	'extra-small': 12px
 	// )
 	// $border-radius: (
-// 'base': 12px,
-// 'small': 8px,
-//  'round': 20px,
-//  'circle': 100%,
-// )
+	// 'base': 12px,
+	// 'small': 8px,
+	//  'round': 20px,
+	//  'circle': 100%,
+	// )
 );
 
 @use 'element-plus/theme-chalk/src/index.scss' as *;
-
-.mi-checkbox {
-	--mi-color-primary: var(--text-base) !important;
-	--mi-checkbox-border-radius: 0 !important;
-}
-
-.mi-drawer.btt {
-	height: 85vh !important;
-}
-
-.mi-button {
-	height: auto;
-	--mi-button-disabled-bg-color: var(--brand-grey-40);
-}
-
-.mi-drawer .mi-drawer__header {
-	@media screen and (max-width: 720px) {
-		margin-bottom: 12px !important;
-	}
-}

@@ -11,7 +11,10 @@ const statusClass = {
 	40: 'close',
 }
 const route = useRoute()
-const status = ref(route.query.type || '')
+const status = ref('')
+watchEffect(() => {
+	status.value = (route.query.type as string) || ''
+})
 const {
 	data: orderList,
 	pagination,
@@ -19,18 +22,6 @@ const {
 } = useTablePagination<OrderDetail>((p = {}) =>
 	$api('trade/order/page?apifoxApiId=219807468', {
 		params: { ...p, status: status.value },
-	}).then((res) => {
-		res.list.forEach((o) => {
-			if (status.value === 0) {
-				o.status = 0
-			}
-			else {
-				o.status
-					= status.value
-					|| [0, 10, 20, 30, 40][Math.ceil(Math.random() * 5)]
-			}
-		})
-		return res
 	}),
 )
 watch(status, resetData)
@@ -50,28 +41,28 @@ watch(status, resetData)
 							class="user-order-list-container_nav order-list__nav"
 						>
 							<li
-								v-for="t in statusOptions"
-								:key="t.value"
+								v-for="option in statusOptions"
+								:key="option.value"
 								class="order-list__nav__title title"
-								@click="status = t.value"
+								@click="status = option.value"
 							>
 								<span
 									:class="{
 										'title-active':
-											`${status}` === `${t.value}`,
+											`${status}` === `${option.value}`,
 									}"
 								>
-									{{ $t(t.label) }}
+									{{ $t(option.label) }}
 								</span>
 							</li>
 						</ul>
 						<ul>
-							<section v-for="o in orderList" :key="o.no">
+							<section v-for="order in orderList" :key="order.no">
 								<li
 									class="order-item"
 									:class="[
 										`order-item--${statusClass[
-											o.status
+											order.status
 										]?.toLowerCase()}`,
 									]"
 								>
@@ -80,8 +71,8 @@ watch(status, resetData)
 											class="order-item-header--title show-tag"
 										>
 											{{
-												statusText[o.status]
-													&& $t(statusText[o.status])
+												statusText[order.status]
+													&& $t(statusText[order.status])
 											}}
 										</p>
 										<p class="info"></p>
@@ -89,7 +80,7 @@ watch(status, resetData)
 									<div class="order-item-info info">
 										<ul class="info-left">
 											<li class="info-left_time">
-												{{ o.createTime }}
+												{{ order.createTime }}
 											</li>
 											<!-- <li class="info-left-name">
 												{{ o.receiverName }}
@@ -98,7 +89,7 @@ watch(status, resetData)
 												class="info-left-order-id order-id"
 											>
 												{{ $t('Order number') }}:
-												{{ o.no }}
+												{{ order.no }}
 											</li>
 										</ul>
 										<div class="info-right">
@@ -112,7 +103,7 @@ watch(status, resetData)
 													class="info-right-total__num"
 												>
 													<ProductPrice
-														:data="o.payPrice"
+														:data="order.payPrice"
 													/>
 												</span>
 											</div>
@@ -123,10 +114,10 @@ watch(status, resetData)
 									>
 										<div class="goods-list-order-btn">
 											<nuxt-link
-												v-if="o.status === 0"
+												v-if="order.status === 0"
 												:to="
 													$path(
-														`/user/checkout?orderId=${o.id}`,
+														`/user/checkout?orderId=${order.id}`,
 													)
 												"
 												class="goods-list-order-btn--orange order-btn"
@@ -136,7 +127,7 @@ watch(status, resetData)
 											<nuxt-link
 												:to="
 													$path(
-														`/user/orderview/${o.id}`,
+														`/user/orderview/${order.id}`,
 													)
 												"
 												class="goods-list-order-btn--white order-btn"
@@ -146,9 +137,9 @@ watch(status, resetData)
 										</div>
 										<div class="goods-list-gooods-info">
 											<div
-												v-for="g in o.items"
-												:key="g.id"
-												class="goods-list-gooods-info__container"
+												v-for="item in order.items"
+												:key="item.id"
+												class="goods-list-gooods-info__container my-2"
 											>
 												<div
 													class="goods-list-gooods-info__img"
@@ -156,13 +147,13 @@ watch(status, resetData)
 													<nuxt-link
 														:to="
 															$path(
-																`/product/${g.id}`,
+																`/product/${item.id}`,
 															)
 														"
 														target="blank"
 													>
 														<app-image
-															:src="g.picUrl"
+															:src="item.picUrl"
 														/>
 													</nuxt-link>
 												</div>
@@ -173,13 +164,13 @@ watch(status, resetData)
 														class="goods-list-gooods-info__information information"
 													>
 														<div>
-															{{ g.spuName }}
+															{{ item.spuName }}
 														</div>
 														<div>
 															<ProductPrice
-																:data="g.price"
+																:data="item.price"
 															/>
-															{{ `x ${g.count}` }}
+															{{ `x ${item.count}` }}
 														</div>
 													</div>
 												</div>

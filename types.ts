@@ -631,3 +631,150 @@ export interface ExpressTrack {
 	time: string
 	[property: string]: any
 }
+
+/**
+ * TradeConfig，用户 App - 交易配置 Response VO
+ */
+export interface TradeConfig {
+	/**
+	 * 售后的退款理由
+	 */
+	afterSaleRefundReasons: string[]
+	/**
+	 * 售后的退货理由
+	 */
+	afterSaleReturnReasons: string[]
+	/**
+	 * 佣金冻结时间（天）
+	 */
+	brokerageFrozenDays: number
+	/**
+	 * 分销海报地址数组
+	 */
+	brokeragePosterUrls: string[]
+	/**
+	 * 佣金提现最小金额，单位：分
+	 */
+	brokerageWithdrawMinPrice: number
+	/**
+	 * 提现方式
+	 */
+	brokerageWithdrawTypes: number[]
+	/**
+	 * 是否开启自提
+	 */
+	deliveryPickUpEnabled: boolean
+	/**
+	 * 腾讯地图 KEY
+	 */
+	tencentLbsKey: string
+	[property: string]: any
+}
+
+/**
+ * AfterSale，用户 App - 交易售后 Response VO
+ */
+export interface AfterSale {
+	/**
+	 * 补充描述
+	 */
+	applyDescription: string
+	/**
+	 * 补充凭证图片
+	 */
+	applyPicUrls: string[]
+	/**
+	 * 申请原因
+	 */
+	applyReason: string
+	/**
+	 * 退货商品数量
+	 */
+	count: number
+	/**
+	 * 创建时间
+	 */
+	createTime: Date
+	/**
+	 * 退货时间
+	 */
+	deliveryTime?: Date
+	/**
+	 * 售后编号
+	 */
+	id: number
+	/**
+	 * 退货物流公司编号
+	 */
+	logisticsId?: number
+	/**
+	 * 退货物流单号
+	 */
+	logisticsNo?: string
+	/**
+	 * 售后流水号
+	 */
+	no: string
+	/**
+	 * 交易订单编号
+	 */
+	orderId: number
+	/**
+	 * 交易订单项编号
+	 */
+	orderItemId: number
+	/**
+	 * 交易订单流水号
+	 */
+	orderNo: string
+	/**
+	 * 商品图片
+	 */
+	picUrl: string
+	properties?: AppProductPropertyValueDetailRespVO[]
+	/**
+	 * 收货备注
+	 */
+	receiveReason?: string
+	/**
+	 * 收货时间
+	 */
+	receiveTime?: Date
+	/**
+	 * 退款金额，单位：分
+	 */
+	refundPrice?: number
+	/**
+	 * 退款时间
+	 */
+	refundTime?: Date
+	/**
+	 * 商品 SKU 编号
+	 */
+	skuId: number
+	/**
+	 * 商品 SPU 编号
+	 */
+	spuId: number
+	/**
+	 * 商品 SPU 名称
+	 */
+	spuName: string
+	/**
+	 * 售后状态
+	 */
+	status: number
+	/**
+	 * 售后类型
+	 */
+	type: number
+	/**
+	 * 更新时间
+	 */
+	updateTime: Date
+	/**
+	 * 售后方式
+	 */
+	way: number
+	[property: string]: any
+}

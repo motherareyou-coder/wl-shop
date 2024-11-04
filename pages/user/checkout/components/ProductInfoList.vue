@@ -25,31 +25,31 @@ const appStore = useAppStore()
 			class="product-info__thumb-list"
 		>
 			<li
-				v-for="d in productList"
-				:key="d.id"
+				v-for="item in productList"
+				:key="item.id"
 				class="product-info__thumb-item"
 			>
-				<app-image :src="d.sku?.picUrl || d.spu?.picUrl || d.picUrl" />
+				<app-image :src="item.sku?.picUrl || item.spu?.picUrl || item.picUrl" />
 			</li>
 		</ul>
 		<ul v-else class="product-info__list">
-			<li v-for="d in productList" :key="d.id" class="product-info__item">
+			<li v-for="item in productList" :key="item.id" class="product-info__item">
 				<div class="product-info__content">
 					<app-image src="{d.picUrl}" />
 					<div class="product-other">
 						<ul class="product-params">
 							<li class="product-params__name">
-								{{ d.spu?.name || d.spuName }}
+								{{ item.spu?.name || item.spuName }}
 							</li>
 							<li class="product-params__count">
-								{{ $t('Quantity') }} : {{ d.count }}
+								{{ $t('Quantity') }} : {{ item.count }}
 							</li>
 							<li class="product-params__flag"></li>
 							<li class="product-params__energy"></li>
 						</ul>
 						<ul class="product-price">
 							<div class="mi-price">
-								<product-price :data="d.sku?.price || d.price" />
+								<product-price :data="item.sku?.price || item.price" />
 							</div>
 						</ul>
 					</div>
@@ -68,8 +68,8 @@ const appStore = useAppStore()
 			</h2>
 			<ul class="product-info__list">
 				<li
-					v-for="d in productList"
-					:key="d.id"
+					v-for="item in productList"
+					:key="item.id"
 					class="product-info__item"
 				>
 					<div class="product-info__content">
@@ -77,17 +77,17 @@ const appStore = useAppStore()
 						<div class="product-other">
 							<ul class="product-params">
 								<li class="product-params__name">
-									{{ d.spu?.name || d.spuName }}
+									{{ item.spu?.name || item.spuName }}
 								</li>
 								<li class="product-params__count">
-									{{ $t('Quantity') }} : {{ d.count }}
+									{{ $t('Quantity') }} : {{ item.count }}
 								</li>
 								<li class="product-params__flag"></li>
 								<li class="product-params__energy"></li>
 							</ul>
 							<ul class="product-price">
 								<div class="mi-price">
-									<product-price :data="d.sku?.price || d.price" />
+									<product-price :data="item.sku?.price || item.price" />
 								</div>
 							</ul>
 						</div>

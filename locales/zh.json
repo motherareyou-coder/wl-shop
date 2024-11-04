@@ -6,6 +6,7 @@
 	"register": "注册",
 
 	"home": "首页",
+	"user": "用户中心",
 
 	"store": "商城",
 	"mobile": "手机/平板",
@@ -171,5 +172,24 @@
 	"expired": "已过期",
 	"Male": "男",
 	"Female": "女",
-	"Favorites": "我的收藏"
+	"After sale type": "售后类型",
+	"Refund only": "仅退款",
+	"Return and refund": "退货退款",
+	"Refund price": "退款金额",
+	"Apply reason": "申请原因",
+	"Apply description": "相关描述",
+	"Don't want it anymore": "不想要了",
+	"Dislike": "不喜欢",
+	"Select": "请选择",
+	"Submit": "提交",
+	"Favorites": "我的收藏",
+	"SubmitAfterSale": "提交申请",
+	"Processing": "处理中",
+	"Apply time": "申请时间",
+	"Please fill in the return logistics information.": "请填写退货物流信息",
+	"Logistics company": "物流公司",
+	"Tracking number": "快递单号",
+	"AfterSale number": "服务单号",
+	"AfterSale List": "售后订单",
+	"Confirm": "确认"
 }

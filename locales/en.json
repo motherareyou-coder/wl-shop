@@ -6,6 +6,7 @@
 	"register": "Sign up",
 
 	"home": "Home",
+	"user": "User",
 
 	"store": "Store",
 	"mobile": "Mobile",
@@ -21,5 +22,6 @@
 	"CancelOrder": "Cancel",
 	"ReceiveOrder": "Receive",
 	"DeleteOrder": "Delete",
-	"ReceiverName": "Name"
+	"ReceiverName": "Name",
+	"SubmitAfterSale": "Submit"
 }

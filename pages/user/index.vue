@@ -194,13 +194,9 @@ function logout() {
 					</el-icon>
 				</nuxt-link>
 			</div>
-			<section
-				class="orders-swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode"
-			>
-				<ul class="swiper-wrapper orders-nav flex justify-around">
-					<li
-						class="swiper-slide orders-nav__item swiper-slide-active"
-					>
+			<section class="orders-swiper-container">
+				<ul class="orders-nav flex justify-around">
+					<li class="orders-nav__item">
 						<nuxt-link :to="$path('/user/orderlist?type=0')">
 							<img
 								class="orders-nav__icon"
@@ -212,10 +208,7 @@ function logout() {
 							}}</span>
 						</nuxt-link>
 					</li>
-					<li
-						role="row"
-						class="swiper-slide orders-nav__item swiper-slide-next"
-					>
+					<li role="row" class="orders-nav__item">
 						<nuxt-link :to="$path('/user/orderlist?type=20')">
 							<img
 								class="orders-nav__icon"
@@ -227,7 +220,7 @@ function logout() {
 							}}</span>
 						</nuxt-link>
 					</li>
-					<li role="row" class="swiper-slide orders-nav__item">
+					<li role="row" class="orders-nav__item">
 						<nuxt-link :to="$path('/user/orderlist?type=30')">
 							<img
 								class="orders-nav__icon"
@@ -239,11 +232,7 @@ function logout() {
 							}}</span>
 						</nuxt-link>
 					</li>
-					<li
-						role="row"
-						tabindex="0"
-						class="swiper-slide orders-nav__item"
-					>
+					<li role="row" tabindex="0" class="orders-nav__item">
 						<nuxt-link :to="$path('/user/aftersale')">
 							<img
 								class="orders-nav__icon"

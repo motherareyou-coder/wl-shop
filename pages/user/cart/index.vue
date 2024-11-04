@@ -221,8 +221,8 @@ function checkAllChange(selected: any) {
 						</button>
 					</aside>
 					<section
-						v-for="g in finalList"
-						:key="g.id"
+						v-for="item in finalList"
+						:key="item.id"
 						class="site-cart__card site-cart__group cart-group"
 					>
 						<article
@@ -231,21 +231,21 @@ function checkAllChange(selected: any) {
 							<section
 								class="cart-item__grid cart-item__goods"
 								:class="{
-									'cart-item__goods--invalid': g.disabled,
+									'cart-item__goods--invalid': item.disabled,
 								}"
 							>
 								<div class="cart-item__checkbox">
 									<el-checkbox
-										v-model="g.selected"
-										@change="(v) => checkChange(g, v)"
+										v-model="item.selected"
+										@change="(v) => checkChange(item, v)"
 									/>
 								</div>
 								<div class="cart-item__gap"></div>
 								<div class="cart-item__image">
-									<nuxt-link :to="$path(`/product/${g.id}`)">
+									<nuxt-link :to="$path(`/product/${item.id}`)">
 										<app-image
 											class="cart-item__image-content"
-											:src="g.spu.picUrl"
+											:src="item.spu.picUrl"
 										/>
 									</nuxt-link>
 								</div>
@@ -253,12 +253,12 @@ function checkAllChange(selected: any) {
 								<div class="cart-item__detail">
 									<div class="cart-item__product">
 										<nuxt-link
-											:to="$path(`/product/${g.id}`)"
+											:to="$path(`/product/${item.id}`)"
 										>
 											<h3
 												class="cart-item__product-title"
 											>
-												{{ g.spu.name }}
+												{{ item.spu.name }}
 											</h3>
 										</nuxt-link>
 										<div
@@ -266,7 +266,7 @@ function checkAllChange(selected: any) {
 											class="cart-item__price"
 										>
 											<ProductPrice
-												:data="g.sku.price"
+												:data="item.sku.price"
 												class="cart-item__price-expect"
 											/>
 										</div>
@@ -277,18 +277,18 @@ function checkAllChange(selected: any) {
 											class="cart-item__price"
 										>
 											<ProductPrice
-												:data="g.sku.price"
+												:data="item.sku.price"
 												class="cart-item__price-expect"
 											/>
 										</div>
 										<div class="quantity-section">
 											<QtyInput
-												v-model="g.count"
-												:max="g.sku.stock"
+												v-model="item.count"
+												:max="item.sku.stock"
 												class="quantity-section__content"
-												:disabled="g.disabled"
+												:disabled="item.disabled"
 												@change="
-													(v) => updateCount(g, v)
+													(v) => updateCount(item, v)
 												"
 											/>
 										</div>
@@ -300,7 +300,7 @@ function checkAllChange(selected: any) {
 														--brand-black-30
 													);
 												"
-												@click.prevent="handleDelete(g)"
+												@click.prevent="handleDelete(item)"
 											>
 												<el-icon>
 													<ElIconDelete />

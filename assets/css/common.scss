@@ -11,12 +11,6 @@ li {
 	list-style: none;
 }
 
-p,
-span,
-strong {
-	white-space: pre-line;
-}
-
 input,
 select,
 textarea {
@@ -92,4 +86,28 @@ body {
 	cursor: pointer;
 	display: inline-block;
 	padding: var(--btn-padding) !important;
+}
+
+.mi-checkbox {
+	--mi-color-primary: var(--text-base) !important;
+	--mi-checkbox-border-radius: 0 !important;
+}
+
+.mi-drawer.btt {
+	height: 85vh !important;
+}
+
+.mi-button {
+	height: auto !important;
+	--mi-button-disabled-bg-color: var(--brand-grey-40) !important;
+}
+
+.mi-drawer .mi-drawer__header {
+	@media screen and (max-width: 720px) {
+		margin-bottom: 12px !important;
+	}
+}
+
+.mi-btn.mi-btn--icon {
+	font-size: var(--icon-font-size);
 }
