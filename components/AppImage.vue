@@ -8,5 +8,5 @@ const src = computed(() => props.src)
 </script>
 
 <template>
-	<el-image :src="src" />
+	<el-image :src="src" class="max-w-full" />
 </template>

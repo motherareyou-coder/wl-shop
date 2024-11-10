@@ -83,10 +83,10 @@ watch(type, resetData)
 				</li>
 			</ul>
 			<el-table v-if="isBalance" :data="list">
-				<el-table-column prop="bizType" />
+				<el-table-column prop="bizType" width="200" />
 				<el-table-column prop="title" />
-				<el-table-column prop="createTime" />
-				<el-table-column prop="price">
+				<el-table-column prop="createTime" width="200" />
+				<el-table-column prop="price" width="100">
 					<template #default="{ row }">
 						<span
 							class="price-wrap"
@@ -100,10 +100,10 @@ watch(type, resetData)
 				</el-table-column>
 			</el-table>
 			<el-table v-else :data="list">
-				<el-table-column prop="title" />
+				<el-table-column prop="title" width="200" />
 				<el-table-column prop="description" />
-				<el-table-column prop="createTime" />
-				<el-table-column prop="point">
+				<el-table-column prop="createTime" width="200" />
+				<el-table-column prop="point" width="100">
 					<template #default="{ row }">
 						<span
 							class="price-wrap"
@@ -121,7 +121,6 @@ watch(type, resetData)
 				v-model:page-size="pagination.pageSize"
 				:total="pagination.total"
 				layout="prev,pager,next,jumper"
-				center
 				class="mt-5"
 			/>
 		</div>

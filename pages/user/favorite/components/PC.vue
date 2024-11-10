@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductItem from './ProductItem.vue'
 import type { Product } from '~/types'
+import ProductItem from './ProductItem.vue'
 
 const { data, pagination, getData } = useTablePagination<Product>((p = {}) =>
 	$api('product/favorite/page?apifoxApiId=221197514', {
@@ -28,7 +28,6 @@ function handleCancel(item: Product, i) {
 		v-model:page-size="pagination.pageSize"
 		:total="pagination.total"
 		layout="prev,pager,next,jumper"
-		center
 	/>
 </template>
 

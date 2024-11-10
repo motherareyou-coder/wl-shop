@@ -26,7 +26,6 @@ const appStore = useAppStore()
 				v-model:page-size="pagination.pageSize"
 				:total="pagination.total"
 				layout="prev,pager,next,jumper"
-				center
 				class="mt-2"
 			/>
 		</div>
@@ -39,11 +38,3 @@ const appStore = useAppStore()
 		</div>
 	</div>
 </template>
-
-<style scoped>
-.mi-pagination {
-	justify-content: center;
-	--mi-pagination-bg-color: transparent;
-	--mi-pagination-button-disabled-bg-color: transparent;
-}
-</style>

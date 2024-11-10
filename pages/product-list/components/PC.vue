@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductItem from './ProductItem.vue'
 import type { Product } from '~/types'
+import ProductItem from './ProductItem.vue'
 
 const props = defineProps({
 	params: { type: Object, default: () => ({}) },
@@ -38,7 +38,6 @@ watch(() => props.scopeValues, resetData)
 		v-model:page-size="pagination.pageSize"
 		:total="pagination.total"
 		layout="prev,pager,next,jumper"
-		center
 	/>
 </template>
 

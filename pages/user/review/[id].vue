@@ -3,5 +3,5 @@ import Orderview from '../orderview/[id].vue'
 </script>
 
 <template>
-	<Orderview />
+	<Orderview class="mt-5" />
 </template>

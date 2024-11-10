@@ -111,3 +111,10 @@ body {
 .mi-btn.mi-btn--icon {
 	font-size: var(--icon-font-size);
 }
+
+
+.mi-pagination {
+	justify-content: center;
+	--mi-pagination-bg-color: transparent;
+	--mi-pagination-button-disabled-bg-color: transparent;
+}
