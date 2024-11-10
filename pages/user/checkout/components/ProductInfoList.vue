@@ -29,11 +29,17 @@ const appStore = useAppStore()
 				:key="item.id"
 				class="product-info__thumb-item"
 			>
-				<app-image :src="item.sku?.picUrl || item.spu?.picUrl || item.picUrl" />
+				<app-image
+					:src="item.sku?.picUrl || item.spu?.picUrl || item.picUrl"
+				/>
 			</li>
 		</ul>
 		<ul v-else class="product-info__list">
-			<li v-for="item in productList" :key="item.id" class="product-info__item">
+			<li
+				v-for="item in productList"
+				:key="item.id"
+				class="product-info__item"
+			>
 				<div class="product-info__content">
 					<app-image src="{d.picUrl}" />
 					<div class="product-other">
@@ -49,7 +55,9 @@ const appStore = useAppStore()
 						</ul>
 						<ul class="product-price">
 							<div class="mi-price">
-								<product-price :data="item.sku?.price || item.price" />
+								<product-price
+									:data="item.sku?.price || item.price"
+								/>
 							</div>
 						</ul>
 					</div>
@@ -61,6 +69,7 @@ const appStore = useAppStore()
 			:title="$t('Shopping cart')"
 			:direction="appStore.isMobile ? 'btt' : 'rtl'"
 			append-to-body
+			class="product-list-drawer"
 		>
 			<h2 class="product-overview__title">
 				{{ productList.length }}
@@ -87,7 +96,9 @@ const appStore = useAppStore()
 							</ul>
 							<ul class="product-price">
 								<div class="mi-price">
-									<product-price :data="item.sku?.price || item.price" />
+									<product-price
+										:data="item.sku?.price || item.price"
+									/>
 								</div>
 							</ul>
 						</div>
@@ -97,3 +108,9 @@ const appStore = useAppStore()
 		</el-drawer>
 	</template>
 </template>
+
+<style>
+.product-list-drawer {
+	height: 100% !important;
+}
+</style>

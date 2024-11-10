@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { isArray, isString, sortBy, uniqBy } from 'lodash-es'
-import PC from './components/PC.vue'
-import Mobile from './components/Mobile.vue'
 import { useAppStore } from '@/stores/app'
+import { isArray, isString, sortBy, uniqBy } from 'lodash-es'
+import Mobile from './components/Mobile.vue'
+import PC from './components/PC.vue'
 // import './index.scss'
 import type { ProductDetail } from '~/types'
 

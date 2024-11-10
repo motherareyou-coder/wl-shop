@@ -164,6 +164,7 @@ function handleConfirm() {
 
 <style lang="scss">
 .coupon-drawer {
+	height: 100% !important;
 	--content-padding: var(--drawer-content-padding);
 	--modal-footer-padding-horizontal: var(--content-padding);
 	--modal-footer-padding-vertical: calc(var(--content-padding) / 2);

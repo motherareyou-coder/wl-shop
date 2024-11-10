@@ -61,6 +61,37 @@ export interface Level {
 	[property: string]: any
 }
 
+/**
+ * Activity，用户 App - 营销活动 Response VO
+ */
+export interface Activity {
+	/**
+	 * 活动结束时间
+	 */
+	endTime: Date
+	/**
+	 * 活动编号
+	 */
+	id: number
+	/**
+	 * 活动名称
+	 */
+	name: string
+	/**
+	 * spu 编号
+	 */
+	spuId: number
+	/**
+	 * 活动开始时间
+	 */
+	startTime: Date
+	/**
+	 * 活动类型
+	 */
+	type: number
+	[property: string]: any
+}
+
 export interface Product {
 	id: number
 	name: string

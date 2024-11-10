@@ -6,7 +6,7 @@ const route = useRoute()
 const info: OrderDetail = JSON.parse(
 	localStorage.getItem('after-sale-apply') || '{}',
 )
-const item: OrderItem = info.items?.find(d => `${d.id}` === route.query.item)
+const item: OrderItem = info.items?.find(d => `${d.id}` === route.query.item) || {}
 
 const { data: config } = await useAPI<TradeConfig>(
 	'trade/config/get?apifoxApiId=225575439',

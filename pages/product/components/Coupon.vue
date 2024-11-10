@@ -59,6 +59,9 @@ const appStore = useAppStore()
 				</li>
 			</div>
 		</div>
+		<button v-if="appStore.isMobile" class="events-info__more">
+			<el-icon><el-icon-arrow-right /></el-icon>
+		</button>
 	</div>
 	<app-modal
 		v-model="isOpen"

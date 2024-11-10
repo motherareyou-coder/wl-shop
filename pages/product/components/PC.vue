@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import Big from 'big.js'
+import type { ProductDetail, Property, SKU } from '~/types'
+import Activities from './Activities.vue'
 import Coupon from './Coupon.vue'
 import Review from './Review/index.vue'
-import type { ProductDetail, Property, SKU } from '~/types'
 import './PC.scss'
 
 const props = defineProps({
@@ -92,6 +93,9 @@ const totalPrice = computed(() => {
 								/>
 							</div>
 						</div>
+					</section>
+					<section class="product__section product__section-spacer offers-section">
+						<Activities class="offers-section__list" />
 					</section>
 					<section
 						class="product__section product__section-spacer events-info"

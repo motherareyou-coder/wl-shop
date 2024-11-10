@@ -1,13 +1,13 @@
 <script setup lang="tsx">
+import { useAppStore } from '@/stores/app'
 import { pick } from 'lodash-es'
-import { useCheckOut } from '../cart/utils'
+import type { CartItem, Coupon, OrderSettlement } from '~/types'
 import CouponDialog from '../cart/components/CouponDialog.vue'
-import AddressList from './components/AddressList.vue'
+import { useCheckOut } from '../cart/utils'
 import Address from './components/Address.vue'
+import AddressList from './components/AddressList.vue'
 import ProductInfoList from './components/ProductInfoList.vue'
 import './index.scss'
-import { useAppStore } from '@/stores/app'
-import type { CartItem, Coupon, OrderSettlement } from '~/types'
 
 const route = useRoute()
 const orderId = route.query.orderId

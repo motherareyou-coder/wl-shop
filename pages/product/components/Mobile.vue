@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import Coupon from './Coupon.vue'
-import './Mobile.scss'
-import Review from './Review/index.vue'
 import type { ProductDetail, SKU } from '~/types'
+import Activities from './Activities.vue'
+import Coupon from './Coupon.vue'
+import Review from './Review/index.vue'
+import './Mobile.scss'
 
 const props = defineProps({
 	info: { type: Object as () => ProductDetail, required: true },
@@ -26,6 +27,8 @@ document.body.onscroll = (e) => {
 		navbarFixed.value = el.value.getBoundingClientRect().y < 60
 	}
 }
+
+const showActivities = ref(false)
 </script>
 
 <template>
@@ -73,6 +76,12 @@ document.body.onscroll = (e) => {
 		<section
 			class="product--mobile__section product--mobile__section--card events-info"
 		>
+			<div class="events-info__container" @click="showActivities = true">
+				<Activities class="flex-1 overflow-hidden" />
+				<button class="events-info__more">
+					<el-icon><ElIconArrowRight /></el-icon>
+				</button>
+			</div>
 			<Coupon />
 		</section>
 		<section
@@ -159,7 +168,11 @@ document.body.onscroll = (e) => {
 		</div>
 		<div ref="el">
 			<keep-alive>
-				<div v-if="tab === 0" class="site-container" style="margin: 0 auto">
+				<div
+					v-if="tab === 0"
+					class="site-container"
+					style="margin: 0 auto"
+				>
 					<app-image
 						v-for="img in info.sliderPicUrls"
 						:key="img"
@@ -170,5 +183,15 @@ document.body.onscroll = (e) => {
 				<Review v-else-if="tab === 1" />
 			</keep-alive>
 		</div>
+		<el-drawer
+			v-model="showActivities"
+			:title="$t('Events')"
+			direction="btt"
+			height="auto"
+		>
+			<div class="px-5">
+				<Activities />
+			</div>
+		</el-drawer>
 	</main>
 </template>
