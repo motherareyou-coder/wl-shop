@@ -2,6 +2,10 @@
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 
+definePageMeta({
+	title: 'Favorites',
+	showBread: true,
+})
 const appStore = useAppStore()
 useHead({
 	title: `${$t('Favorites')} ${$t('appTitle')}`,
@@ -9,7 +13,7 @@ useHead({
 </script>
 
 <template>
-	<div class="favorite-list">
+	<div class="favorite-list" :class="[appStore.isMobile ? 'bg-white' : '']">
 		<div class="product-list__container site-container-1400">
 			<component
 				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"

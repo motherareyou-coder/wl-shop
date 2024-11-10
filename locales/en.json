@@ -19,9 +19,12 @@
 
 	"cart": "cart",
 	"All Order": "All",
+	"CheckAll": "All",
 	"CancelOrder": "Cancel",
 	"ReceiveOrder": "Receive",
 	"DeleteOrder": "Delete",
 	"ReceiverName": "Name",
-	"SubmitAfterSale": "Submit"
+	"SubmitAfterSale": "Submit",
+	"dayorder-pre": "Day",
+	"dayorder-suf": ""
 }

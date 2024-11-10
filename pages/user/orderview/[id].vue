@@ -8,6 +8,10 @@ const router = useRouter()
 const id = route.params.id
 const payOrderId = route.query.payOrderId
 
+definePageMeta({
+	title: 'ORDER DETAILS',
+	showBread: true,
+})
 useHead({
 	title: `${id} ${$t('OrderView')} ${$t('appTitle')}`,
 })

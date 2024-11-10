@@ -1,7 +1,7 @@
 export default defineNuxtPlugin(() => {
 	// const { session } = useUserSession()
 	const token = localStorage.getItem('access-token')
-	const { baseURL, apifoxApiId } = useRuntimeConfig().public
+	const { baseURL, tenantId } = useRuntimeConfig().public
 	const nuxtApp = useNuxtApp()
 	const userStore = useUserStore()
 
@@ -13,11 +13,11 @@ export default defineNuxtPlugin(() => {
 				if (v === '' || v === null)
 					delete options.params![k]
 			})
-			// options.params.apifoxApiId = apifoxApiId
 			if (token) {
 				options.headers = new Headers(options.headers)
 				// note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
 				options.headers.set('Authorization', `Bearer ${token}`)
+				options.headers.set('tenant-id', `${tenantId}`)
 			}
 		},
 		onResponse({ response }) {

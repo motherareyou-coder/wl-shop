@@ -194,7 +194,7 @@ function checkAllChange(selected: any) {
 							class="cart-header__checkbox"
 							@change="checkAllChange"
 						>
-							{{ $t('All') }}
+							{{ $t('CheckAll') }}
 						</el-checkbox>
 						<button
 							class="cursor-pointer cart-header__delete"

@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
+import Mobile from './components/Mobile.vue'
 
-defineOptions({ name: 'OrderListCache' })
 definePageMeta({
-	name: 'OrderListCache',
-	title: 'OrderList',
+	title: 'My wallet',
 	showBread: true,
 })
-useHead({
-	title: `${$t('OrderList')} ${$t('appTitle')}`,
-})
-
 const appStore = useAppStore()
 </script>
 

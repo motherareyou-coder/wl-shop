@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import PC from './components/PC.vue'
 import Mobile from './components/Mobile.vue'
+import PC from './components/PC.vue'
 
 defineOptions({ name: 'AftersaleListCache' })
 definePageMeta({
-	keepalive: true,
 	name: 'AftersaleListCache',
 })
 useHead({

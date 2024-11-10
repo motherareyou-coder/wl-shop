@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import zh from 'element-plus/es/locale/lang/zh-cn'
 import en from 'element-plus/es/locale/lang/en'
+import zh from 'element-plus/es/locale/lang/zh-cn'
 
 const route = useRoute()
 const { t, locale } = useI18n()
@@ -25,6 +25,8 @@ useSeoMeta({
 	//   ogImage: 'https://example.com/image.png',
 	//   twitterCard: 'summary_large_image',
 })
+
+const appStore = useAppStore()
 </script>
 
 <template>
@@ -50,7 +52,7 @@ useSeoMeta({
 		<Body>
 			<el-config-provider :locale="{ en, zh }[locale]" namespace="mi">
 				<NuxtLayout>
-					<NuxtPage :keepalive="{ include: 'OrderListCache,ProductListCache,AftersaleListCache' }" />
+					<NuxtPage :keepalive="appStore.isMobile" />
 				</NuxtLayout>
 			</el-config-provider>
 		</Body>

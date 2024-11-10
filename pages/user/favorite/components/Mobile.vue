@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductItem from './ProductItem.vue'
 import type { Product } from '~/types'
+import ProductItem from './ProductItem.vue'
 
 const { data, load, loading } = useInfiteLoad<Product>(p =>
 	$api('product/favorite/page?apifoxApiId=221197514', {

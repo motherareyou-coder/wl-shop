@@ -28,7 +28,7 @@ watch(status, resetData)
 </script>
 
 <template>
-	<div class="user-order-list miv4">
+	<div class="user-order-list miv4 mb-10">
 		<div class="user-layout__container miv4">
 			<div class="mi-breadcrumbs user-layout__breadcrumbs"></div>
 			<div class="user-main">

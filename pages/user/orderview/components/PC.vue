@@ -13,9 +13,8 @@ const data = computed(() => props.data)
 </script>
 
 <template>
-	<div class="order-view-main">
+	<div class="order-view-main mb-10">
 		<div class="user-layout__container miv4">
-			<div class="mi-breadcrumbs user-layout__breadcrumbs"></div>
 			<div class="user-main">
 				<div class="order-view-main--title">
 					{{ $t('MY ORDER') }}

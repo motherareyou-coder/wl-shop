@@ -85,6 +85,11 @@ function handleDelete(p: CartItem) {
 			<AppMenu class="navigation__group-wrapper" :data="categories" />
 			<div class="navigation__separator"></div>
 			<ul class="navigation__group navigation__shortcut">
+				<li v-if="appStore.isPC" class="navigation__item shortcut__item">
+					<nuxt-link class="navigation__link" :to="$path('/articles')">
+						{{ $t('Discover') }}
+					</nuxt-link>
+				</li>
 				<li class="navigation__item shortcut__item">
 					<LanguageSelect class="navigation__link" />
 				</li>
@@ -204,22 +209,17 @@ function handleDelete(p: CartItem) {
 									</el-dropdown-item>
 								</nuxt-link>
 								<el-dropdown-item @click="logout">
-									{{ $t('Sign out') }}
+									{{ $t('Log out') }}
 								</el-dropdown-item>
 							</template>
 							<nuxt-link v-else :to="$path('/login')">
 								<el-dropdown-item>
-									{{ $t('Sign in') }}
+									{{ $t('Log in') }}
 								</el-dropdown-item>
 							</nuxt-link>
 						</el-dropdown-menu>
 					</template>
 				</el-dropdown>
-				<li v-else class="navigation__item shortcut__item">
-					<nuxt-link class="navigation__link" :to="$path('/user')">
-						<Icon name="icon:user" />
-					</nuxt-link>
-				</li>
 				<li
 					v-if="showMobileMenu"
 					class="navigation__item shortcut__item shortcut__item-menu"

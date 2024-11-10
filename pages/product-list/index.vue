@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { Category } from '~/types'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
-import type { Category } from '~/types'
 import './index.scss'
 
 defineOptions({ name: 'ProductListCache' })
@@ -84,7 +84,7 @@ function setSort(t: string) {
 </script>
 
 <template>
-	<main class="product-list">
+	<main class="product-list" :class="[appStore.isMobile ? 'bg-white' : '']">
 		<div class="product-list__container site-container-1400">
 			<div class="product-filter">
 				<ul class="condition-list">

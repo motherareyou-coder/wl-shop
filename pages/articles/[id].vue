@@ -1,0 +1,70 @@
+<script setup lang="ts">
+import ArticleItem from './components/ArticleItem.vue'
+import type { Article } from '~/types'
+import './detail.scss'
+
+const route = useRoute()
+const id = route.params.id
+const categoryId = route.query.categoryId
+const { data } = await useAPI<Article>(
+	'promotion/article/get?apifoxApiId=228621652',
+	{ params: { id } },
+)
+
+$api('promotion/article/add-browse-count?apifoxApiId=228621449', {
+	method: 'put',
+	params: { id },
+})
+
+const { data: recommends } = await useAPI<Article>(
+	'promotion/article/mall/page',
+	{ params: { pageNo: 1, pageSize: 4, categoryId } },
+).then((res) => {
+	res.data.value = res.data.value.list
+	return res
+})
+</script>
+
+<template>
+	<div class="site-container-1400 mx-auto w-full">
+		<div class="new-detail">
+			<section class="new-detail__main">
+				<div class="new-detail__main-content">
+					<div class="new-detail__title">
+						{{ data?.title }}
+					</div>
+					<div class="new-detail__info">
+						<span>{{ data?.createTime }}</span>
+						<span class="view-count">
+							<el-icon class="view-count-icon"><ElIconView /></el-icon>
+							{{ data.browseCount }}
+						</span>
+					</div>
+					<div
+						class="new-detail__content"
+						v-html="data?.content"
+					></div>
+				</div>
+			</section>
+			<section class="new-detail__read-more">
+				<div class="new-detail__read-more-title">
+					{{ $t('Read more') }}
+				</div>
+				<div class="new-detail__read-more-item list-content">
+					<ul>
+						<li
+							v-for="item in recommends"
+							:key="item.id"
+							class="item-new"
+						>
+							<ArticleItem
+								:data="item"
+								:category-id="categoryId"
+							/>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+	</div>
+</template>

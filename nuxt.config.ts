@@ -91,9 +91,11 @@ export default defineNuxtConfig({
 	// 	namespace: 'mi',
 	// },
 	runtimeConfig: {
+		// public中的键也可以在客户端使用
 		public: {
 			baseURL: '/api',
-			// apifoxApiId: '211912811',
+			tenantId: 1,
+			currency: '£',
 		},
 	},
 	nitro: {

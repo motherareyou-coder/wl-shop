@@ -1,4 +1,4 @@
-export function $api(...args: any[]) {
+export function $api<T>(...args: any[]) {
 	const nuxtApp = useNuxtApp()
-	return nuxtApp.$api(...args)
+	return nuxtApp.$api<T>(...args)
 }

@@ -2,6 +2,10 @@
 import type { Coupon } from '~/types'
 import './index.scss'
 
+definePageMeta({
+	title: 'Coupons',
+	showBread: true,
+})
 const route = useRoute()
 const status = ref(0)
 watchEffect(() => {

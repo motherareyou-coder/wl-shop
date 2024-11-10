@@ -20,7 +20,7 @@ function handleCancel(item: Product, i) {
 </script>
 
 <template>
-	<div class="mi-product__list">
+	<div class="mi-product__list" style="margin: 0">
 		<ProductItem v-for="(item, i) in data" :key="item.id" :data="item" @cancel="handleCancel(item, i)" />
 	</div>
 	<el-pagination

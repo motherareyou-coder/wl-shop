@@ -1,7 +1,8 @@
 <script setup>
 defineOptions({ name: 'ProductPrice' })
 
-const unit = ref('£')
+const { currency } = useRuntimeConfig().public
+const unit = ref(currency || '£')
 const data = defineModel('data')
 </script>
 

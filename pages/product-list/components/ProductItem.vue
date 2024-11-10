@@ -5,18 +5,20 @@ const router = useRouter()
 function onClick() {
 	router.push($path(`/product/${data.value.id}`))
 }
+const appStore = useAppStore()
 </script>
 
 <template>
 	<li class="mi-product__item-wrapper">
-		<div class="mi-product__item">
-			<div class="item__figure-container">
-				<app-image
-					class="mi-image item__image"
-					:src="data.img"
-					@click="onClick"
-				/>
-			</div>
+		<div
+			class="mi-product__item"
+		>
+			<app-image
+				class="shrink-0"
+				:class="[appStore.isPC ? 'w-60 h-60 m-3' : 'w-28 h-28']"
+				:src="data.img"
+				@click="onClick"
+			/>
 			<div class="item__info">
 				<div class="item__info-section">
 					<h3 class="item__title" @click="onClick">

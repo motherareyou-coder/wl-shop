@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductItem from './ProductItem.vue'
 import type { Product } from '~/types'
+import ProductItem from './ProductItem.vue'
 
 const props = defineProps({
 	params: { type: Object, default: () => ({}) },

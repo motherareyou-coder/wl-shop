@@ -778,3 +778,216 @@ export interface AfterSale {
 	way: number
 	[property: string]: any
 }
+
+/**
+ * PayWallet APP - 用户钱包 Response VO
+ */
+export interface PayWallet {
+	/**
+	 * 钱包余额，单位分
+	 */
+	balance: number
+	/**
+	 * 累计支出，单位分
+	 */
+	totalExpense: number
+	/**
+	 * 累计充值，单位分
+	 */
+	totalRecharge: number
+	[property: string]: any
+}
+
+/**
+ * PayWalletTransaction，用户 APP - 钱包流水分页 Response VO
+ */
+export interface PayWalletTransaction {
+	/**
+	 * 业务分类
+	 */
+	bizType: number
+	/**
+	 * 交易时间
+	 */
+	createTime: Date
+	/**
+	 * 交易金额，单位分
+	 */
+	price: number
+	/**
+	 * 流水标题
+	 */
+	title: string
+	[property: string]: any
+}
+/**
+ * PointRecord，用户 App - 用户积分记录 Response VO
+ */
+export interface PointRecord {
+	/**
+	 * 发生时间
+	 */
+	createTime: Date
+	/**
+	 * 积分描述
+	 */
+	description?: string
+	/**
+	 * 自增主键
+	 */
+	id: number
+	/**
+	 * 积分
+	 */
+	point: number
+	/**
+	 * 积分标题
+	 */
+	title: string
+	[property: string]: any
+}
+
+export interface SignInConfig {
+	/**
+	 * 签到第 x 天
+	 */
+	day: number
+	/**
+	 * 奖励积分
+	 */
+	point: number
+	[property: string]: any
+}
+
+export interface SignIn {
+	/**
+	 * 连续签到第 x 天
+	 */
+	continuousDay: number
+	/**
+	 * 今天是否已签到
+	 */
+	todaySignIn: boolean
+	/**
+	 * 总签到天数
+	 */
+	totalDay: number
+	[property: string]: any
+}
+
+export interface MemberLevel {
+	/**
+	 * 等级背景图
+	 */
+	backgroundUrl?: string
+	/**
+	 * 享受折扣
+	 */
+	discountPercent: number
+	/**
+	 * 升级经验
+	 */
+	experience: number
+	/**
+	 * 等级图标
+	 */
+	icon?: string
+	/**
+	 * 等级
+	 */
+	level: number
+	/**
+	 * 等级名称
+	 */
+	name: string
+	[property: string]: any
+}
+
+/**
+ * ExperienceRecord，用户 App - 会员经验记录 Response VO
+ */
+export interface ExperienceRecord {
+	/**
+	 * 创建时间
+	 */
+	createTime: Date
+	/**
+	 * 描述
+	 */
+	description: string
+	/**
+	 * 经验
+	 */
+	experience: number
+	/**
+	 * 标题
+	 */
+	title: string
+	[property: string]: any
+}
+
+/**
+ * ArticleCategory，应用 App - 文章分类 Response VO
+ */
+export interface ArticleCategory {
+	/**
+	 * 分类编号
+	 */
+	id: number
+	/**
+	 * 分类名称
+	 */
+	name: string
+	/**
+	 * 分类图标
+	 */
+	picUrl: string
+	[property: string]: any
+}
+
+/**
+ * Article，应用 App - 文章 Response VO
+ */
+export interface Article {
+	/**
+	 * 文章作者
+	 */
+	author: string
+	/**
+	 * 浏览量
+	 */
+	browseCount: number
+	/**
+	 * 分类编号
+	 */
+	categoryId: number
+	/**
+	 * 文章内容
+	 */
+	content: string
+	/**
+	 * 发布时间
+	 */
+	createTime: Date
+	/**
+	 * 文章编号
+	 */
+	id: number
+	/**
+	 * 文章简介
+	 */
+	introduction: string
+	/**
+	 * 图文封面
+	 */
+	picUrl: string
+	/**
+	 * 关联的商品 SPU 编号
+	 */
+	spuId?: number
+	/**
+	 * 文章标题
+	 */
+	title: string
+	[property: string]: any
+}

@@ -33,7 +33,7 @@ watch(() => props.scopeValues, resetData)
 		<ProductItem v-for="item in data" :key="item.id" :data="item" />
 	</div>
 	<el-pagination
-		v-if="!scopeValues.length"
+		v-if="!props.scopeValues?.length"
 		v-model:current-page="pagination.currentPage"
 		v-model:page-size="pagination.pageSize"
 		:total="pagination.total"

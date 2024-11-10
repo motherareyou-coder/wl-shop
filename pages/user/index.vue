@@ -29,55 +29,47 @@ const { data: favCount } = await useAPI(
 const linkList = [
 	{
 		title: $t('My Orders'),
-		tips: 'Track, modify, or cancel an order or make a return or review',
 		icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
 		url: '/user/orderlist',
 	},
 	{
 		title: $t('Coupons'),
-		tips: 'View your Coupons redeem',
 		icon: 'https://i05.appmifile.com/791_operatorx_operatorx_opx/06/06/2024/e1b8a664a4b5df21bc0977b135892354.png',
 		url: '/user/coupon',
 	},
-	// {
-	// 	title: $t('Mi Club'),
-	// 	tips: 'Shopping to earn and redeem for coupons',
-	// 	icon: 'https://i05.appmifile.com/143_operatorx_operatorx_opx/06/06/2024/d1a5a49897e12ddf746db4461c696812.png',
-	// 	// url: 'https://mobile.mi.com/uk/user/mi-club',
-	// },
+	{
+		title: $t('Sign in'),
+		icon: 'https://i05.appmifile.com/143_operatorx_operatorx_opx/06/06/2024/d1a5a49897e12ddf746db4461c696812.png',
+		url: '/user/signin',
+	},
 	{
 		title: $t('Address Book'),
-		tips: 'Manager your address for delivery',
 		icon: 'https://i05.appmifile.com/87_operatorx_operatorx_opx/06/06/2024/de057751b5b6119d34a827cc57f55f79.png',
 		url: '/user/address',
 	},
-	// {
-	// 	title: $t('Notifications Preferences'),
-	// 	tips: 'Manager your push, email and messages',
-	// 	icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
-	// 	url: '/user/notification-preferences',
-	// },
-	// {
-	// 	title: $t('My Account'),
-	// 	tips: 'Signing in and security or reset password',
-	// 	icon: 'https://i05.appmifile.com/681_operatorx_operatorx_opx/06/06/2024/ebccf17dd62553652278d76353868aa4.png',
-	// 	// url: 'https://account.xiaomi.com/fe/service/account?bizFlag=mi_i18n_global',
-	// },
+	{
+		title: $t('My wallet'),
+		icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
+		url: '/user/wallet',
+	},
+	{
+		title: $t('My points') + (user.point ? `(${user.point})` : ''),
+		type: 'points',
+		icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
+		url: '/user/points',
+	},
+	{
+		title: $t('Level'),
+		icon: 'https://i05.appmifile.com/681_operatorx_operatorx_opx/06/06/2024/ebccf17dd62553652278d76353868aa4.png',
+		url: '/user/level',
+	},
 	// {
 	// 	title: $t('My Reviews'),
-	// 	tips: 'Share your opinions about products features or your own feelings',
 	// 	icon: 'https://i05.appmifile.com/656_operatorx_operatorx_opx/06/06/2024/82fc1f0e03bdd22014ccfa62a0ca722c.png',
 	// 	url: '',
 	// },
-	// {
-	// 	title: $t('F-code'),
-	// 	tips: '',
-	// 	icon: 'https://i05.appmifile.com/843_operatorx_operatorx_opx/06/06/2024/d4f9359112e712e9519a61e0fe05c389.png',
-	// 	url: '/user/f-code',
-	// },
 	{
 		title: $t('Favorites') + (favCount.value ? `(${favCount.value})` : ''),
-		tips: 'Manager your favorite products',
 		icon: 'https://i05.appmifile.com/843_operatorx_operatorx_opx/06/06/2024/d4f9359112e712e9519a61e0fe05c389.png',
 		url: '/user/favorite',
 	},
@@ -250,6 +242,7 @@ function logout() {
 		<section class="use-center-nav__entries user-center__section">
 			<nuxt-link
 				v-for="l in linkList"
+				v-show="!(l.type === 'points' && appStore.isPC) "
 				:key="l.url"
 				class="use-center-nav__item"
 				:to="$path(l.url)"
@@ -257,9 +250,6 @@ function logout() {
 				<img class="entries-icon" :src="l.icon">
 				<p class="entries-item__title">
 					{{ l.title }}
-				</p>
-				<p class="entries-item__desc">
-					{{ l.tips }}
 				</p>
 				<el-icon class="icon-forward">
 					<ElIconArrowRight />
@@ -275,7 +265,7 @@ function logout() {
 				<ElIconSwitchButton />
 			</el-icon>
 			<p class="sign-out__title">
-				{{ $t('Sign out') }}
+				{{ $t('Log out') }}
 			</p>
 		</button>
 		<app-modal

@@ -11,6 +11,7 @@ defineOptions({
 		</noscript>
 		<AppHeader />
 		<CartNav />
+		<UserBreadcrumb />
 		<slot></slot>
 		<AppFooter />
 	</div>

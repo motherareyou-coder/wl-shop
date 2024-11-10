@@ -18,7 +18,8 @@ function hide() {
 	show.value = false
 	currentCat.value = null
 }
-
+const route = useRoute()
+watch(() => route.fullPath, hide)
 watch(
 	() => appStore.isMobile,
 	v => v || hide(),
@@ -60,7 +61,7 @@ watch(
 					<nuxt-link
 						:to="$path('/user')"
 						class="content__user"
-						@click.stop="hide"
+						@click.stop
 					>
 						<div
 							class="content__user-info content__user-info--logged-in"
@@ -91,11 +92,19 @@ watch(
 											`/product-list?categoryId=${m.id}`,
 										)
 									"
-									@click.stop="hide"
+									@click.stop
 								>
 									{{ m.name }}
 								</nuxt-link>
 								<el-icon><ElIconArrowRight /></el-icon>
+							</li>
+							<li class="nav__link">
+								<nuxt-link
+									class="navigation__link"
+									:to="$path('/articles')"
+								>
+									{{ $t('Discover') }}
+								</nuxt-link>
 							</li>
 						</ul>
 					</div>
@@ -114,7 +123,6 @@ watch(
 											:key="item.id"
 											class="header-product-item header-product-item-mobile"
 											:to="$path(`/product/${item.id}`)"
-											@click="hide"
 										>
 											<app-image
 												class="header-product-item__image"

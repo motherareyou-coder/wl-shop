@@ -11,45 +11,45 @@ const appStore = useAppStore()
 
 <template>
 	<li class="mi-product__item-wrapper">
-		<div class="mi-product__item">
-			<div class="item__figure-container">
-				<app-image
-					class="mi-image item__image"
-					:src="data.img"
-					@click="onClick"
-				/>
-			</div>
-			<div class="item__info">
-				<div class="item__info-section w-full">
-					<h3
-						class="item__title items-center w-full"
-						style="display: flex"
-						:class="[
-							appStore.isPC
-								? 'justify-center'
-								: 'justify-between',
-						]"
+		<div
+			class="flex bg-white w-full"
+			:class="[appStore.isPC ? 'flex-col p-3 rounded' : '']"
+		>
+			<app-image
+				class="shrink-0 cursor-pointer"
+				:class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']"
+				:src="data.img"
+				@click="onClick"
+			/>
+			<div
+				class="w-full flex flex-col"
+				:class="[
+					appStore.isPC ? '' : 'h-20 pl-2 justify-between h-full p-3',
+				]"
+			>
+				<div
+					class="overflow-hidden flex h-10 "
+					:class="[appStore.isPC ? 'my-3' : '']"
+				>
+					<span
+						class="overflow-hidden text-ellipsis cursor-pointer"
+						style="
+							display: box;
+							display: -webkit-box;
+							-webkit-box-orient: vertical;
+							-webkit-line-clamp: 2;
+						"
 						@click="onClick"
 					>
-						<span>
-							{{ data.id }}
-						</span>
-						<el-icon
-							class="ml-2"
-							style="color: #ff6900"
-							@click.stop="emit('cancel')"
-						>
+						{{ data.spuName }}
+					</span>
+				</div>
+				<div class="flex justify-between">
+					<product-price class="font-medium" :data="data.price" />
+					<button @click.stop="emit('cancel')">
+						<el-icon class="ml-2" style="color: #ff6900">
 							<el-icon-star />
 						</el-icon>
-					</h3>
-				</div>
-				<div class="item__info-section item__info__translate">
-					<product-price
-						class="mi-price item__price"
-						:data="data.price"
-					/>
-					<button @click.prevent="onClick">
-						{{ $t('Shop Now') }}
 					</button>
 				</div>
 			</div>
