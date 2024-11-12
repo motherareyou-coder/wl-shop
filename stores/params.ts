@@ -10,7 +10,7 @@ export const useParamsStore = defineStore('ParamsStore', {
 		getCartCount() {
 			const nuxtApp = useNuxtApp()
 			return nuxtApp
-				.$api<number>('trade/cart/get-count?apifoxApiId=218995480')
+				.$api<number>('trade/cart/get-count')
 				.then((res: number) => {
 					this.cartCount = res
 				})

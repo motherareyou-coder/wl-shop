@@ -16,7 +16,7 @@ useHead({
 	title: `${id} ${$t('OrderView')} ${$t('appTitle')}`,
 })
 const { data: info, refresh } = await useAPI<OrderDetail>(
-	'trade/order/get-detail?apifoxApiId=219799959',
+	'trade/order/get-detail',
 	{ params: { id } },
 )
 if (payOrderId && !info.value?.payTime) {
@@ -24,7 +24,7 @@ if (payOrderId && !info.value?.payTime) {
 	const getPayStatus = () => {
 		if (info.value?.payTime)
 			return
-		$api('pay/order/get?apifoxApiId=220062937', {
+		$api('pay/order/get', {
 			params: { id: payOrderId },
 		})
 			.then((res) => {
@@ -63,7 +63,7 @@ function handleCommand(type: string, data: any) {
 		case 'cancel':
 			delMsgBox(msg1).then(() => {
 				loading.value = true
-				$api('trade/order/cancel?apifoxApiId=225702258', {
+				$api('trade/order/cancel', {
 					method: 'delete',
 					params: { id },
 				})
@@ -76,7 +76,7 @@ function handleCommand(type: string, data: any) {
 		case 'delete':
 			delMsgBox(msg2).then(() => {
 				loading.value = true
-				$api('trade/order/delete?apifoxApiId=225702264', {
+				$api('trade/order/delete', {
 					method: 'delete',
 					params: { id },
 				})
@@ -89,7 +89,7 @@ function handleCommand(type: string, data: any) {
 		case 'receive':
 			delMsgBox(msg3).then(() => {
 				loading.value = true
-				$api('trade/order/receive?apifoxApiId=220053696', {
+				$api('trade/order/receive', {
 					method: 'put',
 					params: { id },
 				})
@@ -110,7 +110,7 @@ function handleCommand(type: string, data: any) {
 }
 
 const { data: tracks } = await useAPI<ExpressTrack[]>(
-	'trade/order/get-express-track-list?apifoxApiId=225701705',
+	'trade/order/get-express-track-list',
 	{
 		params: { id },
 	},

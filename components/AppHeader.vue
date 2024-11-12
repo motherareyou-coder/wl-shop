@@ -12,8 +12,8 @@ const searchShow = ref(false)
 userStore.getInfo()
 
 const { data: categories } = await useAPI<Category[]>(
-	'product/category/list/top?apifoxApiId=211912811',
-)
+	'product/category/list/top',
+    {params:{num:5}})
 
 const paramsStore = useParamsStore()
 const cartCount = computed(() => paramsStore.$state.cartCount)
@@ -23,7 +23,7 @@ watch(
 	categories,
 	(v) => {
 		v?.forEach((c, i) =>
-			$api('product/spu/page?apifoxApiId=211495718', {
+			$api('product/spu/page', {
 				params: {
 					categoryId: c.id,
 					pageNo: 1,
@@ -43,7 +43,7 @@ const showMobileMenu = computed(
 const route = useRoute()
 const router = useRouter()
 function logout() {
-	$api('member/auth/logout?apifoxApiId=221136607', { method: 'post' }).then(
+	$api('member/auth/logout', { method: 'post' }).then(
 		() => {
 			userStore.logout()
 			if (route.path.includes('user'))
@@ -57,13 +57,13 @@ const isCart = computed(
 )
 const validList = ref<CartItem[]>([])
 function getCartList() {
-	$api('trade/cart/list?apifoxApiId=218994931').then((res) => {
+	$api('trade/cart/list').then((res) => {
 		validList.value = res.validList as CartItem[]
 		paramsStore.setCartCount(validList.value.length)
 	})
 }
 function handleDelete(p: CartItem) {
-	$api('trade/cart/delete?apifoxApiId=218995484', {
+	$api('trade/cart/delete', {
 		method: 'delete',
 		body: { ids: [p.id] },
 	}).then(() => {

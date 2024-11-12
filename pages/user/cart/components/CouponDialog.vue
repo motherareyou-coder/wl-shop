@@ -9,7 +9,7 @@ const selected = ref<number[]>([])
 const active = ref<Coupon>()
 
 const { data } = await useAsyncData<Coupon[]>(() =>
-	$api('promotion/coupon/page?apifoxApiId=221192399').then(res => res.list),
+	$api('promotion/coupon/page').then(res => res.list),
 )
 
 const availableList = computed(

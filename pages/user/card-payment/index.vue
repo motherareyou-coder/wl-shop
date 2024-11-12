@@ -4,7 +4,7 @@ import './index.scss'
 const route = useRoute()
 const id = route.query.orderId
 
-const { data: info } = await useAPI('trade/order/get-detail?apifoxApiId=219799959', { params: { id } })
+const { data: info } = await useAPI('trade/order/get-detail', { params: { id } })
 
 const data = ref({})
 </script>

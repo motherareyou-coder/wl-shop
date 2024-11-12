@@ -16,7 +16,7 @@ import 'swiper/css/pagination'
 defineOptions({ name: 'AppSwiper' })
 
 const { data } = await useAPI<Banner[]>(
-	'promotion/banner/list?apifoxApiId=212551460',
+	'promotion/banner/list',
 	{ params: { position: 1 } },
 )
 watch(
@@ -80,7 +80,7 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 const router = useRouter()
 function onClick({ id }: Banner) {
 	if (id) {
-		$api('promotion/banner/add-browse-count?apifoxApiId=212551542', {
+		$api('promotion/banner/add-browse-count', {
 			method: 'put',
 			params: { id },
 		}).then(() => {

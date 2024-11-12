@@ -36,7 +36,7 @@ const formRef = ref()
 const isEdit = ref(false)
 
 function refressAddressList() {
-	return $api('member/address/list?apifoxApiId=220056923').then((res) => {
+	return $api('member/address/list').then((res) => {
 		addressList.value = res || []
 	})
 }
@@ -62,7 +62,7 @@ function handleDelete(data: Address, i: number) {
 		confirmButtonClass: 'mi-button--info',
 	})
 		.then(() =>
-			$api('member/address/delete?apifoxApiId=221188610', {
+			$api('member/address/delete', {
 				method: 'delete',
 				body: { id: data.id },
 			}).then(() => {
@@ -95,7 +95,7 @@ function handleSubmit() {
 			return
 		loading.value = true
 		if (formState.data.id) {
-			$api('member/address/update?apifoxApiId=221188479', {
+			$api('member/address/update', {
 				method: 'put',
 				body: pick(formState.data, propList),
 			})
@@ -108,7 +108,7 @@ function handleSubmit() {
 				})
 		}
 		else {
-			$api('member/address/create?apifoxApiId=221188485', {
+			$api('member/address/create', {
 				method: 'post',
 				body: pick(formState.data, propList),
 			})
@@ -132,7 +132,7 @@ function showList() {
 
 function updateDefaultStatus(data: Address, v: number) {
 	if (v) {
-		$api('member/address/update?apifoxApiId=221188479', {
+		$api('member/address/update', {
 			method: 'put',
 			body: { ...pick(data, propList), defaultStatus: true },
 		}).then(() => {

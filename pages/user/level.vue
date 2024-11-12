@@ -10,11 +10,11 @@ const userStore = useUserStore()
 const user = computed(() => userStore.$state)
 
 const { data: steps } = await useAPI<MemberLevel>(
-	'member/level/list?apifoxApiId=230327619',
+	'member/level/list',
 )
 
 function getData<ExperienceRecord>(params: any) {
-	return $api<ExperienceRecord>('member/experience-record/page?apifoxApiId=230327650', {
+	return $api<ExperienceRecord>('member/experience-record/page', {
 		params,
 	})
 }

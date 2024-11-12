@@ -4,7 +4,7 @@ import type { Coupon } from '~/types'
 const id = inject('id')
 
 const { data, load, reset } = useInfiteLoad<Coupon>(params =>
-	$api('promotion/coupon-template/list?apifoxApiId=218961339', {
+	$api('promotion/coupon-template/list', {
 		params: { ...params, spuId: id, count: 100 },
 	}),
 )
@@ -14,7 +14,7 @@ const isOpen = ref(false)
 watch(isOpen, v => v || reset())
 
 function getCoupon(c: Coupon) {
-	$api('promotion/coupon/take?apifoxApiId=218967586', {
+	$api('promotion/coupon/take', {
 		method: 'post',
 		params: { templateId: c.id },
 	}).then(() => {

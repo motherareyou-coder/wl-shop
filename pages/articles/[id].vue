@@ -7,11 +7,11 @@ const route = useRoute()
 const id = route.params.id
 const categoryId = route.query.categoryId
 const { data } = await useAPI<Article>(
-	'promotion/article/get?apifoxApiId=228621652',
+	'promotion/article/get',
 	{ params: { id } },
 )
 
-$api('promotion/article/add-browse-count?apifoxApiId=228621449', {
+$api('promotion/article/add-browse-count', {
 	method: 'put',
 	params: { id },
 })

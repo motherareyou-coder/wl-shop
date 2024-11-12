@@ -4,12 +4,12 @@ import type { AfterSale } from '~/types'
 const route = useRoute()
 const id = route.params.id
 const { data, refresh } = await useAPI<AfterSale>(
-	'trade/after-sale/get?apifoxApiId=225683297',
+	'trade/after-sale/get',
 	{ params: { id } },
 )
 
 const { data: componies } = await useAPI<{ id: number, name: string }[]>(
-	'trade/delivery/express/list?apifoxApiId=225700093',
+	'trade/delivery/express/list',
 )
 
 const visible = ref(false)
@@ -30,7 +30,7 @@ function handleConfirm() {
 		if (!v)
 			return
 		loading.value = true
-		$api('trade/after-sale/delivery?apifoxApiId=225683247', {
+		$api('trade/after-sale/delivery', {
 			method: 'put',
 			body: form.value,
 		})
@@ -52,7 +52,7 @@ function handleCancel() {
 		}),
 	).then(() => {
 		loading.value = true
-		$api('trade/after-sale/cancel?apifoxApiId=225683219', {
+		$api('trade/after-sale/cancel', {
 			method: 'delete',
 			params: { id },
 		})

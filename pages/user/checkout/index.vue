@@ -13,7 +13,7 @@ const route = useRoute()
 const orderId = route.query.orderId
 const productList = ref<CartItem[]>([])
 if (orderId) {
-	$api('trade/order/get-detail?apifoxApiId=219799959', {
+	$api('trade/order/get-detail', {
 		params: { id: orderId },
 	}).then((res) => {
 		const { items = [], ...data } = res
@@ -25,7 +25,7 @@ if (orderId) {
 	})
 }
 else {
-	$api('trade/cart/list?apifoxApiId=218994931', {}).then((res) => {
+	$api('trade/cart/list', {}).then((res) => {
 		productList.value = res.validList.filter((d: CartItem) => d.selected)
 	})
 }
@@ -78,7 +78,7 @@ const shipOptions = ref([
 	// },
 ])
 // const { data: payOptions } = await useAPI<string[]>(
-// 	'pay/channel/get-enable-code-list?apifoxApiId=219383090',
+// 	'pay/channel/get-enable-code-list',
 // 	{ params: { appId: 1 } },
 // )
 const payOptions = ref([
@@ -195,7 +195,7 @@ const msg = $t('Please select a address.')
 function handleSubmit() {
 	const fn = () => {
 		if (info.value?.payOrderId) {
-			$api('pay/order/submit?apifoxApiId=219797603', {
+			$api('pay/order/submit', {
 				method: 'post',
 				body: {
 					id: info.value?.payOrderId,
@@ -217,7 +217,7 @@ function handleSubmit() {
 		if (loading.value)
 			return
 		loading.value = true
-		$api('trade/order/create?apifoxApiId=219379935', {
+		$api('trade/order/create', {
 			method: 'post',
 			body: {
 				items: items.value,

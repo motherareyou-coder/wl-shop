@@ -19,7 +19,7 @@ export function useCheckOut(
 	function getInfo() {
 		console.log('getInfo', productList.value)
 		if (productList.value?.length) {
-			$api('trade/order/settlement?apifoxApiId=219151428', {
+			$api('trade/order/settlement', {
 				params: {
 					items: items.value,
 					couponId: coupon.value?.id,

@@ -29,7 +29,7 @@ const { data, load, reset } = useInfiteLoad<OrderDetail>((params) => {
 	}
 	if (status.value === 30)
 		p.commentStatus = false
-	return $api('trade/order/page?apifoxApiId=219807468', {
+	return $api('trade/order/page', {
 		params: p,
 	})
 })

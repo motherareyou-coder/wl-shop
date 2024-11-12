@@ -26,7 +26,7 @@ useHead({
 const appStore = useAppStore()
 const categories = ref<Category[]>([])
 function refreshCategories() {
-	$api('product/category/list?apifoxApiId=217665537', {
+	$api('product/category/list', {
 		params: { ids: productScopeValues.value },
 	}).then((res) => {
 		categories.value.splice(0, categories.value.length, ...res)

@@ -11,12 +11,12 @@ import type { Category } from '~/types'
 defineOptions({ name: 'AppFeature' })
 
 const { data: categories } = await useAPI<Category[]>(
-	'product/category/list/featured/top?apifoxApiId=211955118',
+	'product/category/list/featured/top',
 	{ params: { num: 5 } },
 )
 watch(categories, (v) => {
 	v?.forEach(async (d) => {
-		$api('product/spu/page?apifoxApiId=211495718', {
+		$api('product/spu/page', {
 			params: {
 				categoryId: d.id,
 				pageNo: 1,

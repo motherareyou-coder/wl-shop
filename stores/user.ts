@@ -42,7 +42,7 @@ export const useUserStore = defineStore('UserStore', {
 		getInfo() {
 			const nuxtApp = useNuxtApp()
 			return nuxtApp
-				.$api<UserInfo>('member/user/get?apifoxApiId=221159725')
+				.$api<UserInfo>('member/user/get')
 				.then((res: UserInfo) => {
 					if (localStorage.getItem('access-token'))
 						this.$patch(res)

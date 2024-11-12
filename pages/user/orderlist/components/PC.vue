@@ -20,7 +20,7 @@ const {
 	pagination,
 	resetData,
 } = useTablePagination<OrderDetail>((p = {}) =>
-	$api('trade/order/page?apifoxApiId=219807468', {
+	$api('trade/order/page', {
 		params: { ...p, status: status.value },
 	}),
 )

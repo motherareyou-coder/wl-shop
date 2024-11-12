@@ -9,7 +9,7 @@ const info: OrderDetail = JSON.parse(
 const item: OrderItem = info.items?.find(d => `${d.id}` === route.query.item) || {}
 
 const { data: config } = await useAPI<TradeConfig>(
-	'trade/config/get?apifoxApiId=225575439',
+	'trade/config/get',
 )
 
 const data = ref({
@@ -32,7 +32,7 @@ const options = (info.status === 20
 const router = useRouter()
 
 function submit() {
-	$api('trade/after-sale/create?apifoxApiId=225568599', {
+	$api('trade/after-sale/create', {
 		method: 'post',
 		body: {
 			orderItemId: item.id,
@@ -62,7 +62,7 @@ function handleSubmit() {
 			images.value.forEach((f) => {
 				form.append('file', f.raw)
 			})
-			$api('infra/file/upload?apifoxApiId=225572197', {
+			$api('infra/file/upload', {
 				method: 'post',
 				body: form,
 			}).then((res) => {

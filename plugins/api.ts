@@ -13,11 +13,12 @@ export default defineNuxtPlugin(() => {
 				if (v === '' || v === null)
 					delete options.params![k]
 			})
+			options.headers = new Headers(options.headers)
+			//租户不论是否登陆，都需要传入
+			options.headers.set('tenant-id', `${tenantId}`)
 			if (token) {
-				options.headers = new Headers(options.headers)
 				// note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
 				options.headers.set('Authorization', `Bearer ${token}`)
-				options.headers.set('tenant-id', `${tenantId}`)
 			}
 		},
 		onResponse({ response }) {
@@ -47,7 +48,7 @@ export default defineNuxtPlugin(() => {
 		if (refreshToken) {
 			refreshing = true
 			api(
-				'member/auth/refresh-token?apifoxApiId=221136003',
+				'member/auth/refresh-token',
 				{ method: 'post', params: { refreshToken } },
 			).then((res) => {
 				userStore.setToken(res as AuthToken)

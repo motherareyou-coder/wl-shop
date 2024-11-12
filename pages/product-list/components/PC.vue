@@ -9,7 +9,7 @@ const props = defineProps({
 const { data, pagination, resetData } = useTablePagination<Product>(
 	(p = {}) =>
 		props.scopeValues?.length
-			? $api('product/spu/list-by-ids?apifoxApiId=221196568', {
+			? $api('product/spu/list-by-ids', {
 				params: {
 					...props.params,
 					ids: props.scopeValues,
@@ -20,7 +20,7 @@ const { data, pagination, resetData } = useTablePagination<Product>(
 					total: res.length,
 				}
 			})
-			: $api('product/spu/page?apifoxApiId=211495718', {
+			: $api('product/spu/page', {
 				params: { ...p, ...props.params },
 			}),
 )

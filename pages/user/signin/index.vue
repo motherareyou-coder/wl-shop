@@ -9,13 +9,13 @@ definePageMeta({
 })
 
 const { data, refresh } = await useAPI<SignIn>(
-	'member/sign-in/record/get-summary?apifoxApiId=228403418',
+	'member/sign-in/record/get-summary',
 )
 const { data: steps } = await useAPI<SignInConfig[]>(
-	'member/sign-in/config/list?apifoxApiId=228398341',
+	'member/sign-in/config/list',
 )
 function signIn() {
-	$api('member/sign-in/record/create?apifoxApiId=228404154', {
+	$api('member/sign-in/record/create', {
 		method: 'post',
 	}).then(refresh)
 }

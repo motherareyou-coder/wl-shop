@@ -2,7 +2,7 @@
 import type { AfterSale } from '~/types'
 
 const { data, pagination, getData } = useTablePagination<AfterSale>((p = {}) =>
-	$api('trade/after-sale/page?apifoxApiId=225683284', {
+	$api('trade/after-sale/page', {
 		params: { ...p, status: status.value },
 	}),
 )
@@ -21,7 +21,7 @@ function handleCancel({ id }: AfterSale) {
 		}),
 	).then(() => {
 		loading1.value = true
-		$api('trade/after-sale/cancel?apifoxApiId=225683219', {
+		$api('trade/after-sale/cancel', {
 			method: 'delete',
 			params: { id },
 		})

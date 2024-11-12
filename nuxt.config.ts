@@ -80,7 +80,9 @@ export default defineNuxtConfig({
 		server: {
 			proxy: {
 				'/api': {
-					target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
+					// target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
+					// target: 'http://122.190.56.101:6060/shop-server',
+					target: 'http://10.10.10.17:48080',
 					changeOrigin: true,
 					rewrite: path => path.replace('api', 'app-api'),
 				},
@@ -95,7 +97,7 @@ export default defineNuxtConfig({
 		public: {
 			baseURL: '/api',
 			tenantId: 1,
-			currency: '£',
+			currency: '$',
 		},
 	},
 	nitro: {

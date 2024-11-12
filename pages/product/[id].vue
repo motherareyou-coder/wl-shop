@@ -12,7 +12,7 @@ const id = route.params.id
 provide('id', id)
 
 const { data: info } = await useAPI<ProductDetail>(
-	'product/spu/get-detail?apifoxApiId=218881713',
+	'product/spu/get-detail',
 	{ params: { id } },
 )
 useHead({
@@ -73,7 +73,7 @@ const properties = computed(() => {
 })
 
 const { data: stared } = await useAPI<boolean>(
-	'product/favorite/exits?apifoxApiId=218963826',
+	'product/favorite/exits',
 	{ params: { spuId: id } },
 )
 
@@ -81,7 +81,7 @@ const count = ref(1)
 
 function toggleStar() {
 	if (stared.value) {
-		$api('product/favorite/delete?apifoxApiId=218963891', {
+		$api('product/favorite/delete', {
 			method: 'delete',
 			body: { spuId: id },
 		}).then(() => {
@@ -89,7 +89,7 @@ function toggleStar() {
 		})
 	}
 	else {
-		$api('product/favorite/create?apifoxApiId=218963858', {
+		$api('product/favorite/create', {
 			method: 'post',
 			body: { spuId: id },
 		}).then(() => {
@@ -99,7 +99,7 @@ function toggleStar() {
 }
 
 function goCart() {
-	$api('trade/cart/add?apifoxApiId=218995477', {
+	$api('trade/cart/add', {
 		method: 'post',
 		body: {
 			count: count.value,

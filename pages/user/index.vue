@@ -23,7 +23,7 @@ const formState = reactive({
 })
 
 const { data: favCount } = await useAPI(
-	'product/favorite/get-count?apifoxApiId=221197545',
+	'product/favorite/get-count',
 )
 
 const linkList = [
@@ -90,7 +90,7 @@ const uploadRef = ref()
 function handleChangeAvatar(p) {
 	const form = new FormData()
 	form.append('file', p.file)
-	return $api('infra/file/upload?apifoxApiId=228906663', {
+	return $api('infra/file/upload', {
 		method: 'post',
 		body: form,
 	}).then((res) => {
@@ -100,7 +100,7 @@ function handleChangeAvatar(p) {
 }
 function handleSubmit() {
 	formState.loading = true
-	$api('member/user/update?apifoxApiId=221160017', {
+	$api('member/user/update', {
 		method: 'put',
 		body: formState.data,
 	}).finally(() => {
@@ -110,7 +110,7 @@ function handleSubmit() {
 
 const router = useRouter()
 function logout() {
-	$api('member/auth/logout?apifoxApiId=221136607', { method: 'post' }).then(
+	$api('member/auth/logout', { method: 'post' }).then(
 		() => {
 			userStore.logout()
 			router.replace($path('/'))

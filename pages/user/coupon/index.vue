@@ -20,7 +20,7 @@ const tags = ref([
 ])
 
 const { data, load, reset, loading } = useInfiteLoad<Coupon>(params =>
-	$api('promotion/coupon/page?apifoxApiId=221192399', {
+	$api('promotion/coupon/page', {
 		params: { ...params, status: status.value },
 	}),
 )

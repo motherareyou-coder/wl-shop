@@ -25,7 +25,7 @@ interface Bargin {
 }
 
 const { data } = await useAsyncData<Bargin[]>(() =>
-	$api('promotion/bargain-activity/page?apifoxApiId=212557777').then(
+	$api('promotion/bargain-activity/page').then(
 		res => res.list,
 	),
 )

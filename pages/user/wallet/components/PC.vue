@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PayWallet, PayWalletTransaction, PointRecord } from '~/types'
 
-const { data } = await useAPI<PayWallet>('pay/wallet/get?apifoxApiId=228468014')
+const { data } = await useAPI<PayWallet>('pay/wallet/get')
 
 const isBalance = ref(1)
 const type = ref('')
@@ -21,8 +21,8 @@ const {
 		p.createTime = createTime.value
 	return $api(
 		isBalance.value
-			? 'pay/wallet-transaction/page?apifoxApiId=228467010'
-			: 'member/point/record/page?apifoxApiId=230297291',
+			? 'pay/wallet-transaction/page'
+			: 'member/point/record/page',
 		{ params: p },
 	)
 })

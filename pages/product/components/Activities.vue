@@ -3,7 +3,7 @@ import type { Activity } from '~/types'
 
 const id = inject('id')
 const { data } = await useAPI<Activity[]>(
-	'promotion/activity/list-by-spu-id?apifoxApiId=218974336',
+	'promotion/activity/list-by-spu-id',
 	{ params: { spuId: id } },
 )
 </script>

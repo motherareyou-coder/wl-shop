@@ -15,7 +15,7 @@ const tags = ref([
 const tag = ref(0)
 
 const { data, load, reset } = useInfiteLoad<Review>(params =>
-	$api('product/comment/page?apifoxApiId=218971748', {
+	$api('product/comment/page', {
 		params: { ...params, spuId: id, type: tag.value },
 	}),
 )

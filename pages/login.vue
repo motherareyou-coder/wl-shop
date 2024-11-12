@@ -51,7 +51,7 @@ function sendCode() {
 	timeout.value = 60
 	reduceTime()
 	if (isChange.value) {
-		$api('member/auth/send-sms-email-code?apifoxApiId=221141272', {
+		$api('member/auth/send-sms-email-code', {
 			method: 'post',
 			body: {
 				account: form.value.account,
@@ -60,7 +60,7 @@ function sendCode() {
 		})
 	}
 	else {
-		$api('member/auth/send-sms-email-code?apifoxApiId=221141272', {
+		$api('member/auth/send-sms-email-code', {
 			method: 'post',
 			body: {
 				account: form.value.account,
@@ -75,7 +75,7 @@ function updatePsw() {
 	formRef.value?.validate((v) => {
 		if (!v)
 			return
-		$api('member/user/update-password?apifoxApiId=221140817', {
+		$api('member/user/update-password', {
 			method: 'put',
 			body: {
 				code: form.value.code,
@@ -95,7 +95,7 @@ function login() {
 			return
 		let promise
 		if (usePsw.value) {
-			promise = $api('member/auth/account-login?apifoxApiId=221136892', {
+			promise = $api('member/auth/account-login', {
 				method: 'post',
 				body: {
 					account: form.value.account,
@@ -105,7 +105,7 @@ function login() {
 		}
 		else {
 			promise = $api(
-				'member/auth/email-sms-Login?apifoxApiId=221027570',
+				'member/auth/email-sms-Login',
 				{
 					method: 'post',
 					body: {

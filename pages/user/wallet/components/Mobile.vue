@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PayWallet, PayWalletTransaction, PointRecord } from '~/types'
 
-const { data } = await useAPI<PayWallet>('pay/wallet/get?apifoxApiId=228468014')
+const { data } = await useAPI<PayWallet>('pay/wallet/get')
 
 const createTime = ref([])
 const type = ref('')
@@ -11,7 +11,7 @@ const {
 	reset,
 } = useInfiteLoad<PayWallet>(
 	params =>
-		$api('pay/wallet-transaction/page?apifoxApiId=228467010', {
+		$api('pay/wallet-transaction/page', {
 			params: {
 				...params,
 				createTime: createTime.value || [],

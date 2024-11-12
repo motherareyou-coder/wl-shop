@@ -33,7 +33,7 @@ const validList = ref<CartItem[]>([])
 const invalidList = ref<CartItem[]>([])
 function getCartList() {
 	warpLoading(
-		$api('trade/cart/list?apifoxApiId=218994931').then((res) => {
+		$api('trade/cart/list').then((res) => {
 			validList.value = res.validList as CartItem[]
 			invalidList.value = res.invalidList as CartItem[]
 			invalidList.value.forEach((d) => {
@@ -74,7 +74,7 @@ const open1 = ref(false)
 
 function handleAdd(g: CartItem) {
 	warpLoading(
-		$api('trade/cart/add?apifoxApiId=218995477', {
+		$api('trade/cart/add', {
 			method: 'post',
 			body: { id: g.id },
 		}).then(getCartList),
@@ -90,7 +90,7 @@ function delMsgBox() {
 function handleDelete(g: CartItem) {
 	delMsgBox().then(() =>
 		warpLoading(
-			$api('trade/cart/delete?apifoxApiId=218995484', {
+			$api('trade/cart/delete', {
 				method: 'delete',
 				body: { ids: [g.id] },
 			}).then(() => {
@@ -117,7 +117,7 @@ function handleDelete(g: CartItem) {
 function handleDeleteAll() {
 	delMsgBox().then(() =>
 		warpLoading(
-			$api('trade/cart/delete?apifoxApiId=218995484', {
+			$api('trade/cart/delete', {
 				method: 'delete',
 				body: {
 					ids: finalList.value
@@ -133,7 +133,7 @@ function handleDeleteAll() {
 
 function updateCount(g: CartItem, count: number) {
 	warpLoading(
-		$api('trade/cart/update-count?apifoxApiId=218995472', {
+		$api('trade/cart/update-count', {
 			method: 'put',
 			body: { id: g.id, count },
 		}).then(() => {
@@ -145,7 +145,7 @@ function updateCount(g: CartItem, count: number) {
 const checkAll = ref(false)
 function checkChange(g: CartItem, v: boolean) {
 	warpLoading(
-		$api('trade/cart/update-selected?apifoxApiId=218995467', {
+		$api('trade/cart/update-selected', {
 			method: 'put',
 			body: { ids: [g.id], selected: v },
 		})
@@ -165,7 +165,7 @@ function updateCheckAll() {
 function checkAllChange(selected: any) {
 	if (validList.value.length) {
 		warpLoading(
-			$api('trade/cart/update-selected?apifoxApiId=218995467', {
+			$api('trade/cart/update-selected', {
 				method: 'put',
 				body: {
 					ids: validList.value.map(d => d.id),

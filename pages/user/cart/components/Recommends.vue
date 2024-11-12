@@ -5,7 +5,7 @@ import './Recommends.scss'
 const emit = defineEmits(['add'])
 
 const { data: recommends } = await useAsyncData<Recommend[]>(() =>
-	$api('product/browse-history/page?apifoxApiId=219379380', {
+	$api('product/browse-history/page', {
 		params: { pageNo: 1, pageSize: 12 },
 	}).then(res => res.list),
 )

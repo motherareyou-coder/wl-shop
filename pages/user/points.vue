@@ -11,7 +11,7 @@ const {
 	reset,
 } = useInfiteLoad<PointRecord>(
 	params =>
-		$api('member/point/record/page?apifoxApiId=230297291', {
+		$api('member/point/record/page', {
 			params: {
 				...params,
 				createTime: createTime.value || [],
