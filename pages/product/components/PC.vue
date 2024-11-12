@@ -85,7 +85,7 @@ const totalPrice = computed(() => {
 						</h2>
 						<div class="information-section__product-info">
 							<div class="information-section__product-sku-info">
-								{{ info.description }}
+								{{ info.introduction }}
 							</div>
 							<div class="information-section__product-price">
 								<ProductPrice
@@ -125,7 +125,7 @@ const totalPrice = computed(() => {
 												selected[p.id] === v.id,
 										}"
 									>
-										<span>{{ v.name }}</span>
+										{{ v.name }}
 									</button>
 								</li>
 							</ul>
@@ -169,6 +169,7 @@ const totalPrice = computed(() => {
 							<div class="add-cart-section__submit-group">
 								<button
 									class="add-cart-section__btn add-cart-section__submit add-cart-section__submit--main"
+									:disabled="!sku"
 									@click.prevent="emit('submit')"
 								>
 									{{ $t('BUY NOW') }}

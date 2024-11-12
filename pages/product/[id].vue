@@ -49,7 +49,9 @@ const properties = computed(() => {
 	if (!info.value)
 		return []
 	if (isString(info.value.propertyList)) {
-		return JSON.parse(info.value.propertyList)
+		const a = JSON.parse(info.value.propertyList)
+		if (a.length)
+			return a
 	}
 	if (isArray(info.value.propertyList))
 		return info.value.propertyList
@@ -71,6 +73,15 @@ const properties = computed(() => {
 	})
 	return Object.values(map)
 })
+watch(
+	() => info.value?.skus,
+	(v) => {
+		if (v && !curSku.value) {
+			selected.value = { ...(v[0]?.propertyMap || {}) }
+		}
+	},
+	{ immediate: true },
+)
 
 const { data: stared } = await useAPI<boolean>(
 	'product/favorite/exits',
@@ -99,6 +110,8 @@ function toggleStar() {
 }
 
 function goCart() {
+	if (!count.value || !curSku.value)
+		return
 	$api('trade/cart/add', {
 		method: 'post',
 		body: {

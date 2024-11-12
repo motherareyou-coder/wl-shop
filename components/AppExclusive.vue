@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
 import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
-import './AppExclusive.scss'
 import { chunk } from 'lodash-es'
+import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import './AppExclusive.scss'
 
 import 'swiper/css'
 import 'swiper/css/navigation'

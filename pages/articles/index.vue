@@ -37,7 +37,7 @@ function method(params) {
 			</div>
 			<app-list :key="categoryId" class="list-content" :method="method">
 				<template #default="{ row }">
-					<ArticleItem :data="row" :category-id="categoryId" />
+					<ArticleItem :data="row" :category-id="row.categoryId" />
 				</template>
 			</app-list>
 		</div>

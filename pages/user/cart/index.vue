@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { CartItem, Coupon, ProductBrowseHistory } from '~/types'
 import CouponDialog from './components/CouponDialog.vue'
 import QtyInput from './components/QtyInput.vue'
 import Recommends from './components/Recommends.vue'
 import { useCheckOut } from './utils'
-import type { CartItem, Coupon } from '~/types'
 
 import './index.scss'
 
@@ -69,30 +69,39 @@ const productList = computed(
 const { info, getInfo, items } = useCheckOut(productList, coupon)
 watch(items, getInfo, { immediate: true, deep: true })
 watch(coupon, getInfo, { immediate: true, deep: true })
+watch(
+	info,
+	(v) => {
+		if (v?.coupons)
+			coupons.value = v.coupons
+	},
+	{ immediate: true },
+)
 
 const open1 = ref(false)
 
-function handleAdd(g: CartItem) {
+function handleAdd(g: ProductBrowseHistory) {
 	warpLoading(
 		$api('trade/cart/add', {
 			method: 'post',
-			body: { id: g.id },
+			body: { id: g.id, count: 1 },
 		}).then(getCartList),
 	)
 }
 
 const { t } = useI18n()
 function delMsgBox() {
-	return ElMessageBox.confirm(t('Are you sure to remove this product from shopping cart?'), {
-		confirmButtonClass: 'mi-button--info',
-	})
+	return ElMessageBox.confirm(
+		t('Are you sure to remove this product from shopping cart?'),
+		{ confirmButtonClass: 'mi-button--info' },
+	)
 }
 function handleDelete(g: CartItem) {
 	delMsgBox().then(() =>
 		warpLoading(
 			$api('trade/cart/delete', {
 				method: 'delete',
-				body: { ids: [g.id] },
+				params: { ids: [g.id] },
 			}).then(() => {
 				const index1 = validList.value.findIndex(d => d.id === g.id)
 				if (index1 !== -1) {
@@ -119,7 +128,7 @@ function handleDeleteAll() {
 		warpLoading(
 			$api('trade/cart/delete', {
 				method: 'delete',
-				body: {
+				params: {
 					ids: finalList.value
 						.filter(d => d.selected)
 						.map(d => d.id),
@@ -242,7 +251,9 @@ function checkAllChange(selected: any) {
 								</div>
 								<div class="cart-item__gap"></div>
 								<div class="cart-item__image">
-									<nuxt-link :to="$path(`/product/${item.id}`)">
+									<nuxt-link
+										:to="$path(`/product/${item.id}`)"
+									>
 										<app-image
 											class="cart-item__image-content"
 											:src="item.spu.picUrl"
@@ -300,7 +311,9 @@ function checkAllChange(selected: any) {
 														--brand-black-30
 													);
 												"
-												@click.prevent="handleDelete(item)"
+												@click.prevent="
+													handleDelete(item)
+												"
 											>
 												<el-icon>
 													<ElIconDelete />

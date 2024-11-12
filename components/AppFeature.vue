@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import './AppFeature.scss'
-import { Swiper, SwiperSlide } from 'swiper/vue'
 import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import type { Category } from '~/types'
 
+import './AppFeature.scss'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import type { Category } from '~/types'
 
 defineOptions({ name: 'AppFeature' })
 
@@ -15,7 +15,7 @@ const { data: categories } = await useAPI<Category[]>(
 	{ params: { num: 5 } },
 )
 watch(categories, (v) => {
-	v?.forEach(async (d) => {
+	v?.forEach?.(async (d) => {
 		$api('product/spu/page', {
 			params: {
 				categoryId: d.id,

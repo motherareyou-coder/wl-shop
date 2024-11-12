@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import PC from './components/PC.vue'
-import Mobile from './components/Mobile.vue'
 import type { ExpressTrack, OrderDetail } from '~/types'
+import Mobile from './components/Mobile.vue'
+import PC from './components/PC.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -28,7 +28,7 @@ if (payOrderId && !info.value?.payTime) {
 			params: { id: payOrderId },
 		})
 			.then((res) => {
-				if (res.successTime) {
+				if (res.payTime) {
 					refresh()
 					clearTimeout(timer)
 					router.push(route.path)
@@ -80,7 +80,7 @@ function handleCommand(type: string, data: any) {
 					method: 'delete',
 					params: { id },
 				})
-					.then(refresh)
+					.then(() => router.go(-1))
 					.finally(() => {
 						loading.value = false
 					})
@@ -100,7 +100,17 @@ function handleCommand(type: string, data: any) {
 			})
 			break
 		case 'pay':
-			router.push($path(`/user/checkout?orderId=${id}`))
+			if (payOrderId) {
+				$api('pay/order/submit', {
+					method: 'post',
+					body: {
+						id: payOrderId,
+						channelCode: 'mock',
+						channelExtras: {},
+					},
+				}).then(refresh)
+			}
+			// router.push($path(`/user/checkout?orderId=${id}`))
 			break
 		case 'aftersale':
 			localStorage.setItem('after-sale-apply', JSON.stringify(info.value))

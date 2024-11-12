@@ -42,7 +42,9 @@ watch(status, reset)
 						v-for="tag in tags"
 						:key="tag.value"
 						class="mi-tabs__item mi-tabs__item--separator"
-						:class="{ 'mi-tabs__item--active': status === tag.value }"
+						:class="{
+							'mi-tabs__item--active': status === tag.value,
+						}"
 						@click="status = tag.value"
 					>
 						<div class="mi-tabs__item-content">
@@ -58,6 +60,7 @@ watch(status, reset)
 					v-for="coupon in data"
 					:key="coupon.id"
 					class="user-coupon__item--wrapper"
+					:class="{ disabled: coupon.status != 0 }"
 				>
 					<div class="user-coupon__item in">
 						<p class="user-coupon__item--name">
@@ -74,11 +77,35 @@ watch(status, reset)
 						</p>
 					</div>
 					<div class="user-coupon__item--btn">
-						<nuxt-link :to="$path(`/product-list?productScope=${coupon.productScope}&productScopeValues=${coupon.productScopeValues}`)" class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn">
+						<nuxt-link
+							v-if="coupon.status === 0"
+							:to="
+								$path(
+									`/product-list?productScope=${coupon.productScope}&productScopeValues=${coupon.productScopeValues}`,
+								)
+							"
+							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
+						>
 							<span class="mi-btn__text">
 								{{ $t('Use now') }}
 							</span>
 						</nuxt-link>
+						<button
+							v-if="coupon.status === 1"
+							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
+						>
+							<span class="mi-btn__text">
+								{{ $t('used') }}
+							</span>
+						</button>
+						<button
+							v-if="coupon.status === 2"
+							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
+						>
+							<span class="mi-btn__text">
+								{{ $t('expired') }}
+							</span>
+						</button>
 					</div>
 				</li>
 			</ul>

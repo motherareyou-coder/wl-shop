@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { statusText } from '../../orderlist/utils'
 import type { ExpressTrack, OrderDetail } from '~/types'
+import { statusText } from '../../orderlist/utils'
 
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
@@ -12,7 +12,7 @@ const data = computed(() => props.data)
 </script>
 
 <template>
-	<div class="order-view--mobile ">
+	<div class="order-view--mobile">
 		<section class="p-4 bg-white my-2">
 			<div class="flex justify-between">
 				<p>
@@ -74,7 +74,7 @@ const data = computed(() => props.data)
 						{{ item.spuName }}
 					</span>
 					<span class="text-xs" style="color: #b4b4be">
-						{{ item.properties?.map((p) => p.valueName).join(' ') }}
+						{{ item.properties?.map(p => p.valueName).join(' ') }}
 					</span>
 					<span class="text-xs flex justify-between items-center">
 						<span>
@@ -114,19 +114,14 @@ const data = computed(() => props.data)
 				</li>
 				<li class="flex justify-between my-1">
 					<span class="whitespace-nowrap">{{ $t('Total') }}:</span>
-					<ProductPrice
-						class="order-total__amount"
-						:data="data.payPrice"
-					/>
+					<ProductPrice class="order-total__amount" :data="data.payPrice" />
 				</li>
 			</ul>
 		</section>
-		<section
-			class="order-action-container my-2 bg-white p-2 sticky bottom-0"
-		>
+		<section class="order-action-container my-2 bg-white p-2 sticky bottom-0">
 			<div class="flex justify-end">
 				<el-button
-					v-if="data.status === 0 || data.status === 10"
+					v-if="data.status === 0"
 					type="info"
 					:disabled="props.loading"
 					@click="emit('command', 'cancel')"

@@ -12,7 +12,7 @@ const appStore = useAppStore()
 <template>
 	<li class="mi-product__item-wrapper">
 		<div
-			class="flex bg-white w-full"
+			class="flex bg-white w-full items-center"
 			:class="[appStore.isPC ? 'flex-col p-3 rounded' : '']"
 		>
 			<app-image
@@ -28,7 +28,7 @@ const appStore = useAppStore()
 				]"
 			>
 				<div
-					class="overflow-hidden flex h-10 "
+					class="overflow-hidden flex h-10"
 					:class="[appStore.isPC ? 'my-3' : '']"
 				>
 					<span

@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { pick } from 'lodash-es'
-import AddressForm from './AddressForm.vue'
 import type { Address } from '~/types'
+import AddressForm from './AddressForm.vue'
 import './AddressList.scss'
 
 const props = defineProps({
@@ -44,7 +44,7 @@ refressAddressList()
 
 function handleAdd() {
 	nextTick(() => formRef.value?.resetFields())
-	formState.data = {}
+	formState.data = { defaultStatus: false }
 	formState.visible = true
 	isEdit.value = false
 }
@@ -64,7 +64,7 @@ function handleDelete(data: Address, i: number) {
 		.then(() =>
 			$api('member/address/delete', {
 				method: 'delete',
-				body: { id: data.id },
+				params: { id: data.id },
 			}).then(() => {
 				addressList.value?.splice(i, 1)
 				// refressAddressList()
@@ -74,8 +74,10 @@ function handleDelete(data: Address, i: number) {
 }
 
 const propList = [
+	'id',
 	'name',
 	'mobile',
+	'cityId',
 	'areaId',
 	'detailAddress',
 	'defaultStatus',
@@ -152,7 +154,11 @@ function renderButton(props1: { data: Address, index: any }) {
 		<>
 			<span
 				class="user-address__card-btn user-address__card-btn--delete"
-				onClick={() => handleDelete(props1.data, props1.index)}
+				onClick={(e) => {
+					e.preventDefault()
+					e.stopPropagation()
+					handleDelete(props1.data, props1.index)
+				}}
 			>
 				<el-icon>
 					<ElIconDelete />
@@ -160,7 +166,11 @@ function renderButton(props1: { data: Address, index: any }) {
 			</span>
 			<span
 				class="user-address__card-btn user-address__card-btn--edit"
-				onClick={() => handleEdit(props1.data)}
+				onClick={(e) => {
+					e.preventDefault()
+					e.stopPropagation()
+					handleEdit(props1.data)
+				}}
 			>
 				<el-icon>
 					<ElIconEdit />
@@ -175,7 +185,7 @@ function RenderAddress(props1: { data: Address, index: number }) {
 			class={{
 				'user-address__card user-address__card--center user-address__card--default cursor-pointer':
 					true,
-				'user-address__card--selected': selected.value === props1.data,
+				'user-address__card--selected': props.isCheckout && selected.value && selected.value.id === props1.data.id,
 			}}
 			onClick={() => {
 				selected.value = props1.data

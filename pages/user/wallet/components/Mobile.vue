@@ -57,8 +57,7 @@ watch(type, reset)
 								item.bizType === 1 ? 'increase' : 'decrease',
 							]"
 						>
-							{{ item.bizType === 1 ? '+' : '-'
-							}}<ProductPrice :data="item.price" />
+							<ProductPrice :data="item.price" />
 						</span>
 					</div>
 					<span class="time">{{ item.createTime }}</span>

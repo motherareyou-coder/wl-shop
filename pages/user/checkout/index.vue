@@ -9,6 +9,10 @@ import AddressList from './components/AddressList.vue'
 import ProductInfoList from './components/ProductInfoList.vue'
 import './index.scss'
 
+useHead({
+	title: `${$t('Checkout')} ${$t('appTitle')}`,
+})
+
 const route = useRoute()
 const orderId = route.query.orderId
 const productList = ref<CartItem[]>([])
@@ -19,6 +23,7 @@ if (orderId) {
 		const { items = [], ...data } = res
 		productList.value = items
 		info.value = data
+		coupons.value = data.coupons || []
 		// coupon.value = res.couponId
 		// 	? { id: res.couponId, discountPrice: res.couponPrice }
 		// 	: null
@@ -177,6 +182,14 @@ const { info, getInfo, items } = useCheckOut(productList, coupon, data)
 if (!orderId) {
 	watch(items, getInfo, { immediate: true, deep: true })
 	watch(coupon, getInfo, { immediate: true, deep: true })
+	watch(
+		info,
+		(v) => {
+			if (v && v.coupons)
+				coupons.value = v.coupons
+		},
+		{ immediate: true },
+	)
 	watch(() => data.value.pointStatus, getInfo)
 	watch(() => data.value.addressId, getInfo)
 	getInfo()
@@ -195,18 +208,9 @@ const msg = $t('Please select a address.')
 function handleSubmit() {
 	const fn = () => {
 		if (info.value?.payOrderId) {
-			$api('pay/order/submit', {
-				method: 'post',
-				body: {
-					id: info.value?.payOrderId,
-					channelCode: 'mock',
-					channelExtras: {},
-				},
-			}).then(() =>
-				router.push(
-					$path(
-						`/user/review/${info.value.id}?payOrderId=${info.value.payOrderId}`,
-					),
+			router.push(
+				$path(
+					`/user/review/${info.value.id}?payOrderId=${info.value.payOrderId}`,
 				),
 			)
 		}

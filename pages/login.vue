@@ -70,6 +70,7 @@ function sendCode() {
 	}
 }
 
+const loading = ref(false)
 const formRef = ref()
 function updatePsw() {
 	formRef.value?.validate((v) => {
@@ -93,6 +94,7 @@ function login() {
 	formRef.value?.validate((v) => {
 		if (!v)
 			return
+		loading.value = true
 		let promise
 		if (usePsw.value) {
 			promise = $api('member/auth/account-login', {
@@ -115,10 +117,14 @@ function login() {
 				},
 			)
 		}
-		promise.then((res) => {
-			userStore.setToken(res)
-			router.push('/')
-		})
+		promise
+			.then((res) => {
+				userStore.setToken(res)
+				router.push('/')
+			})
+			.finally(() => {
+				loading.value = false
+			})
 	})
 }
 </script>
@@ -193,7 +199,13 @@ function login() {
 		>
 			{{ $t('Update Password') }}
 		</el-button>
-		<el-button v-else class="w-full" type="info" @click="login">
+		<el-button
+			v-else
+			class="w-full"
+			type="info"
+			:disabled="loading"
+			@click="login"
+		>
 			{{ $t('Login') }}
 		</el-button>
 		<div v-if="isChange" class="my-2 text-left">

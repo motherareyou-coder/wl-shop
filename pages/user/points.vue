@@ -57,7 +57,7 @@ watch(type, reset)
 								item.bizType === 1 ? 'increase' : 'decrease',
 							]"
 						>
-							{{ (item.bizType === 1 ? '+' : '-') + item.point }}
+							{{ item.point }}
 						</span>
 					</div>
 					<span class="time">{{ item.createTime }}</span>

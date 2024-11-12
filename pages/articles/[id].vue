@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import ArticleItem from './components/ArticleItem.vue'
 import type { Article } from '~/types'
+import ArticleItem from './components/ArticleItem.vue'
 import './detail.scss'
 
 const route = useRoute()
 const id = route.params.id
-const categoryId = route.query.categoryId
+const categoryId = route.query.categoryId || ''
 const { data } = await useAPI<Article>(
 	'promotion/article/get',
 	{ params: { id } },

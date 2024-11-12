@@ -32,9 +32,9 @@ export const useUserStore = defineStore('UserStore', {
 		return {
 			nickname: '',
 			avatar: '',
-			accessToken: localStorage.getItem('access-token'),
-			refreshToken: localStorage.getItem('refresh-token'),
-			expiresTime: Number(localStorage.getItem('expires-time')),
+			accessToken: localStorage.getItem('access-token') || '',
+			refreshToken: localStorage.getItem('refresh-token') || '',
+			expiresTime: Number(localStorage.getItem('expires-time')) || '',
 		} as unknown as UserInfo
 	},
 	getters: {},
@@ -48,6 +48,7 @@ export const useUserStore = defineStore('UserStore', {
 						this.$patch(res)
 					return res
 				})
+				.catch(() => this.reset())
 		},
 		setToken({ accessToken, refreshToken, expiresTime }: AuthToken) {
 			let time = new Date(expiresTime).getTime()
@@ -63,7 +64,18 @@ export const useUserStore = defineStore('UserStore', {
 			localStorage.setItem('expires-time', `${time}`)
 		},
 		logout() {
+			const nuxtApp = useNuxtApp()
+			return nuxtApp
+				.$api('member/auth/logout', { method: 'post' })
+				.then(() => {
+					this.reset()
+				})
+		},
+		reset() {
 			this.$reset()
+			this.accessToken = ''
+			this.refreshToken = ''
+			this.expiresTime = ''
 			localStorage.removeItem('access-token')
 			localStorage.removeItem('refresh-token')
 			localStorage.removeItem('expires-time')

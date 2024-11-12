@@ -19,14 +19,19 @@ export function useCheckOut(
 	function getInfo() {
 		console.log('getInfo', productList.value)
 		if (productList.value?.length) {
+			const params = {
+				couponId: coupon.value?.id,
+				pointStatus: data?.value?.pointStatus || false,
+				deliveryType: data?.value?.deliveryType || 1,
+				addressId: data?.value?.addressId,
+			}
+			items.value.forEach((item, i) => {
+				Object.entries(item).forEach(([k, v]) => {
+					params[`items[${i}].${k}`] = v
+				})
+			})
 			$api('trade/order/settlement', {
-				params: {
-					items: items.value,
-					couponId: coupon.value?.id,
-					pointStatus: data?.value?.pointStatus || false,
-					deliveryType: data?.value?.deliveryType || 1,
-					addressId: data?.value?.addressId,
-				},
+				params,
 			}).then((res) => {
 				info.value = res
 			})

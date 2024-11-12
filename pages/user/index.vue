@@ -8,17 +8,17 @@ useHead({
 const appStore = useAppStore()
 const userStore = useUserStore()
 
-const user = userStore.$state // await userStore.getInfo()
+const user = computed(() => userStore.$state)
 
 const formState = reactive({
 	visible: false,
 	loading: false,
 	file: null,
 	data: {
-		nickname: user.nickname,
-		avatar: user.avatar,
-		sex: user.sex,
-		birthday: user.birthday,
+		nickname: user.value.nickname,
+		avatar: user.value.avatar,
+		sex: user.value.sex,
+		birthday: user.value.birthday,
 	},
 })
 
@@ -53,7 +53,7 @@ const linkList = [
 		url: '/user/wallet',
 	},
 	{
-		title: $t('My points') + (user.point ? `(${user.point})` : ''),
+		title: $t('My points') + (user.value.point ? `(${user.value.point})` : ''),
 		type: 'points',
 		icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
 		url: '/user/points',
@@ -78,10 +78,10 @@ const linkList = [
 function handleEdit() {
 	formState.file = null
 	formState.data = {
-		nickname: user.nickname,
-		avatar: user.avatar,
-		sex: user.sex,
-		birthday: user.birthday,
+		nickname: user.value.nickname,
+		avatar: user.value.avatar,
+		sex: user.value.sex,
+		birthday: user.value.birthday,
 	}
 	formState.visible = true
 }
@@ -110,12 +110,9 @@ function handleSubmit() {
 
 const router = useRouter()
 function logout() {
-	$api('member/auth/logout', { method: 'post' }).then(
-		() => {
-			userStore.logout()
-			router.replace($path('/'))
-		},
-	)
+	userStore.logout().then(() => {
+		router.replace($path('/'))
+	})
 }
 </script>
 

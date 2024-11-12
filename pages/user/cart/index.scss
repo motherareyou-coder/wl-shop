@@ -3855,10 +3855,9 @@
     border-radius: 8px;
     height: var(--image-width);
     margin: 0 auto;
-    object-fit: contain
 }
 
-.cart-recommend .cart-recommend__list .cart-recommend__item .cart-recommend__image .mi-image__img {
+.cart-recommend .cart-recommend__list .cart-recommend__item .cart-recommend__image img {
     border-radius: 8px;
     object-fit: contain
 }

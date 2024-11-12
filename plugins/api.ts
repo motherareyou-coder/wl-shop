@@ -1,9 +1,9 @@
 export default defineNuxtPlugin(() => {
 	// const { session } = useUserSession()
-	const token = localStorage.getItem('access-token')
 	const { baseURL, tenantId } = useRuntimeConfig().public
 	const nuxtApp = useNuxtApp()
 	const userStore = useUserStore()
+	const localePath = useLocalePath()
 
 	const api = $fetch.create({
 		baseURL,
@@ -14,21 +14,39 @@ export default defineNuxtPlugin(() => {
 					delete options.params![k]
 			})
 			options.headers = new Headers(options.headers)
-			//租户不论是否登陆，都需要传入
+			// 租户不论是否登陆，都需要传入
 			options.headers.set('tenant-id', `${tenantId}`)
+			const token = userStore.accessToken
 			if (token) {
-				// note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
-				options.headers.set('Authorization', `Bearer ${token}`)
+				options.headers.set('Authorization', `${token}`)
 			}
 		},
 		onResponse({ response }) {
-			if (response._data?.data)
-				response._data = response._data?.data
-			refreshToken()
+			const { code, data, msg } = response._data
+			if (code === 0) {
+				response._data = data
+				refreshToken()
+			}
+			else if (code === 401) {
+				if (userStore.accessToken) {
+					ElMessage.error(msg)
+					nuxtApp.runWithContext(() =>
+						navigateTo(localePath('/login')),
+					)
+				}
+				else {
+					return Promise.reject(msg)
+					// throw new Error(msg)
+				}
+			}
+			else {
+				ElMessage.error(msg)
+				return Promise.reject(msg)
+			}
 		},
-		async onResponseError({ request, response }) {
+		onResponseError({ request, response }) {
 			if (response.status === 401) {
-				await nuxtApp.runWithContext(() => navigateTo('/login'))
+				nuxtApp.runWithContext(() => navigateTo(localePath('/login')))
 			}
 			else {
 				ElMessage.error(
@@ -47,14 +65,16 @@ export default defineNuxtPlugin(() => {
 			return
 		if (refreshToken) {
 			refreshing = true
-			api(
-				'member/auth/refresh-token',
-				{ method: 'post', params: { refreshToken } },
-			).then((res) => {
-				userStore.setToken(res as AuthToken)
-			}).finally(() => {
-				refreshing = false
+			api('member/auth/refresh-token', {
+				method: 'post',
+				params: { refreshToken },
 			})
+				.then((res) => {
+					userStore.setToken(res as AuthToken)
+				})
+				.finally(() => {
+					refreshing = false
+				})
 		}
 	}
 

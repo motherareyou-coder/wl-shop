@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import './index.scss'
-import PC from './PC.vue'
-import Mobile from './Mobile.vue'
 import type { Review } from '~/types'
+import Mobile from './Mobile.vue'
+import PC from './PC.vue'
+import './index.scss'
 
 const route = useRoute()
-const id = route.params.is
+const id = route.params.id
 const tags = ref([
 	{ label: 'All', value: 0 },
 	{ label: 'Good', value: 1 },

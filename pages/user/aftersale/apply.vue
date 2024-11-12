@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { UploadFile } from 'element-plus'
+import { isArray } from 'lodash-es'
 import type { OrderDetail, OrderItem, TradeConfig } from '~/types'
 
 const route = useRoute()
 const info: OrderDetail = JSON.parse(
 	localStorage.getItem('after-sale-apply') || '{}',
 )
-const item: OrderItem = info.items?.find(d => `${d.id}` === route.query.item) || {}
+const item: OrderItem
+	= info.items?.find(d => `${d.id}` === route.query.item) || {}
 
 const { data: config } = await useAPI<TradeConfig>(
 	'trade/config/get',
@@ -17,7 +19,7 @@ const data = ref({
 	applyReason: null,
 	applyDescription: '',
 	refundPrice: item.payPrice,
-	applyPicUrls: [],
+	images: [],
 })
 const images = ref([])
 
@@ -40,7 +42,7 @@ function submit() {
 			way: data.value.way,
 			applyReason: data.value.applyReason,
 			applyDescription: data.value.applyDescription,
-			applyPicUrls: data.value.applyPicUrls,
+			images: data.value.images,
 		},
 	})
 		.then((res) => {
@@ -66,7 +68,7 @@ function handleSubmit() {
 				method: 'post',
 				body: form,
 			}).then((res) => {
-				data.value.applyPicUrls = res
+				data.value.images = isArray(res) ? res : [res]
 				submit()
 			})
 		}

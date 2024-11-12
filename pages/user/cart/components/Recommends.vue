@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Recommend } from '~/types'
+import type { ProductBrowseHistory } from '~/types'
 import './Recommends.scss'
 
 const emit = defineEmits(['add'])
 
-const { data: recommends } = await useAsyncData<Recommend[]>(() =>
+const { data: recommends } = await useAsyncData<ProductBrowseHistory[]>(() =>
 	$api('product/browse-history/page', {
 		params: { pageNo: 1, pageSize: 12 },
 	}).then(res => res.list),
@@ -18,7 +18,7 @@ function addToCart(r) {
 <template>
 	<article class="site-cart__recommend cart-recommend">
 		<h4 class="cart-recommend__title">
-			{{ $t('You may also like') }}
+			{{ $t('View history') }}
 		</h4>
 		<ul class="cart-recommend__list">
 			<li
@@ -27,10 +27,16 @@ function addToCart(r) {
 				class="cart-recommend__item"
 			>
 				<nuxt-link :to="$path(`/product/${r.id}`)">
-					<app-image class="cart-recommend__image" :src="r.picUrl" />
+					<app-image
+						class="cart-recommend__image w-full"
+						:src="r.picUrl"
+					/>
 				</nuxt-link>
 				<div class="cart-recommend__product-info">
-					<nuxt-link class="cart-recommend__product-name" :to="$path(`/product/${r.id}`)">
+					<nuxt-link
+						class="cart-recommend__product-name"
+						:to="$path(`/product/${r.id}`)"
+					>
 						{{ r.spuName }}
 					</nuxt-link>
 				</div>

@@ -94,7 +94,7 @@ watch(type, resetData)
 								row.bizType === 1 ? 'increase' : 'decrease',
 							]"
 						>
-							{{ row.bizType === 1 ? '+' : '-' }}<ProductPrice :data="row.price" />
+							<ProductPrice :data="row.price" />
 						</span>
 					</template>
 				</el-table-column>
@@ -111,7 +111,7 @@ watch(type, resetData)
 								row.bizType === 1 ? 'increase' : 'decrease',
 							]"
 						>
-							{{ (row.bizType === 1 ? '+' : '-') + row.point }}
+							{{ row.point }}
 						</span>
 					</template>
 				</el-table-column>

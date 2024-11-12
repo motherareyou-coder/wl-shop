@@ -3,7 +3,7 @@ import type { Coupon } from '~/types'
 
 const visible = defineModel('visible', { default: false })
 const coupon = defineModel<Coupon>()
-const coupons = defineModel<Coupon[]>('list')
+const availableList = defineModel<Coupon[]>('list', { default: () => [] })
 
 const selected = ref<number[]>([])
 const active = ref<Coupon>()
@@ -12,17 +12,25 @@ const { data } = await useAsyncData<Coupon[]>(() =>
 	$api('promotion/coupon/page').then(res => res.list),
 )
 
-const availableList = computed(
-	() => data.value, // ?.filter(d => d.status === 1) || [],
-)
 const disabledList = computed(
-	() => data.value?.filter(d => d.status !== 1) || [],
+	() =>
+		data.value?.filter(
+			d =>
+				d.status !== 1
+				|| !availableList.value.find(c => c.id === d.id),
+		) || [],
 )
 const tab = ref(0)
 
-watch(availableList, (v) => {
-	coupons.value = v || []
-}, { immediate: true })
+watch(
+	data,
+	(v) => {
+		if (v && !availableList.value.length) {
+			availableList.value = v.filter(d => d.status === 1) || []
+		}
+	},
+	{ immediate: true },
+)
 
 watch(selected, (v) => {
 	if (v.length > 1) {

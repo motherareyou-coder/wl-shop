@@ -254,6 +254,29 @@ export interface CartItem {
 		properties: number[]
 	}
 }
+export interface ProductBrowseHistory {
+	/**
+	 * 编号
+	 */
+	id: number
+	/**
+	 * 商品封面图
+	 */
+	picUrl?: string
+	/**
+	 * 商品单价
+	 */
+	price?: number
+	/**
+	 * 商品 SPU 编号
+	 */
+	spuId: number
+	/**
+	 * 商品 SPU 名称
+	 */
+	spuName?: string
+	[property: string]: any
+}
 
 /**
  * Address APP - 用户收件地址 Response VO

@@ -1,26 +1,25 @@
 <script setup lang="ts">
-import { isObject } from 'lodash-es'
-import './AddressDialog.scss'
 import type { Address, City, Country, State } from '~/types'
+import './AddressDialog.scss'
 
 const data = defineModel<Address>({ default: () => ({}) })
+watch(data, (v) => {
+	if (v.countryId)
+		v.countryId = Number(v.countryId)
+	if (v.areaId)
+		v.areaId = Number(v.areaId)
+	if (v.cityId)
+		v.cityId = Number(v.cityId)
+})
 
 interface Options {
 	label: any
 	value: any
 }
 
-const countries = ref<(Country & Options)[]>([])
-$api('system/area/getAreaCountry').then((res) => {
-	if (isObject(res)) {
-		res = [res as unknown as Country]
-	}
-	res?.forEach((d) => {
-		d.label = d.name
-		d.value = d.id
-	})
-	res.length && countries.value.splice(0, countries.value.length, ...res)
-})
+const paramsStore = useParamsStore()
+paramsStore.getCountries()
+const countries = computed(() => paramsStore.countries)
 
 const states = ref<(State & Options)[]>([])
 function refreshStates() {
@@ -40,10 +39,10 @@ function refreshStates() {
 		res.length && states.value.push(...res)
 	})
 }
-watch(() => data.value.countryId, refreshStates)
+watch(() => data.value.countryId, refreshStates, { immediate: true })
 const cities = ref<(City & Options)[]>([])
 function refreshCities() {
-	if (!data.value.countryId)
+	if (!data.value.areaId)
 		return cities.value.splice(0, cities.value.length)
 	$api('system/area/getAreaCityByStateId', {
 		params: { stateId: data.value.areaId },
@@ -59,7 +58,7 @@ function refreshCities() {
 		res.length && cities.value.push(...res)
 	})
 }
-watch(() => data.value.areaId, refreshCities)
+watch(() => data.value.areaId, refreshCities, { immediate: true })
 
 const rules = {
 	name: [
@@ -142,26 +141,28 @@ const columns = [
 		prop: 'countryId',
 		options: countries.value,
 		width: '49%',
-		onChange: (v) => {
+		onChange: (v: number) => {
 			const country = countries.value?.find(c => c.id === v)
-			data.value.phonecode = country?.phonecode
+			data.value.countryPhoneCode = `+${country?.phonecode}`
+			data.value.areaId = ''
+			data.value.cityId = ''
 		},
 	},
-	{ label: $t('Area'), prop: 'areaId', options: states.value, width: '49%' },
+	{
+		label: $t('Area'),
+		prop: 'areaId',
+		options: states.value,
+		width: '49%',
+		onChange: () => {
+			data.value.cityId = ''
+		},
+	},
 	{ label: $t('City'), prop: 'cityId', options: cities.value, width: '49%' },
 	{ label: $t('House number'), prop: 'houseNumber' },
 	{ label: `${$t('Address')} 1`, prop: 'detailAddress' },
 	{ label: `${$t('Address')} 2`, prop: 'detailAddress2' },
 	{ label: $t('Mobile'), prop: 'mobile' },
 	{ label: $t('Email'), prop: 'email' },
-]
-
-const editableProps = [
-	'name',
-	'mobile',
-	'areaId',
-	'detailAddress',
-	'defaultStatus',
 ]
 
 const formRef = ref()
@@ -192,13 +193,14 @@ defineExpose({
 			<el-select
 				v-if="c.options"
 				v-model="data[c.prop]"
+				filterable
 				@change="c.onChange"
 			>
 				<el-option v-for="o in c.options" :key="o.value" v-bind="o" />
 			</el-select>
 			<el-input v-else v-model="data[c.prop]">
 				<template v-if="c.prop === 'mobile'" #prefix>
-					<span>+{{ data.phonecode }}</span>
+					<span>{{ data.countryPhoneCode }}</span>
 				</template>
 			</el-input>
 		</el-form-item>

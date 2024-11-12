@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { statusText } from '../../orderlist/utils'
 import type { ExpressTrack, OrderDetail } from '~/types'
+import { statusText } from '../../orderlist/utils'
 import './PC.scss'
 
 const props = defineProps({
@@ -28,18 +28,18 @@ const data = computed(() => props.data)
 							v-if="data.status === 0"
 							class="btn"
 							:disabled="props.loading"
+							@click="emit('command', 'cancel')"
+						>
+							{{ $t('CancelOrder') }}
+						</el-button>
+						<el-button
+							v-if="data.status === 0"
+							class="btn"
+							:disabled="props.loading"
 							type="info"
 							@click="emit('command', 'pay')"
 						>
 							{{ $t('Pay Now') }}
-						</el-button>
-						<el-button
-							v-if="data.status === 0 || data.status === 10"
-							class="btn"
-							:disabled="props.loading"
-							@click="emit('command', 'cancel')"
-						>
-							{{ $t('CancelOrder') }}
 						</el-button>
 						<el-button
 							v-if="data.status === 40 || data.status === 30"
@@ -101,11 +101,16 @@ const data = computed(() => props.data)
 								target="blank"
 								class="flex mr-5"
 							>
-								<app-image class="h-20 w-20" :src="item.picUrl" />
+								<app-image
+									class="h-20 w-20"
+									:src="item.picUrl"
+								/>
 							</nuxt-link>
 							<div class="flex flex-col justify-between flex-1">
 								<div>
-									<nuxt-link :to="$path(`/product/${item.id}`)">
+									<nuxt-link
+										:to="$path(`/product/${item.id}`)"
+									>
 										{{ item.spuName }}
 									</nuxt-link>
 								</div>
@@ -125,8 +130,14 @@ const data = computed(() => props.data)
 							</div>
 							<div>
 								<el-button
-									v-if="data.status === 10 || data.status === 20"
-									style="padding: 6px; font-size: 12px;border-radius: 0;"
+									v-if="
+										data.status === 10 || data.status === 20
+									"
+									style="
+										padding: 6px;
+										font-size: 12px;
+										border-radius: 0;
+									"
 									:disabled="props.loading"
 									@click="emit('command', 'aftersale', item)"
 								>

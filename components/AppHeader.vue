@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import './AppHeader.scss'
 import type { CartItem, Category } from '~/types'
+import './AppHeader.scss'
 
 defineOptions({ name: 'AppHeader' })
 
@@ -13,7 +13,8 @@ userStore.getInfo()
 
 const { data: categories } = await useAPI<Category[]>(
 	'product/category/list/top',
-    {params:{num:5}})
+	{ params: { num: 5 } },
+)
 
 const paramsStore = useParamsStore()
 const cartCount = computed(() => paramsStore.$state.cartCount)
@@ -22,7 +23,7 @@ paramsStore.getCartCount()
 watch(
 	categories,
 	(v) => {
-		v?.forEach((c, i) =>
+		v?.forEach?.((c, i) =>
 			$api('product/spu/page', {
 				params: {
 					categoryId: c.id,
@@ -43,33 +44,50 @@ const showMobileMenu = computed(
 const route = useRoute()
 const router = useRouter()
 function logout() {
-	$api('member/auth/logout', { method: 'post' }).then(
-		() => {
-			userStore.logout()
-			if (route.path.includes('user'))
-				router.replace($path('/'))
-		},
-	)
+	userStore.logout().then(() => {
+		if (route.path.includes('user'))
+			router.replace($path('/'))
+	})
 }
 
 const isCart = computed(
 	() => route.path.includes('cart') || route.path.includes('checkout'),
 )
 const validList = ref<CartItem[]>([])
+const loading = ref(false)
+watch(
+	() => userStore.accessToken,
+	(v) => {
+		if (!v)
+			validList.value = []
+	},
+)
 function getCartList() {
-	$api('trade/cart/list').then((res) => {
-		validList.value = res.validList as CartItem[]
-		paramsStore.setCartCount(validList.value.length)
-	})
+	if (!userStore.accessToken)
+		return (validList.value = [])
+	loading.value = true
+	$api('trade/cart/list')
+		.then((res) => {
+			validList.value = res.validList as CartItem[]
+			paramsStore.setCartCount(validList.value?.length)
+		})
+		.finally(() => {
+			loading.value = false
+		})
 }
 function handleDelete(p: CartItem) {
+	loading.value = true
 	$api('trade/cart/delete', {
 		method: 'delete',
-		body: { ids: [p.id] },
-	}).then(() => {
-		validList.value = validList.value.filter(g => g.id !== p.id)
-		paramsStore.setCartCount(cartCount.value - 1)
+		params: { ids: [p.id] },
 	})
+		.then(() => {
+			validList.value = validList.value.filter(g => g.id !== p.id)
+			paramsStore.setCartCount(cartCount.value - 1)
+		})
+		.finally(() => {
+			loading.value = false
+		})
 }
 </script>
 
@@ -107,52 +125,43 @@ function handleDelete(p: CartItem) {
 						:offset="0"
 						@show="getCartList"
 					>
-						<div
-							v-if="cartCount"
-							v-loading="validList.length === 0"
-						>
+						<div v-if="cartCount" v-loading="loading">
 							<ul class="cart__list">
-								<li
-									v-for="p in validList"
-									:key="p.id"
-									class="cart__item"
-								>
-									<div class="cart__item-link">
+								<li v-for="p in validList" :key="p.id" class="cart__item">
+									<nuxt-link
+										:to="$path(`/product/${p.spu.id}`)"
+										class="cart__item-link"
+									>
 										<app-image
 											class="cart__item-image"
 											:src="p.spu.picUrl"
 											alt=""
 										/>
 										<div class="cart__item-info">
-											<span
-												class="cart__item-detail cart__item-name"
-											>{{ p.spu.name }}</span>
+											<span class="cart__item-detail cart__item-name">{{
+												p.spu.name
+											}}</span>
 											<span
 												class="cart__item-detail cart__font--muted cart__item-price notranslate"
 											>{{ p.sku.price }}</span>
 											<span
 												class="cart__item-detail cart__font--muted cart__item-quantity"
-											>{{ $t('Quantity') }}:
-												{{ p.count }}</span>
+											>{{ $t('Quantity') }}: {{ p.count }}</span>
 										</div>
 										<el-icon
 											class="micon micon-delete cart__font--muted cart__item-delete"
-											@click.prevent="handleDelete(p)"
+											@click.prevent.stop="handleDelete(p)"
 										>
 											<ElIconDelete />
 										</el-icon>
-									</div>
+									</nuxt-link>
 								</li>
 							</ul>
 							<div class="cart__summary">
 								<div class="cart__summary-info">
-									<span
-										class="cart__font--muted cart__summary-count"
-									>
+									<span class="cart__font--muted cart__summary-count">
 										{{
-											`${$t('Subtotal')} (${
-												validList.length
-											}${$t('items')})`
+											`${$t('Subtotal')} (${validList.length}${$t('items')})`
 										}}
 									</span>
 								</div>
@@ -166,20 +175,14 @@ function handleDelete(p: CartItem) {
 						</div>
 						<span v-else>{{ $t('Your cart is empty') }}</span>
 						<template #reference>
-							<nuxt-link
-								class="navigation__link"
-								:to="$path('/user/cart')"
-							>
+							<nuxt-link class="navigation__link" :to="$path('/user/cart')">
 								<el-badge
 									:show-zero="false"
 									:is-dot="appStore.isMobile"
 									:value="cartCount"
 									color="#ff6700"
 								>
-									<Icon
-										name="icon:cart"
-										style="margin-bottom: -2px"
-									/>
+									<Icon name="icon:cart" style="margin-bottom: -2px" />
 								</el-badge>
 							</nuxt-link>
 						</template>
@@ -189,10 +192,7 @@ function handleDelete(p: CartItem) {
 					v-if="appStore.isPC"
 					class="navigation__item shortcut__item"
 				>
-					<nuxt-link
-						class="navigation__link outline-none"
-						:to="$path('/user')"
-					>
+					<nuxt-link class="navigation__link outline-none" :to="$path('/user')">
 						<Icon name="icon:user" />
 					</nuxt-link>
 					<template #dropdown>
