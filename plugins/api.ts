@@ -35,13 +35,13 @@ export default defineNuxtPlugin(() => {
 					)
 				}
 				else {
-					return Promise.reject(msg)
+					return Promise.reject(response._data)
 					// throw new Error(msg)
 				}
 			}
 			else {
 				ElMessage.error(msg)
-				return Promise.reject(msg)
+				return Promise.reject(response._data)
 			}
 		},
 		onResponseError({ request, response }) {

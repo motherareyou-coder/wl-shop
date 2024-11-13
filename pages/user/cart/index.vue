@@ -277,7 +277,7 @@ function checkAllChange(selected: any) {
 											class="cart-item__price"
 										>
 											<ProductPrice
-												:data="item.sku.price"
+												:data="item.sku?.price"
 												class="cart-item__price-expect"
 											/>
 										</div>
@@ -288,14 +288,14 @@ function checkAllChange(selected: any) {
 											class="cart-item__price"
 										>
 											<ProductPrice
-												:data="item.sku.price"
+												:data="item.sku?.price"
 												class="cart-item__price-expect"
 											/>
 										</div>
 										<div class="quantity-section">
 											<QtyInput
 												v-model="item.count"
-												:max="item.sku.stock"
+												:max="item.sku?.stock"
 												class="quantity-section__content"
 												:disabled="item.disabled"
 												@change="

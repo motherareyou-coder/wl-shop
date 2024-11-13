@@ -34,6 +34,9 @@ export function useCheckOut(
 				params,
 			}).then((res) => {
 				info.value = res
+			}).catch((res) => {
+				if (res.code == 1011003006)
+					coupon.value = null
 			})
 		}
 		else {
