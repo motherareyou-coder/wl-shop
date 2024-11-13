@@ -133,21 +133,21 @@ const rules = {
 }
 
 const columns = [
+  {
+    label: $t('Country'),
+    prop: 'countryId',
+    options: countries.value,
+    // width: '49%',
+    onChange: (v: number) => {
+      const country = countries.value?.find(c => c.id === v)
+      data.value.countryPhoneCode = `+${country?.phonecode}`
+      data.value.areaId = ''
+      data.value.cityId = ''
+    },
+  },
 	{ label: $t('First Name'), prop: 'name', width: '49%' },
 	{ label: $t('Last Name'), prop: 'lastName', width: '49%' },
 	{ label: $t('Post code'), prop: 'postCode', width: '49%' },
-	{
-		label: $t('Country'),
-		prop: 'countryId',
-		options: countries.value,
-		width: '49%',
-		onChange: (v: number) => {
-			const country = countries.value?.find(c => c.id === v)
-			data.value.countryPhoneCode = `+${country?.phonecode}`
-			data.value.areaId = ''
-			data.value.cityId = ''
-		},
-	},
 	{
 		label: $t('Area'),
 		prop: 'areaId',
