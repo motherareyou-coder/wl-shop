@@ -84,7 +84,7 @@ function handleAdd(g: ProductBrowseHistory) {
 	warpLoading(
 		$api('trade/cart/add', {
 			method: 'post',
-			body: { id: g.id, count: 1 },
+			body: { skuId: g.id, count: 1 },
 		}).then(getCartList),
 	)
 }

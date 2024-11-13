@@ -26,7 +26,7 @@ function addToCart(r) {
 				:key="r.id"
 				class="cart-recommend__item"
 			>
-				<nuxt-link :to="$path(`/product/${r.id}`)">
+				<nuxt-link :to="$path(`/product/${r.spuId}`)">
 					<app-image
 						class="cart-recommend__image w-full"
 						:src="r.picUrl"
@@ -35,7 +35,7 @@ function addToCart(r) {
 				<div class="cart-recommend__product-info">
 					<nuxt-link
 						class="cart-recommend__product-name"
-						:to="$path(`/product/${r.id}`)"
+						:to="$path(`/product/${r.spuId}`)"
 					>
 						{{ r.spuName }}
 					</nuxt-link>
