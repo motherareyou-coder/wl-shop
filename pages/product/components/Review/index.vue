@@ -9,7 +9,7 @@ const id = route.params.id
 const tags = ref([
 	{ label: 'All', value: 0 },
 	{ label: 'Good', value: 1 },
-	{ label: 'Bad', value: 2 },
+	{ label: 'Neutral', value: 2 },
 	{ label: 'Bad', value: 3 },
 ])
 const tag = ref(0)
