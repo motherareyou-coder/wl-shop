@@ -47,20 +47,20 @@ const props = defineProps({
 				<ul class="commenter-info-review">
 					<li class="commenter-review">
 						<span class="commenter-review-title">{{ $t('Active Since') }}:</span>
-						<span class="commenter-review-content">November 9,2018</span>
+						<span class="commenter-review-content">{{ r.createTime }}</span>
 					</li>
-					<li class="commenter-review">
-						<span class="commenter-review-title">{{ $t('My Reviews') }}:</span>
-						<span class="commenter-review-content"> 2 review</span>
-					</li>
-					<li class="commenter-review">
-						<span class="commenter-review-title">{{ $t('Helpful Votes') }}:</span>
-						<span class="commenter-review-content">November 9,2018</span>
-					</li>
+					<!--<li class="commenter-review">-->
+					<!--	<span class="commenter-review-title">{{ $t('My Reviews') }}:</span>-->
+					<!--	<span class="commenter-review-content"> 2 review</span>-->
+					<!--</li>-->
+					<!--<li class="commenter-review">-->
+					<!--	<span class="commenter-review-title">{{ $t('Helpful Votes') }}:</span>-->
+					<!--	<span class="commenter-review-content">November 9,2018</span>-->
+					<!--</li>-->
 					<li class="commenter-review">
 						<span class="commenter-review-title">{{ $t('Most Recent Review') }}:</span>
 						<span class="commenter-review-content">
-							Xiaomi Pad 6 Mist blue 6 GB + 128 GB
+							{{ r.spuName }}
 						</span>
 					</li>
 				</ul>
