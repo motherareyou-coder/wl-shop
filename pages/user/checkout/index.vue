@@ -625,23 +625,33 @@ const shipOpen = ref(true)
 					<section class="price-summary">
 						<div class="price-summary__total">
 							<h3>{{ $t('Total') }}</h3>
-							<ProductPrice
-								:data="
-									info?.price?.totalPrice || info?.totalPrice
-								"
-							/>
+              <ProductPrice
+                  :data="
+										info?.price?.payPrice || info?.payPrice
+									"
+              />
 						</div>
 						<ul class="price-summary__list">
 							<li class="price-summary__item">
 								<span class="Subtotal">
 									{{ $t('Subtotal') }}
 								</span>
-								<ProductPrice
-									:data="
-										info?.price?.payPrice || info?.payPrice
-									"
-								/>
+                <ProductPrice
+                    :data="
+									info?.price?.totalPrice || info?.totalPrice
+								"
+                />
 							</li>
+              <li class="price-summary__item">
+								<span class="Subtotal">
+									{{ $t('VipDiscount') }}
+								</span>
+                <ProductPrice
+                    :data="
+									info?.price?.vipPrice || info?.vipPrice
+								"
+                />
+              </li>
 							<li
 								class="price-summary__item price-summary__item--saved"
 								:class="{ 'price-summary__item--open': open1 }"

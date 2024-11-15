@@ -166,7 +166,7 @@ const data = computed(() => props.data)
 							</span>
 							<span class="message-info__item-info">
 								{{
-									`${data.receiverAreaName} ${data.receiverDetailAddress}`
+									`${data.receiverAreaName} ${data.receiverDetailAddress} ${data.receiverDetailAddress2} ${data.receiverHouseNumber}`
 								}}
 							</span>
 						</div>
@@ -175,7 +175,9 @@ const data = computed(() => props.data)
 								{{ $t('Phone') }}
 							</span>
 							<span class="message-info__item-info">
-								{{ data.receiverMobile }}
+								{{
+                  `${data.receiverCountryCode} ${data.receiverMobile}`
+                }}
 							</span>
 						</div>
 					</div>
@@ -186,22 +188,50 @@ const data = computed(() => props.data)
 							<span>
 								<ProductPrice :data="data.totalPrice" />
 							</span>
-							<span>{{ $t('Subtotal') }}: </span>
+							<span>{{ $t('Total') }}: </span>
 						</li>
-						<li>
+            <li>
 							<span>
-								<ProductPrice :data="data.deliveryPrice" />
-							</span>
-							<span class="shipping-help">{{ $t('Shipping') }}:
-							</span>
-						</li>
-						<li>
-							<span>
-								-
+                -
 								<ProductPrice :data="data.discountPrice" />
 							</span>
-							<span>{{ $t('Promotion') }}: </span>
-						</li>
+              <span>{{ $t('Discount') }}: </span>
+            </li>
+            <li>
+							<span>
+                -
+								<ProductPrice :data="data.vipPrice" />
+							</span>
+              <span>{{ $t('VipDiscount') }}: </span>
+            </li>
+            <li>
+							<span>
+                -
+								<ProductPrice :data="data.pointPrice" />
+							</span>
+              <span>{{ $t('PointDiscount') }}: </span>
+            </li>
+            <li>
+							<span>
+                -
+								<ProductPrice :data="data.deliveryPrice" />
+							</span>
+              <span>{{ $t('Shipping fee') }}: </span>
+            </li>
+						<!--<li>-->
+						<!--	<span>-->
+						<!--		<ProductPrice :data="data.deliveryPrice" />-->
+						<!--	</span>-->
+						<!--	<span class="shipping-help">{{ $t('Shipping') }}:-->
+						<!--	</span>-->
+						<!--</li>-->
+						<!--<li>-->
+						<!--	<span>-->
+						<!--		- -->
+						<!--		<ProductPrice :data="data.discountPrice" />-->
+						<!--	</span>-->
+						<!--	<span>{{ $t('Promotion') }}: </span>-->
+						<!--</li>-->
 						<li>
 							<span>
 								<ProductPrice
@@ -209,9 +239,20 @@ const data = computed(() => props.data)
 									:data="data.payPrice"
 								/>
 							</span>
-							<span class="total__label">{{ $t('Total') }}:
+							<span class="total__label">{{ $t('PayPrice') }}:
 							</span>
 						</li>
+            <li>
+							<span>
+                +
+								<ProductPrice
+                    class="order-total-count"
+                    :data="data.refundPrice"
+                />
+							</span>
+              <span class="total__label">{{ $t('RefundPrice') }}:
+							</span>
+            </li>
 					</ul>
 				</section>
 			</div>

@@ -11,7 +11,7 @@ const { data, load, loading } = useInfiteLoad<Product>(p =>
 function handleCancel(item: Product, i) {
 	$api('product/favorite/delete', {
 		method: 'delete',
-		body: { spuId: item.id },
+		body: { spuId: item.spuId },
 	}).then(() => {
 		data.value.splice(i, 1)
 	})

@@ -216,15 +216,17 @@ function RenderAddress(props1: { data: Address, index: number }) {
 				</div>
 				<div class="user-address__card-tel-wrapper">
 					<span class="user-address__card-area">
-						{props1.data.mobile}
+						{props1.data.countryPhoneCode} {props1.data.mobile}
 					</span>
 				</div>
 				<div class="user-address__card-content--wrapper">
-					{[
-						props1.data.countryId,
-						props1.data.areaId,
-						props1.data.detailAddress,
-					].join(' ')}
+            {[
+              props1.data.houseNumber,
+              props1.data.detailAddress2,
+              props1.data.detailAddress,
+              props1.data.areaName,
+              props1.data.postCode,
+            ].join(' ')}
 				</div>
 				<div class="user-address__card-btn--wrapper justify-between">
 					{appStore.isMobile

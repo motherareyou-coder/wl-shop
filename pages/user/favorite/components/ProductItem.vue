@@ -3,7 +3,7 @@ const emit = defineEmits('cancel')
 const data = defineModel('data', { default: () => ({}) })
 const router = useRouter()
 function onClick() {
-	router.push($path(`/product/${data.value.id}`))
+	router.push($path(`/product/${data.value.spuId}`))
 }
 
 const appStore = useAppStore()
@@ -18,7 +18,7 @@ const appStore = useAppStore()
 			<app-image
 				class="shrink-0 cursor-pointer"
 				:class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']"
-				:src="data.img"
+				:src="data.picUrl"
 				@click="onClick"
 			/>
 			<div
