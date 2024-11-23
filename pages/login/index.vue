@@ -171,8 +171,9 @@ function handleRegister() {
 												{{ $t('login') }}
 											</el-button>
 											<div class="mi-form-actions mi-form-actions--inline">
-												<div class="mi-form-action mi-form-action--start">
-													<el-link :href="$path('/forgetPassword')" type="primary" :underline="false">
+												<div class="mi-form-action mi-form-action--start" style="max-width: 100%">
+													<!-- <el-link :href="$path('/forgetPassword')" type="primary" :underline="false"> -->
+													<el-link type="primary" :underline="false" @click="usePsw = false">
 														{{ $t('Forgot password') }}?
 													</el-link>
 												</div>
