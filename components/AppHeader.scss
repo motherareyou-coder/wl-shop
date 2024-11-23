@@ -1606,3 +1606,39 @@
     color: var(--text-base);
     text-decoration: underline
 }
+
+
+
+.site-header .site-header__navigation .navigation__shortcut .shortcut__icon {
+    line-height: 1
+}
+
+@media screen and (max-width: 720px) {
+    .site-header .site-header__navigation .navigation__shortcut .shortcut__icon {
+        font-size:20px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .site-header .site-header__navigation .navigation__shortcut .shortcut__icon {
+        font-size:20px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .site-header .site-header__navigation .navigation__shortcut .shortcut__icon {
+        font-size:20px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .site-header .site-header__navigation .navigation__shortcut .shortcut__icon {
+        font-size:28px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .site-header .site-header__navigation .navigation__shortcut .shortcut__icon {
+        font-size:28px
+    }
+}

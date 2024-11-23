@@ -14,19 +14,6 @@ const { data: categories } = await useAPI<Category[]>(
 	'product/category/list/featured/top',
 	{ params: { num: 5 } },
 )
-watch(categories, (v) => {
-	v?.forEach?.(async (d) => {
-		$api('product/spu/page', {
-			params: {
-				categoryId: d.id,
-				pageNo: 1,
-				pageSize: 5,
-			},
-		}).then((res) => {
-			d.children = res.list
-		})
-	})
-}, { immediate: true })
 
 let swiper: SwiperClass | null = null
 const realIndex = ref(0)
@@ -76,7 +63,7 @@ function slideTo(i: number) {
 							class="feature-tab-content feature-tab-content--1left4 feature-tab-content--1C-4S"
 						>
 							<nuxt-link
-								v-for="(c, i) in cat.children"
+								v-for="(c, i) in cat.childProduct"
 								:key="c.id"
 								:to="$path(`/product/${c.id}`)"
 								class="feature-tab--item"
@@ -103,9 +90,9 @@ function slideTo(i: number) {
 											:data="c.price"
 										/>
 										<div class="item-info__button-wrapper">
-											<button class="mi-btn app-button">
+											<el-button type="info">
 												{{ $t('Learn More') }}
-											</button>
+											</el-button>
 										</div>
 									</div>
 								</div>

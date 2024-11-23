@@ -24,7 +24,7 @@ function useInfiteLoad<T>(
 					total.value = data.value.length
 				}
 				else {
-					total.value = res.total || Infinity
+					total.value = res.total ?? Infinity
 					if (uniqKey) {
 						res.list.forEach((d) => {
 							const index = data.value.findIndex(

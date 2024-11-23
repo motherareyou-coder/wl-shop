@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { AfterSale } from '~/types'
 
-const { data, load, loading, pagination } = useInfiteLoad<AfterSale>(params =>
+const { data, load, loading, pagination, total } = useInfiteLoad<AfterSale>(params =>
 	$api('trade/after-sale/page', {
-		params: { ...params },
+		params: { ...params, needLogin: true },
 	}),
 )
 
@@ -16,9 +16,8 @@ const loading1 = ref(false)
 const { t } = useI18n()
 function handleCancel({ id }: AfterSale) {
 	ElMessageBox.confirm(
-		t('Are you confirm to cancel?', {
-			confirmButtonClass: 'mi-button--info',
-		}),
+		t('Are you confirm to cancel?'),
+		{ confirmButtonClass: 'mi-button--info' },
 	).then(() => {
 		loading1.value = true
 		$api('trade/after-sale/cancel', {
@@ -41,7 +40,9 @@ function handleCancel({ id }: AfterSale) {
 
 <template>
 	<div class="aftersale-orders">
+		<el-empty v-if="!loading && total === 0" :description="$t('No data')" />
 		<div
+			v-else
 			v-infinite-scroll="load"
 			class="infinite-scroll infinite-scroll--mobile"
 		>

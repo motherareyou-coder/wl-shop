@@ -1,11 +1,24 @@
-<script setup>
-const data = defineModel('data', { default: () => ({}) })
+<script setup lang="ts">
+import type { Product } from '~/types'
+
+const data = defineModel<Product>('data', { default: () => ({}) })
 
 const router = useRouter()
 function onClick() {
 	router.push($path(`/product/${data.value.id}`))
 }
 const appStore = useAppStore()
+const cartStore = useCartStore()
+
+const { loading, wrapLoading } = useLoading()
+function handleAdd(g: Product) {
+	wrapLoading(
+		// TODO: 商品数据缺少skuId
+		cartStore.addCart(g, { id: g.skuId }, 1).then(() =>
+			router.push($path('/user/cart')),
+		),
+	)
+}
 </script>
 
 <template>
@@ -15,64 +28,33 @@ const appStore = useAppStore()
 		>
 			<app-image
 				class="shrink-0"
-				:class="[appStore.isPC ? 'w-60 h-60 m-3' : 'w-28 h-28']"
-				:src="data.img"
+				:class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']"
+				:src="data.picUrl"
 				@click="onClick"
 			/>
 			<div class="item__info">
 				<div class="item__info-section">
 					<h3 class="item__title" @click="onClick">
-						{{ data.id }}
+						<bdi>
+							{{ data.name }}
+						</bdi>
 					</h3>
 				</div>
-				<div class="item__info-section item__info__translate">
+				<div class="item__info-section">
 					<product-price
 						class="mi-price item__price"
 						:data="data.price"
 					/>
-					<button @click.prevent="onClick">
-						{{ $t('Shop Now') }}
-					</button>
 				</div>
+			</div>
+			<div v-if="appStore.isPC" class="item__action">
+				<el-button :disabled="loading" plain @click.prevent="handleAdd">
+					{{ $t('Add to cart') }}
+				</el-button>
+				<el-button type="info" @click.prevent="onClick">
+					{{ $t('Shop Now') }}
+				</el-button>
 			</div>
 		</div>
 	</li>
 </template>
-
-<style lang="scss" scoped>
-.mi-product__item {
-	.item__info__translate {
-		position: relative;
-		button {
-			background: #191919;
-			border-radius: 10.5px;
-			color: #fff;
-			font-weight: 700;
-			opacity: 0;
-			position: absolute;
-			white-space: nowrap;
-			padding: 6px 12px;
-			transition: 0.3s;
-			font-size: var(--item-font-size);
-			@media screen and (max-width: 720px) {
-				display: none;
-			}
-		}
-	}
-	.price {
-		transition: all 0.3s;
-	}
-	&:hover {
-		button {
-			opacity: 1;
-			top: 50%;
-			transform: translateY(-50%);
-			transition-delay: 0.2s;
-		}
-		.price {
-			opacity: 0;
-			transform: translateY(-20%);
-		}
-	}
-}
-</style>

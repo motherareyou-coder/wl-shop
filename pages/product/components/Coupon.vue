@@ -89,8 +89,9 @@ const appStore = useAppStore()
 								{{ c.name }}
 							</h6>
 							<p class="coupon-list__item--date">
-								{{ c.validStartTime }} -
-								{{ c.validEndTime }}
+								<app-time :data="c.validStartTime" />
+								-
+								<app-time :data="c.validEndTime" />
 							</p>
 							<p class="coupon-list__item--range">
 								{{ c.description }}

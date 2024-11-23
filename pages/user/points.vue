@@ -60,7 +60,9 @@ watch(type, reset)
 							{{ item.point }}
 						</span>
 					</div>
-					<span class="time">{{ item.createTime }}</span>
+					<span class="time">
+						<app-time :data="item.createTime" />
+					</span>
 				</li>
 			</ul>
 		</div>

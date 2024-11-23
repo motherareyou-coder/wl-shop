@@ -80,7 +80,7 @@ const totalPrice = computed(() => {
 								:class="{ active: props.star }"
 								@click="emit('star')"
 							>
-								<ElIconStar class="micon" />
+								<ElIconStar />
 							</el-icon>
 						</h2>
 						<div class="information-section__product-info">
@@ -94,9 +94,7 @@ const totalPrice = computed(() => {
 							</div>
 						</div>
 					</section>
-					<section class="product__section product__section-spacer offers-section">
-						<Activities class="offers-section__list" />
-					</section>
+					<Activities class="offers-section__list" />
 					<section
 						class="product__section product__section-spacer events-info"
 					>

@@ -5,7 +5,7 @@ const route = useRoute()
 const router = useRouter()
 
 const showTitle = computed(() => {
-	// TODO: 过滤route
+	// TODO: Pref过滤route
 	router.getRoutes().forEach((r) => {
 		if (r.path.includes('components'))
 			router.removeRoute(r.name)
@@ -24,7 +24,7 @@ const appStore = useAppStore()
 		class="site-container-1400 mx-auto w-full"
 		style="flex-grow: 0"
 	>
-		<el-breadcrumb style="height:2.5rem;line-height:2.5rem" separator="/">
+		<el-breadcrumb class="user-layout__breadcrumbs" separator="/">
 			<el-breadcrumb-item :to="{ path: '/' }">
 				{{ $t('home') }}
 			</el-breadcrumb-item>
@@ -41,4 +41,25 @@ const appStore = useAppStore()
 	</div>
 </template>
 
-<style scoped></style>
+<style lang="scss">
+.user-layout__breadcrumbs.mi-breadcrumb {
+    background: #f9f9fa;
+	color: #424242;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+	.mi-breadcrumb-item {
+		color: var(--title-base);
+		font-size: 14px;
+		height: 40px;
+		line-height: 40px;
+		font-weight: 300;
+	}
+	.mi-breadcrumb__inner.is-link, .mi-breadcrumb__inner a{
+		color: #b0b0b0;
+		&:hover{
+			color: var(--mi-color-primary);
+		}
+	}
+}
+</style>

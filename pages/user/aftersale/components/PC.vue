@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { AfterSale } from '~/types'
+import './PC.scss'
 
 const { data, pagination, getData } = useTablePagination<AfterSale>((p = {}) =>
 	$api('trade/after-sale/page', {
-		params: { ...p, status: status.value },
+		params: { ...p, status: status.value, needLogin: true },
 	}),
 )
 
@@ -16,9 +17,8 @@ const loading1 = ref(false)
 const { t } = useI18n()
 function handleCancel({ id }: AfterSale) {
 	ElMessageBox.confirm(
-		t('Are you confirm to cancel?', {
-			confirmButtonClass: 'mi-button--info',
-		}),
+		t('Are you confirm to cancel?'),
+		{ confirmButtonClass: 'mi-button--info' },
 	).then(() => {
 		loading1.value = true
 		$api('trade/after-sale/cancel', {
@@ -40,15 +40,29 @@ function goDetail({ id }: AfterSale) {
 
 <template>
 	<div class="aftersale-list">
-		<div class="site-container-1400 w-full mx-auto my-8 bg-white p-12">
-			<p class="text-3xl mb-4 mt-0">
-				{{ $t('AfterSale List') }}
-			</p>
+		<div class="site-container-1400 w-full mx-auto mb-8 bg-white p-12">
+			<div class="user-order-list-container">
+				<h1 class="user-order-list-container_title mt-0">
+					{{ $t('AfterSales') }}
+				</h1>
+				<div class="user-order-list miv4">
+					<div class="tag-nav">
+						<li>
+							<nuxt-link :to="$path('/user/orderlist')">
+								{{ $t('My Orders') }}
+							</nuxt-link>
+						</li>
+						<li class="active">
+							{{ $t('AfterSales') }}
+						</li>
+					</div>
+				</div>
+			</div>
 			<ul>
 				<li
 					v-for="item in data"
 					:key="item.id"
-					class="my-5 p-6"
+					class="mb-5 p-6"
 					style="border: 1px solid #e0e0e0"
 				>
 					<div class="text-xl">
@@ -112,6 +126,7 @@ function goDetail({ id }: AfterSale) {
 			</ul>
 			<div class="">
 				<el-pagination
+					v-if="pagination.total"
 					v-model:page-size="pagination.pageSize"
 					v-model:current-page="pagination.currentPage"
 					:total="pagination.total"

@@ -53,6 +53,7 @@ body {
 	scrollbar-width: thin;
 	font-family: 'MiSans Chinese', sans-serif;
 }
+
 @media screen and (max-width: 720px) {
 	body {
 		width: 100% !important;
@@ -64,28 +65,10 @@ body {
 }
 
 .svg-icon {
-	width: min(max(var(--icon-width), 1em), 28px);
-	height: min(max(var(--icon-height), 1em), 28px);
+	width: 1em;
+	height: 1em;
 	color: inherit;
 	cursor: pointer;
-}
-
-.app-button {
-	--btn-padding: var(--btn-padding-vertical, 10px)
-		var(--btn-padding-horizontal, 10px);
-	--btn-text-base: var(--text-reverse);
-	--btn-background-white: var(--background-white);
-	--btn-background-black: var(--background-black);
-	--btn-background-primary: var(--background-primary);
-	--btn-background-color: var(--btn-background-black);
-	--link-text-decoration: underline;
-	background-color: var(--btn-background-color);
-	border: none;
-	border-radius: var(--btn-border-radius, 12px);
-	color: var(--btn-text-base);
-	cursor: pointer;
-	display: inline-block;
-	padding: var(--btn-padding) !important;
 }
 
 .mi-checkbox {
@@ -97,10 +80,7 @@ body {
 	max-height: 85vh !important;
 }
 
-.mi-button {
-	height: auto !important;
-	--mi-button-disabled-bg-color: var(--brand-grey-40) !important;
-}
+
 
 .mi-drawer .mi-drawer__header {
 	@media screen and (max-width: 720px) {

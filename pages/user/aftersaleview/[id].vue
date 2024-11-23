@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import type { AfterSale } from '~/types'
 
+definePageMeta({
+	showBread: true,
+	title: 'AfterSale Detail',
+})
+useHead({
+	title: `${$t('AfterSale Detail')} ${$t('appTitle')}`,
+})
+
 const route = useRoute()
 const id = route.params.id
 const { data, refresh } = await useAPI<AfterSale>(
@@ -47,9 +55,8 @@ function handleConfirm() {
 const { t } = useI18n()
 function handleCancel() {
 	ElMessageBox.confirm(
-		t('Are you confirm to cancel?', {
-			confirmButtonClass: 'mi-button--info',
-		}),
+		t('Are you confirm to cancel?'),
+		{ confirmButtonClass: 'mi-button--info' },
 	).then(() => {
 		loading.value = true
 		$api('trade/after-sale/cancel', {
@@ -70,7 +77,7 @@ const appStore = useAppStore()
 		<div
 			:class="[
 				appStore.isPC
-					? 'site-container-1400 bg-white my-10 mx-auto w-full p-10'
+					? 'site-container-1400 bg-white mb-10 mx-auto w-full p-10'
 					: '',
 			]"
 		>
@@ -86,38 +93,34 @@ const appStore = useAppStore()
 					<el-step :title="$t('Done')" />
 				</el-steps>
 			</section>
-			<section class="my-2 bg-white p-4">
+			<section
+				v-if="data && data.logisticsNo"
+				class="my-2 bg-white p-4"
+			>
+				<p>{{ $t('AfterSale logisticsNo') }}: {{ data.logisticsNo }}</p>
+			</section>
+			<section
+				v-if="data && (data.status === 20 || data.status === 30)"
+				class="my-2 bg-white p-4"
+			>
 				<div
-					class="flex justify-between items-center"
-					:class="[data.logisticsNo ? '' : 'cursor-pointer']"
+					class="flex justify-between items-center cursor-pointer"
 					@click="handleShow"
 				>
 					<div>
 						<div class="mb-2">
-							<span v-if="data.logisticsNo">
-								{{ data.logisticsNo }}
-							</span>
-							<span v-else>
-								{{
-									$t(
-										'Please fill in the return logistics information.',
-									)
-								}}
-							</span>
+							{{ $t('Please fill in the return logistics information.') }}
 						</div>
-						<div
-							v-if="!data.logisticsNo"
-							class="text-slate-400 text-sm"
-						>
-							{{ data.deliveryTime }}
+						<div class="text-slate-400 text-sm">
+							<app-time :data="data?.deliveryTime" />
 						</div>
 					</div>
-					<div v-if="!data.logisticsNo">
+					<div>
 						<el-icon><ElIconArrowRight /></el-icon>
 					</div>
 				</div>
 			</section>
-			<section class="my-2 bg-white p-4">
+			<section v-if="data" class="my-2 bg-white p-4">
 				<div class="flex">
 					<nuxt-link
 						class="flex mr-5"
@@ -158,7 +161,7 @@ const appStore = useAppStore()
 							{{ $t('Apply time') }}
 						</span>
 						<span class="break-all ml-2 text-right">
-							{{ data?.createTime }}
+							<app-time :data="data?.createTime" />
 						</span>
 					</li>
 					<li class="flex justify-between my-1">

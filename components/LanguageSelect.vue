@@ -9,7 +9,7 @@ const items = [
 
 <template>
 	<el-dropdown :popper="{ placement: 'bottom-start' }" :hide-on-click="true">
-		<Icon name="icon:language" style="outline: none" />
+		<i class="micon micon-language-earth" v-bind="$attrs"></i>
 		<template #dropdown>
 			<el-dropdown-menu>
 				<SwitchLocalePathLink v-for="o in items" :key="o.value" :locale="o.value" style="width:100%">

@@ -65,7 +65,7 @@ function getData<ExperienceRecord>(params: any) {
 							]"
 						>
 							<span>{{ row.description }}</span>
-							<span>{{ row.createTime }}</span>
+							<app-time :data="row.createTime" />
 						</div>
 					</div>
 				</template>

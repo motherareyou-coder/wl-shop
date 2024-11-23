@@ -79,7 +79,7 @@ const data = ref({})
 							</el-form-item>
 						</div>
 					</el-form>
-					<button class="app-button">
+					<el-button type="info">
 						<span class="flex items-center justify-center">
 							<img
 								src="https://checkoutshopper-live.adyen.com/checkoutshopper/images/components/lock.svg"
@@ -88,7 +88,7 @@ const data = ref({})
 								{{ $t('Pay') }}
 							</span>
 						</span>
-					</button>
+					</el-button>
 				</div>
 			</div>
 		</main>

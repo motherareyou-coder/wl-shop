@@ -3562,7 +3562,8 @@
 
 .cart-empty .cart-empty__btn-group .cart-empty__btn {
     --btn-font-size: var(--font-size);
-    --btn-padding-vertical: 10px
+    --btn-padding-vertical: 10px;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 720px) {

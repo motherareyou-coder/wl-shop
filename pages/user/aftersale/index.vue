@@ -5,9 +5,11 @@ import PC from './components/PC.vue'
 defineOptions({ name: 'AftersaleListCache' })
 definePageMeta({
 	name: 'AftersaleListCache',
+	showBread: true,
+	title: 'AfterSales',
 })
 useHead({
-	title: `${$t('Aftersale')} ${$t('appTitle')}`,
+	title: `${$t('AfterSales')} ${$t('appTitle')}`,
 })
 
 const appStore = useAppStore()

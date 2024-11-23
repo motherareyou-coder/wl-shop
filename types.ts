@@ -68,7 +68,7 @@ export interface Activity {
 	/**
 	 * 活动结束时间
 	 */
-	endTime: Date
+	endTime: number | string
 	/**
 	 * 活动编号
 	 */
@@ -84,7 +84,7 @@ export interface Activity {
 	/**
 	 * 活动开始时间
 	 */
-	startTime: Date
+	startTime: number | string
 	/**
 	 * 活动类型
 	 */
@@ -99,7 +99,7 @@ export interface Product {
 	categoryId: number
 	picUrl: string
 	sliderPicUrls: string[]
-	specType: true
+	specType: boolean
 	price: number
 	marketPrice: number
 	vipPrice: number
@@ -120,7 +120,8 @@ export interface Category {
 	parentId: number
 	name: string
 	picUrl: string
-	children?: Product[]
+	childCategory?: Category[]
+	childProduct?: Product[]
 }
 
 export interface Property {
@@ -237,22 +238,15 @@ export interface Coupon {
 export interface CartItem {
 	id: number
 	count: number
-	selected: true
+	selected: boolean
 	disabled?: boolean
-	checked?: boolean
 	spu: {
 		id: number
 		name: string
 		picUrl: string
 		categoryId: number
 	}
-	sku: {
-		id: number
-		picUrl: string
-		price: number
-		stock: number
-		properties: number[]
-	}
+	sku: SKU
 }
 export interface ProductBrowseHistory {
 	/**
@@ -389,6 +383,25 @@ export interface OrderSettlement {
 }
 
 /**
+ * PayOrderSubmit，用户 APP - 支付订单提交 Response VO
+ */
+export interface PayOrderSubmit {
+	/**
+	 * 展示内容
+	 */
+	displayContent: string
+	/**
+	 * 展示模式
+	 */
+	displayMode: string
+	/**
+	 * 支付状态
+	 */
+	status: number
+	[property: string]: any
+}
+
+/**
  * Price，费用（合计）
  */
 export interface Price {
@@ -431,7 +444,7 @@ export interface OrderDetail {
 	/**
 	 * 订单取消时间
 	 */
-	cancelTime?: Date
+	cancelTime?: number | string
 	/**
 	 * 拼团记录编号
 	 */
@@ -451,7 +464,7 @@ export interface OrderDetail {
 	/**
 	 * 下单时间
 	 */
-	createTime: Date
+	createTime: number | string
 	/**
 	 * 运费金额
 	 */
@@ -459,7 +472,7 @@ export interface OrderDetail {
 	/**
 	 * 发货时间
 	 */
-	deliveryTime?: Date
+	deliveryTime?: number | string
 	/**
 	 * 配送方式
 	 */
@@ -471,7 +484,7 @@ export interface OrderDetail {
 	/**
 	 * 订单完成时间
 	 */
-	finishTime?: Date
+	finishTime?: number | string
 	/**
 	 * 订单编号
 	 */
@@ -504,7 +517,7 @@ export interface OrderDetail {
 	/**
 	 * 付款超时时间
 	 */
-	payExpireTime: Date
+	payExpireTime: number | string
 	/**
 	 * 支付订单编号
 	 */
@@ -520,7 +533,7 @@ export interface OrderDetail {
 	/**
 	 * 付款时间
 	 */
-	payTime?: Date
+	payTime?: number | string
 	/**
 	 * 自提门店编号
 	 */
@@ -560,17 +573,28 @@ export interface OrderDetail {
 	/**
 	 * 收货时间
 	 */
-	receiveTime?: Date
+	receiveTime?: number | string
 	/**
 	 * 退款金额，单位：分
 	 */
 	refundPrice?: number
 	/**
 	 * 售后状态
+	 * 0.未退款
+	 * 10.部分退款
+	 * 20.全部退款
 	 */
 	refundStatus?: number
 	/**
 	 * 订单状态
+	 * 10.申请中,会员申请退款,退款申请待商家处理
+	 * 20.卖家通过,商家同意退款,请退货并填写物流信息
+	 * 30.待卖家收货,会员填写退货物流信息,退货退款申请待商家处理
+	 * 40.等待平台退款,商家收货,无（有赞无该状态）
+	 * 50.完成,商家确认退款,退款成功
+	 * 61.买家取消售后,会员取消退款,退款关闭
+	 * 62.卖家拒绝,商家拒绝退款,商家不同意退款申请
+	 * 63.卖家拒绝收货,商家拒绝收货,商家拒绝收货，不同意退款
 	 */
 	status: number
 	/**
@@ -602,6 +626,9 @@ export interface OrderItem {
 	afterSaleId?: number
 	/**
 	 * 售后状态
+	 * 0.未退款
+	 * 10.部分退款
+	 * 20.全部退款
 	 */
 	afterSaleStatus: number
 	/**
@@ -748,11 +775,11 @@ export interface AfterSale {
 	/**
 	 * 创建时间
 	 */
-	createTime: Date
+	createTime: number | string
 	/**
 	 * 退货时间
 	 */
-	deliveryTime?: Date
+	deliveryTime?: number | string
 	/**
 	 * 售后编号
 	 */
@@ -793,7 +820,7 @@ export interface AfterSale {
 	/**
 	 * 收货时间
 	 */
-	receiveTime?: Date
+	receiveTime?: number | string
 	/**
 	 * 退款金额，单位：分
 	 */
@@ -801,7 +828,7 @@ export interface AfterSale {
 	/**
 	 * 退款时间
 	 */
-	refundTime?: Date
+	refundTime?: number | string
 	/**
 	 * 商品 SKU 编号
 	 */
@@ -820,6 +847,8 @@ export interface AfterSale {
 	status: number
 	/**
 	 * 售后类型
+	 * 10.售中退款(交易完成前买家申请退款)
+	 * 20.售后退款(交易完成后买家申请退款)
 	 */
 	type: number
 	/**
@@ -828,6 +857,8 @@ export interface AfterSale {
 	updateTime: Date
 	/**
 	 * 售后方式
+	 * 10.仅退款
+	 * 20.退货退款
 	 */
 	way: number
 	[property: string]: any
@@ -863,7 +894,7 @@ export interface PayWalletTransaction {
 	/**
 	 * 交易时间
 	 */
-	createTime: Date
+	createTime: number | string
 	/**
 	 * 交易金额，单位分
 	 */
@@ -881,7 +912,7 @@ export interface PointRecord {
 	/**
 	 * 发生时间
 	 */
-	createTime: Date
+	createTime: number | string
 	/**
 	 * 积分描述
 	 */
@@ -964,7 +995,7 @@ export interface ExperienceRecord {
 	/**
 	 * 创建时间
 	 */
-	createTime: Date
+	createTime: number | string
 	/**
 	 * 描述
 	 */
@@ -1022,7 +1053,7 @@ export interface Article {
 	/**
 	 * 发布时间
 	 */
-	createTime: Date
+	createTime: number | string
 	/**
 	 * 文章编号
 	 */

@@ -109,16 +109,15 @@ function toggleStar() {
 	}
 }
 
+const userStore = useUserStore()
+const cartStore = useCartStore()
+
 function goCart() {
 	if (!count.value || !curSku.value)
 		return
-	$api('trade/cart/add', {
-		method: 'post',
-		body: {
-			count: count.value,
-			skuId: curSku.value?.id,
-		},
-	}).then(() => router.push($path('/user/cart')))
+	cartStore.addCart(info.value!, curSku.value, count.value).then(() =>
+		router.push($path('/user/cart')),
+	)
 }
 
 const appStore = useAppStore()

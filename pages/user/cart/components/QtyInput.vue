@@ -47,14 +47,12 @@ function handleChange() {
 			:class="{ 'quantity-section__button--disabled': data <= 1 }"
 			@click="decrease"
 		>
-			<el-icon class="micon micon-quantity-decrease">
-				<ElIconMinus />
-			</el-icon>
+			<i class="micon micon-quantity-decrease"></i>
 		</div>
 		<input
 			v-model.number="data"
 			:min="props.min"
-			:max="props.max"
+			:max="props.max ?? Infinity"
 			:step="1"
 			class="quantity-section__value"
 			:disabled="props.disabled"
@@ -68,9 +66,7 @@ function handleChange() {
 			aria-label="Increase the quantity"
 			@click="increase"
 		>
-			<el-icon class="micon micon-quantity-increase">
-				<ElIconPlus />
-			</el-icon>
+			<i class="micon micon-quantity-increase"></i>
 		</div>
 	</div>
 </template>

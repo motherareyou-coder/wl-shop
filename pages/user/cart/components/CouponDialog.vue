@@ -104,12 +104,9 @@ function handleConfirm() {
 									<ProductPrice :data="item.discountPrice" />
 								</div>
 								<div class="timerange">
-									{{
-										[
-											item.validStartTime,
-											item.validEndTime,
-										].join(' - ')
-									}}
+									<app-time :data="item.validStartTime" />
+									-
+									<app-time :data="item.validEndTime" />
 								</div>
 								<div class="desc">
 									{{ item.description }}
@@ -162,9 +159,9 @@ function handleConfirm() {
 				<span v-else>{{ $t('Select 1 coupon to get discount') }}</span>
 			</div>
 			<div class="action">
-				<button class="app-button" @click.prevent="handleConfirm">
+				<el-button type="info" @click.prevent="handleConfirm">
 					{{ $t('Confrim') }}
-				</button>
+				</el-button>
 			</div>
 		</footer>
 	</el-drawer>
@@ -498,8 +495,6 @@ function handleConfirm() {
 			svg {
 				color: var(--mi-color-warning);
 				margin-inline-end: 6px;
-				--icon-width: var(--font-size);
-				--icon-height: var(--font-size);
 
 				@media screen and (max-width: 720px) {
 					--font-size: 20px;

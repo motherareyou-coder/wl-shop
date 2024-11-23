@@ -19,8 +19,8 @@ const { data: info, refresh } = await useAPI<OrderDetail>(
 	'trade/order/get-detail',
 	{ params: { id } },
 )
+let timer: any
 if (payOrderId && !info.value?.payTime) {
-	let timer: any
 	const getPayStatus = () => {
 		if (info.value?.payTime)
 			return
@@ -28,7 +28,7 @@ if (payOrderId && !info.value?.payTime) {
 			params: { id: payOrderId },
 		})
 			.then((res) => {
-				if (res.payTime) {
+				if (res.no) {
 					refresh()
 					clearTimeout(timer)
 					router.push(route.path)
@@ -41,11 +41,11 @@ if (payOrderId && !info.value?.payTime) {
 				timer = setTimeout(getPayStatus, 2000)
 			})
 	}
-	onBeforeUnmount(() => {
-		clearTimeout(timer)
-	})
 	getPayStatus()
 }
+onBeforeUnmount(() => {
+	clearTimeout(timer)
+})
 
 const appStore = useAppStore()
 const loading = ref(false)
@@ -67,6 +67,7 @@ function handleCommand(type: string, data: any) {
 					method: 'delete',
 					params: { id },
 				})
+					.then(() => clearTimeout(timer))
 					.then(refresh)
 					.finally(() => {
 						loading.value = false
@@ -100,21 +101,14 @@ function handleCommand(type: string, data: any) {
 			})
 			break
 		case 'pay':
-			if (payOrderId) {
-				$api('pay/order/submit', {
-					method: 'post',
-					body: {
-						id: payOrderId,
-						channelCode: 'mock',
-						channelExtras: {},
-					},
-				}).then(refresh)
-			}
-			// router.push($path(`/user/checkout?orderId=${id}`))
+			router.push($path(`/user/checkout?orderId=${id}`))
 			break
 		case 'aftersale':
 			localStorage.setItem('after-sale-apply', JSON.stringify(info.value))
 			router.push($path(`/user/aftersale/apply?item=${data.id}`))
+			break
+		case 'aftersale-view':
+			router.push($path(`/user/aftersaleview/${data.id}`))
 			break
 	}
 }

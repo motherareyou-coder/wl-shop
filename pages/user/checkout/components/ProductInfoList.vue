@@ -82,7 +82,7 @@ const appStore = useAppStore()
 					class="product-info__item"
 				>
 					<div class="product-info__content">
-						<app-image src="{d.picUrl}" />
+						<app-image :src="item.picUrl || item.sku?.picUrl || item.spu?.picUrl" />
 						<div class="product-other">
 							<ul class="product-params">
 								<li class="product-params__name">

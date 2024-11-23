@@ -1,4 +1,4 @@
-.mi-btn{
+.mi-btn {
     --btn-padding: var(--btn-padding-vertical) var(--btn-padding-horizontal);
     --btn-text-base: var(--text-reverse);
     --btn-background-white: var(--background-white);
@@ -18,7 +18,8 @@
     padding: var(--btn-padding);
     // height:auto !important;
 }
-.mi-btn.mi-button{
+
+.mi-btn.mi-button {
     --btn-padding: var(--btn-padding-vertical) var(--btn-padding-horizontal);
     --btn-text-base: var(--text-base);
     --btn-background-white: var(--background-white);
@@ -36,51 +37,72 @@
     display: inline-block !important;
     font-size: var(--btn-font-size) !important;
     padding: var(--btn-padding) !important;
+    height: auto !important;
+}
+
+.mi-button{
+    --btn-padding: var(--btn-padding-vertical) var(--btn-padding-horizontal);
+    padding: var(--btn-padding) !important;
     // height:auto !important;
 }
 
 @media screen and (max-width: 720px) {
-   .mi-button, .mi-btn {
-        --btn-padding-vertical:8px;
+
+    .mi-button,
+    .mi-btn {
+        --btn-padding-vertical: 8px;
         --btn-padding-horizontal: 20px;
         --btn-font-size: 12px;
         --btn-border-radius: 8px;
+        --mi-border-radius-base: 8px;
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
-   .mi-button, .mi-btn {
-        --btn-padding-vertical:10px;
+
+    .mi-button,
+    .mi-btn {
+        --btn-padding-vertical: 10px;
         --btn-padding-horizontal: 16px;
         --btn-font-size: 1.5625vw;
         --btn-border-radius: 8px;
+        --mi-border-radius-base: 8px;
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
-   .mi-button, .mi-btn {
-        --btn-padding-vertical:.8333333333vw;
+
+    .mi-button,
+    .mi-btn {
+        --btn-padding-vertical: .8333333333vw;
         --btn-padding-horizontal: 1.6666666667vw;
         --btn-font-size: 16px;
         --btn-border-radius: 8px;
+        --mi-border-radius-base: 8px;
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
-   .mi-button, .mi-btn {
-        --btn-padding-vertical:.625vw;
+
+    .mi-button,
+    .mi-btn {
+        --btn-padding-vertical: .625vw;
         --btn-padding-horizontal: 2.0833333333vw;
         --btn-font-size: 1.25vw;
         --btn-border-radius: 12px;
+        --mi-border-radius-base: 12px;
     }
 }
 
 @media screen and (min-width: 1921px) {
-   .mi-button, .mi-btn {
-        --btn-padding-vertical:12px;
+
+    .mi-button,
+    .mi-btn {
+        --btn-padding-vertical: 12px;
         --btn-padding-horizontal: 40px;
         --btn-font-size: 24px;
         --btn-border-radius: 14px;
+        --mi-border-radius-base: 14px;
     }
 }
 
@@ -121,7 +143,7 @@
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -129,7 +151,7 @@
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -137,7 +159,7 @@
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -145,7 +167,7 @@
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -153,7 +175,7 @@
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -161,7 +183,7 @@
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -169,7 +191,7 @@
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -177,7 +199,7 @@
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -185,7 +207,7 @@
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -193,7 +215,7 @@
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -201,7 +223,7 @@
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -209,7 +231,7 @@
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -217,7 +239,7 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--default.mi-btn--highlight-m {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -269,79 +291,79 @@
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--primary.mi-btn--highlight-m {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 
     .mi-btn.mi-btn--primary.mi-btn--highlight-m:hover {
@@ -370,31 +392,31 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--link {
-        --link-font-size:12px
+        --link-font-size: 12px
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link {
-        --link-font-size:1.5625vw
+        --link-font-size: 1.5625vw
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link {
-        --link-font-size:16px
+        --link-font-size: 16px
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link {
-        --link-font-size:1.25vw
+        --link-font-size: 1.25vw
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--link {
-        --link-font-size:24px
+        --link-font-size: 24px
     }
 }
 
@@ -410,31 +432,31 @@
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--link.mi-btn--highlight-m {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
@@ -450,38 +472,39 @@
     --link-text-decoration: none
 }
 
-.mi-btn.mi-btn--arrow-m .micon,.mi-btn.mi-btn--arrow-pc .micon {
+.mi-btn.mi-btn--arrow-m .micon,
+.mi-btn.mi-btn--arrow-pc .micon {
     font-size: inherit;
     transform: scaleX(var(--cardinal-number))
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
-        display:inline-block
+        display: inline-block
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
-        display:inline-block
+        display: inline-block
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
-        display:inline-block
+        display: inline-block
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--arrow-pc .micon-link-arrow {
-        display:inline-block
+        display: inline-block
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--arrow-m .micon-link-arrow {
-        display:inline-block
+        display: inline-block
     }
 }
 
@@ -496,31 +519,31 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--icon {
-        --icon-font-size:24px
+        --icon-font-size: 24px
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--icon {
-        --icon-font-size:20px
+        --icon-font-size: 20px
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--icon {
-        --icon-font-size:2.2222222222vw
+        --icon-font-size: 2.2222222222vw
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--icon {
-        --icon-font-size:1.6666666667vw
+        --icon-font-size: 1.6666666667vw
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--icon {
-        --icon-font-size:32px
+        --icon-font-size: 32px
     }
 }
 
@@ -530,7 +553,7 @@
 
 .mi-btn.mi-btn--icon:focus-visible {
     outline: 4px solid var(--outline-color);
-    outline-offset: 0!important
+    outline-offset: 0 !important
 }
 
 .mi-btn.mi-btn--icon .micon {
@@ -539,79 +562,79 @@
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
-        --btn-text-base:#ff781a
+        --btn-text-base: #ff781a
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
-        --btn-text-base:#ff781a
+        --btn-text-base: #ff781a
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
-        --btn-text-base:#ff781a
+        --btn-text-base: #ff781a
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:hover {
-        --btn-text-base:#ff781a
+        --btn-text-base: #ff781a
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 1921px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--icon.mi-btn--highlight-m {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 
     .mi-btn.mi-btn--icon.mi-btn--highlight-m:hover {
@@ -644,7 +667,7 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--link-default {
-        --btn-background-color:transparent;
+        --btn-background-color: transparent;
         border: 1px solid #191919;
         border: 1px solid var(--border-secondary)
     }
@@ -663,7 +686,7 @@
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -671,7 +694,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -679,7 +702,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -687,7 +710,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -695,7 +718,7 @@
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -703,7 +726,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -711,7 +734,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -719,7 +742,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -727,7 +750,7 @@
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -735,7 +758,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -743,7 +766,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -751,7 +774,7 @@
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -759,7 +782,7 @@
 
 @media screen and (max-width: 720px)and (max-width:720px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-m {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -779,7 +802,7 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--link-default.mi-btn--dark {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         border-color: #fff;
         border-color: var(--text-reverse)
     }
@@ -796,7 +819,7 @@
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--link-default {
-        align-items:center;
+        align-items: center;
         border-radius: initial;
         display: inline-flex;
         font-size: var(--link-font-size);
@@ -807,37 +830,37 @@
 
 @media screen and (min-width: 721px)and (max-width:720px) {
     .mi-btn.mi-btn--link-default {
-        --link-font-size:12px
+        --link-font-size: 12px
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-default {
-        --link-font-size:1.5625vw
+        --link-font-size: 1.5625vw
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-default {
-        --link-font-size:16px
+        --link-font-size: 16px
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-default {
-        --link-font-size:1.25vw
+        --link-font-size: 1.25vw
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-default {
-        --link-font-size:24px
+        --link-font-size: 24px
     }
 }
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--link-default:hover .mi-btn__text {
-        -webkit-text-decoration:var(--link-text-decoration);
+        -webkit-text-decoration: var(--link-text-decoration);
         text-decoration: var(--link-text-decoration)
     }
 
@@ -849,37 +872,37 @@
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:720px) {
     .mi-btn.mi-btn--link-default.mi-btn--highlight-m {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--link-default.mi-btn--dark {
-        --btn-text-base:#fff
+        --btn-text-base: #fff
     }
 
     .mi-btn.mi-btn--link-default.mi-btn--disabled {
@@ -895,7 +918,7 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--default-link {
-        align-items:center;
+        align-items: center;
         border-radius: initial;
         display: inline-flex;
         font-size: var(--link-font-size);
@@ -906,37 +929,37 @@
 
 @media screen and (max-width: 720px)and (max-width:720px) {
     .mi-btn.mi-btn--default-link {
-        --link-font-size:12px
+        --link-font-size: 12px
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default-link {
-        --link-font-size:1.5625vw
+        --link-font-size: 1.5625vw
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default-link {
-        --link-font-size:16px
+        --link-font-size: 16px
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default-link {
-        --link-font-size:1.25vw
+        --link-font-size: 1.25vw
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--default-link {
-        --link-font-size:24px
+        --link-font-size: 24px
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--default-link:hover .mi-btn__text {
-        -webkit-text-decoration:var(--link-text-decoration);
+        -webkit-text-decoration: var(--link-text-decoration);
         text-decoration: var(--link-text-decoration)
     }
 
@@ -948,37 +971,37 @@
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (max-width:720px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-m {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--default-link.mi-btn--dark {
-        --btn-text-base:#fff
+        --btn-text-base: #fff
     }
 
     .mi-btn.mi-btn--default-link.mi-btn--disabled {
@@ -994,7 +1017,7 @@
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--default-link {
-        --btn-background-color:transparent;
+        --btn-background-color: transparent;
         border: 1px solid #191919;
         border: 1px solid var(--border-secondary)
     }
@@ -1013,7 +1036,7 @@
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -1021,7 +1044,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -1029,7 +1052,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -1037,7 +1060,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -1045,7 +1068,7 @@
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -1053,7 +1076,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -1061,7 +1084,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -1069,7 +1092,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:hover {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: #ff781a;
         border-color: transparent
     }
@@ -1077,7 +1100,7 @@
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -1085,7 +1108,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -1093,7 +1116,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -1101,7 +1124,7 @@
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-pc:focus-visible {
-        outline:2px solid #f7f7f7;
+        outline: 2px solid #f7f7f7;
         outline: 2px solid var(--background-base);
         outline-offset: -4px
     }
@@ -1109,7 +1132,7 @@
 
 @media screen and (min-width: 721px)and (max-width:720px) {
     .mi-btn.mi-btn--default-link.mi-btn--highlight-m {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-primary);
         border: 1px solid transparent
     }
@@ -1129,7 +1152,7 @@
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--default-link.mi-btn--dark {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         border-color: #fff;
         border-color: var(--text-reverse)
     }
@@ -1151,7 +1174,7 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--link-primary {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-black);
         border: 1px solid transparent
     }
@@ -1169,79 +1192,79 @@
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (max-width: 720px)and (max-width:720px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-m {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-m:hover {
@@ -1251,7 +1274,7 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--link-primary.mi-btn--dark {
-        --btn-text-base:var(--text-base);
+        --btn-text-base: var(--text-base);
         --btn-background-color: var(--btn-background-white);
         border: 1px solid transparent
     }
@@ -1267,7 +1290,7 @@
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--link-primary {
-        align-items:center;
+        align-items: center;
         border-radius: initial;
         display: inline-flex;
         font-size: var(--link-font-size);
@@ -1278,37 +1301,37 @@
 
 @media screen and (min-width: 721px)and (max-width:720px) {
     .mi-btn.mi-btn--link-primary {
-        --link-font-size:12px
+        --link-font-size: 12px
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-primary {
-        --link-font-size:1.5625vw
+        --link-font-size: 1.5625vw
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-primary {
-        --link-font-size:16px
+        --link-font-size: 16px
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-primary {
-        --link-font-size:1.25vw
+        --link-font-size: 1.25vw
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-primary {
-        --link-font-size:24px
+        --link-font-size: 24px
     }
 }
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--link-primary:hover .mi-btn__text {
-        -webkit-text-decoration:var(--link-text-decoration);
+        -webkit-text-decoration: var(--link-text-decoration);
         text-decoration: var(--link-text-decoration)
     }
 
@@ -1320,37 +1343,37 @@
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:720px) {
     .mi-btn.mi-btn--link-primary.mi-btn--highlight-m {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--link-primary.mi-btn--dark {
-        --btn-text-base:#fff
+        --btn-text-base: #fff
     }
 
     .mi-btn.mi-btn--link-primary.mi-btn--disabled {
@@ -1366,7 +1389,7 @@
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--primary-link {
-        align-items:center;
+        align-items: center;
         border-radius: initial;
         display: inline-flex;
         font-size: var(--link-font-size);
@@ -1377,37 +1400,37 @@
 
 @media screen and (max-width: 720px)and (max-width:720px) {
     .mi-btn.mi-btn--primary-link {
-        --link-font-size:12px
+        --link-font-size: 12px
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary-link {
-        --link-font-size:1.5625vw
+        --link-font-size: 1.5625vw
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary-link {
-        --link-font-size:16px
+        --link-font-size: 16px
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary-link {
-        --link-font-size:1.25vw
+        --link-font-size: 1.25vw
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--primary-link {
-        --link-font-size:24px
+        --link-font-size: 24px
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--primary-link:hover .mi-btn__text {
-        -webkit-text-decoration:var(--link-text-decoration);
+        -webkit-text-decoration: var(--link-text-decoration);
         text-decoration: var(--link-text-decoration)
     }
 
@@ -1419,37 +1442,37 @@
 
 @media screen and (max-width: 720px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (min-width:1921px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px)and (max-width:720px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-m {
-        --btn-text-base:var(--text-primary)
+        --btn-text-base: var(--text-primary)
     }
 }
 
 @media screen and (max-width: 720px) {
     .mi-btn.mi-btn--primary-link.mi-btn--dark {
-        --btn-text-base:#fff
+        --btn-text-base: #fff
     }
 
     .mi-btn.mi-btn--primary-link.mi-btn--disabled {
@@ -1465,7 +1488,7 @@
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--primary-link {
-        --btn-text-base:var(--text-reverse);
+        --btn-text-base: var(--text-reverse);
         --btn-background-color: var(--btn-background-black);
         border: 1px solid transparent
     }
@@ -1483,79 +1506,79 @@
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:hover {
-        --btn-background-color:#ff781a
+        --btn-background-color: #ff781a
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:721px)and (max-width:1024px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1025px)and (max-width:1440px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1441px)and (max-width:1920px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 721px)and (min-width:1921px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-pc:focus-visible {
-        outline-offset:-4px
+        outline-offset: -4px
     }
 }
 
 @media screen and (min-width: 721px)and (max-width:720px) {
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-m {
-        --btn-background-color:var(--btn-background-primary)
+        --btn-background-color: var(--btn-background-primary)
     }
 
     .mi-btn.mi-btn--primary-link.mi-btn--highlight-m:hover {
@@ -1565,7 +1588,7 @@
 
 @media screen and (min-width: 721px) {
     .mi-btn.mi-btn--primary-link.mi-btn--dark {
-        --btn-text-base:var(--text-base);
+        --btn-text-base: var(--text-base);
         --btn-background-color: var(--btn-background-white);
         border: 1px solid transparent
     }
@@ -1579,36 +1602,43 @@
     }
 }
 
-.mi-btn.mi-btn--disabled,.mi-btn:disabled {
+.mi-btn.mi-btn--disabled,
+.mi-btn:disabled {
     --btn-text-base: var(--text-reverse);
     --btn-background-color: var(--brand-grey-40);
     border: 1px solid transparent;
     cursor: not-allowed
 }
 
-.mi-btn.mi-btn--disabled:hover,.mi-btn:disabled:hover {
+.mi-btn.mi-btn--disabled:hover,
+.mi-btn:disabled:hover {
     --btn-background-color: var(--brand-grey-40);
     --btn-text-base: var(--text-reverse);
     border-color: transparent
 }
 
-.mi-btn.mi-btn--disabled:focus-visible,.mi-btn:disabled:focus-visible {
-    outline: none!important
+.mi-btn.mi-btn--disabled:focus-visible,
+.mi-btn:disabled:focus-visible {
+    outline: none !important
 }
 
-.mi-btn.mi-btn--highlight-m.mi-btn--disabled,.mi-btn.mi-btn--highlight-m.mi-btn--disabled:hover,.mi-btn.mi-btn--highlight-pc.mi-btn--disabled,.mi-btn.mi-btn--highlight-pc.mi-btn--disabled:hover {
+.mi-btn.mi-btn--highlight-m.mi-btn--disabled,
+.mi-btn.mi-btn--highlight-m.mi-btn--disabled:hover,
+.mi-btn.mi-btn--highlight-pc.mi-btn--disabled,
+.mi-btn.mi-btn--highlight-pc.mi-btn--disabled:hover {
     --btn-background-color: var(--brand-grey-40);
     --btn-text-base: var(--text-reverse)
 }
 
-.mi-btn.mi-btn--link.mi-btn--disabled,.mi-btn.mi-btn--link.mi-btn--disabled:hover {
+.mi-btn.mi-btn--link.mi-btn--disabled,
+.mi-btn.mi-btn--link.mi-btn--disabled:hover {
     --btn-background-color: transparent;
     --btn-text-base: var(--text-secondary)
 }
 
 @media screen and (max-width: 720px) {
     .mi-link__arrow.mi-link__arrow--pc-only {
-        display:none
+        display: none
     }
 }
 
@@ -1618,6 +1648,6 @@
 
 @media screen and (max-width: 720px) {
     .mi-link__arrow.mi-link__arrow--m-only {
-        display:block
+        display: block
     }
 }

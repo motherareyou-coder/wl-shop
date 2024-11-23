@@ -201,13 +201,6 @@
     max-width: 100%;
 }
 
-.user-layout__breadcrumbs {
-    background: #f9f9fa;
-    background: var(--background-base-variant);
-    margin-top: -30px;
-    position: absolute
-}
-
 .user-column {
     box-sizing: border-box;
     flex-basis: 234px;
@@ -2255,7 +2248,7 @@
 
 .order-price span:last-child {
     color: #666;
-    margin-right: 12px
+    // margin-right: 12px
 }
 
 .order-price span.no-margin {

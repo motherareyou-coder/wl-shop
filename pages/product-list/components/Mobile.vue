@@ -30,7 +30,7 @@ watch(() => props.scopeValues, reset)
 </script>
 
 <template>
-	<div v-infinite-scroll="load">
+	<div v-infinite-scroll="load" class="infinite-scroll infinite-scroll--mobile">
 		<ul class="mi-product__list">
 			<ProductItem v-for="item in data" :key="item.id" :data="item" />
 		</ul>

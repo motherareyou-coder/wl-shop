@@ -160,9 +160,7 @@ function renderButton(props1: { data: Address, index: any }) {
 					handleDelete(props1.data, props1.index)
 				}}
 			>
-				<el-icon>
-					<ElIconDelete />
-				</el-icon>
+				<i class="micon micon-delete" />
 			</span>
 			<span
 				class="user-address__card-btn user-address__card-btn--edit"
@@ -172,9 +170,7 @@ function renderButton(props1: { data: Address, index: any }) {
 					handleEdit(props1.data)
 				}}
 			>
-				<el-icon>
-					<ElIconEdit />
-				</el-icon>
+				<i class="micon micon-edit1" />
 			</span>
 		</>
 	)
@@ -216,17 +212,18 @@ function RenderAddress(props1: { data: Address, index: number }) {
 				</div>
 				<div class="user-address__card-tel-wrapper">
 					<span class="user-address__card-area">
-						{props1.data.countryPhoneCode} {props1.data.mobile}
+						{props1.data.countryPhoneCode}
+						{props1.data.mobile}
 					</span>
 				</div>
 				<div class="user-address__card-content--wrapper">
-            {[
-              props1.data.houseNumber,
-              props1.data.detailAddress2,
-              props1.data.detailAddress,
-              props1.data.areaName,
-              props1.data.postCode,
-            ].join(' ')}
+					{[
+						props1.data.houseNumber,
+						props1.data.detailAddress2,
+						props1.data.detailAddress,
+						props1.data.areaName,
+						props1.data.postCode,
+					].join(' ')}
 				</div>
 				<div class="user-address__card-btn--wrapper justify-between">
 					{appStore.isMobile
@@ -285,19 +282,15 @@ function RenderAddress(props1: { data: Address, index: number }) {
 						{{ $t('Add new address') }}
 					</div>
 					<div>
-						<el-icon class="micon micon-unfold-more">
-							<ElIconPlus />
-						</el-icon>
+						<i class="micon micon-unfold-more"></i>
 					</div>
 				</div>
 			</section>
-			<ElIcon
+			<i
 				v-else-if="props.isCheckout"
 				class="spread-icon micon micon-forward"
 				@click="showList"
-			>
-				<ElIconArrowRight />
-			</ElIcon>
+			></i>
 		</template>
 		<div
 			v-if="(props.isCheckout && appStore.isPC) || !props.isCheckout"
@@ -312,18 +305,17 @@ function RenderAddress(props1: { data: Address, index: number }) {
 					{{ $t('Add new address') }}
 					<i class="micon micon-link-arrow"></i>
 				</span>
-				<button class="user-address__card--add-btn app-button">
-					<ElIcon>
-						<ElIconPlus />
-					</ElIcon>
+				<el-button type="info" class="user-address__card--add-btn">
+					<i class="micon micon-unfold-more"></i>
 					<span>
 						{{ $t('Add new address') }}
 					</span>
-				</button>
+				</el-button>
 			</div>
 		</div>
 		<AppModal
 			v-model="formState.visible"
+			:style="appStore.isMobile ? 'min-height: 80vh' : ''"
 			:title="
 				formState.data.id
 					? $t('Edit your address')
@@ -348,24 +340,21 @@ function RenderAddress(props1: { data: Address, index: number }) {
 			v-if="appStore.isMobile"
 			v-model="listVisible"
 			:title="$t('Address')"
-			style="max-height: 60vh"
+			style="min-height: 60vh"
 			append-to-body
 		>
 			<template v-for="(a, i) in addressList" :key="a.id">
 				<RenderAddress :data="a" :index="i" :hide-default="true" />
 			</template>
 			<template #footer>
-				<button
-					class="user-address__card--add-btn app-button w-full"
+				<el-button
+					type="info"
+					class="user-address__card--add-btn w-full rounded-lg"
 					@click="handleAdd"
 				>
-					<ElIcon>
-						<ElIconPlus />
-					</ElIcon>
-					<span>
-						{{ $t('Add new address') }}
-					</span>
-				</button>
+					<i class="micon micon-unfold-more mr-2"></i>
+					<span>{{ $t('Add new address') }}</span>
+				</el-button>
 			</template>
 		</AppModal>
 	</div>

@@ -27,7 +27,7 @@ const data = computed(() => props.data)
 			</div>
 			<div class="mt-1">
 				<p style="color: var(--title-light)">
-					{{ data.createTime }}
+					<app-time :data="data.createTime" />
 				</p>
 			</div>
 		</section>
@@ -84,7 +84,23 @@ const data = computed(() => props.data)
 							</span>
 						</span>
 						<el-button
-							v-if="data.status === 10 || data.status === 20"
+							v-if="item.afterSaleStatus === 20"
+							style="padding: 6px; font-size: 12px"
+							:disabled="props.loading"
+							@click="emit('command', 'aftersale-view', item)"
+						>
+							{{ $t('Refund success') }}
+						</el-button>
+						<el-button
+							v-else-if="item.afterSaleStatus === 10"
+							style="padding: 6px; font-size: 12px"
+							:disabled="props.loading"
+							@click="emit('command', 'aftersale-view', item)"
+						>
+							{{ $t('Partial refund') }}
+						</el-button>
+						<el-button
+							v-else-if="item.afterSaleStatus === 0 && data.status === 10 || data.status === 20"
 							style="padding: 6px; font-size: 12px"
 							:disabled="props.loading"
 							@click="emit('command', 'aftersale', item)"

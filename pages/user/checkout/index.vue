@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { useAppStore } from '@/stores/app'
 import { pick } from 'lodash-es'
-import type { CartItem, Coupon, OrderSettlement } from '~/types'
+import type { CartItem, Coupon, OrderSettlement, PayOrderSubmit } from '~/types'
 import CouponDialog from '../cart/components/CouponDialog.vue'
 import { useCheckOut } from '../cart/utils'
 import Address from './components/Address.vue'
@@ -16,6 +16,64 @@ useHead({
 const route = useRoute()
 const orderId = route.query.orderId
 const productList = ref<CartItem[]>([])
+
+const data = ref({
+	deliveryType: 1,
+	addressId: null,
+	receiverName: '',
+	receiverMobile: '',
+	pointStatus: true,
+	remark: '',
+	payKey: '',
+	agreed: false,
+})
+
+function onSelectAddress(v) {
+	data.value.addressId = v?.id
+	data.value.receiverName = v?.name
+	data.value.receiverMobile = v?.mobile
+}
+
+const shipOptions = ref([
+	{
+		name: $t('Standard delivery'),
+		type: 1, // 快递发货
+		expect_time: $t('Expected to be delivered within 2 ~ 5 working days'),
+	},
+])
+const { data: payOptions1 } = await useAPI<string[]>(
+	'pay/channel/get-enable-code-list',
+	{ params: { appId: 1 } },
+)
+const Pays = [
+	{
+		title: `${$t('Credit')} / ${$t('Debit Card')}`,
+		image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
+		key: 'mock',
+	},
+	{
+		title: 'PayPal',
+		image: 'https://i02.appmifile.com/639_updatepdf_in/10/05/2022/047f28c0f62ee7866a1a060a1dc2c695.png',
+		key: 'paypal',
+	},
+	{
+		title: 'Wallet',
+		image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
+		key: 'wallet',
+	},
+]
+const payOptions = computed(() => payOptions1.value?.length === 0 ? Pays : payOptions1.value?.map(k => Pays.find(p => p.key === k)))
+watch(payOptions1, (v) => {
+	data.value.payKey = v?.[0]
+}, { immediate: true })
+
+const appStore = useAppStore()
+const deviceType = computed(() => appStore.deviceType)
+const couponVisible = ref(false)
+const coupon = ref<Coupon>()
+const coupons = ref<Coupon[]>([])
+
+const { info, getInfo, items } = useCheckOut(productList, coupon, data)
 if (orderId) {
 	$api('trade/order/get-detail', {
 		params: { id: orderId },
@@ -33,153 +91,6 @@ else {
 	$api('trade/cart/list', {}).then((res) => {
 		productList.value = res.validList.filter((d: CartItem) => d.selected)
 	})
-}
-
-const data = ref({
-	deliveryType: 1,
-	addressId: null,
-	receiverName: '',
-	receiverMobile: '',
-	pointStatus: true,
-	remark: '',
-	payKey: 'cards',
-	agreed: false,
-})
-
-function onSelectAddress(v) {
-	data.value.addressId = v?.id
-	data.value.receiverName = v?.name
-	data.value.receiverMobile = v?.mobile
-}
-
-const shipOptions = ref([
-	{
-		name: $t('Standard delivery'),
-		type: 1, // 快递发货
-		expect_time: $t('Expected to be delivered within 2 ~ 5 working days'),
-		tips: 'In case of weather or holiday-related disruptions, delivery may be delayed',
-		money: '4.9',
-		self_lifting_list: null,
-		slot_time_list: null,
-		description: '',
-		is_support: 1,
-		not_support_reason: null,
-		token: 'eyJkZWxpdmVyX2lkIjoiMCIsImRlbGl2ZXJ5X2xpbmUiOiI1OSIsImV4cGVjdF90aW1lIjoiRXhwZWN0ZWQgdG8gYmUgZGVsaXZlcmVkIHdpdGhpbiAyIH4gNSB3b3JraW5nIGRheXMiLCJleHRlbmQiOiIiLCJwcmljZSI6IjQuOSIsInNlcnZpY2VfbmFtZSI6IlN0YW5kYXJkIGRlbGl2ZXJ5Iiwic2lnbiI6ImQyYTM1NzFjNGU2OGM2ODJkODViNjFmYmNiZjFlNjc2IiwidGltZXN0YW1wIjoiMTcyODc5MjMwOSIsInR5cGUiOiJub3JtYWwifQ',
-		delivery_line: '59',
-	},
-	// {
-	// 	name: 'Standard delivery1',
-	// 	type: 2, // 门店自提
-	// 	expect_time: 'Expected to be delivered within 2 ~ 5 working days',
-	// 	tips: 'In case of weather or holiday-related disruptions, delivery may be delayed',
-	// 	money: '4.9',
-	// 	self_lifting_list: null,
-	// 	slot_time_list: null,
-	// 	description: '',
-	// 	is_support: 1,
-	// 	not_support_reason: null,
-	// 	token: 'eyJkZWxpdmVyX2lkIjoiMCIsImRlbGl2ZXJ5X2xpbmUiOiI1OSIsImV4cGVjdF90aW1lIjoiRXhwZWN0ZWQgdG8gYmUgZGVsaXZlcmVkIHdpdGhpbiAyIH4gNSB3b3JraW5nIGRheXMiLCJleHRlbmQiOiIiLCJwcmljZSI6IjQuOSIsInNlcnZpY2VfbmFtZSI6IlN0YW5kYXJkIGRlbGl2ZXJ5Iiwic2lnbiI6ImQyYTM1NzFjNGU2OGM2ODJkODViNjFmYmNiZjFlNjc2IiwidGltZXN0YW1wIjoiMTcyODc5MjMwOSIsInR5cGUiOiJub3JtYWwifQ',
-	// 	delivery_line: '59',
-	// },
-])
-// const { data: payOptions } = await useAPI<string[]>(
-// 	'pay/channel/get-enable-code-list',
-// 	{ params: { appId: 1 } },
-// )
-const payOptions = ref([
-	{
-		title: `${$t('Credit')} / ${$t('Debit Card')}`,
-		subtitle: '',
-		enable: true,
-		infotitle: '',
-		info: 'test',
-		image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
-		key: 'cards',
-		subOptions: null,
-		upioptions: '',
-		upitype: 0,
-		gateway: 'uk_adyen',
-		offer: '',
-		ot_module_id: 30,
-		option_tag: 0,
-		i18n_payment: 0,
-		codstatus: '',
-		emi_list: null,
-		cards: [
-			{
-				name: 'VISA',
-				img: '//i01.appmifile.com/webfile/globalimg/sefrconfirm/visa1.png',
-			},
-			{
-				name: 'MAST',
-				img: '//i01.appmifile.com/webfile/globalimg/sefrconfirm/mastercard.png',
-			},
-			{
-				name: 'AMEX',
-				img: '//i01.appmifile.com/webfile/globalimg/sefrconfirm/amex.png',
-			},
-			{
-				name: 'DINER',
-				img: '//i01.appmifile.com/webfile/globalimg/checkout/diner.png',
-			},
-			{
-				name: 'DISC',
-				img: '//i01.appmifile.com/webfile/globalimg/sefrconfirm/discover.png',
-			},
-			{
-				name: 'MAES',
-				img: '//i01.appmifile.com/webfile/globalimg/sefrconfirm/maestro.png',
-			},
-		],
-	},
-	{
-		title: 'PayPal',
-		subtitle: '',
-		enable: true,
-		infotitle: '',
-		info: $t('Pay in 3 installments interest-free via Paypal'),
-		image: 'https://i02.appmifile.com/639_updatepdf_in/10/05/2022/047f28c0f62ee7866a1a060a1dc2c695.png',
-		key: 'paypalnew',
-		subOptions: null,
-		upioptions: '',
-		upitype: 0,
-		gateway: 'uk_paypalnew',
-		offer: '',
-		ot_module_id: 410,
-		option_tag: 1,
-		i18n_payment: 0,
-		codstatus: '',
-		emi_list: null,
-	},
-	// {
-	// 	title: 'PayPal Credit',
-	// 	subtitle: '',
-	// 	enable: true,
-	// 	infotitle: '',
-	// 	info: 'Enjoy 0% up to 24 monthly instalments',
-	// 	image: 'https://i02.appmifile.com/639_updatepdf_in/10/05/2022/047f28c0f62ee7866a1a060a1dc2c695.png',
-	// 	key: 'paylater',
-	// 	subOptions: null,
-	// 	upioptions: '',
-	// 	upitype: 0,
-	// 	gateway: 'uk_paylater',
-	// 	offer: '',
-	// 	ot_module_id: 413,
-	// 	option_tag: 1,
-	// 	i18n_payment: 0,
-	// 	codstatus: '',
-	// 	emi_list: null,
-	// },
-])
-
-const appStore = useAppStore()
-const deviceType = computed(() => appStore.deviceType)
-const couponVisible = ref(false)
-const coupon = ref<Coupon>()
-const coupons = ref<Coupon[]>([])
-
-const { info, getInfo, items } = useCheckOut(productList, coupon, data)
-if (!orderId) {
 	watch(items, getInfo, { immediate: true, deep: true })
 	watch(coupon, getInfo, { immediate: true, deep: true })
 	watch(
@@ -196,94 +107,53 @@ if (!orderId) {
 }
 
 const router = useRouter()
-const loading = ref(false)
-// watch(
-// 	() => route.fullPath,
-// 	(v) => {
-// 		if (route.query.orderId)
-// 			router.push($path(`/user/card-payment?orderId=${info.value.id}`))
-// 	},
-// )
+const { loading, wrapLoading } = useLoading()
 const msg = $t('Please select a address.')
 function handleSubmit() {
-	const fn = () => {
-		if (info.value?.payOrderId) {
-			router.push(
-				$path(
-					`/user/review/${info.value.id}?payOrderId=${info.value.payOrderId}`,
-				),
-			)
-		}
-	}
 	if (!orderId) {
 		if (!data.value.addressId)
 			return ElMessage.info(msg)
-		if (loading.value)
-			return
-		loading.value = true
-		$api('trade/order/create', {
-			method: 'post',
-			body: {
-				items: items.value,
-				...pick(data.value, [
-					'deliveryType',
-					'addressId',
-					'receiverName',
-					'receiverMobile',
-					'pointStatus',
-					'remark',
-				]),
-			},
-		})
-			.then((res) => {
-				if (info?.value) {
-					info.value.id = res.id
-					info.value.payOrderId = res.payOrderId
-					router.push($path(`/user/checkout?orderId=${res.id}`))
-				}
-			})
-			.then(fn)
-			.finally(() => {
-				// loading.value = false
-			})
+		const body = {
+			items: items.value,
+			...pick(data.value, [
+				'deliveryType',
+				'addressId',
+				'receiverName',
+				'receiverMobile',
+				'pointStatus',
+				'remark',
+			]),
+		}
+		wrapLoading(
+			$api<{ id: number, payOrderId: number }>('trade/order/create', { method: 'post', body })
+				.then(res =>
+					handlePay(res.id, res.payOrderId)),
+		)
 	}
-	else {
-		fn()
+	else if (info.value?.payOrderId) {
+		handlePay(orderId, info.value.payOrderId)
 	}
 }
+function handlePay(orderId: string | number, payOrderId: string | number) {
+	return payOrderId && $api<PayOrderSubmit>('pay/order/submit', {
+		method: 'post',
+		body: {
+			id: payOrderId,
+			channelCode: data.value.payKey,
+			channelExtras: {},
+		},
+	})
+		.then(payDisplay)
+		.then(() => router.push($path(`/user/review/${orderId}?payOrderId=${payOrderId}`)))
+}
 
-function PayPalButton() {
-	return (
-		<div
-			class="mi-paypal-button"
-			style={{
-				opacity: data.value.agreed ? 1 : 0.38,
-			}}
-			onClick={handleSubmit}
-		>
-			<div class="paypal-buttons paypal-buttons-context-iframe paypal-buttons-label-unknown paypal-buttons-layout-horizontal">
-				<div
-					class="paypal-button paypal-button-shape-rect"
-					style="background: #ffc439;"
-				>
-					<div
-						class="paypal-button-label-container flex items-center justify-center"
-						class={[appStore.isPC ? 'h-11 py-2' : 'h-6 py-1']}
-					>
-						<img
-							src={
-								new URL(
-									'@/assets/imgs/paypal.svg',
-									import.meta.url,
-								).href
-							}
-							class="h-full"
-						/>
-					</div>
-				</div>
-			</div>
-		</div>
-	)
+function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
+	if (displayMode === 'iframe') {
+		window.open(displayContent, '_blank', 'width=500,height=400')
+	}
+	else if (displayMode === 'url') {
+		window.open(displayContent, '_blank', 'width=500,height=400')
+	}
 }
 
 function clearCoupon() {
@@ -390,9 +260,7 @@ const shipOpen = ref(true)
 										@click="showMore = false"
 									>
 										{{ $t('Close') }}
-										<el-icon class="micon micon-up">
-											<ElIconArrowUp />
-										</el-icon>
+										<i class="micon micon-up"></i>
 									</div>
 									<div
 										v-else
@@ -401,9 +269,7 @@ const shipOpen = ref(true)
 										@click="showMore = true"
 									>
 										{{ $t('More') }}
-										<el-icon class="micon micon-down">
-											<ElIconArrowDown />
-										</el-icon>
+										<i class="micon micon-down"></i>
 									</div>
 								</template>
 							</template>
@@ -579,26 +445,6 @@ const shipOpen = ref(true)
 													>
 														{{ o.title }}
 													</div>
-
-													<div
-														v-if="o.cards?.length"
-														class="cards__info pay-item__tips"
-													>
-														<img
-															v-for="c in o.cards"
-															:key="c.name"
-															:src="c.img"
-															:alt="c.name"
-														>
-													</div>
-													<div
-														v-else
-														class="pay-pal__info pay-item__tips"
-													>
-														<p>
-															{{ o.info }}
-														</p>
-													</div>
 												</div>
 											</article>
 										</div>
@@ -625,33 +471,33 @@ const shipOpen = ref(true)
 					<section class="price-summary">
 						<div class="price-summary__total">
 							<h3>{{ $t('Total') }}</h3>
-              <ProductPrice
-                  :data="
-										info?.price?.payPrice || info?.payPrice
-									"
-              />
+							<ProductPrice
+								:data="
+									info?.price?.payPrice || info?.payPrice
+								"
+							/>
 						</div>
 						<ul class="price-summary__list">
 							<li class="price-summary__item">
 								<span class="Subtotal">
 									{{ $t('Subtotal') }}
 								</span>
-                <ProductPrice
-                    :data="
-									info?.price?.totalPrice || info?.totalPrice
-								"
-                />
+								<ProductPrice
+									:data="
+										info?.price?.totalPrice || info?.totalPrice
+									"
+								/>
 							</li>
-              <li class="price-summary__item">
+							<li class="price-summary__item">
 								<span class="Subtotal">
 									{{ $t('VipDiscount') }}
 								</span>
-                <ProductPrice
-                    :data="
-									info?.price?.vipPrice || info?.vipPrice
-								"
-                />
-              </li>
+								<ProductPrice
+									:data="
+										info?.price?.vipPrice || info?.vipPrice
+									"
+								/>
+							</li>
 							<li
 								class="price-summary__item price-summary__item--saved"
 								:class="{ 'price-summary__item--open': open1 }"
@@ -740,9 +586,7 @@ const shipOpen = ref(true)
 								</u>
 								<el-icon
 									class="micon micon-link-arrow coupons-info__view-icon"
-								>
-									<ElIconArrowRight />
-								</el-icon>
+								/>
 							</button>
 						</div>
 						<span
@@ -771,17 +615,16 @@ const shipOpen = ref(true)
 											class="coupon-time card-item"
 										>
 											{{ $t('Expiry') }}:
-											{{ coupon.validStartTime }} -
-											{{ coupon.validEndTime }}
+											<app-time :data="coupon.validStartTime" />
+											-
+											<app-time :data="coupon.validEndTime" />
 										</li>
 									</ul>
 									<el-icon
 										v-if="!orderId"
 										class="micon micon-close coupon-card__clear"
 										@click="clearCoupon"
-									>
-										<ElIconCircleCloseFilled />
-									</el-icon>
+									/>
 								</div>
 								<!-- <strong class="coupons-info__message">
 									The best coupon has been selected.
@@ -810,9 +653,9 @@ const shipOpen = ref(true)
 						</div>
 					</section>
 					<el-button
-						v-if="appStore.isPC && data.payKey === 'cards'"
+						v-if="appStore.isPC"
 						type="info"
-						class="checkout-footer__submit--pc checkout-footer"
+						class="mi-btn mi-btn--primary checkout-footer__submit--pc checkout-footer"
 						:disabled="
 							loading
 								|| !(info?.price?.totalPrice || info?.totalPrice)
@@ -821,8 +664,6 @@ const shipOpen = ref(true)
 					>
 						{{ $t('Pay Now') }}
 					</el-button>
-					<PayPalButton v-if="data.payKey === 'paypalnew'" />
-					<!-- <CheckoutTerms v-if="appStore.isPC" /> -->
 				</div>
 				<CartService
 					class="site-checkout__support-service"
@@ -845,7 +686,6 @@ const shipOpen = ref(true)
 					</div>
 				</div>
 				<el-button
-					v-if="data.payKey === 'cards'"
 					type="info"
 					class="checkout-footer__submit--pay"
 					:disabled="
@@ -856,10 +696,6 @@ const shipOpen = ref(true)
 				>
 					{{ $t('Pay Now') }}
 				</el-button>
-				<PayPalButton
-					v-if="data.payKey === 'paypalnew'"
-					style="min-width: 150px"
-				/>
 			</div>
 		</main>
 	</div>

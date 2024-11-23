@@ -8,14 +8,23 @@
 	position: fixed;
 	width: 100%;
 	display: block;
+	z-index: 22;
 }
 
 .site-slide-menu.hidden {
-	z-index: -1;
+    display: none
 }
 
 .site-slide-menu.show {
-	z-index: 22;
+    display: block;
+}
+
+.show {
+    transform: translateY(0) !important;
+}
+
+.opacity, .show {
+    transition: all .9s ease;
 }
 
 .site-slide-menu .site-slide-menu__overlay {

@@ -60,7 +60,7 @@ watch(type, reset)
 							<ProductPrice :data="item.price" />
 						</span>
 					</div>
-					<span class="time">{{ item.createTime }}</span>
+					<app-time class="time" :data="item.createTime" />
 				</li>
 			</ul>
 		</div>

@@ -34,7 +34,7 @@ const { data: recommends } = await useAPI<Article>(
 						{{ data?.title }}
 					</div>
 					<div class="new-detail__info">
-						<span>{{ data?.createTime }}</span>
+						<app-time :data="data?.createTime" />
 						<span class="view-count">
 							<el-icon class="view-count-icon"><ElIconView /></el-icon>
 							{{ data.browseCount }}

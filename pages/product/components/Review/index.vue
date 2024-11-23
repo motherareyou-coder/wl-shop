@@ -7,14 +7,14 @@ import './index.scss'
 const route = useRoute()
 const id = route.params.id
 const tags = ref([
-	{ label: 'All', value: 0 },
-	{ label: 'Good', value: 1 },
-	{ label: 'Neutral', value: 2 },
-	{ label: 'Bad', value: 3 },
+	{ label: $t('All'), value: 0 },
+	{ label: $t('Good'), value: 1 },
+	{ label: $t('Neutral'), value: 2 },
+	{ label: $t('Bad'), value: 3 },
 ])
 const tag = ref(0)
 
-const { data, load, reset } = useInfiteLoad<Review>(params =>
+const { data, load, reset, total, loading } = useInfiteLoad<Review>(params =>
 	$api('product/comment/page', {
 		params: { ...params, spuId: id, type: tag.value },
 	}),
@@ -41,7 +41,9 @@ const appStore = useAppStore()
 				{{ t.label }}
 			</li>
 		</ul>
+		<el-empty v-if="!loading && total === 0" :description="$t('No data')" />
 		<div
+			v-else
 			v-infinite-scroll="load"
 			class="infinite-scroll"
 			:class="{ 'infinite-scroll--mobile': appStore.isMobile }"
@@ -51,5 +53,6 @@ const appStore = useAppStore()
 				:data="data"
 			/>
 		</div>
+		<div v-loading="loading"></div>
 	</div>
 </template>

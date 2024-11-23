@@ -7,34 +7,43 @@ import './index.scss'
 defineOptions({ name: 'ProductListCache' })
 const route = useRoute()
 const productScopeValues = ref([])
-const categoryId = ref(route.query.categoryId)
+const categoryId = ref<number | string | null>(null)
 const query = ref(route.query.query)
-watch(
-	() => route.fullPath,
-	() => {
-		categoryId.value = route.query.categoryId
-		query.value = route.query.query
-		productScopeValues.value
-			= route.query.productScopeValues?.split(',') || []
-	},
-	{ immediate: true },
-)
+
 useHead({
 	title: `${$t('Product List')} ${$t('appTitle')}`,
 })
 
 const appStore = useAppStore()
-const categories = ref<Category[]>([])
-function refreshCategories() {
-	$api('product/category/list', {
-		params: { ids: productScopeValues.value },
-	}).then((res) => {
-		categories.value.splice(0, categories.value.length, ...res)
-		// if (!categories.value.find(c => c.id === categoryId.value))
-		// 	categoryId.value = null
-	})
-}
-refreshCategories()
+const { data: categories, refresh: refreshCategories } = await useAPI<Category[]>('product/category/list/top', {
+	params: { ids: productScopeValues.value, num: 5 },
+})
+const curCat = ref<Category | null>(null)
+const curCat1 = ref<Category | null>(null)
+const expanded = ref(false)
+
+watch(expanded, (v) => {
+	if (appStore.isMobile) {
+		document.body.style.overflow = v ? 'hidden' : 'auto'
+	}
+})
+
+watch(
+	() => route.fullPath,
+	() => {
+		categoryId.value = route.query.categoryId || ''
+		query.value = route.query.query
+		productScopeValues.value
+			= route.query.productScopeValues?.split(',') || []
+
+		if (categoryId.value) {
+			curCat.value = categories.value?.find(c => c.childCategory.find(cc => cc.id == categoryId.value))
+			console.log(curCat.value)
+			expanded.value = !!curCat.value
+		}
+	},
+	{ immediate: true },
+)
 
 watch(productScopeValues, refreshCategories)
 
@@ -81,42 +90,94 @@ function setSort(t: string) {
 		sortAsc.value = true
 	}
 }
+
+function handleClick(item = null) {
+	categoryId.value = item?.id
+	if (!item)
+		curCat.value = item
+	curCat1.value = item
+	expanded.value = false
+}
+
+const activeNames = ref(categories.value?.map(d => d.id))
 </script>
 
 <template>
-	<main class="product-list" :class="[appStore.isMobile ? 'bg-white' : '']">
-		<div class="product-list__container site-container-1400">
-			<div class="product-filter">
-				<ul class="condition-list">
-					<li class="category-filter">
-						<el-select
-							v-model="categoryId"
-							:placeholder="$t('Categoris')"
-						>
-							<el-option
-								v-for="c in categories"
-								:key="c.id"
-								:label="c.name"
-								:value="c.id"
+	<main class="product-catalogue-main" :class="[appStore.isMobile ? 'bg-white' : '']">
+		<div class="product-catalogue site-container-1400 w-full mx-auto">
+			<div v-if="appStore.isMobile" class="product-catalogue__filter product-catalogue__filter--mobile" :class="{ 'product-catalogue__filter--expand': expanded }">
+				<div class="condition-title">
+					<div class="select-entry" :class="{ 'select-entry--expand': expanded }" @click="expanded = !expanded">
+						{{ curCat1?.name || curCat?.name || $t('All Products') }}
+						<i class="micon micon-up"></i>
+					</div>
+					<div class="select-entry ">
+						<li class="">
+							<el-input
+								v-model="query"
+								clearable
+								@keydown.enter="keyword = query"
 							/>
-						</el-select>
-					</li>
+						</li>
+					</div>
+				</div>
+				<div class="condition-title">
 					<template v-for="(f, i) in fileds" :key="f.value">
 						<li
-							class="price"
-							:class="{ active: sortField === f.value }"
+							class="select-entry sort-item"
+							:class="{ 'sort-item--active': sortField === f.value }"
 							@click="setSort(f.value)"
 						>
 							{{ f.label }}
 							<i
 								v-if="f.value === 'price'"
 								class="micon micon-arrow-up condition-list__icon"
-								:class="{ expand: sortAsc }"
+								:class="{ down: !sortAsc }"
 							></i>
 						</li>
 						<li
 							v-if="i !== fileds.length - 1"
-							class="separator"
+							class="condition-list__separator"
+						></li>
+					</template>
+				</div>
+				<div class="condition-content">
+					<el-collapse v-model="activeNames" class="mi-accordion filter-accordion">
+						<button class="mi-collapse-item__header is-active" @click="handleClick()">
+							{{ $t('All products') }}
+						</button>
+						<el-collapse-item v-for="cat in categories" :key="cat.id" :title="cat.name" :name="cat.id">
+							<div class="group__body" style="color:var(--text-secondary);padding-left: 1.25rem">
+								<div v-for="item in cat.childCategory" :key="item.id" class="accordion__item" :class="{ 'accordion__item--selected': categoryId == item.id }" @click="handleClick(item)">
+									<span class="item__content">{{ item.name }}</span>
+								</div>
+							</div>
+						</el-collapse-item>
+					</el-collapse>
+				</div>
+			</div>
+			<div v-if="appStore.isPC" class="product-catalogue__filter">
+				<ul class="condition-list">
+					<li class="category-filter inline-flex items-center" @click="expanded = !expanded">
+						{{ $t('Categoris') }}
+						<i class="micon micon-up condition-list__icon" :class="{ expand: expanded }"></i>
+					</li>
+					<template v-for="(f, i) in fileds" :key="f.value">
+						<li
+							class="sort-item"
+							:class="{ 'sort-item--active': sortField === f.value }"
+							@click="setSort(f.value)"
+						>
+							{{ f.label }}
+							<i
+								v-if="f.value === 'price'"
+								class="micon micon-arrow-up condition-list__icon"
+								:class="{ down: !sortAsc }"
+							></i>
+						</li>
+						<li
+							v-if="i !== fileds.length - 1"
+							class="condition-list__separator"
 						></li>
 					</template>
 					<li class="">
@@ -127,120 +188,40 @@ function setSort(t: string) {
 						/>
 					</li>
 				</ul>
+				<div v-if="appStore.isPC" class="cat-list cat-list--style-two bg-white" :class="{ 'cat-list--expand': expanded }">
+					<div class="cat-list__primary">
+						<div class="primary__item" @click="curCat = null;categoryId = null">
+							<span class="cat-list__item cat-list__item--prominent" :class="{ 'cat-list__item--current': curCat === null }">
+								{{ $t('All Products') }}
+							</span>
+						</div>
+						<div v-for="cat in categories" :key="cat.id" class="primary__item" @click="curCat = cat">
+							<span class="cat-list__item cat-list__item--prominent" :class="{ 'cat-list__item--current': curCat?.id == cat.id }">
+								{{ cat.name }}
+							</span>
+						</div>
+					</div>
+					<div v-if="curCat" class="cat-list__group">
+						<div class="group__secondary">
+							<div class="group__tertiary">
+								<el-radio
+									v-for="item in curCat.childCategory" :key="item.id" v-model="categoryId" :value="`${item.id}`"
+								>
+									{{ item.name }}
+								</el-radio>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<component
-				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
-				:params="params"
-				:scope-values="productScopeValues"
-			/>
+			<div class="product-catalogue__container">
+				<component
+					:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
+					:params="params"
+					:scope-values="productScopeValues"
+				/>
+				<div v-if="appStore.isMobile && expanded" class="product-catalogue__mask" @click="expanded = false"></div>
+			</div>
 		</div>
 	</main>
 </template>
-
-<style lang="scss" scoped>
-.product-list {
-	@media screen and (max-width: 720px) {
-		--grid-columns: 1;
-		--grid-gap: 16px;
-		--category-filter-width: 100px;
-		--filter-font-size: 12px;
-		--filter-item-margin-right: 8px;
-		--cat-padding-horizontal: 6px;
-	}
-	@media screen and (min-width: 721px) and (max-width: 1024px) {
-		--grid-columns: 3;
-		--grid-gap: 8px;
-		--category-filter-width: 100px;
-		--filter-font-size: 18px;
-		--filter-item-margin-right: 24px;
-		--cat-padding-horizontal: 8px;
-	}
-	@media screen and (min-width: 1025px) and (max-width: 1440px) {
-		--grid-columns: 4;
-		--grid-gap: 12px;
-		--category-filter-width: 120px;
-		--filter-font-size: 18px;
-		--filter-item-margin-right: 24px;
-		--cat-padding-horizontal: 8px;
-	}
-	@media screen and (min-width: 1441px) and (max-width: 1920px) {
-		--grid-columns: 4;
-		--grid-gap: 12px;
-		--category-filter-width: 150px;
-		--filter-font-size: 18px;
-		--filter-item-margin-right: 24px;
-		--cat-padding-horizontal: 10px;
-	}
-	@media screen and (min-width: 1921px) {
-		--grid-columns: 4;
-		--grid-gap: 16px;
-		--category-filter-width: 180px;
-		--filter-font-size: 18px;
-		--filter-item-margin-right: 24px;
-		--cat-padding-horizontal: 14px;
-	}
-	.product-list__container {
-		margin: var(--grid-gap) auto;
-		position: relative;
-		@media screen and (max-width: 720px) {
-			margin: 0 auto;
-		}
-	}
-	.product-filter {
-		padding: var(--grid-gap);
-		box-sizing: border-box;
-		@media screen and (max-width: 720px) {
-			padding: 0;
-			position: sticky;
-		}
-		.condition-list {
-			padding: var(--cat-padding-horizontal);
-			background-color: #fff;
-			align-items: center;
-			display: flex;
-			flex-wrap: wrap;
-			font-size: var(--filter-font-size);
-			margin-bottom: var(--common-distance);
-			font-weight: 400;
-			li {
-				color: #898989;
-				color: var(--text-secondary);
-				cursor: pointer;
-				margin-top: calc(var(--filter-item-margin-right) / 4);
-				margin-bottom: calc(var(--filter-item-margin-right) / 4);
-				margin-inline-end: var(--filter-item-margin-right);
-				&:hover,
-				&.active {
-					color: var(--text-primary);
-				}
-				&.separator {
-					background: #191919;
-					background: var(--background-black);
-					height: 20px;
-					width: 1px;
-					cursor: unset;
-				}
-				&.price {
-					display: inline-flex;
-					align-items: center;
-				}
-				&.category-filter .mi-select {
-					width: var(--category-filter-width) !important;
-				}
-				.mi-icon {
-					margin-inline-start: 8px;
-					font-size: var(--filter-font-size);
-					display: inline-block;
-					transition: all 0.2s;
-					transform: rotate(180deg);
-					transform-origin: 50% 50%;
-					color: inherit;
-					&.expand {
-						transform: rotate(0);
-					}
-				}
-			}
-		}
-	}
-}
-</style>

@@ -210,10 +210,8 @@ function submit() {
 										@click.prevent="submit"
 									>
 										<el-icon
-											class="micon-forward submit__icon"
-										>
-											<ElIconArrowRight />
-										</el-icon>
+											class="micon micon-forward submit__icon"
+										/>
 									</button>
 								</el-form-item>
 							</el-form>

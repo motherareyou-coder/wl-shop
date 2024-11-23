@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import BgImg from '@/assets/imgs/user-center-bg.jpg'
+import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
+import dayjs from 'dayjs'
+import type { PayWallet } from '~/types'
 import './index.scss'
 
 useHead({
@@ -14,17 +17,21 @@ const formState = reactive({
 	visible: false,
 	loading: false,
 	file: null,
+	rules: {
+		nickname: [{ required: true }],
+	},
 	data: {
 		nickname: user.value.nickname,
 		avatar: user.value.avatar,
 		sex: user.value.sex,
-		birthday: user.value.birthday,
+		birthday: dayjs(user.value.birthday).format('YYYY-MM-DD'),
 	},
 })
 
 const { data: favCount } = await useAPI(
 	'product/favorite/get-count',
 )
+const { data: wallet } = await useAPI<PayWallet>('pay/wallet/get')
 
 const linkList = [
 	{
@@ -38,7 +45,7 @@ const linkList = [
 		url: '/user/coupon',
 	},
 	{
-		title: $t('Sign in'),
+		title: $t('Sign'),
 		icon: 'https://i05.appmifile.com/143_operatorx_operatorx_opx/06/06/2024/d1a5a49897e12ddf746db4461c696812.png',
 		url: '/user/signin',
 	},
@@ -47,17 +54,17 @@ const linkList = [
 		icon: 'https://i05.appmifile.com/87_operatorx_operatorx_opx/06/06/2024/de057751b5b6119d34a827cc57f55f79.png',
 		url: '/user/address',
 	},
-	{
-		title: $t('My wallet'),
-		icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
-		url: '/user/wallet',
-	},
-	{
-		title: $t('My points') + (user.value.point ? `(${user.value.point})` : ''),
-		type: 'points',
-		icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
-		url: '/user/points',
-	},
+	// {
+	// 	title: $t('My wallet'),
+	// 	icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
+	// 	url: '/user/wallet',
+	// },
+	// {
+	// 	title: $t('My points') + (user.value.point ? `(${user.value.point})` : ''),
+	// 	type: 'points',
+	// 	icon: 'https://i05.appmifile.com/61_operatorx_operatorx_opx/06/06/2024/2f0829882fd50a98858aedbc203ed39e.png',
+	// 	url: '/user/points',
+	// },
 	{
 		title: $t('Level'),
 		icon: 'https://i05.appmifile.com/681_operatorx_operatorx_opx/06/06/2024/ebccf17dd62553652278d76353868aa4.png',
@@ -81,7 +88,7 @@ function handleEdit() {
 		nickname: user.value.nickname,
 		avatar: user.value.avatar,
 		sex: user.value.sex,
-		birthday: user.value.birthday,
+		birthday: dayjs(user.value.birthday).format('YYYY-MM-DD'),
 	}
 	formState.visible = true
 }
@@ -94,17 +101,82 @@ function handleChangeAvatar(p) {
 		method: 'post',
 		body: form,
 	}).then((res) => {
-		formState.data.avatar = res
+		formState.data.avatar = res as string
 		uploadRef.value?.clearFiles()
 	})
 }
+
+const formRef = ref()
 function handleSubmit() {
-	formState.loading = true
-	$api('member/user/update', {
-		method: 'put',
-		body: formState.data,
-	}).finally(() => {
-		formState.loading = false
+	formRef.value?.validate((v) => {
+		if (!v)
+			return
+		formState.loading = true
+		$api('member/user/update', {
+			method: 'put',
+			body: formState.data,
+		}).then(() => {
+			formState.visible = false
+			userStore.getInfo()
+		}).finally(() => {
+			formState.loading = false
+		})
+	})
+}
+
+const formRef1 = ref()
+const showPsw1 = ref(true)
+const changePswState = reactive({
+	visible: false,
+	loading: false,
+	data: {
+		password: '',
+		code: '',
+	},
+	rules: {
+		password: [{ required: true }, {
+			validator: (r, v, cb) => {
+
+			},
+			message: $t('password-required'),
+		}],
+		code: [{ required: true }],
+	},
+})
+function handleChangePsw() {
+	changePswState.data = {
+		password: '',
+		code: '',
+	}
+	changePswState.visible = true
+}
+function updatePsw() {
+	formRef1.value?.validate((v: boolean) => {
+		if (!v)
+			return
+		changePswState.loading = true
+		$api('member/user/update-password', {
+			method: 'put',
+			body: {
+				password: changePswState.data.password,
+				code: changePswState.data.code,
+			},
+		}).then(() => {
+			changePswState.visible = false
+		}).finally(() => {
+			changePswState.loading = false
+		})
+	})
+}
+
+function sendCode() {
+	user.value.email
+	&& $api('member/auth/send-sms-email-code', {
+		method: 'post',
+		body: {
+			account: user.value.email,
+			scene: 3,
+		},
 	})
 }
 
@@ -120,7 +192,7 @@ function logout() {
 	<div class="user-center__container">
 		<section
 			class="user-account__overview"
-			:style="{ 'background-image': `url(${BgImg})` }"
+			:style="{ 'background-image': `url(${appStore.isPC ? BgImg : BgImgMobile})` }"
 		>
 			<main class="account-overview-main">
 				<section class="overview-main">
@@ -138,15 +210,26 @@ function logout() {
 								</li>
 								<li class="info-box__item email">
 									<span class="email-content">
-										<!-- {{ $t('Email') }}: {{ user.email }} -->
+										{{ $t('Email') }}: {{ user.email }}
 									</span>
-									<el-icon
+									<i
 										v-if="appStore.isMobile"
-										class="icon-forward"
+										class="micon micon-link-arrow icon-forward"
 										@click="handleEdit"
-									>
-										<ElIconEdit />
-									</el-icon>
+									></i>
+								</li>
+								<li
+									v-if="appStore.isMobile"
+									class="info-box__item email"
+									style="margin-top: -20px"
+								>
+									<span class="email-content">
+										{{ $t('Update password') }}
+									</span>
+									<i
+										class="micon micon-link-arrow icon-forward"
+										@click="handleChangePsw"
+									></i>
 								</li>
 							</ul>
 							<a
@@ -157,11 +240,57 @@ function logout() {
 								<span>
 									{{ $t('Edit information') }}
 								</span>
-								<el-icon class="icon-forward">
-									<ElIconArrowRight />
-								</el-icon>
+								<i class="micon micon-link-arrow icon-forward"></i>
+							</a>
+							<a
+								v-if="appStore.isPC"
+								class="edit-info__link"
+								@click="handleChangePsw"
+							>
+								<span>
+									{{ $t('Update password') }}
+								</span>
+								<i class="micon micon-link-arrow icon-forward"></i>
 							</a>
 						</div>
+					</div>
+					<div class="message-block">
+						<nuxt-link :to="$path('/user/level')" class="message-block__link">
+							<dl class="msg__item">
+								<dt>
+									<i class="micon micon-account msg-item__icon"></i>
+									{{ appStore.isPC ? $t('Level') : '' }}
+								</dt>
+								<dd>
+									{{ appStore.isMobile ? $t('Level') : '' }}
+									{{ user.level?.name }}
+								</dd>
+							</dl>
+						</nuxt-link>
+						<nuxt-link :to="$path('/user/wallet?type=1')" class="message-block__link">
+							<dl class="msg__item">
+								<dt>
+									<i class="micon micon-coupons msg-item__icon"></i>
+									{{ appStore.isPC ? $t('Wallet') : '' }}
+								</dt>
+								<dd>
+									{{ appStore.isMobile ? $t('Wallet') : '' }}
+									{{ wallet?.balance }}
+								</dd>
+							</dl>
+						</nuxt-link>
+						<nuxt-link :to="$path('/user/points')" class="message-block__link">
+							<dl class="msg__item">
+								<dt>
+									<i class="micon micon-points msg-item__icon"></i>
+									{{ appStore.isPC ? $t('Points') : '' }}
+								</dt>
+								<dd>
+									{{ appStore.isMobile ? $t('Points') : '' }}
+									{{ user.point }}
+								</dd>
+							</dl>
+						</nuxt-link>
 					</div>
 				</section>
 			</main>
@@ -178,9 +307,7 @@ function logout() {
 					class="flex items-center"
 				>
 					<span class="mi-btn__text">{{ $t('All orders') }}</span>
-					<el-icon class="micon micon-link-arrow">
-						<ElIconArrowRight />
-					</el-icon>
+					<i class="micon micon-link-arrow"></i>
 				</nuxt-link>
 			</div>
 			<section class="orders-swiper-container">
@@ -248,9 +375,7 @@ function logout() {
 				<p class="entries-item__title">
 					{{ l.title }}
 				</p>
-				<el-icon class="icon-forward">
-					<ElIconArrowRight />
-				</el-icon>
+				<i v-if="appStore.isMobile" class="micon micon-forward icon-forward"></i>
 			</nuxt-link>
 		</section>
 		<button
@@ -258,12 +383,11 @@ function logout() {
 			class="sign-out__item"
 			@click.prevent="logout"
 		>
-			<el-icon class="sign-out__icon">
-				<ElIconSwitchButton />
-			</el-icon>
+			<i class="micon micon-sign-out sign-out__icon"></i>
 			<p class="sign-out__title">
-				{{ $t('Log out') }}
+				{{ $t('Sign Out') }}
 			</p>
+			<i v-if="appStore.isMobile" class="micon micon-forward icon-forward"></i>
 		</button>
 		<app-modal
 			v-model="formState.visible"
@@ -271,8 +395,9 @@ function logout() {
 			class="edit-modal-main"
 			destroy-on-close
 			:show-close="false"
+			style="min-height: 70vh"
 		>
-			<el-form :model="formState.data" labe-position="top">
+			<el-form ref="formRef" class="edit-modal__form" :model="formState.data" :rules="formState.rules" label-position="top" :show-message="false" hide-required-asterisk>
 				<el-form-item class="m-0">
 					<div class="w-full flex justify-center">
 						<el-upload
@@ -288,9 +413,7 @@ function logout() {
 									:src="formState.data.avatar"
 								/>
 								<div class="edit-modal-avatar_edit">
-									<el-icon class="upload-avatar__icon">
-										<ElIconEdit />
-									</el-icon>
+									<i class="micon micon-edit1 upload-avatar__icon"></i>
 								</div>
 							</div>
 						</el-upload>
@@ -321,11 +444,46 @@ function logout() {
 				</el-form-item>
 			</el-form>
 			<template #footer>
-				<div class="flex">
-					<el-button class="w-2/4" @click="formState.visible = false">
+				<div class="flex w-full">
+					<el-button class="edit-modal-btn w-2/4" @click="formState.visible = false">
 						{{ $t('Cancel') }}
 					</el-button>
-					<el-button class="w-2/4" type="info" @click="handleSubmit">
+					<el-button class="edit-modal-btn w-2/4" type="info" :disabled="formState.loading" @click="handleSubmit">
+						{{ $t('Save') }}
+					</el-button>
+				</div>
+			</template>
+		</app-modal>
+		<app-modal
+			v-model="changePswState.visible"
+			:title="$t('Update password')"
+			class="edit-modal-main"
+		>
+			<el-form ref="formRef1" :model="changePswState.data" :rules="changePswState.rules" label-position="top" :show-message="false" hide-required-asterisk>
+				<el-form-item :label="$t('Password')" prop="password">
+					<el-input v-model="changePswState.data.password" :type="showPsw1 ? '' : 'password'">
+						<template #suffix>
+							<PswEye v-model="showPsw1" />
+						</template>
+					</el-input>
+				</el-form-item>
+				<el-form-item :label="$t('Code')" prop="code">
+					<el-input v-model="changePswState.data.code">
+						<template #suffix>
+							<CodeSender
+								token="updatePsw-timeout"
+								@click="sendCode"
+							/>
+						</template>
+					</el-input>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<div class="flex w-full">
+					<el-button class="edit-modal-btn w-2/4" @click="changePswState.visible = false">
+						{{ $t('Cancel') }}
+					</el-button>
+					<el-button class="edit-modal-btn w-2/4" type="info" :disabled="changePswState.loading" @click="updatePsw">
 						{{ $t('Save') }}
 					</el-button>
 				</div>

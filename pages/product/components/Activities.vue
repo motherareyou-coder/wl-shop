@@ -9,11 +9,16 @@ const { data } = await useAPI<Activity[]>(
 </script>
 
 <template>
-	<ul>
-		<li v-for="a in data" :key="a.id">
-			{{ `${a.type} ${a.name} ${a.startTime} - ${a.endTime}` }}
-		</li>
-	</ul>
+	<section v-if="data?.length" class="product__section product__section-spacer offers-section">
+		<ul>
+			<li v-for="a in data" :key="a.id">
+				{{ `${a.type} ${a.name} ` }}
+				<app-time :data="a.startTime" />
+				-
+				<app-time :data="a.endTime" />
+			</li>
+		</ul>
+	</section>
 </template>
 
 <style lang="scss" scoped>

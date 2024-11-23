@@ -9,25 +9,10 @@ interface Options {
 export const useParamsStore = defineStore('ParamsStore', {
 	state: () => {
 		return {
-			cartCount: 0,
 			countries: [] as unknown as (Country & Options)[],
 		}
 	},
 	actions: {
-		getCartCount() {
-			const nuxtApp = useNuxtApp()
-			return nuxtApp
-				.$api<number>('trade/cart/get-count')
-				.then((res: number) => {
-					this.cartCount = res
-				})
-				.catch(() => {
-					this.cartCount = 0
-				})
-		},
-		setCartCount(qty: number) {
-			this.cartCount = qty
-		},
 		getCountries() {
 			if (this.countries.length)
 				return this.countries
@@ -41,7 +26,7 @@ export const useParamsStore = defineStore('ParamsStore', {
 							...res.map(d => ({
 								...d,
 								label: d.name,
-								value: `${d.id}`,
+								value: d.id,
 							})),
 						)
 					}

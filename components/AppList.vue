@@ -22,6 +22,7 @@ const appStore = useAppStore()
 				</li>
 			</ul>
 			<el-pagination
+				v-if="pagination.total"
 				v-model:current-page="pagination.currentPage"
 				v-model:page-size="pagination.pageSize"
 				:total="pagination.total"

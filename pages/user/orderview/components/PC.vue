@@ -90,11 +90,11 @@ const data = computed(() => props.data)
 					</el-timeline>
 				</section>
 				<section class="package-detail">
-					<div class="flex flex-col">
+					<div class="flex flex-col package-detail__item">
 						<div
 							v-for="item in data.items"
 							:key="item.id"
-							class="flex py-2"
+							class="flex py-8"
 						>
 							<nuxt-link
 								:to="$path(`/product/${item.id}`)"
@@ -130,14 +130,24 @@ const data = computed(() => props.data)
 							</div>
 							<div>
 								<el-button
-									v-if="
-										data.status === 10 || data.status === 20
-									"
-									style="
-										padding: 6px;
-										font-size: 12px;
-										border-radius: 0;
-									"
+									v-if="item.afterSaleStatus === 20"
+									style="padding: 6px;font-size: 12px;border-radius: 0;"
+									:disabled="props.loading"
+									@click="emit('command', 'aftersale-view', item)"
+								>
+									{{ $t('Refund success') }}
+								</el-button>
+								<el-button
+									v-else-if="item.afterSaleStatus === 10"
+									style="padding: 6px;font-size: 12px;border-radius: 0;"
+									:disabled="props.loading"
+									@click="emit('command', 'aftersale-view', item)"
+								>
+									{{ $t('Partial refund') }}
+								</el-button>
+								<el-button
+									v-else-if="item.afterSaleStatus === 0 && data.status === 10 || data.status === 20"
+									style="padding: 6px;font-size: 12px;border-radius: 0;"
 									:disabled="props.loading"
 									@click="emit('command', 'aftersale', item)"
 								>
@@ -176,83 +186,62 @@ const data = computed(() => props.data)
 							</span>
 							<span class="message-info__item-info">
 								{{
-                  `${data.receiverCountryCode} ${data.receiverMobile}`
-                }}
+									`${data.receiverCountryCode} ${data.receiverMobile}`
+								}}
 							</span>
 						</div>
 					</div>
 				</section>
 				<section class="order-total-container">
 					<ul class="order-price">
-						<li>
-							<span>
-								<ProductPrice :data="data.totalPrice" />
-							</span>
-							<span>{{ $t('Total') }}: </span>
-						</li>
-            <li>
-							<span>
-                -
-								<ProductPrice :data="data.discountPrice" />
-							</span>
-              <span>{{ $t('Discount') }}: </span>
-            </li>
-            <li>
-							<span>
-                -
-								<ProductPrice :data="data.vipPrice" />
-							</span>
-              <span>{{ $t('VipDiscount') }}: </span>
-            </li>
-            <li>
-							<span>
-                -
-								<ProductPrice :data="data.pointPrice" />
-							</span>
-              <span>{{ $t('PointDiscount') }}: </span>
-            </li>
-            <li>
-							<span>
-                -
-								<ProductPrice :data="data.deliveryPrice" />
-							</span>
-              <span>{{ $t('Shipping fee') }}: </span>
-            </li>
-						<!--<li>-->
-						<!--	<span>-->
-						<!--		<ProductPrice :data="data.deliveryPrice" />-->
-						<!--	</span>-->
-						<!--	<span class="shipping-help">{{ $t('Shipping') }}:-->
-						<!--	</span>-->
-						<!--</li>-->
-						<!--<li>-->
-						<!--	<span>-->
+						<table class="float-right text-right">
+							<tr>
+								<td><span>{{ $t('Total') }}: </span></td>
+								<td><ProductPrice :data="data.totalPrice" /></td>
+							</tr>
+							<tr>
+								<td><span>{{ $t('Discount') }}: </span></td>
+								<td>-<ProductPrice :data="data.discountPrice" /></td>
+							</tr>
+							<tr>
+								<td><span>{{ $t('VipDiscount') }}: </span></td>
+								<td>-<ProductPrice :data="data.vipPrice" /></td>
+							</tr>
+							<tr>
+								<td><span>{{ $t('PointDiscount') }}: </span></td>
+								<td>-<ProductPrice :data="data.pointPrice" /></td>
+							</tr>
+							<tr>
+								<td><span>{{ $t('Shipping fee') }}: </span></td>
+								<td><ProductPrice :data="data.deliveryPrice" /></td>
+							</tr>
+							<tr>
+								<td><span class="total__label">{{ $t('PayPrice') }}:</span></td>
+								<td>
+									<span class="order-total-count mx-0">
+										<ProductPrice :data="data.payPrice" />
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td><span class="total__label">{{ $t('RefundPrice') }}:</span></td>
+								<td>+<ProductPrice class="order-total-count" :data="data.refundPrice" /></td>
+							</tr>
+						</table>
+						<!-- <li> -->
+						<!--	<span> -->
+						<!--		<ProductPrice :data="data.deliveryPrice" /> -->
+						<!--	</span> -->
+						<!--	<span class="shipping-help">{{ $t('Shipping') }}: -->
+						<!--	</span> -->
+						<!-- </li> -->
+						<!-- <li> -->
+						<!--	<span> -->
 						<!--		- -->
-						<!--		<ProductPrice :data="data.discountPrice" />-->
-						<!--	</span>-->
-						<!--	<span>{{ $t('Promotion') }}: </span>-->
-						<!--</li>-->
-						<li>
-							<span>
-								<ProductPrice
-									class="order-total-count"
-									:data="data.payPrice"
-								/>
-							</span>
-							<span class="total__label">{{ $t('PayPrice') }}:
-							</span>
-						</li>
-            <li>
-							<span>
-                +
-								<ProductPrice
-                    class="order-total-count"
-                    :data="data.refundPrice"
-                />
-							</span>
-              <span class="total__label">{{ $t('RefundPrice') }}:
-							</span>
-            </li>
+						<!--		<ProductPrice :data="data.discountPrice" /> -->
+						<!--	</span> -->
+						<!--	<span>{{ $t('Promotion') }}: </span> -->
+						<!-- </li> -->
 					</ul>
 				</section>
 			</div>

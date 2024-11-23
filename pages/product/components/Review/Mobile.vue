@@ -20,12 +20,12 @@ const props = defineProps({
 							{{ r.userNickname }}
 						</p>
 						<p class="user_review--review_info--submit_time">
-							{{ r.createTime }}
+							<app-time :data="r.createTime" />
 						</p>
 					</div>
 				</div>
 				<el-rate
-					:model-value="r.scores / 20"
+					:model-value="r.scores"
 					class="star-list user_review--review_info--stars"
 					allow-half
 					disabled
@@ -34,8 +34,14 @@ const props = defineProps({
 			<div class="user_review--review_content">
 				{{ r.content }}
 			</div>
+			<ul class="user_review--comment_media">
+				<li v-for="(img) in r.picUrls" :key="img" class="user_review--comment_media--item">
+					<app-image :src="img" />
+				</li>
+			</ul>
 			<div class="user_review--operation">
 				<p class="user_review--operation--product_name">
+					{{ r.spuName }}
 					{{ r.skuProperties.map(d => d.valueName).join(' ') }}
 				</p>
 				<!-- <div class="user_review--operation--action">
@@ -50,6 +56,15 @@ const props = defineProps({
 						</span>
 					</div>
 				</div> -->
+			</div>
+			<div v-if="r.replyContent" class="comment-additional">
+				<div class="comment-info-top">
+					<p>{{ $t('Merchants reply') }}:</p>
+					<app-time class="comment-additional-time" :data="r.replyTime" />
+				</div>
+				<div class="comment-additional-content">
+					{{ r.replyContent }}
+				</div>
 			</div>
 		</div>
 	</div>

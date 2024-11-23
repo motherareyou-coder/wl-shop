@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { statusOptions, statusText } from '../utils'
 import type { OrderDetail } from '~/types'
+import { statusOptions, statusText } from '../utils'
 import './PC.scss'
 
 const statusClass = {
@@ -30,13 +30,24 @@ watch(status, resetData)
 <template>
 	<div class="user-order-list miv4 mb-10">
 		<div class="user-layout__container miv4">
-			<div class="mi-breadcrumbs user-layout__breadcrumbs"></div>
 			<div class="user-main">
 				<section>
 					<div class="user-order-list-container">
 						<h1 class="user-order-list-container_title">
 							{{ $t('My Orders') }}
 						</h1>
+						<div class="user-order-list miv4">
+							<div class="tag-nav">
+								<li class="active">
+									{{ $t('My Orders') }}
+								</li>
+								<li>
+									<nuxt-link :to="$path('/user/aftersale')">
+										{{ $t('AfterSales') }}
+									</nuxt-link>
+								</li>
+							</div>
+						</div>
 						<ul
 							class="user-order-list-container_nav order-list__nav"
 						>
@@ -80,7 +91,7 @@ watch(status, resetData)
 									<div class="order-item-info info">
 										<ul class="info-left">
 											<li class="info-left_time">
-												{{ order.createTime }}
+												<app-time :data="order.createTime" />
 											</li>
 											<!-- <li class="info-left-name">
 												{{ o.receiverName }}
@@ -183,6 +194,7 @@ watch(status, resetData)
 					</div>
 					<div class="user-order-list__pagination">
 						<el-pagination
+							v-if="pagination.total"
 							v-model:page-size="pagination.pageSize"
 							v-model:current-page="pagination.currentPage"
 							:total="pagination.total"

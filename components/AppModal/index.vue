@@ -26,6 +26,7 @@ const appStore = useAppStore()
 		v-model="visible"
 		class="mi-modal"
 		direction="btt"
+		style="min-height:40vh"
 		center
 	>
 		<template #header>

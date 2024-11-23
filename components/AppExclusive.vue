@@ -110,7 +110,7 @@ function prev() {
 								<div
 									class="exclusive-offers-footer-bar__content-desc"
 								>
-									{{ item.bargainMinPrice }}
+									<ProductPrice :data="item.bargainMinPrice" />
 								</div>
 								<div
 									class="exclusive-offers-footer-bar__content-button"

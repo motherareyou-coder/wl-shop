@@ -9,6 +9,10 @@ const props = defineProps({
 const data = toRef(props, 'data')
 
 const currentCat = ref()
+const activeName = ref()
+watch(currentCat, (v) => {
+	activeName.value = v?.childCategory[0]?.id
+})
 
 const userStore = useUserStore()
 const appStore = useAppStore()
@@ -27,7 +31,7 @@ watch(
 </script>
 
 <template>
-	<div class="site-slide-menu" :class="[show ? 'show' : 'hidden']">
+	<div class="site-slide-menu show">
 		<input
 			id="site-slide-menu__controller"
 			v-model="show"
@@ -73,7 +77,7 @@ watch(
 								>
 							</div>
 							<span class="user-info__nickname">
-								{{ userStore.nickname || $t('Login') }}
+								{{ userStore.nickname || $t('login') }}
 							</span>
 						</div>
 						<el-icon><ElIconArrowRight /></el-icon>
@@ -110,50 +114,47 @@ watch(
 					</div>
 				</div>
 				<div
-					class="submenu__wrapper site-container submenu-mobile__style"
+					class="submenu__wrapper site-container submenu-mobile__style "
 					:class="{ 'submenu-mobile__show': !!currentCat }"
 				>
-					<div class="submenu__item">
-						<div class="submenu__item-content">
+					<el-collapse v-if="currentCat" v-model="activeName" accordion>
+						<el-collapse-item v-for="cat in currentCat.childCategory" :key="cat.id" :title="cat.name" :name="cat.id" class="submenu__item">
 							<div class="submenu-product submenu-product-mobile">
-								<template v-for="c in data">
-									<template v-if="c === currentCat">
-										<nuxt-link
-											v-for="item in c.children"
-											:key="item.id"
-											class="header-product-item header-product-item-mobile"
-											:to="$path(`/product/${item.id}`)"
-										>
-											<app-image
-												class="header-product-item__image"
-												:src="item.picUrl"
-											/>
-											<div
-												class="header-product-item__info"
-											>
-												<div
-													class="header-product-item__title"
-												>
-													{{ item.name }}
-												</div>
-												<div
-													class="mi-price header-product-item__price"
-												>
-													<ProductPrice
-														:data="item.price"
-													/>
-												</div>
+								<div class="flex flex-col">
+									<nuxt-link v-for="item in cat.childProduct" :key="item.id" :to="$path(`/product/${item.id}`)" class="header-product-item header-product-item-mobile">
+										<app-image class="mi-image header-product-item__image" :src="item.picUrl" />
+										<div class="header-product-item__info">
+											<div class="header-product-item__title">
+												{{ item.name }}
 											</div>
+											<div class="mi-price header-product-item__price">
+												<ProductPrice :data="item.price" />
+											</div>
+										</div>
+									</nuxt-link>
+									<div class="submenu-footer submenu-footer-mobile">
+										<nuxt-link class="submenu-footer__item" :to="$path(`/product-list?categoryId=${cat.id}`)">
+											{{ $t('All Products') }}
+											<el-icon>
+												<ElIconArrowRight />
+											</el-icon>
 										</nuxt-link>
-									</template>
-								</template>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</el-collapse-item>
+					</el-collapse>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.mi-collapse{
+	--mi-collapse-border-color:transparent;
+	:deep(.mi-collapse-item__header){
+		padding: 8px 20px;
+	}
+}
+</style>

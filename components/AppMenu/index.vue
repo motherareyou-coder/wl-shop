@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
+import type { Category } from '~/types'
 import SubMenu from './SubMenu.vue'
 import './index.scss'
-import type { Category } from '~/types'
 
 defineOptions({ name: 'AppMenu' })
 const props = defineProps({
@@ -23,18 +23,17 @@ function setHoverd(item: any, i: string | number) {
 	hoverd.value = item
 	if (!wrapRef.value)
 		return
-	const t = wrapRef.value.children[i]
-	height.value = `${
-		t.children[0].children[0].offsetHeight + t.offsetHeight
-	}px`
+	const c = wrapRef.value.querySelector('.submenu__product-group')
+	height.value = `${c.offsetHeight + 26 + 20}px`
 }
 
-const deviceType = ref('pc')
 const appStore = useAppStore()
 watch(
 	() => appStore.isMobile,
 	v => v || hide(),
 )
+const route = useRoute()
+watch(() => route.fullPath, hide)
 </script>
 
 <template>
@@ -48,6 +47,9 @@ watch(
 				v-for="(item, i) in data"
 				:key="item.id"
 				class="navigation__item"
+				:class="{
+					'navigation__item--hover': hoverd === item,
+				}"
 				@mouseenter="setHoverd(item, i)"
 			>
 				<nuxt-link
@@ -55,7 +57,6 @@ watch(
 						$path(`/product-list?categoryId=${item.id}`)
 					"
 					class="navigation__link navigation__link--border"
-					@click="hide"
 				>
 					<span>{{ item.name }}</span>
 				</nuxt-link>
@@ -70,14 +71,10 @@ watch(
 			<SubMenu
 				v-for="item in data"
 				:key="item.id"
-				:category="item.id"
-				:data="item.children"
-				:class="{
-					[`submenu__wrapper--${deviceType}-show`]: item === hoverd,
-				}"
+				:data="item.childCategory"
+				:show="item === hoverd"
 				@mouseenter="stop"
 				@mouseleave="start"
-				@link-click="hide"
 			/>
 		</div>
 		<div

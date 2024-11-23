@@ -19,7 +19,7 @@ const tags = ref([
 	{ label: $t('expired'), value: 2 },
 ])
 
-const { data, load, reset, loading } = useInfiteLoad<Coupon>(params =>
+const { data, load, reset, loading, total } = useInfiteLoad<Coupon>(params =>
 	$api('promotion/coupon/page', {
 		params: { ...params, status: status.value },
 	}),
@@ -55,7 +55,8 @@ watch(status, reset)
 			</div>
 		</div>
 		<div class="user-coupon__list--content">
-			<ul v-infinite-scroll="load" class="user-coupon__list">
+			<el-empty v-if="!loading && total === 0" :description="$t('No data')" />
+			<ul v-else v-infinite-scroll="load" class="user-coupon__list">
 				<li
 					v-for="coupon in data"
 					:key="coupon.id"
@@ -70,7 +71,9 @@ watch(status, reset)
 							<ProductPrice :data="coupon.discountPrice" />
 						</p>
 						<p class="user-coupon__item--time">
-							{{ [coupon.validStartTime, coupon.validEndTime].join('-') }}
+							<app-time :data="coupon.validStartTime" />
+							-
+							<app-time :data="coupon.validEndTime" />
 						</p>
 						<p class="user-coupon__item--desc">
 							<span>{{ $t('Apply for') }} {{ coupon.productScope }}</span>

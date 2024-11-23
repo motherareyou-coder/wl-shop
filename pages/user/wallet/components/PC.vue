@@ -3,8 +3,10 @@ import type { PayWallet, PayWalletTransaction, PointRecord } from '~/types'
 
 const { data } = await useAPI<PayWallet>('pay/wallet/get')
 
-const isBalance = ref(1)
-const type = ref('')
+const route = useRoute()
+// eslint-disable-next-line eqeqeq
+const isBalance = ref(route.query.type as string == 0 ? 0 : 1)
+const status = ref<string | number>('')
 const createTime = ref([])
 const {
 	data: list,
@@ -12,10 +14,10 @@ const {
 	resetData,
 } = useTablePagination<PayWalletTransaction | PointRecord>((p = {}) => {
 	if (isBalance.value) {
-		p.type = type.value
+		p.type = status.value
 	}
 	else {
-		p.addStatus = { 1: true, 2: false }[type.value]
+		p.addStatus = { 1: true, 2: false }[status.value]
 	}
 	if (createTime.value?.length)
 		p.createTime = createTime.value
@@ -27,7 +29,7 @@ const {
 	)
 })
 watch(isBalance, resetData)
-watch(type, resetData)
+watch(status, resetData)
 </script>
 
 <template>
@@ -59,17 +61,17 @@ watch(type, resetData)
 			</ul>
 			<ul class="nav">
 				<li>
-					<span :class="{ active: type === '' }" @click="type = ''">
+					<span :class="{ active: status === '' }" @click="status = ''">
 						{{ $t('All') }}
 					</span>
 				</li>
 				<li>
-					<span :class="{ active: type === 1 }" @click="type = 1">
+					<span :class="{ active: status === 1 }" @click="status = 1">
 						{{ $t('Earning') }}
 					</span>
 				</li>
 				<li>
-					<span :class="{ active: type === 2 }" @click="type = 2">
+					<span :class="{ active: status === 2 }" @click="status = 2">
 						{{ $t('Spend') }}
 					</span>
 				</li>
@@ -117,6 +119,7 @@ watch(type, resetData)
 				</el-table-column>
 			</el-table>
 			<el-pagination
+				v-if="pagination.total"
 				v-model:current-page="pagination.currentPage"
 				v-model:page-size="pagination.pageSize"
 				:total="pagination.total"

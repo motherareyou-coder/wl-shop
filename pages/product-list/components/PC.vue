@@ -29,11 +29,12 @@ watch(() => props.scopeValues, resetData)
 </script>
 
 <template>
-	<div class="mi-product__list">
+	<el-empty v-if="pagination.total === 0" :description="$t('No data')" />
+	<div v-else class="mi-product__list">
 		<ProductItem v-for="item in data" :key="item.id" :data="item" />
 	</div>
 	<el-pagination
-		v-if="!props.scopeValues?.length"
+		v-if="!props.scopeValues?.length && pagination.total"
 		v-model:current-page="pagination.currentPage"
 		v-model:page-size="pagination.pageSize"
 		:total="pagination.total"

@@ -1,5 +1,6 @@
+import { remove } from 'lodash-es'
 import { defineStore } from 'pinia'
-import type { UserInfo } from '~/types'
+import type { CartItem, UserInfo } from '~/types'
 
 export interface AuthToken {
 	/**
@@ -35,6 +36,8 @@ export const useUserStore = defineStore('UserStore', {
 			accessToken: localStorage.getItem('access-token') || '',
 			refreshToken: localStorage.getItem('refresh-token') || '',
 			expiresTime: Number(localStorage.getItem('expires-time')) || '',
+			cartList: (JSON.parse(localStorage.getItem('temp-cart') || '[]') || []) as CartItem[],
+			needAddCart: false,
 		} as unknown as UserInfo
 	},
 	getters: {},
@@ -46,6 +49,9 @@ export const useUserStore = defineStore('UserStore', {
 				.then((res: UserInfo) => {
 					if (localStorage.getItem('access-token'))
 						this.$patch(res)
+					// 登陆时将临时购物车的数据通过接口加入购物车
+					this.needAddCart && useCartStore().addToBackEnd()
+					this.needAddCart = false
 					return res
 				})
 				.catch(() => this.reset())
@@ -61,7 +67,7 @@ export const useUserStore = defineStore('UserStore', {
 			this.expiresTime = time
 			localStorage.setItem('access-token', accessToken)
 			localStorage.setItem('refresh-token', refreshToken)
-			localStorage.setItem('expires-time', `${time}`)
+			// localStorage.setItem('expires-time', `${time}`)
 		},
 		logout() {
 			const nuxtApp = useNuxtApp()
@@ -78,7 +84,7 @@ export const useUserStore = defineStore('UserStore', {
 			this.expiresTime = ''
 			localStorage.removeItem('access-token')
 			localStorage.removeItem('refresh-token')
-			localStorage.removeItem('expires-time')
+			// localStorage.removeItem('expires-time')
 		},
 	},
 })

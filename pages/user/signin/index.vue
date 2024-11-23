@@ -4,7 +4,7 @@ import type { SignIn, SignInConfig } from '~/types'
 const appStore = useAppStore()
 
 definePageMeta({
-	title: 'Sign in',
+	title: 'Sign',
 	showBread: true,
 })
 
@@ -28,11 +28,11 @@ function signIn() {
 			:class="[appStore.isPC ? 'p-12' : 'p-5']"
 		>
 			<h1 v-if="appStore.isPC" class="mt-0">
-				{{ $t('Sign in') }}
+				{{ $t('Sign') }}
 			</h1>
 			<p class="py-5 calendar flex justify-between">
 				<span>
-					{{ $t('Sign in calendar') }}
+					{{ $t('Sign calendar') }}
 				</span>
 				<span class="continuous-day">
 					{{ $t('Have benn signed in for') }}
@@ -71,7 +71,7 @@ function signIn() {
 					:class="[appStore.isPC ? 'w-32' : 'w-full']"
 					@click="signIn"
 				>
-					{{ $t('Sign in') }}
+					{{ $t('Sign') }}
 				</el-button>
 			</div>
 		</div>

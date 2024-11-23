@@ -24,6 +24,7 @@ function handleCancel(item: Product, i) {
 		<ProductItem v-for="(item, i) in data" :key="item.id" :data="item" @cancel="handleCancel(item, i)" />
 	</div>
 	<el-pagination
+		v-if="pagination.total"
 		v-model:current-page="pagination.currentPage"
 		v-model:page-size="pagination.pageSize"
 		:total="pagination.total"

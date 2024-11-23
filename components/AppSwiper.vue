@@ -5,8 +5,8 @@
 -->
 <script setup lang="ts">
 import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
-import { Swiper, SwiperSlide } from 'swiper/vue'
 import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 import './AppSwiper.scss'
 
 import 'swiper/css'
@@ -142,7 +142,6 @@ function onClick({ id }: Banner) {
 						<i
 							class="micon micon-fill-arrow-left navigator__icon with-transition mirror"
 						>
-							<Icon name="icon:left" />
 						</i>
 					</button>
 				</div>
@@ -156,7 +155,6 @@ function onClick({ id }: Banner) {
 						<i
 							class="micon micon-fill-arrow-right navigator__icon with-transition mirror"
 						>
-							<Icon name="icon:right" />
 						</i>
 					</button>
 				</div>

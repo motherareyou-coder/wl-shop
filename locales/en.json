@@ -2,7 +2,7 @@
 	"language": "English",
 	"appTitle": "Shop",
 
-	"login": "Login",
+	"login": "Sign in",
 	"register": "Sign up",
 
 	"home": "Home",
@@ -26,5 +26,7 @@
 	"ReceiverName": "Name",
 	"SubmitAfterSale": "Submit",
 	"dayorder-pre": "Day",
-	"dayorder-suf": ""
+	"dayorder-suf": "",
+
+	"password-required": "Password must be 8-16 characters and include bothnumbers and letters"
 }

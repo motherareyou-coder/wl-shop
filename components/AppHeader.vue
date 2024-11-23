@@ -16,28 +16,10 @@ const { data: categories } = await useAPI<Category[]>(
 	{ params: { num: 5 } },
 )
 
-const paramsStore = useParamsStore()
-const cartCount = computed(() => paramsStore.$state.cartCount)
-paramsStore.getCartCount()
+const cartStore = useCartStore()
+const cartCount = computed(() => cartStore.cartCount)
+const validList = computed(() => cartStore.validList)
 
-watch(
-	categories,
-	(v) => {
-		v?.forEach?.((c, i) =>
-			$api('product/spu/page', {
-				params: {
-					categoryId: c.id,
-					pageNo: 1,
-					pageSize: 5,
-				},
-			}).then((res) => {
-				c.id += i
-				c.children = res.list
-			}),
-		)
-	},
-	{ immediate: true },
-)
 const showMobileMenu = computed(
 	() => appStore.bodyWidth && appStore.bodyWidth <= 1024,
 )
@@ -45,49 +27,21 @@ const route = useRoute()
 const router = useRouter()
 function logout() {
 	userStore.logout().then(() => {
-		if (route.path.includes('user'))
-			router.replace($path('/'))
+		if (route.path.includes('user') && !route.path.includes('user/cart'))
+			router.replace(route.fullPath)
 	})
 }
 
 const isCart = computed(
 	() => route.path.includes('cart') || route.path.includes('checkout'),
 )
-const validList = ref<CartItem[]>([])
-const loading = ref(false)
-watch(
-	() => userStore.accessToken,
-	(v) => {
-		if (!v)
-			validList.value = []
-	},
-)
+const { loading, wrapLoading } = useLoading()
+
 function getCartList() {
-	if (!userStore.accessToken)
-		return (validList.value = [])
-	loading.value = true
-	$api('trade/cart/list')
-		.then((res) => {
-			validList.value = res.validList as CartItem[]
-			paramsStore.setCartCount(validList.value?.length)
-		})
-		.finally(() => {
-			loading.value = false
-		})
+	wrapLoading(cartStore.getCartList())
 }
 function handleDelete(p: CartItem) {
-	loading.value = true
-	$api('trade/cart/delete', {
-		method: 'delete',
-		params: { ids: [p.id] },
-	})
-		.then(() => {
-			validList.value = validList.value.filter(g => g.id !== p.id)
-			paramsStore.setCartCount(cartCount.value - 1)
-		})
-		.finally(() => {
-			loading.value = false
-		})
+	wrapLoading(cartStore.removeCart([p.id]))
 }
 </script>
 
@@ -109,12 +63,18 @@ function handleDelete(p: CartItem) {
 					</nuxt-link>
 				</li>
 				<li class="navigation__item shortcut__item">
-					<LanguageSelect class="navigation__link" />
+					<div class="navigation__link">
+						<div class="shortcut__item--wrapper">
+							<LanguageSelect class="shortcut__icon" />
+						</div>
+					</div>
 				</li>
 				<li class="navigation__item shortcut__item">
-					<i class="navigation__link" @click="searchShow = true">
-						<Icon name="icon:search" />
-					</i>
+					<div class="navigation__link" @click="searchShow = true">
+						<div class="shortcut__item--wrapper">
+							<i class="micon micon-search-glass shortcut__icon"></i>
+						</div>
+					</div>
 				</li>
 				<li class="navigation__item shortcut__item">
 					<el-popover
@@ -129,21 +89,23 @@ function handleDelete(p: CartItem) {
 							<ul class="cart__list">
 								<li v-for="p in validList" :key="p.id" class="cart__item">
 									<nuxt-link
-										:to="$path(`/product/${p.spu.id}`)"
+										:to="$path(`/product/${p.spu?.id}`)"
 										class="cart__item-link"
 									>
 										<app-image
 											class="cart__item-image"
-											:src="p.spu.picUrl"
+											:src="p.spu?.picUrl"
 											alt=""
 										/>
 										<div class="cart__item-info">
-											<span class="cart__item-detail cart__item-name">{{
-												p.spu.name
-											}}</span>
+											<span class="cart__item-detail cart__item-name">
+												{{ p.spu?.name }}
+											</span>
 											<span
 												class="cart__item-detail cart__font--muted cart__item-price notranslate"
-											>{{ p.sku.price }}</span>
+											>
+												<ProductPrice :data="p.sku?.price" />
+											</span>
 											<span
 												class="cart__item-detail cart__font--muted cart__item-quantity"
 											>{{ $t('Quantity') }}: {{ p.count }}</span>
@@ -151,9 +113,7 @@ function handleDelete(p: CartItem) {
 										<el-icon
 											class="micon micon-delete cart__font--muted cart__item-delete"
 											@click.prevent.stop="handleDelete(p)"
-										>
-											<ElIconDelete />
-										</el-icon>
+										/>
 									</nuxt-link>
 								</li>
 							</ul>
@@ -182,7 +142,7 @@ function handleDelete(p: CartItem) {
 									:value="cartCount"
 									color="#ff6700"
 								>
-									<Icon name="icon:cart" style="margin-bottom: -2px" />
+									<i class="micon micon-shopping-cart shortcut__icon"></i>
 								</el-badge>
 							</nuxt-link>
 						</template>
@@ -193,7 +153,7 @@ function handleDelete(p: CartItem) {
 					class="navigation__item shortcut__item"
 				>
 					<nuxt-link class="navigation__link outline-none" :to="$path('/user')">
-						<Icon name="icon:user" />
+						<i class="micon micon-account shortcut__icon"></i>
 					</nuxt-link>
 					<template #dropdown>
 						<el-dropdown-menu>
@@ -209,14 +169,21 @@ function handleDelete(p: CartItem) {
 									</el-dropdown-item>
 								</nuxt-link>
 								<el-dropdown-item @click="logout">
-									{{ $t('Log out') }}
+									{{ $t('Sign out') }}
 								</el-dropdown-item>
 							</template>
-							<nuxt-link v-else :to="$path('/login')">
-								<el-dropdown-item>
-									{{ $t('Log in') }}
-								</el-dropdown-item>
-							</nuxt-link>
+							<template v-else>
+								<nuxt-link :to="$path('/login')">
+									<el-dropdown-item>
+										{{ $t('Sign in') }}
+									</el-dropdown-item>
+								</nuxt-link>
+								<nuxt-link :to="$path('/login?type=1')">
+									<el-dropdown-item>
+										{{ $t('Sign up') }}
+									</el-dropdown-item>
+								</nuxt-link>
+							</template>
 						</el-dropdown-menu>
 					</template>
 				</el-dropdown>
@@ -224,15 +191,26 @@ function handleDelete(p: CartItem) {
 					v-if="showMobileMenu"
 					class="navigation__item shortcut__item shortcut__item-menu"
 				>
-					<i
-						class="site-slide-menu__controller navigation__link shortcut__item--wrapper"
-						@click="sideShow = true"
-					>
-						<Icon name="icon:menu" />
-					</i>
+					<div class="navigation__link">
+						<div class="shortcut__item--wrapper">
+							<i
+								class="micon micon-menu shortcut__icon"
+								@click="sideShow = true"
+							></i>
+						</div>
+					</div>
 				</li>
 			</ul>
 		</nav>
 		<AppSearch v-model="searchShow" />
 	</header>
 </template>
+
+<style lang="scss">
+.site-header--sticky {
+	.mi-badge__content.is-fixed{
+		padding: 2PX 4PX !important;
+		line-height: 1;
+	}
+}
+</style>

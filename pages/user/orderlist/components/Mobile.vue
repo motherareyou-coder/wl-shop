@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { statusText } from '../utils'
 import type { OrderDetail } from '~/types'
+import { statusText } from '../utils'
 
 const statusOptions = [
 	{ value: '', label: $t('All Order') },
@@ -73,7 +73,7 @@ function goDetail({ id }: OrderDetail) {
 						<div>
 							{{ `${$t('Order number')} ${order.no}` }}
 						</div>
-						<div class="status">
+						<div class="status whitespace-nowrap">
 							{{
 								statusText[order.status]
 									&& $t(statusText[order.status])

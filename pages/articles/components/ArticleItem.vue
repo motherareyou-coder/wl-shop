@@ -26,7 +26,7 @@ const data = defineModel<Article>('data')
 				</div>
 				<div class="flex justify-between whitespace-nowrap">
 					<p>
-						{{ data.createTime }}
+						<app-time :data="data?.createTime" />
 					</p>
 					<p class="flex items-center">
 						<el-icon class="mr-2">
