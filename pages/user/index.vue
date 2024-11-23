@@ -279,7 +279,7 @@ function logout() {
 								</dd>
 							</dl>
 						</nuxt-link>
-						<nuxt-link :to="$path('/user/points')" class="message-block__link">
+						<nuxt-link :to="appStore.isPC ? $path('/user/wallet?type=0') : $path('/user/points')" class="message-block__link">
 							<dl class="msg__item">
 								<dt>
 									<i class="micon micon-points msg-item__icon"></i>
