@@ -110,7 +110,7 @@ function updatePsw() {
 									:disabled="loading"
 									@click.prevent.stop="updatePsw"
 								>
-									{{ $t('Update Password') }}
+									{{ $t('Update password') }}
 								</el-button>
 							</div>
 						</el-form>
