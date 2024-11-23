@@ -15,7 +15,7 @@ const {
 			params: {
 				...params,
 				createTime: createTime.value || [],
-				addStatus: type.value,
+				addStatus: { 1: true, 2: false }[type.value],
 			},
 		}),
 	'',

@@ -28,6 +28,7 @@ const {
 		{ params: p },
 	)
 })
+const userStore = useUserStore()
 watch(isBalance, resetData)
 watch(status, resetData)
 </script>
@@ -55,7 +56,7 @@ watch(status, resetData)
 						:class="{ active: isBalance === 0 }"
 						@click="isBalance = 0"
 					>
-						{{ `${$t('Points')}: ${data.balance}` }}
+						{{ `${$t('Points')}: ${userStore.$state.point}` }}
 					</span>
 				</li>
 			</ul>
