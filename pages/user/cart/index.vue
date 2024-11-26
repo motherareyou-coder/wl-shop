@@ -199,7 +199,7 @@ function checkAllChange(selected: boolean) {
 									<div class="cart-item__gap"></div>
 									<div class="cart-item__image">
 										<nuxt-link
-											:to="$path(`/product/${item.id}`)"
+											:to="$path(`/product/${item.spu.id}`)"
 										>
 											<app-image
 												class="cart-item__image-content"
@@ -211,7 +211,7 @@ function checkAllChange(selected: boolean) {
 									<div class="cart-item__detail">
 										<div class="cart-item__product">
 											<nuxt-link
-												:to="$path(`/product/${item.id}`)"
+												:to="$path(`/product/${item.spu.id}`)"
 											>
 												<h3
 													class="cart-item__product-title"
