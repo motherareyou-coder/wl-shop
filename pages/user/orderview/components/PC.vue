@@ -146,7 +146,7 @@ const data = computed(() => props.data)
 									{{ $t('Refunding') }}
 								</el-button>
 								<el-button
-									v-else-if="item.afterSaleStatus === 0 && data.status === 10 || data.status === 20"
+									v-else-if="item.afterSaleStatus === 0 &&  [10, 20, 30].includes(data.status)"
 									style="padding: 6px;font-size: 12px;border-radius: 0;"
 									:disabled="props.loading"
 									@click="emit('command', 'aftersale', item)"
