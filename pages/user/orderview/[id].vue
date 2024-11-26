@@ -108,7 +108,7 @@ function handleCommand(type: string, data: any) {
 			router.push($path(`/user/aftersale/apply?item=${data.id}`))
 			break
 		case 'aftersale-view':
-			router.push($path(`/user/aftersaleview/${data.id}`))
+			router.push($path(`/user/aftersaleview/${data.afterSaleId}`))
 			break
 	}
 }

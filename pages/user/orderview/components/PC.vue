@@ -143,7 +143,7 @@ const data = computed(() => props.data)
 									:disabled="props.loading"
 									@click="emit('command', 'aftersale-view', item)"
 								>
-									{{ $t('Partial refund') }}
+									{{ $t('Refunding') }}
 								</el-button>
 								<el-button
 									v-else-if="item.afterSaleStatus === 0 && data.status === 10 || data.status === 20"
