@@ -97,7 +97,7 @@ const data = computed(() => props.data)
 							class="flex py-8"
 						>
 							<nuxt-link
-								:to="$path(`/product/${item.id}`)"
+								:to="$path(`/product/${item.spuId}`)"
 								target="blank"
 								class="flex mr-5"
 							>
@@ -109,7 +109,7 @@ const data = computed(() => props.data)
 							<div class="flex flex-col justify-between flex-1">
 								<div>
 									<nuxt-link
-										:to="$path(`/product/${item.id}`)"
+										:to="$path(`/product/${item.spuId}`)"
 									>
 										{{ item.spuName }}
 									</nuxt-link>
