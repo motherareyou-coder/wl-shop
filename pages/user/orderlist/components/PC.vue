@@ -158,7 +158,7 @@ watch(status, resetData)
 													<nuxt-link
 														:to="
 															$path(
-																`/product/${item.id}`,
+																`/product/${item.spuId}`,
 															)
 														"
 														target="blank"
