@@ -42,7 +42,7 @@ function submit() {
 			way: data.value.way,
 			applyReason: data.value.applyReason,
 			applyDescription: data.value.applyDescription,
-			images: data.value.images,
+      applyPicUrls: data.value.images,
 		},
 	})
 		.then((res) => {

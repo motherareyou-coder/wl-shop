@@ -11,7 +11,8 @@ export function useCheckOut(
 		(productList.value || []).map(d => ({
 			skuId: d.sku?.id || d.skuId,
 			count: d.count,
-			productId: d.id,
+			// productId: d.id,
+			cartId: d.id,
 			productPrice: d.sku?.price || d.price,
 			categoryId: d.spu?.categoryId,
 		})),

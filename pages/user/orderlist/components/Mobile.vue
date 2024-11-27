@@ -71,7 +71,8 @@ function goDetail({ id }: OrderDetail) {
 				>
 					<div class="flex justify-between">
 						<div>
-							{{ `${$t('Order number')} ${order.no}` }}
+							<!--{{ `${$t('Order number')} ${order.no}` }}-->
+							{{ `${order.no}` }}
 						</div>
 						<div class="status whitespace-nowrap">
 							{{
