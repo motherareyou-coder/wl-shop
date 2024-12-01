@@ -90,7 +90,11 @@ function handleRegister() {
 		if (!v)
 			return
 		wrapLoading(
-			$api('member/auth/email-account-register').then((res) => {
+			$api('member/auth/email-account-register', { method: 'post', body: {
+				account: form.value.account,
+				password: form.value.password,
+				confirmPassword: form.value.confirmPassword,
+			} }).then((res) => {
 				userStore.setToken(res)
 				router.push('/')
 			}),

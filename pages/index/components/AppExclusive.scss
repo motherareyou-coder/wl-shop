@@ -237,14 +237,20 @@
     }
 }
 
+.activity-customize .activity-customize__content-background  {
+    width: 100%;
+}
 .activity-customize .activity-customize__content-background img {
     border-radius: 10px;
     transition: 0.5s;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 @media screen and (max-width: 720px) {
     .activity-customize .activity-customize__content-background img {
-        --mi-image-height: 140px;
+        height: 140px;
         border-radius: 0;
         vertical-align: top;
     }
@@ -252,25 +258,25 @@
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {
     .activity-customize .activity-customize__content-background img {
-        --mi-image-height: 200px;
+        height: 200px;
     }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
     .activity-customize .activity-customize__content-background img {
-        --mi-image-height: 258px;
+        height: 258px;
     }
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
     .activity-customize .activity-customize__content-background img {
-        --mi-image-height: 321px;
+        height: 321px;
     }
 }
 
 @media screen and (min-width: 1921px) {
     .activity-customize .activity-customize__content-background img {
-        --mi-image-height: 321px;
+        height: 321px;
     }
 }
 

@@ -76,12 +76,7 @@ const showActivities = ref(false)
 		<section
 			class="product--mobile__section product--mobile__section--card events-info"
 		>
-			<div class="events-info__container" @click="showActivities = true">
-				<Activities class="flex-1 overflow-hidden" />
-				<button class="events-info__more">
-					<el-icon><ElIconArrowRight /></el-icon>
-				</button>
-			</div>
+			<Activities collapse @click="showActivities = true" />
 			<Coupon />
 		</section>
 		<section
@@ -187,11 +182,9 @@ const showActivities = ref(false)
 			v-model="showActivities"
 			:title="$t('Events')"
 			direction="btt"
-			height="auto"
+			style="min-height: 50vh"
 		>
-			<div class="px-5">
-				<Activities />
-			</div>
+			<Activities />
 		</el-drawer>
 	</main>
 </template>

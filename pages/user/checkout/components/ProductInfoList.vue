@@ -54,10 +54,29 @@ const appStore = useAppStore()
 							<li class="product-params__energy"></li>
 						</ul>
 						<ul class="product-price">
-							<div class="mi-price">
-								<product-price
-									:data="item.sku?.price || item.price"
-								/>
+							<div class="mi-price flex flex-col">
+								<template v-if="item.sku">
+									<product-price
+										:data="item.price"
+									/>
+									<del>
+										<product-price
+											:data="item.sku?.price"
+											plain
+										/>
+									</del>
+								</template>
+								<template v-else>
+									<product-price
+										:data="item.payPrice"
+									/>
+									<del>
+										<product-price
+											:data="item.price"
+											plain
+										/>
+									</del>
+								</template>
 							</div>
 						</ul>
 					</div>
@@ -95,10 +114,29 @@ const appStore = useAppStore()
 								<li class="product-params__energy"></li>
 							</ul>
 							<ul class="product-price">
-								<div class="mi-price">
-									<product-price
-										:data="item.sku?.price || item.price"
-									/>
+								<div class="mi-price" :class="[appStore.isMobile ? '' : 'flex flex-col']">
+									<template v-if="item.sku">
+										<product-price
+											:data="item.price"
+										/>
+										<del>
+											<product-price
+												:data="item.sku?.price"
+												plain
+											/>
+										</del>
+									</template>
+									<template v-else>
+										<product-price
+											:data="item.payPrice"
+										/>
+										<del>
+											<product-price
+												:data="item.price"
+												plain
+											/>
+										</del>
+									</template>
 								</div>
 							</ul>
 						</div>

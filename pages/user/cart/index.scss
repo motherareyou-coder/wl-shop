@@ -4330,7 +4330,11 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: calc(var(--group-gap)/-2)
+    margin: calc(var(--group-gap)/-2);
+
+    @media screen and (min-width: 721px) {
+        flex-wrap: nowrap;
+    }
 }
 
 .mi-marketing-label__tags .tag__item {

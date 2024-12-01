@@ -26,7 +26,7 @@
 	"OrderView": "订单详情",
 	"Learn More": "了解更多",
 	"Featured Products": "特色产品",
-	"Exclusive Offers": "限时优惠",
+	"All Promotions": "所有促销活动",
 	"Follow Us": "关注我们",
 	"All Products": "所有产品",
 	"Product List": "产品列表",
@@ -253,5 +253,9 @@
 	"Login to view your shopping cart and have better experience.": "登录查看您的购物车并获得更好的体验",
 	"password-required": "密码必须为 8-16 个字符，并包含数字和字母",
 	"Please sign in first": "请先登录",
-	"Your login has expired": "您的登陆已过期"
+	"Your login has expired": "您的登陆已过期",
+	"Daily Picks": "每日精选",
+	"Group Buying Event": "团购活动",
+	"Bargin Event": "砍价活动",
+	"Coupon collection": "优惠卷列表"
 }

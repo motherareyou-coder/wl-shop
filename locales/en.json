@@ -28,5 +28,14 @@
 	"dayorder-pre": "Day",
 	"dayorder-suf": "",
 
-	"password-required": "Password must be 8-16 characters and include bothnumbers and letters"
+	"password-required": "Password must be 8-16 characters and include bothnumbers and letters",
+	"秒杀": "Lightning",
+	"砍价": "Haggling",
+	"拼团": "Grouping",
+	"限时折扣": "Discount",
+	"满减送": "Reduction",
+	"会员折扣": "VIP discount",
+	"优惠劵": "Coupon",
+	"积分": "Points",
+	"优惠": "Discount"
 }

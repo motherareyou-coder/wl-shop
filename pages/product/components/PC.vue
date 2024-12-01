@@ -13,14 +13,15 @@ const props = defineProps({
 	properties: { type: Array as () => ProductDetail['propertyList'] },
 })
 const emit = defineEmits(['star', 'submit'])
-const count = defineModel('count')
+const count = defineModel<number>('count')
 const info = computed(() => props.info)
 const sku = defineModel<SKU>('sku')
 const selected = defineModel('selected')
 const tab = ref(0)
+const price = computed(() => sku.value?.vipPrice || sku.value?.price || info.value.price || 0)
 const totalPrice = computed(() => {
-	const price = new Big(sku.value?.price || info.value.price)
-	return count.value ? price.times(new Big(count.value)).toFixed(2) : '0.00'
+	const p = new Big(price.value)
+	return count.value ? p.times(new Big(count.value)).toFixed(2) : '0.00'
 })
 </script>
 
@@ -88,13 +89,17 @@ const totalPrice = computed(() => {
 								{{ info.introduction }}
 							</div>
 							<div class="information-section__product-price">
-								<ProductPrice
-									:data="sku?.price || info.price"
-								/>
+								<ProductPrice :data="price" />
+								<del>
+									<ProductPrice
+										:data="sku?.marketPrice || info.marketPrice"
+										plain
+									/>
+								</del>
 							</div>
 						</div>
 					</section>
-					<Activities class="offers-section__list" />
+					<Activities />
 					<section
 						class="product__section product__section-spacer events-info"
 					>
@@ -151,7 +156,13 @@ const totalPrice = computed(() => {
 								<div
 									class="order-list-section__item-spacer"
 								></div>
-								<ProductPrice :data="totalPrice" />
+								<ProductPrice :data="price" />
+								<del>
+									<ProductPrice
+										:data="sku?.marketPrice || info.marketPrice"
+										plain
+									/>
+								</del>
 							</li>
 							<li class="order-list-section__item">
 								<span>{{ $t('Total') }}:</span>

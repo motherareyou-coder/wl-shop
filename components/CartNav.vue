@@ -26,7 +26,7 @@ watchEffect(() => {
 </script>
 
 <template>
-	<nav v-if="activeStep" class="shopping-nav">
+	<nav v-if="activeStep && !route.query.bargainRecordId" class="shopping-nav">
 		<div class="shopping-nav__wrapper">
 			<div
 				v-for="s in steps"

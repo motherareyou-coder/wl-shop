@@ -87,6 +87,7 @@ export interface Activity {
 	startTime: number | string
 	/**
 	 * 活动类型
+	 * 1.秒杀活动 2.砍价活动 3.拼团活动 4.限时折扣 5.满减送 6.会员折扣 7.优惠劵 8.积分
 	 */
 	type: number
 	[property: string]: any
@@ -854,7 +855,7 @@ export interface AfterSale {
 	/**
 	 * 更新时间
 	 */
-	updateTime: Date
+	updateTime: string
 	/**
 	 * 售后方式
 	 * 10.仅退款
@@ -1074,5 +1075,137 @@ export interface Article {
 	 * 文章标题
 	 */
 	title: string
+	[property: string]: any
+}
+
+/**
+ * ProductSpu，用户 App - 商品 SPU Response VO
+ */
+export interface ProductSpu {
+	/**
+	 * 分类编号
+	 */
+	categoryId: number
+	/**
+	 * 商品 SPU 编号
+	 */
+	id: number
+	/**
+	 * 商品简介
+	 */
+	introduction: string
+	/**
+	 * 市场价，单位使用：分
+	 */
+	marketPrice: number
+	/**
+	 * 商品名称
+	 */
+	name: string
+	/**
+	 * 商品封面图
+	 */
+	picUrl: string
+	/**
+	 * 商品价格，单位使用：分
+	 */
+	price: number
+	/**
+	 * 商品销量
+	 */
+	salesCount: number
+	/**
+	 * 商品轮播图
+	 */
+	sliderPicUrls: string[]
+	/**
+	 * 规格类型
+	 */
+	specType: boolean
+	/**
+	 * 库存
+	 */
+	stock: number
+	/**
+	 * VIP 价格，单位使用：分
+	 */
+	vipPrice: number
+	[property: string]: any
+}
+
+/**
+ * BargainActivity，用户 App - 砍价活动 Response VO
+ */
+export interface BargainActivity {
+	/**
+	 * 砍价最低金额，单位：分
+	 */
+	bargainMinPrice: number
+	/**
+	 * 活动结束时间
+	 */
+	endTime: string
+	/**
+	 * 砍价活动编号
+	 */
+	id: number
+	/**
+	 * 商品市场价，单位：分
+	 */
+	marketPrice: number
+	/**
+	 * 砍价活动名称
+	 */
+	name: string
+	/**
+	 * 商品图片
+	 */
+	picUrl: string
+	/**
+	 * 商品 SKU 编号
+	 */
+	skuId: number
+	/**
+	 * 商品 SPU 编号
+	 */
+	spuId: number
+	/**
+	 * 活动开始时间
+	 */
+	startTime: string
+	/**
+	 * 砍价库存
+	 */
+	stock: number
+	orderId?: string
+	payOrderId?: string
+	payStatus?: string
+	[property: string]: any
+}
+
+/**
+ * BargainHelp，用户 App - 砍价助力 Response VO
+ */
+export interface BargainHelp {
+	/**
+	 * 助力用户的头像
+	 */
+	avatar: string
+	/**
+	 * 创建时间
+	 */
+	createTime: Date
+	/**
+	 * 助力用户的昵称
+	 */
+	nickname: string
+	/**
+	 * 助力用户的砍价金额
+	 */
+	reducePrice: number
+	/**
+	 * 用户编号
+	 */
+	userId: number
 	[property: string]: any
 }

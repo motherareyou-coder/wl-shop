@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product } from '~/types'
+import type { Activity, Product } from '~/types'
 
 const data = defineModel<Product>('data', { default: () => ({}) })
 
@@ -19,6 +19,9 @@ function handleAdd(g: Product) {
 		),
 	)
 }
+
+const { data: activities } = await useAPI<Activity[]>('promotion/activity/list-by-spu-id', { params: {	spuId: data.value.id } })
+const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 </script>
 
 <template>
@@ -33,6 +36,18 @@ function handleAdd(g: Product) {
 				@click="onClick"
 			/>
 			<div class="item__info">
+				<div v-if="activities?.length" class="item__info-section">
+					<div class="mi-marketing-label__tags item__marketing-tags">
+						<ul class="tag__list">
+							<template v-for="(a, i) in activities" :key="a.type">
+								<template v-if="a.type === 5">
+									<ActivityTag v-if="i === first5" class="tag__item" :name="a.name" />
+								</template>
+								<ActivityTag v-else class="tag__item" :type="a.type" />
+							</template>
+						</ul>
+					</div>
+				</div>
 				<div class="item__info-section">
 					<h3 class="item__title" @click="onClick">
 						<bdi>
@@ -41,10 +56,17 @@ function handleAdd(g: Product) {
 					</h3>
 				</div>
 				<div class="item__info-section">
-					<product-price
-						class="mi-price item__price"
-						:data="data.price"
-					/>
+					<div class="mi-price item__price item__price--on-sale">
+						<product-price
+							:data="data.price"
+						/>
+						<del v-if="data.marketPrice" class="notranslate">
+							<product-price
+								:data="data.marketPrice"
+								plain
+							/>
+						</del>
+					</div>
 				</div>
 			</div>
 			<div v-if="appStore.isPC" class="item__action">

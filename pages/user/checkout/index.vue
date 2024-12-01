@@ -13,8 +13,10 @@ useHead({
 	title: `${$t('Checkout')} ${$t('appTitle')}`,
 })
 
+const router = useRouter()
 const route = useRoute()
 const orderId = route.query.orderId
+const bargainRecordId = route.query.bargainRecordId
 const productList = ref<CartItem[]>([])
 
 const data = ref({
@@ -78,6 +80,8 @@ if (orderId) {
 	$api('trade/order/get-detail', {
 		params: { id: orderId },
 	}).then((res) => {
+		if (res.status !== 0)
+			return router.push($path(`/user/review/${orderId}`))
 		const { items = [], ...data } = res
 		productList.value = items
 		info.value = data
@@ -87,9 +91,20 @@ if (orderId) {
 		// 	: null
 	})
 }
+else if (bargainRecordId) {
+	const data = JSON.parse(localStorage.getItem(`bargainRecordId-${bargainRecordId}`))
+	productList.value = [data]
+	// TODO: 提示sku不匹配
+	getInfo({ bargainRecordId })
+}
 else {
 	$api('trade/cart/list', {}).then((res) => {
 		productList.value = res.validList.filter((d: CartItem) => d.selected)
+		productList.value.forEach((d) => {
+			d.price = d.price || d.sku.price
+		})
+		if (productList.value.length === 0)
+			router.push($path(`/user/cart`))
 	})
 	watch(items, getInfo, { immediate: true, deep: true })
 	watch(coupon, getInfo, { immediate: true, deep: true })
@@ -106,7 +121,6 @@ else {
 	getInfo()
 }
 
-const router = useRouter()
 const { loading, wrapLoading } = useLoading()
 const msg = $t('Please select a address.')
 function handleSubmit() {
@@ -115,6 +129,7 @@ function handleSubmit() {
 			return ElMessage.info(msg)
 		const body = {
 			items: items.value,
+			bargainRecordId,
 			...pick(data.value, [
 				'deliveryType',
 				'addressId',
@@ -144,7 +159,7 @@ function handlePay(orderId: string | number, payOrderId: string | number) {
 		},
 	})
 		.then(payDisplay)
-		.then(() => router.push($path(`/user/review/${orderId}?payOrderId=${payOrderId}`)))
+		.finally(() => router.push($path(`/user/review/${orderId}?payOrderId=${payOrderId}`)))
 }
 
 function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
@@ -472,9 +487,7 @@ const shipOpen = ref(true)
 						<div class="price-summary__total">
 							<h3>{{ $t('Total') }}</h3>
 							<ProductPrice
-								:data="
-									info?.price?.payPrice || info?.payPrice
-								"
+								:data="info?.price?.payPrice || info?.payPrice"
 							/>
 						</div>
 						<ul class="price-summary__list">
@@ -483,32 +496,19 @@ const shipOpen = ref(true)
 									{{ $t('Subtotal') }}
 								</span>
 								<ProductPrice
-									:data="
-										info?.price?.totalPrice || info?.totalPrice
-									"
-								/>
-							</li>
-							<li class="price-summary__item">
-								<span class="Subtotal">
-									{{ $t('VipDiscount') }}
-								</span>
-								<ProductPrice
-									:data="
-										info?.price?.vipPrice || info?.vipPrice
-									"
+									:data="info?.price?.totalPrice || info?.totalPrice"
 								/>
 							</li>
 							<li
+								v-if="info?.promotions"
 								class="price-summary__item price-summary__item--saved"
 								:class="{ 'price-summary__item--open': open1 }"
 							>
-								<span>{{ $t('Discount') }}</span>
+								<span>{{ $t('优惠') }}</span>
 								<span>
 									<ProductPrice
-										:data="
-											info?.price?.discountPrice
-												|| info?.discountPrice
-										"
+										class="price-summary__item-fee"
+										:data="info.promotions.reduce((t, c) => t - c.discountPrice, 0)"
 									/>
 									<button class="price-summary__item-more">
 										<el-icon
@@ -522,35 +522,13 @@ const shipOpen = ref(true)
 								<div class="price-summary__box">
 									<ul class="price-summary__detail">
 										<li
-											v-if="
-												info?.price?.couponPrice
-													|| info?.couponPrice
-											"
+											v-for="(d, i) in info.promotions" :key="i"
 											class="price-summary__item"
 										>
-											<span>{{ $t('Coupons') }}</span>
+											<span>{{ d.description }}</span>
 											<ProductPrice
 												class="price-summary__item-fee"
-												:data="
-													info?.price?.couponPrice
-														|| info?.couponPrice
-												"
-											/>
-										</li>
-										<li
-											v-if="
-												info?.price?.pointPrice
-													|| info?.pointPrice
-											"
-											class="price-summary__item"
-										>
-											<span>{{ $t('Points') }}</span>
-											<ProductPrice
-												class="price-summary__item-fee"
-												:data="
-													info?.price?.pointPrice
-														|| info?.pointPrice
-												"
+												:data="0 - d.discountPrice"
 											/>
 										</li>
 									</ul>

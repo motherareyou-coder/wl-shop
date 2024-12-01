@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
+import CouponImg from '@/assets/imgs/coupon.webp'
 import { chunk } from 'lodash-es'
 import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
@@ -11,24 +12,49 @@ import 'swiper/css/pagination'
 
 defineOptions({ name: 'AppExclusive' })
 
-interface Bargin {
-	id: number
-	name: string
-	startTime: string
-	endTime: string
-	spuId: number
-	skuId: number
-	stock: number
-	picUrl: string
-	marketPrice: number
-	bargainMinPrice: number
-}
-
-const { data } = await useAsyncData<Bargin[]>(() =>
-	$api('promotion/bargain-activity/page').then(
-		res => res.list,
-	),
-)
+const { t } = useI18n()
+const data = ref([])
+Promise.all([
+	$api('promotion/seckill-activity/get-now').then(res => ({
+		picUrl: res.activities[0]?.picUrl || res.config.sliderPicUrls,
+		spuId: res.activities[0]?.spuId,
+		startTime: res.config.startTime,
+		endTime: res.config.endTime,
+		name: t('Daily Picks'),
+		desc: res.activities[0]?.name,
+		icon: 'micon micon-lightning-solid',
+	})),
+	$api('promotion/combination-activity/page', {
+		params: { pageNo: 1, pageSize: 1 },
+	}).then(res => ({
+		picUrl: res?.list[0]?.picUrl,
+		desc: res?.list[0]?.name,
+		spuId: res.list[0]?.spuId,
+		icon: 'micon micon-bag-solid',
+		name: t('Group Buying Event'),
+	})),
+	$api('promotion/bargain-activity/page', {
+		params: { pageNo: 1, pageSize: 1 },
+	}).then(res => ({
+		picUrl: res?.list[0]?.picUrl,
+		desc: res?.list[0]?.name,
+		icon: 'micon micon-calendar-solid',
+		name: t('Bargin Event'),
+		url: '/bargin',
+	})),
+	$api('promotion/coupon-template/page', {
+		params: { pageNo: 1, pageSize: 1 },
+	}).then(res => ({
+		picUrl: CouponImg,
+		desc: res?.list[0]?.description,
+		spuId: res.list[0]?.spuId,
+		icon: 'micon micon-calendar-solid',
+		name: t('Coupon collection'),
+	})),
+])
+	.then((list) => {
+		data.value = list
+	})
 
 const finalData = computed(() => chunk(data.value, 3))
 
@@ -53,13 +79,22 @@ function prev() {
 	swiper.slidePrev()
 	realIndex.value = swiper.realIndex
 }
+
+const router = useRouter()
+function goDetail(item) {
+	console.log(item)
+	if (item.spuId)
+		router.push($path(`/produtct/${item.spuId}`))
+	else if (item.url)
+		router.push($path(item.url))
+}
 </script>
 
 <template>
 	<div class="exclusive-offers exclusive-offers--full">
 		<div class="exclusive-offers__header">
 			<div class="exclusive-offers__header-text">
-				Exclusive Offers
+				{{ $t('All Promotions') }}
 			</div>
 			<div class="exclusive-offers__header-arrow">
 				<el-icon
@@ -89,28 +124,24 @@ function prev() {
 			@swiper="setSwiper"
 		>
 			<SwiperSlide v-for="(c, i) in finalData" :key="i">
-				<nuxt-link
-					v-for="item in c"
-					:key="item.id"
-					:to="$path(`/product/${item.id}`)"
-					class="exclusive-offers__item"
-				>
-					<div class="activity-customize">
+				<div v-for="(item, j) in c" :key="j" class="exclusive-offers__item">
+					<div class="activity-customize" @click="goDetail(item)">
 						<div class="activity-customize__content">
 							<app-image
 								:src="item.picUrl"
-								class="activity-customize__content-background"
+								class="mi-image activity-customize__content-background"
 							/>
 						</div>
 						<div class="exclusive-offers-footer-bar">
 							<div class="exclusive-offers-footer-bar__title">
+								<i v-if="item.icon" :class="item.icon"></i>
 								{{ item.name }}
 							</div>
 							<div class="exclusive-offers-footer-bar__content">
 								<div
 									class="exclusive-offers-footer-bar__content-desc"
 								>
-									<ProductPrice :data="item.bargainMinPrice" />
+									{{ item.desc }}
 								</div>
 								<div
 									class="exclusive-offers-footer-bar__content-button"
@@ -120,7 +151,7 @@ function prev() {
 							</div>
 						</div>
 					</div>
-				</nuxt-link>
+				</div>
 			</SwiperSlide>
 		</Swiper>
 	</div>

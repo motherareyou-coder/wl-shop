@@ -2882,45 +2882,49 @@ body.social-share-modal-common__Body--overflow-hidden {
     --column-track-size: 300px
 }
 
-.product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__item {
+.product__section-spacer.offers-section .offers-section__list + .offers-section__list {
+    margin-top: 10px;
+}
+.product__section-spacer.offers-section .offers-section__list .offers-section__item {
     color: #898989;
     display: flex;
     font-weight: 400;
     line-height: 1.5;
-    margin-top: 10px;
+    // margin-top: 10px;
     padding-left: 5px;
-    white-space: pre-line
+    white-space: pre-line;
+    flex-wrap: wrap;
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__item {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__item {
         font-size: max(.9722222222vw, 12PX)
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__item {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__item {
         font-size: max(.9722222222vw, 12PX)
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__item {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__item {
         font-size: max(.546875vw, 12PX)
     }
 }
 
 @media screen and (min-width: 1921px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__item {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__item {
         font-size: max(.546875vw, 12PX)
     }
 }
 
-.product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__item:first-of-type {
+.product__section-spacer.offers-section .offers-section__list .offers-section__item:first-of-type {
     margin-top: 0
 }
 
-.product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__item-dot {
+.product__section-spacer.offers-section .offers-section__list .offers-section__item-dot {
     flex-shrink: 0;
     height: 6px;
     margin-right: 6px;
@@ -2928,7 +2932,7 @@ body.social-share-modal-common__Body--overflow-hidden {
     width: 6px
 }
 
-.product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__link {
+.product__section-spacer.offers-section .offers-section__list .offers-section__link {
     color: #ff6900;
     cursor: pointer;
     margin-left: .5em;
@@ -2938,34 +2942,34 @@ body.social-share-modal-common__Body--overflow-hidden {
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__link {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__link {
         font-size: max(.9722222222vw, 12PX)
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__link {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__link {
         font-size: max(.9722222222vw, 12PX)
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__link {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__link {
         font-size: max(.546875vw, 12PX)
     }
 }
 
 @media screen and (min-width: 1921px) {
-    .product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__link {
+    .product__section-spacer.offers-section .offers-section__list .offers-section__link {
         font-size: max(.546875vw, 12PX)
     }
 }
 
-.product--pc .product__article .product__section-spacer.offers-section .offers-section__list .offers-section__link:hover {
+.product__section-spacer.offers-section .offers-section__list .offers-section__link:hover {
     text-decoration: underline
 }
 
-.product--pc .product__article .product__section-spacer.offers-section.offers-section--loading .offers-section__item {
+.product__section-spacer.offers-section.offers-section--loading .offers-section__item {
     background-color: #eee;
     color: #eee !important;
     height: 21px;

@@ -210,7 +210,8 @@
 }
 
 .site-grid--store-small-special {
-    max-width: var(--store-max-width)
+    max-width: var(--store-max-width);
+    padding: 0 var(--site-horizontal-padding);
 }
 
 @media screen and (max-width: 720px) {

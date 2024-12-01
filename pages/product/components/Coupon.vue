@@ -26,7 +26,10 @@ const appStore = useAppStore()
 </script>
 
 <template>
-	<div class="events-info__coupon-area">
+	<div
+		class="events-info__coupon-area"
+		@click="appStore.isMobile && (isOpen = true)"
+	>
 		<div class="events-info__coupon-reward coupon-reward">
 			<div class="get-coupon">
 				<ul class="coupon-reward__list">

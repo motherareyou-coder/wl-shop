@@ -3,6 +3,10 @@ import Big from 'big.js'
 
 defineOptions({ name: 'ProductPrice' })
 
+const props = defineProps({
+	plain: { type: Boolean, default: () => false },
+})
+
 const { currency } = useRuntimeConfig().public
 const unit = ref(currency || '£')
 const data = defineModel('data')
@@ -24,7 +28,10 @@ const price = computed(() => {
 </script>
 
 <template>
-	<strong class="price">
+	<template v-if="props.plain">
+		{{ unit + price }}
+	</template>
+	<strong v-else class="price notranslate">
 		<small v-if="isNumber">{{ data < 0 ? '-' : '' }}{{ unit }}</small>
 		<slot>
 			{{ price }}
