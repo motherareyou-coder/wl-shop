@@ -10,7 +10,10 @@ ul {
 li {
 	list-style: none;
 }
-
+@font-face {
+	font-family: "MiSans Latin"; /*字体名称，自己命名*/
+	src: url('../fonts/miSansLatin/MiSansLatinVF.ttf') format('truetype'); /* 修改为字体文件实际路径 */
+}
 input,
 select,
 textarea {
@@ -51,7 +54,8 @@ body {
 	min-width: 280px;
 	scrollbar-color: #d0d0d0 #fff;
 	scrollbar-width: thin;
-	font-family: 'MiSans Chinese', sans-serif;
+	//font-family: 'MiSans Chinese', sans-serif;
+	font-family: "MiSans Latin", sans-serif;
 }
 
 @media screen and (max-width: 720px) {
