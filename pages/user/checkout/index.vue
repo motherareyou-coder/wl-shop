@@ -2,6 +2,7 @@
 import { useAppStore } from '@/stores/app'
 import { pick } from 'lodash-es'
 import type { CartItem, Coupon, OrderSettlement, PayOrderSubmit } from '~/types'
+import paypalPic from '@/assets/imgs/paypal.png'
 import CouponDialog from '../cart/components/CouponDialog.vue'
 import { useCheckOut } from '../cart/utils'
 import Address from './components/Address.vue'
@@ -49,13 +50,14 @@ const { data: payOptions1 } = await useAPI<string[]>(
 )
 const Pays = [
 	{
-		title: `${$t('Credit')} / ${$t('Debit Card')}`,
+		// title: `${$t('Mock')} / ${$t('Debit Card')}`,
+		title: `${$t('Mock Pay')}`,
 		image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
 		key: 'mock',
 	},
 	{
 		title: 'PayPal',
-		image: 'https://i02.appmifile.com/639_updatepdf_in/10/05/2022/047f28c0f62ee7866a1a060a1dc2c695.png',
+		image: paypalPic,
 		key: 'paypal',
 	},
 	{
