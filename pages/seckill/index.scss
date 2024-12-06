@@ -1,0 +1,2458 @@
+.daily-picks {
+
+
+
+    .mi-energy-label {
+        --column-repeat-count: 1;
+        --column-track-size: 1fr;
+        --item-gap: 10px;
+        --grid-row-gap: var(--item-gap);
+        --grid-column-gap: 0;
+        --group-justify-items: start;
+        --group-align-items: center;
+        --group-margin-top: 0;
+        --group-margin-bottom: 0;
+        --label-flex-direction: row;
+        --label-justify-content: flex-start;
+        --label-align-items: center;
+        --info-margin-bottom: var(--item-gap);
+        --text-light: var(--text-base);
+        --text-dark: var(--text-reverse);
+        --info-text-align: start;
+        grid-column-gap: var(--grid-column-gap);
+        grid-row-gap: var(--grid-row-gap);
+        align-items: var(--group-align-items);
+        -moz-column-gap: var(--grid-column-gap);
+        column-gap: var(--grid-column-gap);
+        display: grid;
+        grid-template-columns: repeat(var(--column-repeat-count), var(--column-track-size));
+        justify-items: var(--group-justify-items);
+        margin-bottom: var(--group-margin-bottom);
+        margin-top: var(--group-margin-top);
+        row-gap: var(--grid-row-gap)
+    }
+
+    @media screen and (max-width: 720px) {
+        .mi-energy-label {
+            --image-width: 34px;
+            --info-margin-left: 12px;
+            --link-font-size: 12px
+        }
+    }
+
+    @media screen and (min-width: 721px)and (max-width:1024px) {
+        .mi-energy-label {
+            --image-width: 26px;
+            --info-margin-left: 14px;
+            --link-font-size: 14px
+        }
+    }
+
+    @media screen and (min-width: 1025px)and (max-width:1440px) {
+        .mi-energy-label {
+            --image-width: 32px;
+            --info-margin-left: 14px;
+            --link-font-size: 16px
+        }
+    }
+
+    @media screen and (min-width: 1441px)and (max-width:1920px) {
+        .mi-energy-label {
+            --image-width: 42px;
+            --info-margin-left: 16px;
+            --link-font-size: 16px
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        .mi-energy-label {
+            --image-width: 54px;
+            --info-margin-left: 16px;
+            --link-font-size: 16px
+        }
+    }
+
+    .mi-energy-label.mi-energy-label--light {
+        color: var(--text-light)
+    }
+
+    .mi-energy-label.mi-energy-label--dark {
+        color: var(--text-dark)
+    }
+
+    .mi-energy-label.mi-energy-label--row {
+        --column-repeat-count: auto-fill;
+        --column-track-size: 200px;
+        --grid-column-gap: var(--item-gap)
+    }
+
+    @media screen and (max-width: 720px) {
+        .mi-energy-label.mi-energy-label--zoom {
+            --image-width: 9.4444444444vw;
+            --info-margin-left: 3.3333333333vw
+        }
+    }
+
+    @media screen and (min-width: 721px)and (max-width:1024px) {
+        .mi-energy-label.mi-energy-label--zoom {
+            --image-width: 3.125vw;
+            --info-margin-left: 1.3671875vw
+        }
+    }
+
+    @media screen and (min-width: 1025px)and (max-width:1440px) {
+        .mi-energy-label.mi-energy-label--zoom {
+            --image-width: 2.2222222222vw;
+            --info-margin-left: .9722222222vw
+        }
+    }
+
+    @media screen and (min-width: 1441px)and (max-width:1920px) {
+        .mi-energy-label.mi-energy-label--zoom {
+            --image-width: 2.1875vw;
+            --info-margin-left: .8333333333vw
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        .mi-energy-label.mi-energy-label--zoom {
+            --image-width: 54px;
+            --info-margin-left: 16px
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .mi-energy-label.mi-energy-label--zoom .mi-energy-label__link {
+            font-size: 3.3333333333vw;
+            font-size: max(3.3333333333vw, 12px)
+        }
+    }
+
+    @media screen and (min-width: 721px)and (max-width:1024px) {
+        .mi-energy-label.mi-energy-label--zoom .mi-energy-label__link {
+            font-size: max(1.3671875vw, 12px)
+        }
+    }
+
+    @media screen and (min-width: 1025px)and (max-width:1440px) {
+        .mi-energy-label.mi-energy-label--zoom .mi-energy-label__link {
+            font-size: max(1.1111111111vw, 12px)
+        }
+    }
+
+    @media screen and (min-width: 1441px)and (max-width:1920px) {
+        .mi-energy-label.mi-energy-label--zoom .mi-energy-label__link {
+            font-size: max(.8333333333vw, 12px)
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        .mi-energy-label.mi-energy-label--zoom .mi-energy-label__link {
+            font-size: 16px
+        }
+    }
+
+    .mi-energy-label .mi-energy-label__item {
+        align-items: var(--label-align-items);
+        display: flex;
+        flex-direction: var(--label-flex-direction);
+        justify-content: var(--label-justify-content);
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content
+    }
+
+    .mi-energy-label .mi-energy-label__item.mi-energy-label__item--column {
+        --label-flex-direction: column-reverse
+    }
+
+    .mi-energy-label .mi-energy-label__item.mi-energy-label__item--column .mi-energy-label__link.mi-energy-label__link--info {
+        -webkit-margin-start: 0;
+        margin-bottom: var(--info-margin-bottom);
+        margin-inline-start: 0;
+        margin-top: var(--info-margin-top)
+    }
+
+    .mi-energy-label .mi-energy-label__image {
+        cursor: default;
+        width: var(--image-width)
+    }
+
+    .mi-energy-label .mi-energy-label__link {
+        cursor: pointer;
+        font-size: var(--link-font-size);
+        text-decoration: underline;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content
+    }
+
+    .mi-energy-label .mi-energy-label__link.mi-energy-label__link--image {
+        line-height: 0
+    }
+
+    .mi-energy-label .mi-energy-label__link.mi-energy-label__link--image .mi-energy-label__image {
+        cursor: pointer
+    }
+
+    .mi-energy-label .mi-energy-label__link.mi-energy-label__link--info {
+        -webkit-margin-start: var(--info-margin-left);
+        margin-inline-start: var(--info-margin-left);
+        text-align: var(--info-text-align)
+    }
+
+
+    .mi-count-down {
+        --icon-background: #191919;
+        --icon-text-color: #fff
+    }
+
+    @media screen and (max-width: 720px) {
+        .mi-count-down {
+            --icon-size: 22px;
+            --font-size: 12px;
+            --colon-margin: 5px;
+            --icon-text-icon-size: 28px;
+            --icon-text-font-size: 12px;
+            --bottom-text: 10px
+        }
+    }
+
+    @media screen and (min-width: 721px)and (max-width:1024px) {
+        .mi-count-down {
+            --icon-size: 22px;
+            --font-size: 12px;
+            --colon-margin: 5px;
+            --icon-text-icon-size: 36px;
+            --icon-text-font-size: 14px;
+            --bottom-text: 12px
+        }
+    }
+
+    @media screen and (min-width: 1025px)and (max-width:1440px) {
+        .mi-count-down {
+            --icon-size: 2.2222222222vw;
+            --font-size: 1.3888888889vw;
+            --colon-margin: .4166666667vw;
+            --icon-text-icon-size: 46px;
+            --icon-text-font-size: 20px;
+            --bottom-text: 12px
+        }
+    }
+
+    @media screen and (min-width: 1441px)and (max-width:1920px) {
+        .mi-count-down {
+            --icon-size: 2.0833333333vw;
+            --font-size: 1.25vw;
+            --colon-margin: .4166666667vw;
+            --icon-text-icon-size: 56px;
+            --icon-text-font-size: 24px;
+            --bottom-text: 16px
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        .mi-count-down {
+            --icon-size: 40px;
+            --font-size: 24px;
+            --colon-margin: 8px;
+            --icon-text-icon-size: 56px;
+            --icon-text-font-size: 24px;
+            --bottom-text: 16px
+        }
+    }
+
+    .mi-count-down--text {
+        display: inline-block
+    }
+
+    .mi-count-down--icon,
+    .mi-count-down-text--icon {
+        align-items: center;
+        direction: ltr;
+        display: inline-flex;
+        justify-content: center
+    }
+
+    .mi-count-down--icon .mi-count-down__time,
+    .mi-count-down-text--icon .mi-count-down__time {
+        align-items: center;
+        background-color: var(--icon-background);
+        -webkit-clip-path: url(#svgClipPath);
+        clip-path: url(#svgClipPath);
+        color: var(--icon-text-color);
+        display: inline-flex;
+        font-size: var(--font-size);
+        height: var(--icon-size);
+        justify-content: center;
+        width: var(--icon-size);
+    }
+
+    .mi-count-down--icon .mi-count-down__colon,
+    .mi-count-down-text--icon .mi-count-down__colon {
+        align-items: center;
+        color: var(--icon-background);
+        display: inline-flex;
+        font-size: var(--font-size);
+        font-weight: 700;
+        height: var(--icon-size);
+        justify-content: center;
+        opacity: .6;
+        padding: 0 var(--colon-margin)
+    }
+
+    .mi-count-down-text--icon {
+        justify-content: normal
+    }
+
+    @media screen and (max-width: 720px) {
+        .mi-count-down-text--icon {
+            justify-content: end
+        }
+    }
+
+    @media screen and (min-width: 721px)and (max-width:1024px) {
+        .mi-count-down-text--icon {
+            justify-content: normal
+        }
+    }
+
+    @media screen and (min-width: 1025px)and (max-width:1440px) {
+        .mi-count-down-text--icon {
+            justify-content: normal
+        }
+    }
+
+    @media screen and (min-width: 1441px)and (max-width:1920px) {
+        .mi-count-down-text--icon {
+            justify-content: normal
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        .mi-count-down-text--icon {
+            justify-content: normal
+        }
+    }
+
+    .mi-count-down-text--icon .mi-count-down__time {
+        background-color: hsla(0, 0%, 54%, .1);
+        color: #191919;
+        font-size: var(--icon-text-font-size);
+        height: var(--icon-text-icon-size);
+        width: var(--icon-text-icon-size)
+    }
+
+    .mi-count-down__bottom-text {
+        color: #191919;
+        font-size: var(--bottom-text);
+        margin-top: 10px;
+        text-align: center
+    }
+
+    @media screen and (max-width: 720px) {
+        .mi-count-down__bottom-text {
+            margin-top: 6px
+        }
+    }
+
+    @media screen and (min-width: 721px)and (max-width:1024px) {
+        .mi-count-down__bottom-text {
+            margin-top: 6px
+        }
+    }
+
+    @media screen and (min-width: 1025px)and (max-width:1440px) {
+        .mi-count-down__bottom-text {
+            margin-top: 8px
+        }
+    }
+
+    @media screen and (min-width: 1441px)and (max-width:1920px) {
+        .mi-count-down__bottom-text {
+            margin-top: 10px
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        .mi-count-down__bottom-text {
+            margin-top: 10px
+        }
+    }
+
+    .mi-count-down-card {
+        width: var(--icon-text-icon-size)
+    }
+
+    @media screen and (max-width: 720px) {
+        .mi-count-down-card {
+            -webkit-margin-end: 10px;
+            margin-inline-end: 10px
+        }
+    }
+
+    @media screen and (min-width: 721px)and (max-width:1024px) {
+        .mi-count-down-card {
+            -webkit-margin-end: 8px;
+            margin-inline-end: 8px
+        }
+    }
+
+    @media screen and (min-width: 1025px)and (max-width:1440px) {
+        .mi-count-down-card {
+            -webkit-margin-end: 16px;
+            margin-inline-end: 16px
+        }
+    }
+
+    @media screen and (min-width: 1441px)and (max-width:1920px) {
+        .mi-count-down-card {
+            -webkit-margin-end: 16px;
+            margin-inline-end: 16px
+        }
+    }
+
+    @media screen and (min-width: 1921px) {
+        .mi-count-down-card {
+            -webkit-margin-end: 16px;
+            margin-inline-end: 16px
+        }
+    }
+
+    .mi-count-down.mi-count-down-text--icon {
+        text-align: center
+    }
+
+    .mi-count-down.mi-count-down-text--icon .mi-count-down-light .mi-count-down__time {
+        background-color: hsla(0, 0%, 100%, .1);
+        color: #fff
+    }
+
+    .mi-count-down.mi-count-down-text--icon .mi-count-down-light .mi-count-down__bottom-text {
+        color: #fff
+    }
+
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area {
+        --grid-columns-number: 1;
+        --grid-gutter-row: 16px;
+        --grid-gutter-col: 8px;
+        --margin-size: var(--grid-gutter-width);
+        --padding-size: 16px;
+        --padding-wrap: 16px;
+        --font-size: 36px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area {
+        --grid-columns-number: 2;
+        --grid-gutter-row: 18px;
+        --grid-gutter-col: 9px;
+        --margin-size: 2.34375vw;
+        --padding-size: 14px;
+        --padding-wrap: 14px;
+        --font-size: 28px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area {
+        --grid-columns-number: 2;
+        --grid-gutter-row: 20px;
+        --grid-gutter-col: 10px;
+        --margin-size: 24px;
+        --padding-size: 14px;
+        --padding-wrap: 18px;
+        --font-size: 42px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area {
+        --grid-columns-number: 2;
+        --grid-gutter-row: 24px;
+        --grid-gutter-col: 16px;
+        --margin-size: 36px;
+        --padding-size: 16px;
+        --padding-wrap: 24px;
+        --font-size: 54px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area {
+        --grid-columns-number: 2;
+        --grid-gutter-row: 24px;
+        --grid-gutter-col: 16px;
+        --margin-size: 48px;
+        --padding-size: 18px;
+        --padding-wrap: 32px;
+        --font-size: 72px
+    }
+}
+
+.daily-picks-area .daily-picks-area__main {
+    grid-gap: var(--grid-gutter-row) var(--grid-gutter-col);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns-number), 1fr);
+    position: relative;
+    text-align: start
+}
+
+.daily-picks-area>.daily-picks-area__aside,
+.daily-picks-area>.mi-btn,
+.daily-picks-area>.mi-loading {
+    grid-column: span var(--grid-columns-number)
+}
+
+.daily-picks-area>.daily-picks-area__empty,
+.daily-picks-area>.daily-picks-area__error,
+.daily-picks-area>.daily-picks-area__loading {
+    box-sizing: border-box;
+    padding: calc(var(--font-size)*2) 0;
+    text-align: center
+}
+
+.daily-picks-area .daily-picks-area__empty {
+    font-size: var(--font-size);
+    font-weight: 900;
+    opacity: .3
+}
+
+.daily-picks-area .daily-picks-area__aside {
+    background-color: #fff;
+    position: -webkit-sticky;
+    position: sticky;
+    top: var(--header-height);
+    z-index: 1
+}
+
+.daily-picks-area .daily-picks-area__aside.daily-picks-area__aside--pinned {
+    background-color: #fff;
+    background-color: var(--background-white);
+    box-shadow: 0 6px 16px 0 rgba(25, 25, 25, .06)
+}
+
+.daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list {
+    --ms-overflow-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: var(--font-size);
+    // margin-bottom: calc(var(--margin-size) - var(--padding-size));
+    // margin-top: calc(var(--padding-size)*-1);
+    // overflow-x: auto;
+    padding: 0;
+    // scrollbar-color: transparent transparent;
+    // scrollbar-width: none;
+}
+
+.daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list::-webkit-scrollbar {
+    display: none;
+    height: 0;
+    width: 0
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list {
+        --font-size: 16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list {
+        --font-size: 12px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list {
+        --font-size: 14px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list {
+        --font-size: 18px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list {
+        --font-size: 24px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list {
+        margin-bottom: var(--margin-size);
+        margin-top: 0
+    }
+}
+
+.daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list .daily-picks-area__date-item {
+    font-weight: 700;
+    padding-bottom: var(--padding-size);
+    padding-top: var(--padding-size);
+    text-transform: uppercase;
+    transition: color .2s ease-in-out
+}
+
+.daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list .daily-picks-area__date-item.daily-picks-area__date-item--active {
+    color: #ff6900;
+    color: var(--text-primary)
+}
+
+.daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list .daily-picks-area__date-item a {
+    -webkit-padding-start: var(--padding-wrap);
+    -webkit-padding-end: var(--padding-wrap);
+    border-left: .5px solid #dcdcdc;
+    border-right: .5px solid #dcdcdc;
+    padding-inline-end: var(--padding-wrap);
+    padding-inline-start: var(--padding-wrap);
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list .daily-picks-area__date-item:first-of-type a {
+    border-left: 0;
+    padding-left: 0;
+}
+
+.daily-picks-area .daily-picks-area__aside .daily-picks-area__date-list .daily-picks-area__date-item:last-of-type a {
+    border-right: 0;
+    padding-right: 0;
+}
+
+.daily-picks-area__list {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow .25s ease;
+    width: 100%
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list:hover {
+        box-shadow: 0 .3125vw .7291666667vw 0 rgba(0, 0, 0, .08)
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list:hover {
+        box-shadow: 0 .3125vw .7291666667vw 0 rgba(0, 0, 0, .08)
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list:hover {
+        box-shadow: 0 6px 14px 0 rgba(0, 0, 0, .08)
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list:hover {
+        box-shadow: 0 6px 14px 0 rgba(0, 0, 0, .08)
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list {
+        border-radius: 8px
+    }
+}
+
+.daily-picks-area__list .daily-picks-area__list-anchor {
+    display: block;
+    height: 0;
+    position: absolute;
+    top: calc(var(--header-height)*-1 - var(--padding-size)*2 - var(--grid-gutter-row)*1.5);
+    visibility: hidden;
+    z-index: -10
+}
+
+.daily-picks-area__list .daily-picks-area__list-header {
+    align-items: center;
+    background-color: #eee;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-between
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list .daily-picks-area__list-header {
+        font-size: 12px;
+        padding: 8px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list .daily-picks-area__list-header {
+        font-size: 12px;
+        padding: 5px 10px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list .daily-picks-area__list-header {
+        font-size: 14px;
+        padding: 7px 14px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list .daily-picks-area__list-header {
+        font-size: 16px;
+        padding: 9px 18px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list .daily-picks-area__list-header {
+        font-size: 20px;
+        padding: 12px 24px
+    }
+}
+
+.daily-picks-area__list .daily-picks-area__list-header .daily-picks-area__list-date mark {
+    -webkit-margin-start: .25em;
+    background-color: transparent;
+    color: inherit;
+    font-weight: 400;
+    margin-inline-start: .25em;
+    text-transform: capitalize
+}
+
+.daily-picks-area__list .daily-picks-area__list-header .daily-picks-area__list-date mark:empty,
+.daily-picks-area__list .daily-picks-area__list-header .daily-picks-area__list-date mark:not(:empty)+i {
+    display: none
+}
+
+.daily-picks-area__list .daily-picks-area__list-header .daily-picks-area__list-date strong {
+    display: inline-block;
+    text-transform: uppercase
+}
+
+.daily-picks-area__list .daily-picks-area__list-header .daily-picks-area__list-date i {
+    -webkit-margin-start: .25em;
+    font-style: normal;
+    margin-inline-start: .25em;
+    text-transform: uppercase
+}
+
+.daily-picks-area__list .daily-picks-area__list-header .daily-picks-area__list-date span {
+    -webkit-margin-start: .25em;
+    margin-inline-start: .25em
+}
+
+.daily-picks-area__list .daily-picks-area__list-status .mi-count-down {
+    --icon-background: #fff;
+    --icon-text-color: #ff6900
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list .daily-picks-area__list-status .mi-count-down {
+        --icon-size: 16px;
+        --font-size: 12px;
+        --colon-margin: 3px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list .daily-picks-area__list-status .mi-count-down {
+        --icon-size: 20px;
+        --font-size: 12px;
+        --colon-margin: 4px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list .daily-picks-area__list-status .mi-count-down {
+        --icon-size: 24px;
+        --font-size: 14px;
+        --colon-margin: 5px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list .daily-picks-area__list-status .mi-count-down {
+        --icon-size: 30px;
+        --font-size: 18px;
+        --colon-margin: 6px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list .daily-picks-area__list-status .mi-count-down {
+        --icon-size: 40px;
+        --font-size: 24px;
+        --colon-margin: 8px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming,
+    .daily-picks-area__list--doing,
+    .daily-picks-area__list--done {
+        flex-direction: row;
+        grid-column: span 2
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming,
+    .daily-picks-area__list--doing,
+    .daily-picks-area__list--done {
+        flex-direction: row;
+        grid-column: span 2
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming,
+    .daily-picks-area__list--doing,
+    .daily-picks-area__list--done {
+        flex-direction: row;
+        grid-column: span 2
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming,
+    .daily-picks-area__list--doing,
+    .daily-picks-area__list--done {
+        flex-direction: row;
+        grid-column: span 2
+    }
+}
+
+.daily-picks-area__list--coming .daily-picks-area__list-header,
+.daily-picks-area__list--doing .daily-picks-area__list-header,
+.daily-picks-area__list--done .daily-picks-area__list-header {
+    background-color: #ff6900;
+    color: #fff;
+    flex-grow: 0
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header,
+    .daily-picks-area__list--doing .daily-picks-area__list-header,
+    .daily-picks-area__list--done .daily-picks-area__list-header {
+        align-items: center
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header,
+    .daily-picks-area__list--doing .daily-picks-area__list-header,
+    .daily-picks-area__list--done .daily-picks-area__list-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 30px 26px;
+        width: 180px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header,
+    .daily-picks-area__list--doing .daily-picks-area__list-header,
+    .daily-picks-area__list--done .daily-picks-area__list-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 42px 36px;
+        width: 248px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header,
+    .daily-picks-area__list--doing .daily-picks-area__list-header,
+    .daily-picks-area__list--done .daily-picks-area__list-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 54px 48px;
+        width: 330px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header,
+    .daily-picks-area__list--doing .daily-picks-area__list-header,
+    .daily-picks-area__list--done .daily-picks-area__list-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 72px 64px;
+        width: 440px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date {
+        display: flex;
+        flex-flow: column nowrap
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date {
+        display: flex;
+        flex-flow: column nowrap
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date {
+        display: flex;
+        flex-flow: column nowrap
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date {
+        display: flex;
+        flex-flow: column nowrap
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date strong {
+        display: flex;
+        flex-flow: column nowrap;
+        font-size: 28px;
+        font-weight: 900;
+        opacity: .3
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date strong {
+        display: flex;
+        flex-flow: column nowrap;
+        font-size: 42px;
+        font-weight: 900;
+        opacity: .3
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date strong {
+        display: flex;
+        flex-flow: column nowrap;
+        font-size: 54px;
+        font-weight: 900;
+        opacity: .3
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date strong {
+        display: flex;
+        flex-flow: column nowrap;
+        font-size: 72px;
+        font-weight: 900;
+        opacity: .3
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date mark {
+        -webkit-margin-start: 0;
+        font-size: 18px;
+        font-weight: 700;
+        margin-inline-start: 0
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date mark {
+        -webkit-margin-start: 0;
+        font-size: 27px;
+        font-weight: 700;
+        margin-inline-start: 0
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date mark {
+        -webkit-margin-start: 0;
+        font-size: 36px;
+        font-weight: 700;
+        margin-inline-start: 0
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date mark,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date mark {
+        -webkit-margin-start: 0;
+        font-size: 48px;
+        font-weight: 700;
+        margin-inline-start: 0
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date i {
+        -webkit-margin-start: 0;
+        font-size: 18px;
+        font-weight: 700;
+        margin-inline-start: 0;
+        text-transform: capitalize
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date i {
+        -webkit-margin-start: 0;
+        font-size: 27px;
+        font-weight: 700;
+        margin-inline-start: 0;
+        text-transform: capitalize
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date i {
+        -webkit-margin-start: 0;
+        font-size: 36px;
+        font-weight: 700;
+        margin-inline-start: 0;
+        text-transform: capitalize
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date i,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date i {
+        -webkit-margin-start: 0;
+        font-size: 48px;
+        font-weight: 700;
+        margin-inline-start: 0;
+        text-transform: capitalize
+    }
+}
+
+.daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-date span,
+.daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-date span,
+.daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-date span {
+    display: none
+}
+
+.daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status,
+.daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status,
+.daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status {
+    display: flex;
+    flex-flow: column nowrap
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status {
+        gap: 9px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status {
+        gap: 14px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status {
+        gap: 18px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status {
+        gap: 24px
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status {
+        display: block
+    }
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status>strong {
+        font-size: 12px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status>strong {
+        font-size: 12px;
+        margin-top: 9px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status>strong {
+        font-size: 18px;
+        margin-top: 14px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status>strong {
+        font-size: 24px;
+        margin-top: 18px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--doing .daily-picks-area__list-header .daily-picks-area__list-status>strong,
+    .daily-picks-area__list--done .daily-picks-area__list-header .daily-picks-area__list-status>strong {
+        font-size: 24px;
+        margin-top: 24px
+    }
+}
+
+.daily-picks-area__list--coming .daily-picks-area__list-action,
+.daily-picks-area__list--doing .daily-picks-area__list-action,
+.daily-picks-area__list--done .daily-picks-area__list-action {
+    position: absolute;
+    transform: translateX(-100%) translateY(-50%)
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-action,
+    .daily-picks-area__list--doing .daily-picks-area__list-action,
+    .daily-picks-area__list--done .daily-picks-area__list-action {
+        top: 30px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-action,
+    .daily-picks-area__list--doing .daily-picks-area__list-action,
+    .daily-picks-area__list--done .daily-picks-area__list-action {
+        bottom: 30px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__list-action {
+        left: 150px
+    }
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__list-action {
+        right: 150px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-action,
+    .daily-picks-area__list--doing .daily-picks-area__list-action,
+    .daily-picks-area__list--done .daily-picks-area__list-action {
+        bottom: 42px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__list-action {
+        left: 211px
+    }
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__list-action {
+        right: 211px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-action,
+    .daily-picks-area__list--doing .daily-picks-area__list-action,
+    .daily-picks-area__list--done .daily-picks-area__list-action {
+        bottom: 56px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__list-action {
+        left: 282px
+    }
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__list-action {
+        right: 282px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-action,
+    .daily-picks-area__list--doing .daily-picks-area__list-action,
+    .daily-picks-area__list--done .daily-picks-area__list-action {
+        bottom: 56px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__list-action {
+        left: 376px
+    }
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__list-action {
+        right: 376px
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__list-action,
+    .daily-picks-area__list--doing .daily-picks-area__list-action,
+    .daily-picks-area__list--done .daily-picks-area__list-action {
+        left: unset;
+        right: 16px
+    }
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__list-action,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__list-action {
+        left: 16px;
+        right: unset
+    }
+}
+
+.daily-picks-area__list--will .daily-picks-area__list-header .daily-picks-area__list-date {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    display: box;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word
+}
+
+.daily-picks-area__list--will .daily-picks-area__list-action {
+    position: absolute;
+    transform: translateY(-50%)
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list--will .daily-picks-area__list-action {
+        top: 30px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__list-action {
+        right: 16px
+    }
+
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__list-action {
+        left: 16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list--will .daily-picks-area__list-action {
+        top: 24px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__list-action {
+        right: 20px
+    }
+
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__list-action {
+        left: 20px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list--will .daily-picks-area__list-action {
+        top: 31px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__list-action {
+        right: 30px
+    }
+
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__list-action {
+        left: 30px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list--will .daily-picks-area__list-action {
+        top: 37px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__list-action {
+        right: 40px
+    }
+
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__list-action {
+        left: 40px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list--will .daily-picks-area__list-action {
+        top: 48px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__list-action {
+        right: 40px
+    }
+
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__list-action {
+        left: 40px
+    }
+}
+
+.daily-picks-area__list--will .daily-picks-area__list-status {
+    display: none
+}
+
+.daily-picks-area__item {
+    align-items: center;
+    background-color: transparent;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+    justify-content: space-between;
+    position: relative;
+    width: 100%
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-grow: 1;
+    height: 100%
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-title {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: #191919;
+    color: var(--text-base);
+    display: box;
+    display: -webkit-box;
+    flex-shrink: 0;
+    font-weight: 700;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 16px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 22px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 27px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 36px
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-subtitle {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: #898989;
+    color: var(--brand-grey);
+    display: box;
+    display: -webkit-box;
+    flex-shrink: 0;
+    font-weight: 400;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-subtitle {
+        font-size: 12px;
+        margin-top: 4px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-subtitle {
+        font-size: 12px;
+        margin-top: 5px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-subtitle {
+        font-size: 14px;
+        margin-top: 6px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-subtitle {
+        font-size: 18px;
+        margin-top: 8px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-subtitle {
+        font-size: 24px;
+        margin-top: 10px
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-subtitle:empty {
+    display: none
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-energy {
+        --group-margin-top: 4px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-energy {
+        --group-margin-top: 8px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-energy {
+        --group-margin-top: 10px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-energy {
+        --group-margin-top: 12px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-energy {
+        --group-margin-top: 16px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-marketing {
+        --installment-margin-top: 3px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-marketing {
+        --installment-margin-top: 5px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-marketing {
+        --installment-margin-top: 6px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-marketing {
+        --installment-margin-top: 7px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-marketing {
+        --installment-margin-top: 8px
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-info {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: #ff6900;
+    color: var(--text-primary);
+    display: box;
+    display: -webkit-box;
+    font-weight: 400;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-line;
+    word-break: break-word
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-info {
+        font-size: 12px;
+        margin: 5px 0
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-info {
+        font-size: 12px;
+        margin: 8px 0
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-info {
+        font-size: 14px;
+        margin: 10px 0
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-info {
+        font-size: 18px;
+        margin: 12px 0
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-info {
+        font-size: 24px;
+        margin: 16px 0
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-spacer {
+    flex-grow: 1
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price strong {
+    font-weight: 700
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price strong {
+        font-size: 16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price strong {
+        font-size: 16px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price strong {
+        font-size: 20px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price strong {
+        font-size: 28px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price strong {
+        font-size: 36px
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price del {
+    color: #d0d0d0
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price del {
+        font-size: 12px;
+        margin: 0 8px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price del {
+        font-size: 12px;
+        margin: 0 8px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price del {
+        font-size: 14px;
+        margin: 0 8px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price del {
+        font-size: 18px;
+        margin: 0 12px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-detail .daily-picks-area__item-price del {
+        font-size: 24px;
+        margin: 0 16px
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-gap {
+    flex-grow: 0;
+    flex-shrink: 0
+}
+
+.daily-picks-area__item .daily-picks-area__item-images {
+    flex-shrink: 0;
+    font-size: 12px;
+    object-fit: contain;
+    object-position: right;
+    position: relative
+}
+
+.daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-main {
+    height: 100%;
+    width: 100%
+}
+
+.daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+    position: absolute
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        bottom: 5px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .1))
+    }
+
+    [dir=ltr] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        right: 5px
+    }
+
+    [dir=rtl] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        left: 5px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        bottom: 6px;
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .1))
+    }
+
+    [dir=ltr] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        right: 6px
+    }
+
+    [dir=rtl] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        left: 6px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        bottom: 9px;
+        filter: drop-shadow(0 2px 9px rgba(0, 0, 0, .1))
+    }
+
+    [dir=ltr] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        right: 9px
+    }
+
+    [dir=rtl] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        left: 9px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        bottom: 12px;
+        filter: drop-shadow(0 3px 12px rgba(0, 0, 0, .1))
+    }
+
+    [dir=ltr] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        right: 12px
+    }
+
+    [dir=rtl] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        left: 12px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        bottom: 16px;
+        filter: drop-shadow(0 4px 16px rgba(0, 0, 0, .1))
+    }
+
+    [dir=ltr] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        right: 16px
+    }
+
+    [dir=rtl] .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift {
+        left: 16px
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift img {
+    background-color: #f7f7f7
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 40px;
+        width: 40px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 40px;
+        width: 40px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 56px;
+        width: 56px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 75px;
+        width: 75px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__item .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 100px;
+        width: 100px
+    }
+}
+
+.daily-picks-area__item .daily-picks-area__item-action {
+    position: absolute
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item,
+    .daily-picks-area__list--doing .daily-picks-area__item,
+    .daily-picks-area__list--done .daily-picks-area__item {
+        --image-width: 120px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 26px 16px 26px 20px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item,
+    .daily-picks-area__list--doing .daily-picks-area__item,
+    .daily-picks-area__list--done .daily-picks-area__item {
+        --image-width: 144px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 30px 40px 30px 70px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item,
+    .daily-picks-area__list--doing .daily-picks-area__item,
+    .daily-picks-area__list--done .daily-picks-area__item {
+        --image-width: 200px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 42px 60px 42px 105px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item,
+    .daily-picks-area__list--doing .daily-picks-area__item,
+    .daily-picks-area__list--done .daily-picks-area__item {
+        --image-width: 270px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 56px 80px 56px 140px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item,
+    .daily-picks-area__list--doing .daily-picks-area__item,
+    .daily-picks-area__list--done .daily-picks-area__item {
+        --image-width: 360px
+    }
+
+    [dir=ltr] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=ltr] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 56px 80px 56px 140px
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 26px 20px 26px 16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 30px 70px 30px 40px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 42px 105px 42px 60px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 56px 140px 56px 80px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    [dir=rtl] .daily-picks-area__list--coming .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--doing .daily-picks-area__item,
+    [dir=rtl] .daily-picks-area__list--done .daily-picks-area__item {
+        padding: 56px 140px 56px 80px
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--doing .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--done .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--doing .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--done .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 20px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--doing .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--done .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 27px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--doing .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--done .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 36px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--doing .daily-picks-area__item-detail .daily-picks-area__item-title,
+    .daily-picks-area__list--done .daily-picks-area__item-detail .daily-picks-area__item-title {
+        font-size: 48px
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-gap,
+    .daily-picks-area__list--doing .daily-picks-area__item-gap,
+    .daily-picks-area__list--done .daily-picks-area__item-gap {
+        flex-basis: 8px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-gap,
+    .daily-picks-area__list--doing .daily-picks-area__item-gap,
+    .daily-picks-area__list--done .daily-picks-area__item-gap {
+        flex-basis: 42px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-gap,
+    .daily-picks-area__list--doing .daily-picks-area__item-gap,
+    .daily-picks-area__list--done .daily-picks-area__item-gap {
+        flex-basis: 60px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-gap,
+    .daily-picks-area__list--doing .daily-picks-area__item-gap,
+    .daily-picks-area__list--done .daily-picks-area__item-gap {
+        flex-basis: 80px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-gap,
+    .daily-picks-area__list--doing .daily-picks-area__item-gap,
+    .daily-picks-area__list--done .daily-picks-area__item-gap {
+        flex-basis: 80px
+    }
+}
+
+.daily-picks-area__list--coming .daily-picks-area__item-images,
+.daily-picks-area__list--doing .daily-picks-area__item-images,
+.daily-picks-area__list--done .daily-picks-area__item-images {
+    height: var(--image-width);
+    width: var(--image-width)
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 40px;
+        width: 40px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 45px;
+        width: 45px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 45px;
+        width: 45px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 60px;
+        width: 60px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--coming .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--doing .daily-picks-area__item-images .daily-picks-area__item-gift img,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift,
+    .daily-picks-area__list--done .daily-picks-area__item-images .daily-picks-area__item-gift img {
+        height: 80px;
+        width: 80px
+    }
+}
+
+.daily-picks-area__list--coming .daily-picks-area__item-energy,
+.daily-picks-area__list--doing .daily-picks-area__item-energy,
+.daily-picks-area__list--done .daily-picks-area__item-energy {
+    --group-margin-top: 0 !important
+}
+
+@media screen and (max-width: 720px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-energy,
+    .daily-picks-area__list--doing .daily-picks-area__item-energy,
+    .daily-picks-area__list--done .daily-picks-area__item-energy {
+        --image-width: 45px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-energy,
+    .daily-picks-area__list--doing .daily-picks-area__item-energy,
+    .daily-picks-area__list--done .daily-picks-area__item-energy {
+        --image-width: 39px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-energy,
+    .daily-picks-area__list--doing .daily-picks-area__item-energy,
+    .daily-picks-area__list--done .daily-picks-area__item-energy {
+        --image-width: 55px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-energy,
+    .daily-picks-area__list--doing .daily-picks-area__item-energy,
+    .daily-picks-area__list--done .daily-picks-area__item-energy {
+        --image-width: 73px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .daily-picks-area__list--coming .daily-picks-area__item-energy,
+    .daily-picks-area__list--doing .daily-picks-area__item-energy,
+    .daily-picks-area__list--done .daily-picks-area__item-energy {
+        --image-width: 97px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list--will .daily-picks-area__item {
+        --image-width: 120px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 26px 16px 26px 20px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list--will .daily-picks-area__item {
+        --image-width: 120px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 22px 20px 22px 40px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list--will .daily-picks-area__item {
+        --image-width: 160px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 33px 30px 33px 60px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list--will .daily-picks-area__item {
+        --image-width: 210px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 44px 40px 44px 80px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list--will .daily-picks-area__item {
+        --image-width: 280px
+    }
+
+    [dir=ltr] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 44px 40px 44px 80px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 26px 20px 26px 16px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 22px 40px 22px 20px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 33px 60px 33px 30px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 44px 80px 44px 40px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    [dir=rtl] .daily-picks-area__list--will .daily-picks-area__item {
+        padding: 44px 80px 44px 40px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list--will .daily-picks-area__item-gap {
+        flex-basis: 8px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list--will .daily-picks-area__item-gap {
+        flex-basis: 16px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list--will .daily-picks-area__item-gap {
+        flex-basis: 22px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list--will .daily-picks-area__item-gap {
+        flex-basis: 30px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list--will .daily-picks-area__item-gap {
+        flex-basis: 30px
+    }
+}
+
+.daily-picks-area__list--will .daily-picks-area__item-images {
+    height: var(--image-width);
+    width: var(--image-width)
+}
+
+.daily-picks-area__list--will .daily-picks-area__item-energy {
+    --group-margin-top: 0 !important;
+    --info-margin-left: 0
+}
+
+.daily-picks-area__list--will .daily-picks-area__item-energy .mi-energy-label__item {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column
+}
+
+.daily-picks-area__list--will .daily-picks-area__item-energy .mi-energy-label__link--info {
+    padding-top: 5px
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list--will .daily-picks-area__item-energy {
+        --image-width: 45px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list--will .daily-picks-area__item-energy {
+        --image-width: 31px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list--will .daily-picks-area__item-energy {
+        --image-width: 44px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list--will .daily-picks-area__item-energy {
+        --image-width: 58px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list--will .daily-picks-area__item-energy {
+        --image-width: 77px
+    }
+}
+
+.daily-picks-area__button {
+    align-items: center;
+    -webkit-clip-path: url(#svgClipPath);
+    clip-path: url(#svgClipPath);
+    color: #fff;
+    color: var(--text-reverse);
+    display: flex;
+    justify-content: center;
+    line-height: 1;
+    transition: background-color .2s ease
+}
+
+.daily-picks-area__button:not(:disabled):hover {
+    --icon-background-color: var(--background-primary)
+}
+
+.daily-picks-area__button .daily-picks-area__button-icon {
+    line-height: 1
+}
+
+.daily-picks-area__button .daily-picks-area__button-text {
+    display: none
+}
+
+.daily-picks-area__button--gray {
+    --icon-background-color: var(--brand-grey-40) !important
+}
+
+.daily-picks-area__list--coming .daily-picks-area__button,
+.daily-picks-area__list--doing .daily-picks-area__button,
+.daily-picks-area__list--done .daily-picks-area__button {
+    display: none
+}
+
+.daily-picks-area__list--will .daily-picks-area__button {
+    --btn-border-radius: 0;
+    --icon-background-color: var(--background-black)
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list--will .daily-picks-area__button {
+        height: 20px;
+        width: 20px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list--will .daily-picks-area__button {
+        height: 20px;
+        width: 20px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list--will .daily-picks-area__button {
+        height: 24px;
+        width: 24px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list--will .daily-picks-area__button {
+        height: 30px;
+        width: 30px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list--will .daily-picks-area__button {
+        height: 40px;
+        width: 40px
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .daily-picks-area__list--will .daily-picks-area__button-icon {
+        --icon-font-size: 14px
+    }
+}
+
+@media screen and (min-width: 721px)and (max-width:1024px) {
+    .daily-picks-area__list--will .daily-picks-area__button-icon {
+        --icon-font-size: 14px
+    }
+}
+
+@media screen and (min-width: 1025px)and (max-width:1440px) {
+    .daily-picks-area__list--will .daily-picks-area__button-icon {
+        --icon-font-size: 18px
+    }
+}
+
+@media screen and (min-width: 1441px)and (max-width:1920px) {
+    .daily-picks-area__list--will .daily-picks-area__button-icon {
+        --icon-font-size: 22px
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .daily-picks-area__list--will .daily-picks-area__button-icon {
+        --icon-font-size: 28px
+    }
+}

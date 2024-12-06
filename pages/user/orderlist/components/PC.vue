@@ -48,13 +48,11 @@ watch(status, resetData)
 								</li>
 							</div>
 						</div>
-						<ul
-							class="user-order-list-container_nav order-list__nav"
-						>
+						<ul class="order-list__nav">
 							<li
 								v-for="option in statusOptions"
 								:key="option.value"
-								class="order-list__nav__title title"
+								class="title"
 								@click="status = option.value"
 							>
 								<span

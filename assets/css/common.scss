@@ -14,6 +14,14 @@ li {
 	font-family: "MiSans Latin"; /*字体名称，自己命名*/
 	src: url('../fonts/miSansLatin/MiSansLatinVF.ttf') format('truetype'); /* 修改为字体文件实际路径 */
 }
+
+p,
+span,
+strong {
+	white-space: pre-line
+}
+
+
 input,
 select,
 textarea {
@@ -98,7 +106,8 @@ body {
 
 
 .mi-pagination {
-	justify-content: center;
-	--mi-pagination-bg-color: transparent;
-	--mi-pagination-button-disabled-bg-color: transparent;
+	margin: calc(var(--grid-gap) * 2) var(--grid-gap);
+	justify-content: center !important;
+	--mi-pagination-bg-color: transparent !important;
+	--mi-pagination-button-disabled-bg-color: transparent !important;
 }

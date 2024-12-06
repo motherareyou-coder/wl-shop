@@ -36,7 +36,7 @@ const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 				@click="onClick"
 			/>
 			<div class="item__info">
-				<div v-if="activities?.length" class="item__info-section">
+				<div v-if="appStore.isPC || activities?.length" class="item__info-section">
 					<div class="mi-marketing-label__tags item__marketing-tags">
 						<ul class="tag__list">
 							<template v-for="(a, i) in activities" :key="a.type">

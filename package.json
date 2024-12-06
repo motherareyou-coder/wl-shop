@@ -20,6 +20,7 @@
 		"@vueuse/nuxt": "^11.2.0",
 		"big.js": "^6.2.2",
 		"dayjs": "^1.11.13",
+		"dayjs-nuxt": "2.1.11",
 		"lodash-es": "^4.17.21",
 		"nuxt": "latest",
 		"pinia": "^2.2.5",

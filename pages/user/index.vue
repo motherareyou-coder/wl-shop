@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import BgImg from '@/assets/imgs/user-center-bg.jpg'
 import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
-import dayjs from 'dayjs'
 import type { PayWallet } from '~/types'
 import './index.scss'
 
@@ -13,6 +12,7 @@ const userStore = useUserStore()
 
 const user = computed(() => userStore.$state)
 
+const dayjs = useDayjs()
 const formState = reactive({
 	visible: false,
 	loading: false,
@@ -38,6 +38,11 @@ const linkList = [
 		title: $t('My Orders'),
 		icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
 		url: '/user/orderlist',
+	},
+	{
+		title: $t('拼团记录'),
+		icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
+		url: '/user/combination',
 	},
 	{
 		title: $t('Coupons'),
@@ -319,9 +324,9 @@ function logout() {
 								src="https://i02.appmifile.com/321_operatorx_operatorx_opx/09/12/2021/51e6d2dc6305cc3250d71be3fad1c40c.png"
 								alt="Unpaid"
 							>
-							<span class="orders-item__title">{{
-								$t('Unpaid')
-							}}</span>
+							<span class="orders-item__title">
+								{{ $t('Unpaid') }}
+							</span>
 						</nuxt-link>
 					</li>
 					<li role="row" class="orders-nav__item">
@@ -331,9 +336,9 @@ function logout() {
 								src="https://i02.appmifile.com/614_operatorx_operatorx_opx/09/12/2021/9f29b095aee59d25f488324878e80f31.png"
 								alt="Shipping"
 							>
-							<span class="orders-item__title">{{
-								$t('Shipping')
-							}}</span>
+							<span class="orders-item__title">
+								{{ $t('Shipping') }}
+							</span>
 						</nuxt-link>
 					</li>
 					<li role="row" class="orders-nav__item">
@@ -343,9 +348,9 @@ function logout() {
 								src="https://i02.appmifile.com/213_operatorx_operatorx_opx/09/12/2021/bdfa2888681dc590f4e20ee6545549b2.png"
 								alt="Reviews"
 							>
-							<span class="orders-item__title">{{
-								$t('Reviews')
-							}}</span>
+							<span class="orders-item__title">
+								{{ $t('Reviews') }}
+							</span>
 						</nuxt-link>
 					</li>
 					<li role="row" tabindex="0" class="orders-nav__item">
@@ -355,9 +360,9 @@ function logout() {
 								src="https://i02.appmifile.com/613_operatorx_operatorx_opx/09/12/2021/e355c76f8bbaddcfb285e03454bdf2ed.png"
 								alt="Returns"
 							>
-							<span class="orders-item__title">{{
-								$t('Returns')
-							}}</span>
+							<span class="orders-item__title">
+								{{ $t('Returns') }}
+							</span>
 						</nuxt-link>
 					</li>
 				</ul>

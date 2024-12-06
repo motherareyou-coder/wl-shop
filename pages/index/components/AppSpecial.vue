@@ -6,6 +6,11 @@ import './AppSpecial.scss'
 const { data: specialList } = await useAPI<ProductSpu[]>('product/spu/get-main-show-spu', { params: { count: 6 } })
 
 const finalData = computed(() => chunk(specialList.value, 3))
+
+const router = useRouter()
+function handleClick(d: ProductSpu) {
+	router.push($path(`/product/${d.id}`))
+}
 </script>
 
 <template>
@@ -20,8 +25,8 @@ const finalData = computed(() => chunk(specialList.value, 3))
 			</div>
 		</div>
 	</section>
-	<section v-for="(children, j) in finalData" :key="j" class="site-grid site-grid--store-small-special site-grid--special-half-quarter ">
-		<section v-for="(d, i) in children" :key="d.id" class="store-goods " :class="[i % 3 === 0 ? 'store-goods--half' : 'store-goods--quarter']">
+	<section v-for="(children, j) in finalData" :key="j" class="site-grid--vertical-100 site-grid site-grid--store-small-special site-grid--special-half-quarter ">
+		<section v-for="(d, i) in children" :key="d.id" class="store-goods " :class="[i % 3 === 0 ? 'store-goods--half' : 'store-goods--quarter']" @click="handleClick(d)">
 			<div class="store-goods__wrapper">
 				<div class="store-goods__info">
 					<div class="store-goods__info--upper">

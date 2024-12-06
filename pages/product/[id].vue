@@ -4,12 +4,28 @@ import { isArray, isString, sortBy, uniqBy } from 'lodash-es'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 // import './index.scss'
-import type { ProductDetail } from '~/types'
+import type { Activity, CombinationActivityDetail, ProductDetail } from '~/types'
 
 const router = useRouter()
 const route = useRoute()
-const id = route.params.id
+const id = route.params.id ? Number(route.params.id) : null
+const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
 provide('id', id)
+
+const combinationActivity = ref<CombinationActivityDetail | null>()
+combinationActivityId && $api<CombinationActivityDetail>('promotion/combination-activity/get-detail', {
+	params: { id: combinationActivityId },
+}).then((res) => {
+	combinationActivity.value = res
+})
+const skuDisabled = ref(false)
+provide('combinationActivityId', combinationActivityId)
+provide('skuDisabled', skuDisabled)
+
+// 秒杀---start
+const pickData = ref<Activity>()
+provide('pickData', pickData)
+// 秒杀---end
 
 const { data: info } = await useAPI<ProductDetail>(
 	'product/spu/get-detail',
@@ -36,15 +52,19 @@ watch(
 watch(
 	selected,
 	(v) => {
+		curSku.value = null
 		info.value?.skus.find((s) => {
 			if (Object.entries(v).every(([k, v]) => s.propertyMap[k] === v)) {
 				curSku.value = s
 			}
 		})
-		console.log(v, curSku.value)
 	},
 	{ deep: true },
 )
+watchEffect(() => {
+	if (combinationActivity.value)
+		skuDisabled.value = !!combinationActivity.value?.products.find(p => p.skuId === curSku.value?.id)
+})
 const properties = computed(() => {
 	if (!info.value)
 		return []
@@ -109,7 +129,7 @@ function toggleStar() {
 	}
 }
 
-const userStore = useUserStore()
+const appStore = useAppStore()
 const cartStore = useCartStore()
 
 function goCart() {
@@ -120,7 +140,35 @@ function goCart() {
 	)
 }
 
-const appStore = useAppStore()
+function goCheckout() {
+	if (!count.value || !curSku.value)
+		return
+	if (pickData.value) {
+		localStorage.setItem(`seckillActivityId-${pickData.value.id}`, JSON.stringify({
+			...info.value,
+			count: 1,
+			sku: curSku.value,
+			skuId: curSku.value?.skuId,
+			spuId: id,
+		}))
+		router.push($path(`/user/checkout?seckillActivityId=${pickData.value.id}`))
+	}
+}
+
+function goCombination() {
+	if (!count.value || !curSku.value)
+		return
+	if (!skuDisabled.value) {
+		localStorage.setItem(`combinationActivityId-${combinationActivityId}`, JSON.stringify({
+			...info.value,
+			count: 1,
+			sku: curSku.value,
+			skuId: curSku.value?.skuId,
+			spuId: id,
+		}))
+		router.push($path(`/user/checkout?combinationActivityId=${combinationActivityId}`))
+	}
+}
 </script>
 
 <template>
@@ -136,6 +184,8 @@ const appStore = useAppStore()
 				:properties="properties"
 				@star="toggleStar"
 				@submit="goCart"
+				@buy="goCheckout"
+				@combination="goCombination"
 			/>
 		</div>
 	</div>

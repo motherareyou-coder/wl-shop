@@ -1,0 +1,28 @@
+.miv4 .order-list__nav,
+.miv4 .user-order-list-container_title {
+    margin-top: 0
+}
+
+.order-list__nav {
+    margin: 25px -25px
+}
+
+.order-list__nav .title {
+    border-right: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    color: #b0b0b0;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 0 25px
+}
+
+.order-list__nav .title:last-child {
+    border-right: none
+}
+
+.order-list__nav .title-active {
+    color: #ff6700
+}

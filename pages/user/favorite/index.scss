@@ -687,7 +687,7 @@
 	}
 }
 
-.mi-product__item .item__action .mi-btn {
+.mi-product__item .item__action .mi-button {
 	--btn-padding-vertical: calc(var(--action-common-gap) / 2);
 	--btn-padding-horizontal: var(--action-common-gap);
 	--btn-font-size: var(--font-size-small);
@@ -701,6 +701,9 @@
 	min-width: 30%;
 	text-align: center;
 	word-break: normal;
+	span {
+		white-space: nowrap;
+	}
 }
 
 @media screen and (min-width: 721px) and (max-width: 1024px) {
@@ -727,7 +730,7 @@
 	}
 }
 
-.mi-product__item .item__action .mi-btn:last-child {
+.mi-product__item .item__action .mi-button:last-child {
 	-webkit-margin-end: unset;
 	margin-inline-end: unset;
 }

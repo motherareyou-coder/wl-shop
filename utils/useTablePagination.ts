@@ -7,7 +7,7 @@ function useTablePagination<T>(fetch: (p: any) => Promise<Res<T>>, immediate = t
 	const data: Ref<T[]> = ref([])
 	const pagination = reactive({
 		currentPage: 1,
-		pageSize: 10,
+		pageSize: 30,
 		total: 0,
 	})
 	const loading = ref(false)
@@ -21,6 +21,8 @@ function useTablePagination<T>(fetch: (p: any) => Promise<Res<T>>, immediate = t
 			pageSize: pagination.pageSize,
 		})
 			.then((res: Res<T>) => {
+				if (Array.isArray(res))
+					res = { list: res, total: res.length }
 				const { list, total } = res
 				data.value = list
 				pagination.total = total

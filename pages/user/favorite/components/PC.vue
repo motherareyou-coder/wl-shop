@@ -31,12 +31,3 @@ function handleCancel(item: Product, i) {
 		layout="prev,pager,next,jumper"
 	/>
 </template>
-
-<style lang="scss" scoped>
-.mi-pagination {
-	margin: calc(var(--grid-gap) * 2) var(--grid-gap);
-	justify-content: center;
-	--mi-pagination-bg-color: transparent;
-	--mi-pagination-button-disabled-bg-color: transparent;
-}
-</style>

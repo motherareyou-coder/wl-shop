@@ -1209,3 +1209,230 @@ export interface BargainHelp {
 	userId: number
 	[property: string]: any
 }
+
+/**
+ * SeckillConfig，用户 App - 秒杀时间段 Response VO
+ */
+export interface SeckillConfig {
+	/**
+	 * 结束时间点
+	 */
+	endTime: string
+	/**
+	 * 秒杀时间段编号
+	 */
+	id: number
+	/**
+	 * 轮播图
+	 */
+	sliderPicUrls: string[]
+	/**
+	 * 开始时间点
+	 */
+	startTime: string
+	[property: string]: any
+}
+
+/**
+ * SeckillActivity，用户 App - 秒杀活动 Response VO
+ */
+export interface SeckillActivity {
+	/**
+	 * 秒杀活动编号
+	 */
+	id: number
+	/**
+	 * 商品市场价，单位：分
+	 */
+	marketPrice: number
+	/**
+	 * 秒杀活动名称
+	 */
+	name: string
+	/**
+	 * 商品图片
+	 */
+	picUrl: string
+	/**
+	 * 秒杀金额，单位：分
+	 */
+	seckillPrice: number
+	/**
+	 * 商品 SPU 编号
+	 */
+	spuId: number
+	/**
+	 * 秒杀活动状态
+	 */
+	status: number
+	/**
+	 * 秒杀库存（剩余）
+	 */
+	stock: number
+	/**
+	 * 秒杀库存（总共）
+	 */
+	totalStock: number
+	[property: string]: any
+}
+
+/**
+ * CombinationActivity，用户 App - 拼团活动 Response VO
+ */
+export interface CombinationActivity {
+	/**
+	 * 拼团金额，单位：分
+	 */
+	combinationPrice: number
+	/**
+	 * 拼团活动编号
+	 */
+	id: number
+	/**
+	 * 商品市场价，单位：分
+	 */
+	marketPrice: number
+	/**
+	 * 拼团活动名称
+	 */
+	name: string
+	/**
+	 * 商品图片
+	 */
+	picUrl: string
+	/**
+	 * 商品 SPU 编号
+	 */
+	spuId: number
+	/**
+	 * 拼团人数
+	 */
+	userSize: number
+	[property: string]: any
+}
+
+/**
+ * CombinationActivityDetail，用户 App - 拼团活动明细 Response VO
+ */
+export interface CombinationActivityDetail {
+	/**
+	 * 活动结束时间
+	 */
+	endTime: Date
+	/**
+	 * 拼团活动编号
+	 */
+	id: number
+	/**
+	 * 拼团活动名称
+	 */
+	name: string
+	/**
+	 * 商品信息数组
+	 */
+	products: Product[]
+	/**
+	 * 单次限购数量
+	 */
+	singleLimitCount?: number
+	/**
+	 * 商品 SPU 编号
+	 */
+	spuId: number
+	/**
+	 * 活动开始时间
+	 */
+	startTime: Date
+	/**
+	 * 活动状态
+	 */
+	status: number
+	/**
+	 * 成功的拼团数量
+	 */
+	successCount: number
+	/**
+	 * 总共限购数量
+	 */
+	totalLimitCount?: number
+	/**
+	 * 拼团人数
+	 */
+	userSize: number
+	[property: string]: any
+}
+
+/**
+ * CombinationRecord，用户 App - 拼团记录 Response VO
+ */
+export interface CombinationRecord {
+	/**
+	 * 拼团活动编号
+	 */
+	activityId: number
+	/**
+	 * 用户头像
+	 */
+	avatar: string
+	/**
+	 * 拼团金额，单位：分
+	 */
+	combinationPrice: number
+	/**
+	 * 购买的商品数量
+	 */
+	count: number
+	/**
+	 * 过期时间
+	 */
+	expireTime: number
+	/**
+	 * 拼团记录编号
+	 */
+	id: number
+	/**
+	 * 用户昵称
+	 */
+	nickname: string
+	/**
+	 * 订单编号
+	 */
+	orderId: number
+	/**
+	 * 商品图片
+	 */
+	picUrl: string
+	/**
+	 * 商品名字
+	 */
+	spuName: string
+	/**
+	 * 拼团状态
+	 */
+	status: number
+	/**
+	 * 已参团人数
+	 */
+	userCount: number
+	/**
+	 * 可参团人数
+	 */
+	userSize: number
+	[property: string]: any
+}
+
+/**
+ * CombinationRecordDetail，用户 App - 拼团记录详细 Response VO
+ */
+export interface CombinationRecordDetail {
+	headRecord: CombinationRecord
+	/**
+	 * 成员的拼团记录
+	 */
+	memberRecords: CombinationRecord[]
+	/**
+	 * 当前用户参团记录对应的订单编号
+	 */
+	orderId: number
+	[property: string]: any
+}

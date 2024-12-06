@@ -11,8 +11,8 @@ const props = defineProps({
 	sku: { type: Object },
 	properties: { type: Array as () => ProductDetail['propertyList'] },
 })
-const emit = defineEmits(['star', 'submit'])
-const count = defineModel('count')
+const emit = defineEmits(['star', 'submit', 'buy', 'combination'])
+const count = defineModel<number>('count')
 const info = computed(() => props.info)
 const sku = defineModel<SKU>('sku')
 const selected = defineModel('selected')
@@ -20,15 +20,20 @@ const tab = ref(0)
 
 const navbarFixed = ref(false)
 
-const el = ref<HTMLElement | null>(null)
+const elRef = ref<HTMLElement | null>(null)
 
-document.body.onscroll = (e) => {
-	if (el.value) {
-		navbarFixed.value = el.value.getBoundingClientRect().y < 60
+document.body.onscroll = () => {
+	if (elRef.value) {
+		navbarFixed.value = elRef.value.getBoundingClientRect().y < 60
 	}
 }
 
 const showActivities = ref(false)
+
+const pickData = inject('pickData')
+const combinationActivityId = inject('combinationActivityId')
+const skuDisabled = inject('skuDisabled')
+const disabled = computed(() => !sku.value || skuDisabled.value)
 </script>
 
 <template>
@@ -38,9 +43,28 @@ const showActivities = ref(false)
 				<span class="xm-text header">{{ info.name }} </span>
 			</div>
 			<div class="xm-navbar-buynow">
-				<button class="xm-navbar-btn" @click="emit('submit')">
-					{{ $t('BUY NOW') }}
-				</button>
+				<el-button
+					type="info"
+					:disabled="!sku?.stock"
+					@click.prevent="emit('submit')"
+				>
+					{{ (pickData || combinationActivityId) ? $t('原价购买') : $t('立即购买') }}
+				</el-button>
+				<el-button
+					v-if="pickData" type="primary"
+					:disabled="disabled"
+					@click.prevent="emit('buy')"
+				>
+					{{ $t('立即购买') }}
+				</el-button>
+				<el-button
+					v-if="combinationActivityId"
+					type="primary"
+					:disabled="disabled"
+					@click.prevent="emit('combination')"
+				>
+					{{ $t('立即开团') }}
+				</el-button>
 			</div>
 		</div>
 	</div>
@@ -52,6 +76,17 @@ const showActivities = ref(false)
 			/>
 		</section>
 		<section class="product--mobile__section product-information">
+			<div v-if="pickData" class="product-information__events-header">
+				<div class="bar-items bar-items--yellow bar-items--daily-pick">
+					<h2 class="bar-items__title">
+						{{ $t('DAILY PICKS') }}
+					</h2>
+					<div class="bar-items__countdown">
+						<span class="bar-items__desc">{{ $t('Ends in') }}</span>
+						<app-count-down class="bar-items__num" :end-time="pickData.endTime" />
+					</div>
+				</div>
+			</div>
 			<div class="product-information__wrapper">
 				<div class="product-information__top">
 					<div class="product-information__price">
@@ -69,7 +104,18 @@ const showActivities = ref(false)
 					{{ info.name }}
 				</h1>
 				<div class="information-section__product-sku-info">
-					{{ info.introduction }}
+					{{ sku?.properties.map(p => p.valueName).join(', ') }}
+				</div>
+				<div class="product-information__events-info">
+					<section class="event-description">
+						<ul class="event-description__tags">
+							<li v-if="pickData" class="event-description__tag">
+								<span>{{ $t('Save up to') }}
+									<ProductPrice :data="pickData.marketPrice - pickData.seckillPrice" />
+								</span>
+							</li>
+						</ul>
+					</section>
 				</div>
 			</div>
 		</section>
@@ -89,9 +135,7 @@ const showActivities = ref(false)
 					class="product--mobile__section product--mobile__section--mobile sku-section-v4 sku-section-v4--mobile"
 				>
 					<template v-for="p in props.properties" :key="p.id">
-						<h3
-							class="sku-section-v4__title product--mobile__title"
-						>
+						<h3 class="sku-section-v4__title product--mobile__title">
 							{{ p.name }}
 						</h3>
 						<ul class="sku-section-v4__list">
@@ -104,8 +148,9 @@ const showActivities = ref(false)
 								<button
 									class="sku-section-v4__button"
 									:class="{
-										'sku-section-v4__button--active':
-											selected[p.id] === v.id,
+										'sku-section-v4__button--sold-out': selected[p.id] === v.id && !sku?.stock,
+										'sku-section-v4__button--disabled': selected[p.id] === v.id && skuDisabled,
+										'sku-section-v4__button--active': selected[p.id] === v.id,
 									}"
 								>
 									<span>{{ v.name }}</span>
@@ -161,7 +206,7 @@ const showActivities = ref(false)
 				</div>
 			</div>
 		</div>
-		<div ref="el">
+		<div ref="elRef">
 			<keep-alive>
 				<div
 					v-if="tab === 0"

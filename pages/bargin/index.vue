@@ -33,10 +33,10 @@ function getData<BargainActivity>(params: any) {
 								</div>
 								<div class="flex items-center justify-between">
 									<span class="text-sm">
-										{{ $t('Min price') }}:
+										{{ $t('最低价') }}:
 										<product-price :data="row.bargainMinPrice" />
 									</span>
-									<el-button type="info">
+									<el-button type="primary">
 										{{ $t('参与砍价') }}
 									</el-button>
 								</div>
@@ -50,7 +50,7 @@ function getData<BargainActivity>(params: any) {
 </template>
 
 <style scoped>
-.bargin-list:deep ul{
+.bargin-list:deep > div > ul {
     grid-gap: var(--grid-gap);
     display: grid;
     gap: var(--grid-gap);

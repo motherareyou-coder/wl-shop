@@ -77,7 +77,8 @@
 	"My Coupon": "我的优惠券",
 	"Rewards": "奖励",
 	"Get Now": "领取",
-	"BUY NOW": "现在购买",
+	"BUY NOW": "立即购买",
+	"BUY": "原价购买",
 	"Overview": "概览",
 	"Likes": "点赞",
 	"Categoris": "类型",
@@ -255,8 +256,15 @@
 	"Please sign in first": "请先登录",
 	"Your login has expired": "您的登陆已过期",
 	"Daily Picks": "每日精选",
-	"Group Buying Event": "团购活动",
+	"DAILY PICKS": "每日精选",
+	"Ends in": "即将结束",
+	"Starts in": "即将开始",
+	"Group Buying Event": "拼团活动",
 	"Bargin Event": "砍价活动",
 	"Coupon collection": "优惠卷列表",
-	"Mock Pay": "模拟支付"
+	"Mock Pay": "模拟支付",
+	"ENDED": "已结束",
+	"IN PRORESS": "进行中",
+	"NOT STARTED": "未开始",
+	"Today": "今日"
 }

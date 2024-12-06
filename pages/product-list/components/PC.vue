@@ -9,7 +9,7 @@ const props = defineProps({
 const { data, pagination, resetData } = useTablePagination<Product>(
 	(p = {}) =>
 		props.scopeValues?.length
-			? $api('product/spu/list-by-ids', {
+			? $api<Product[]>('product/spu/list-by-ids', {
 				params: {
 					...props.params,
 					ids: props.scopeValues,
@@ -41,12 +41,3 @@ watch(() => props.scopeValues, resetData)
 		layout="prev,pager,next,jumper"
 	/>
 </template>
-
-<style lang="scss" scoped>
-.mi-pagination {
-	margin: calc(var(--grid-gap) * 2) var(--grid-gap);
-	justify-content: center;
-	--mi-pagination-bg-color: transparent;
-	--mi-pagination-button-disabled-bg-color: transparent;
-}
-</style>

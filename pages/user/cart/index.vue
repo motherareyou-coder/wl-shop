@@ -120,6 +120,7 @@ function checkAllChange(selected: boolean) {
 </script>
 
 <template>
+	<CartNav :value="1" />
 	<el-form :disabled="loading">
 		<main class="site-cart" :class="{ 'site-cart--empty': finalList.length === 0 }">
 			<div class="site-cart__container">

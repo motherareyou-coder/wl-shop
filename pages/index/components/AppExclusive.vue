@@ -4,8 +4,9 @@ import CouponImg from '@/assets/imgs/coupon.webp'
 import { chunk } from 'lodash-es'
 import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import './AppExclusive.scss'
+import type { SeckillActivity, SeckillConfig } from '~/types'
 
+import './AppExclusive.scss'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -15,29 +16,31 @@ defineOptions({ name: 'AppExclusive' })
 const { t } = useI18n()
 const data = ref([])
 Promise.all([
-	$api('promotion/seckill-activity/get-now').then(res => ({
-		picUrl: res.activities[0]?.picUrl || res.config.sliderPicUrls,
-		spuId: res.activities[0]?.spuId,
-		startTime: res.config.startTime,
-		endTime: res.config.endTime,
+	$api<{ config: SeckillConfig, activities: [SeckillActivity] }>('promotion/seckill-activity/get-now').then(res => ({
+		picUrl: res?.activities?.[0]?.picUrl || res?.config?.sliderPicUrls,
+		// spuId: res?.activities[0]?.spuId,
+		url: '/seckill',
+		startTime: res?.config?.startTime,
+		endTime: res?.config?.endTime,
 		name: t('Daily Picks'),
-		desc: res.activities[0]?.name,
+		desc: res?.activities?.[0]?.name,
 		icon: 'micon micon-lightning-solid',
 	})),
 	$api('promotion/combination-activity/page', {
 		params: { pageNo: 1, pageSize: 1 },
 	}).then(res => ({
-		picUrl: res?.list[0]?.picUrl,
-		desc: res?.list[0]?.name,
-		spuId: res.list[0]?.spuId,
+		picUrl: res?.list?.[0]?.picUrl,
+		desc: res?.list?.[0]?.name,
+		// spuId: res.list[0]?.spuId,
+		url: '/combination',
 		icon: 'micon micon-bag-solid',
 		name: t('Group Buying Event'),
 	})),
 	$api('promotion/bargain-activity/page', {
 		params: { pageNo: 1, pageSize: 1 },
 	}).then(res => ({
-		picUrl: res?.list[0]?.picUrl,
-		desc: res?.list[0]?.name,
+		picUrl: res?.list?.[0]?.picUrl,
+		desc: res?.list?.[0]?.name,
 		icon: 'micon micon-calendar-solid',
 		name: t('Bargin Event'),
 		url: '/bargin',
@@ -46,8 +49,8 @@ Promise.all([
 		params: { pageNo: 1, pageSize: 1 },
 	}).then(res => ({
 		picUrl: CouponImg,
-		desc: res?.list[0]?.description,
-		spuId: res.list[0]?.spuId,
+		desc: res?.list?.[0]?.description,
+		spuId: res?.list?.[0]?.spuId,
 		icon: 'micon micon-calendar-solid',
 		name: t('Coupon collection'),
 	})),

@@ -338,7 +338,6 @@
 		--small-font-size: 12px;
 		--mini-font-size: 10px;
 
-		--max-width-1400: 100%;
 		--app-horizontal-padding: 16px;
 		--margin-vertical: 16px;
 		--title-content-gap: 32px;
@@ -364,7 +363,6 @@
 		--small-font-size: 14px;
 		--mini-font-size: 12px;
 
-		--max-width-1400: 100%;
 		--app-horizontal-padding: 32px;
 		--margin-vertical: 80px;
 		--title-content-gap: 48px;
@@ -390,7 +388,6 @@
 		--small-font-size: 14px;
 		--mini-font-size: 12px;
 
-		--max-width-1400: 1180px;
 		--app-horizontal-padding: 32px;
 		--margin-vertical: 80px;
 		--title-content-gap: 48px;
@@ -416,7 +413,6 @@
 		--small-font-size: 16px;
 		--mini-font-size: 14px;
 
-		--max-width-1400: 1400px;
 		--app-horizontal-padding: 32px;
 		--margin-vertical: 120px;
 		--title-content-gap: 48px;
@@ -442,7 +438,6 @@
 		--small-font-size: 16px;
 		--mini-font-size: 14px;
 
-		--max-width-1400: 1400px;
 		--app-horizontal-padding: 32px;
 		--margin-vertical: 120px;
 		--title-content-gap: 48px;
@@ -454,8 +449,7 @@
     body {
         --header-height:48px;
         --site-horizontal-padding: 16px;
-        --store-max-width: var(--max-width-1400);
-        // --store-max-width: 100%;
+        --store-max-width: 100%;
         --support-max-width: 100%;
         --max-width-1400: 720px;
         --grid-gutter-width: 2.2222222222vw;
@@ -467,8 +461,7 @@
     body {
         --header-height:48px;
         --site-horizontal-padding: 32px;
-        --store-max-width: var(--max-width-1400);
-        // --store-max-width: 945px;
+        --store-max-width: 945px;
         --support-max-width: 960px;
         --max-width-1400: 1000px;
         --grid-gutter-width: .78125vw;
@@ -480,8 +473,8 @@
     body {
         --header-height:48px;
         --site-horizontal-padding: 32px;
-        --store-max-width: var(--max-width-1400);
         // --store-max-width: 945px;
+        --store-max-width: 1180px;
         --support-max-width: 960px;
         --max-width-1400: 1180px;
         --grid-gutter-width: 16px;
@@ -493,8 +486,8 @@
     body {
         --header-height:56px;
         --site-horizontal-padding: 32px;
-        --store-max-width: var(--max-width-1400);
         // --store-max-width: 1260px;
+        --store-max-width: 1400px;
         --support-max-width: 1260px;
         --max-width-1400: 1400px;
         --grid-gutter-width: 16px;
@@ -506,10 +499,9 @@
     body {
         --header-height:56px;
         --site-horizontal-padding: 32px;
-        --store-max-width: var(--max-width-1400);
-        // --store-max-width: 1680px;
+        --store-max-width: 1680px;
         --support-max-width: 1260px;
-        --max-width-1400: 1400px;
+        --max-width-1400: 1680px;
         --grid-gutter-width: 16px;
         --grid-columns: 12
     }

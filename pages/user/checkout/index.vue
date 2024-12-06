@@ -16,9 +16,13 @@ useHead({
 
 const router = useRouter()
 const route = useRoute()
-const orderId = route.query.orderId
-const bargainRecordId = route.query.bargainRecordId
+const orderId = route.query.orderId ? Number(route.query.orderId) : null
+const bargainRecordId = route.query.bargainRecordId ? Number(route.query.bargainRecordId) : null
+const seckillActivityId = route.query.seckillActivityId ? Number(route.query.seckillActivityId) : null
+const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
 const productList = ref<CartItem[]>([])
+
+const cantUseCoupon = !!(orderId || bargainRecordId || seckillActivityId || combinationActivityId)
 
 const data = ref({
 	deliveryType: 1,
@@ -94,10 +98,25 @@ if (orderId) {
 	})
 }
 else if (bargainRecordId) {
-	const data = JSON.parse(localStorage.getItem(`bargainRecordId-${bargainRecordId}`))
-	productList.value = [data]
-	// TODO: 提示sku不匹配
+	const d = JSON.parse(localStorage.getItem(`bargainRecordId-${bargainRecordId}`))
+	productList.value = [d]
+	watch(() => data.value.pointStatus, getInfo)
+	watch(() => data.value.addressId, getInfo)
 	getInfo({ bargainRecordId })
+}
+else if (seckillActivityId) {
+	const d = JSON.parse(localStorage.getItem(`seckillActivityId-${seckillActivityId}`))
+	productList.value = [d]
+	watch(() => data.value.pointStatus, getInfo)
+	watch(() => data.value.addressId, getInfo)
+	getInfo({ seckillActivityId })
+}
+else if (combinationActivityId) {
+	const d = JSON.parse(localStorage.getItem(`combinationActivityId-${combinationActivityId}`))
+	productList.value = [d]
+	watch(() => data.value.pointStatus, getInfo)
+	watch(() => data.value.addressId, getInfo)
+	getInfo({ seckillActivityId })
 }
 else {
 	$api('trade/cart/list', {}).then((res) => {
@@ -131,7 +150,6 @@ function handleSubmit() {
 			return ElMessage.info(msg)
 		const body = {
 			items: items.value,
-			bargainRecordId,
 			...pick(data.value, [
 				'deliveryType',
 				'addressId',
@@ -141,6 +159,12 @@ function handleSubmit() {
 				'remark',
 			]),
 		}
+		if (bargainRecordId)
+			body.bargainRecordId = bargainRecordId
+		if (seckillActivityId)
+			body.seckillActivityId = seckillActivityId
+		if (combinationActivityId)
+			body.combinationActivityId = combinationActivityId
 		wrapLoading(
 			$api<{ id: number, payOrderId: number }>('trade/order/create', { method: 'post', body })
 				.then(res =>
@@ -235,6 +259,7 @@ const shipOpen = ref(true)
 </script>
 
 <template>
+	<CartNav v-if="!cantUseCoupon" :value="2" />
 	<div class="site-checkout">
 		<main class="site-checkout__container">
 			<article
@@ -552,7 +577,7 @@ const shipOpen = ref(true)
 							<li class="price-summary__item"></li>
 						</ul>
 					</section>
-					<section v-if="!orderId" class="coupons-info">
+					<section v-if="!cantUseCoupon && !orderId" class="coupons-info">
 						<div class="coupons-info__header">
 							<h2 class="coupons-info__title">
 								{{ $t('Coupons') }}

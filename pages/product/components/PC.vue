@@ -12,7 +12,7 @@ const props = defineProps({
 	sku: { type: Object },
 	properties: { type: Array as () => ProductDetail['propertyList'] },
 })
-const emit = defineEmits(['star', 'submit'])
+const emit = defineEmits(['star', 'submit', 'buy', 'combination'])
 const count = defineModel<number>('count')
 const info = computed(() => props.info)
 const sku = defineModel<SKU>('sku')
@@ -23,6 +23,11 @@ const totalPrice = computed(() => {
 	const p = new Big(price.value)
 	return count.value ? p.times(new Big(count.value)).toFixed(2) : '0.00'
 })
+
+const pickData = inject('pickData')
+const combinationActivityId = inject('combinationActivityId')
+const skuDisabled = inject('skuDisabled')
+const disabled = computed(() => !sku.value || skuDisabled.value)
 </script>
 
 <template>
@@ -86,15 +91,30 @@ const totalPrice = computed(() => {
 						</h2>
 						<div class="information-section__product-info">
 							<div class="information-section__product-sku-info">
-								{{ info.introduction }}
+								{{ sku?.properties.map(p => p.valueName).join(', ') }}
 							</div>
+							<div v-if="pickData" class="bar-items bar-items--yellow bar-items--daily-pick">
+								<div class="bar-items__left">
+									<p class="bar-items__title">
+										{{ $t('DAILY PICKS') }}
+									</p>
+								</div>
+								<div class="bar-items__countdown">
+									<span class="bar-items__desc">{{ $t('Ends in') }}</span>
+									<app-count-down class="bar-items__num" :end-time="pickData.endTime" />
+								</div>
+							</div>
+							<ul v-if="pickData" class="event-description__tags">
+								<li class="event-description__tag">
+									<span>{{ $t('节省') }}
+										<product-price :data="pickData.marketPrice - pickData.seckillPrice" />
+									</span>
+								</li>
+							</ul>
 							<div class="information-section__product-price">
 								<ProductPrice :data="price" />
 								<del>
-									<ProductPrice
-										:data="sku?.marketPrice || info.marketPrice"
-										plain
-									/>
+									<ProductPrice :data="sku?.marketPrice || info.marketPrice" plain />
 								</del>
 							</div>
 						</div>
@@ -124,8 +144,9 @@ const totalPrice = computed(() => {
 									<button
 										class="sku-section-v4__button"
 										:class="{
-											'sku-section-v4__button--active':
-												selected[p.id] === v.id,
+											'sku-section-v4__button--sold-out': selected[p.id] === v.id && !sku?.stock,
+											'sku-section-v4__button--disabled': selected[p.id] === v.id && skuDisabled,
+											'sku-section-v4__button--active': selected[p.id] === v.id,
 										}"
 									>
 										{{ v.name }}
@@ -153,22 +174,15 @@ const totalPrice = computed(() => {
 						<ul class="order-list-section__list">
 							<li class="order-list-section__item">
 								<span> {{ info.name }} * {{ count }} </span>
-								<div
-									class="order-list-section__item-spacer"
-								></div>
+								<div class="order-list-section__item-spacer"></div>
 								<ProductPrice :data="price" />
 								<del>
-									<ProductPrice
-										:data="sku?.marketPrice || info.marketPrice"
-										plain
-									/>
+									<ProductPrice :data="sku?.marketPrice || info.marketPrice" plain />
 								</del>
 							</li>
 							<li class="order-list-section__item">
 								<span>{{ $t('Total') }}:</span>
-								<div
-									class="order-list-section__item-spacer"
-								></div>
+								<div class="order-list-section__item-spacer"></div>
 								<ProductPrice :data="totalPrice" />
 							</li>
 						</ul>
@@ -176,13 +190,31 @@ const totalPrice = computed(() => {
 					<section class="product__section add-cart-section">
 						<div class="add-cart-section__wrap">
 							<div class="add-cart-section__submit-group">
-								<button
-									class="add-cart-section__btn add-cart-section__submit add-cart-section__submit--main"
-									:disabled="!sku"
+								<el-button
+									type="info"
+									class="add-cart-section__submit flex-1"
+									:disabled="!sku?.stock"
 									@click.prevent="emit('submit')"
 								>
-									{{ $t('BUY NOW') }}
-								</button>
+									{{ (pickData || combinationActivityId) ? $t('原价购买') : $t('立即购买') }}
+								</el-button>
+								<el-button
+									v-if="pickData" type="primary"
+									class="add-cart-section__submit flex-1"
+									:disabled="disabled"
+									@click.prevent="emit('buy')"
+								>
+									{{ $t('立即购买') }}
+								</el-button>
+								<el-button
+									v-if="combinationActivityId"
+									type="primary"
+									class="add-cart-section__submit flex-1"
+									:disabled="disabled"
+									@click.prevent="emit('combination')"
+								>
+									{{ $t('立即开团') }}
+								</el-button>
 							</div>
 						</div>
 					</section>

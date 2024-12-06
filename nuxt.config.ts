@@ -17,6 +17,7 @@ export default defineNuxtConfig({
 		'@nuxt/ui',
 		'@nuxt/icon',
 		'@element-plus/nuxt',
+		'dayjs-nuxt',
 	],
 	imports: {
 		presets: [
@@ -30,7 +31,11 @@ export default defineNuxtConfig({
 	colorMode: {
 		preference: 'light',
 	},
-
+	dayjs: {
+		locales: ['en', 'zh'],
+		plugins: ['relativeTime', 'utc', 'timezone', 'duration'],
+		defaultLocale: 'zh',
+	},
 	i18n: {
 		defaultLocale: 'zh',
 		vueI18n: './locales/i18n.config.ts',

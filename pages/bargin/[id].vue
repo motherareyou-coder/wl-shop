@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { BargainActivity, BargainHelp, PayOrderSubmit, Product } from '~/types'
+import type { BargainActivity, BargainHelp, PayOrderSubmit, ProductDetail, SKU } from '~/types'
 
 const router = useRouter()
 const route = useRoute()
-const activityId = route.params.id
+const activityId = Number(route.params.id)
 const recordId = ref()
 const recordInfo = ref<BargainActivity>({})
 const helpList = ref<BargainHelp[]>([])
@@ -41,13 +41,15 @@ if (!recordId.value) {
 const hasHelp = computed(() => !!helpList.value?.find(d => d.userId === userStore.$state.id))
 const isCurrentUser = computed(() => recordInfo.value.userId == userStore.$state.id)
 
-const productInfo = ref<Product>({})
+const sku = ref<SKU>()
+const productInfo = ref<ProductDetail>({})
 watchEffect(() => {
 	if (data.value?.spuId) {
-		$api<Product>('product/spu/get-detail', { params: {
+		$api<ProductDetail>('product/spu/get-detail', { params: {
 			id: data.value.spuId,
 		} }).then((res) => {
 			productInfo.value = res
+			sku.value = res.skus.find(s => s.id === data.value?.skuId)
 		})
 	}
 })
@@ -92,11 +94,11 @@ function handleCreateOrder() {
 	localStorage.setItem(`bargainRecordId-${recordId.value}`, JSON.stringify({
 		...productInfo.value,
 		count: 1,
-		sku: productInfo.value.skus?.find(s => s.id == data.value?.skuId),
+		sku: sku.value,
 		skuId: data.value?.skuId,
 		spuId: data.value?.spuId,
 	}))
-	router.push($path(`/user/checkout?bargainRecordId=${recordId.value}`))
+	router.push($path(`/user/checkout?bargainRecordId=${recordId.value}&activityId=${activityId}`))
 	return
 	$api('trade/order/create', { method: 'post', body: {
 		items: [{ skuId: productInfo.value.id, count: 1 }],
@@ -156,7 +158,7 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 						</div>
 						<div class="flex items-center justify-between">
 							<span class="text-sm">
-								{{ $t('Min price') }}:
+								{{ $t('最低价') }}:
 								<product-price :data="data.bargainMinPrice" />
 							</span>
 						</div>
@@ -164,11 +166,11 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 				</div>
 			</div>
 			<div v-if="!recordId" class="text-center bg-white p-5">
-				<el-button type="primary" class=" w-full" round @click="handleCreate">
+				<el-button type="primary" round @click="handleCreate">
 					{{ $t('立即参与砍价') }}
 				</el-button>
 			</div>
-			<div v-else-if="recordInfo" class="text-center bg-white py-5">
+			<div v-else-if="recordInfo" class="text-center bg-white p-5">
 				<!-- 砍价中 -->
 				<div v-if="recordInfo.status === 1">
 					{{ $t('已砍') }}
@@ -176,10 +178,10 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 					{{ $t('还差') }}
 					<product-price :data="recordInfo.bargainFirstPrice - recordInfo.bargainPrice" />
 					<div class="mt-2 px-2">
-						<el-button v-if="isCurrentUser" type="primary" class="w-full" round @click="invite">
+						<el-button v-if="isCurrentUser" type="primary" round @click="invite">
 							{{ $t('邀请好友帮砍价') }}
 						</el-button>
-						<el-button v-else-if="!hasHelp" type="primary" class="w-full" round @click="handleHelp">
+						<el-button v-else-if="!hasHelp" type="primary" round @click="handleHelp">
 							{{ $t('帮好友砍价') }}
 						</el-button>
 					</div>
@@ -190,7 +192,7 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 						<div v-if="recordInfo.status === 2">
 							{{ $t('砍价成功') }}
 						</div>
-						<el-button v-else type="primary" class="w-full" round @click="invite">
+						<el-button v-else type="primary" round @click="invite">
 							{{ $t('邀请好友帮砍价') }}
 						</el-button>
 					</div>
@@ -204,16 +206,16 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 						{{ $t('恭喜砍价成功，快去支付吧') }}
 					</div>
 					<div class="mt-2 px-2 flex justify-center">
-						<el-button round :class="[appStore.isPC ? '' : 'w-2/4']" @click="router.push($path('/'))">
+						<el-button round @click="router.push($path('/'))">
 							{{ $t('继续选购') }}
 						</el-button>
-						<el-button v-if="!recordInfo.orderId " type="primary" :class="[appStore.isPC ? '' : 'w-2/4']" round @click="handleCreateOrder">
+						<el-button v-if="!recordInfo.orderId " type="primary" round @click="handleCreateOrder">
 							{{ $t('立即下单') }}
 						</el-button>
-						<el-button v-else-if="recordInfo.payStatus === 10" type="primary" :class="[appStore.isPC ? '' : 'w-2/4']" round @click="handlePayOrder">
+						<el-button v-else-if="recordInfo.payStatus === 10" type="primary" round @click="handlePayOrder">
 							{{ $t('立即支付') }}
 						</el-button>
-						<el-button v-else type="primary" :class="[appStore.isPC ? '' : 'w-2/4']" round @click="handleGoOrder">
+						<el-button v-else type="primary" round @click="handleGoOrder">
 							{{ $t('查看订单') }}
 						</el-button>
 					</div>
@@ -222,7 +224,7 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 				<div v-if="recordInfo.status === 3">
 					<div>{{ $t('砍价失败') }}</div>
 					<div v-if="isCurrentUser" class="mt-2 px-2">
-						<el-button type="primary" class="w-full" round @click="handleCreate">
+						<el-button type="primary" round @click="handleCreate">
 							{{ $t('重新砍价') }}
 						</el-button>
 					</div>
@@ -238,21 +240,22 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 					v-if="helpList.length"
 					class="p-2"
 				>
-					<li v-for="item in helpList" :key="item.id" class="m-2">
+					<li v-for="item in helpList" :key="item.id" class="my-2">
 						<div class="flex items-center justify-between">
-							<div class="flex">
-								<app-image :src="item.avatar" :class="[appStore.isPC ? 'w-24 h-24' : 'w-12 h-12']" />
-								<div class="flex-col mx-2">
+							<div class="flex items-center">
+								<app-image :src="item.avatar" class="'w-12 h-12 rounded-full" />
+								<div class="flex flex-col justify-between m-2">
 									<div class="text-sm">
 										{{ item.nickname }}
 									</div>
 									<div class="text-sm" style="color:var(--title-light)">
-										{{ item.createTime }}
+										<app-time :data="item.createTime" />
 									</div>
 								</div>
 							</div>
 							<div class="flex items-center ">
-								{{ $t('已砍') }} <product-price style="color:var(--mi-color-priamry)" :data="item.reducePrice" />
+								<span class="mr-2">{{ $t('已砍') }} </span>
+								<product-price style="color:var(--mi-color-priamry)" :data="item.reducePrice" />
 							</div>
 						</div>
 					</li>
@@ -270,6 +273,9 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 					<div class="flex flex-col justify-between">
 						<div class="my-2">
 							{{ productInfo.name }}
+						</div>
+						<div v-if="sku" class="my-2" style="color:var(--brand-black-60)">
+							{{ sku?.properties.map(p => p.valueName).join(' ') }}
 						</div>
 						<div class="my-2" style="color:var(--title-light)">
 							{{ productInfo.introduction }}

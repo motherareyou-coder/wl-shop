@@ -84,9 +84,10 @@
     margin-left: 10px;
     min-width: 118px;
     outline: none;
-    padding: 7px;
+    padding: 7px !important;
     text-align: center;
-    white-space: normal
+    white-space: normal;
+    height: auto;
 }
 
 .order-view-main .btn--white {

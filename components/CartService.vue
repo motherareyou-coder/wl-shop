@@ -2,12 +2,13 @@
 import './CartService.scss'
 
 defineOptions({ name: 'CartService' })
+const tab = ref('1')
 </script>
 
 <template>
 	<section class="why-buy-from-mi">
-		<el-collapse>
-			<el-collapse-item title="Why buy from mi.com">
+		<el-collapse v-model="tab">
+			<el-collapse-item title="Why buy from mi.com" name="1">
 				<div class="why-buy-from-mi__separator"></div>
 				<div class="why-buy-from-mi__list">
 					<div class="why-buy-from-mi__item">
@@ -98,6 +99,9 @@ defineOptions({ name: 'CartService' })
 			font-weight: 500;
 			margin: 0;
 		}
+		.mi-collapse-item__content{
+			padding-bottom: 0 !important;
+		}
 
 		@media screen and (max-width: 720px) {
 			.mi-collapse{
@@ -105,9 +109,6 @@ defineOptions({ name: 'CartService' })
 			}
 			.mi-collapse-item__header {
 				font-size: 16px;
-			}
-			.mi-collapse-item__content{
-				padding-bottom: 0
 			}
 		}
 

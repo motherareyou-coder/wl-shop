@@ -10,6 +10,16 @@ const { data } = await useAPI<Activity[]>(
 	'promotion/activity/list-by-spu-id',
 	{ params: { spuId: id } },
 )
+const pickData = inject('pickData') as Ref<Activity | null>
+watch(data, (v) => {
+	v?.forEach((d) => {
+		if (d.type === 1) {
+			const now = new Date().getTime()
+			if (new Date(d.startTime).getTime() <= now && new Date(d.endTime).getTime() > now)
+				pickData.value = d
+		}
+	})
+}, { immediate: true })
 
 const typeTitle = {
 	1: $t('秒杀'),
@@ -39,7 +49,9 @@ const finalData = computed(() => {
 				</li>
 			</ul>
 			<button class="events-info__more">
-				<el-icon><ElIconArrowRight /></el-icon>
+				<el-icon>
+					<ElIconArrowRight />
+				</el-icon>
 			</button>
 		</div>
 		<section v-else class="product__section product__section-spacer offers-section">
@@ -48,7 +60,7 @@ const finalData = computed(() => {
 					{{ tData.typeTitle }}
 				</li>
 				<li v-for="a in tData.data" :key="a.id" class="offers-section__item">
-					{{ a.name }}
+					<span class="name">{{ a.name }}</span>
 					<app-time :data="a.startTime" />
 					-
 					<app-time :data="a.endTime" />
@@ -59,8 +71,11 @@ const finalData = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.offers-section__item{
+.offers-section__item {
 	padding-left: 1rem !important;
+	.name {
+		margin-right: 0.5rem;
+	}
 }
 .type-dot {
 	position: relative;

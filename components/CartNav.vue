@@ -1,6 +1,9 @@
 <script setup>
 import './CartNav.scss'
 
+const props = defineProps({
+	value: { type: Number },
+})
 const steps = [
 	{
 		label: $t('ShoppingCart'),
@@ -18,15 +21,11 @@ const steps = [
 		value: 3,
 	},
 ]
-const route = useRoute()
-const activeStep = ref(0)
-watchEffect(() => {
-	activeStep.value = steps.find(s => route.path.includes(s.key))?.value
-})
+const activeStep = computed(() => props.value)
 </script>
 
 <template>
-	<nav v-if="activeStep && !route.query.bargainRecordId" class="shopping-nav">
+	<nav class="shopping-nav">
 		<div class="shopping-nav__wrapper">
 			<div
 				v-for="s in steps"
