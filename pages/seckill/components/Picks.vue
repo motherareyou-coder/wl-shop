@@ -76,7 +76,7 @@ const now = inject('now')
 								<img src="@/assets/imgs/E-level.png" class="mi-energy-label__image">
 							</nuxt-link>
 							<nuxt-link class="mi-energy-label__link mi-energy-label__link--info">
-								{{ $t('Product information sheet') }}
+								{{ $t('Product information') }}
 							</nuxt-link>
 						</div>
 					</div>

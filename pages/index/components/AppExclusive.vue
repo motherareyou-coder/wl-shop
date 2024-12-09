@@ -22,7 +22,7 @@ Promise.all([
 		url: '/seckill',
 		startTime: res?.config?.startTime,
 		endTime: res?.config?.endTime,
-		name: t('Daily Picks'),
+		name: t('Daily Seckill'),
 		desc: res?.activities?.[0]?.name,
 		icon: 'micon micon-lightning-solid',
 	})),
