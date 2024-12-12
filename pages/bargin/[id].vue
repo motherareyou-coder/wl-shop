@@ -58,7 +58,7 @@ const { t } = useI18n()
 function checkUser() {
 	if (!userStore.$state.id) {
 		ElMessage.info(t('Please sign in first'))
-		router.push($path('/login'))
+		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
 		return false
 	}
 	return true

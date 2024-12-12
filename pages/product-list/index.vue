@@ -9,6 +9,11 @@ const route = useRoute()
 const productScopeValues = ref([])
 const categoryId = ref<number | string | null>(null)
 const query = ref(route.query.query)
+const keyword = ref()
+watchEffect(() => {
+	query.value = route.query.query
+	keyword.value = route.query.query
+})
 
 useHead({
 	title: `${$t('Product List')} ${$t('appTitle')}`,
@@ -47,7 +52,6 @@ watch(
 
 watch(productScopeValues, refreshCategories)
 
-const keyword = ref()
 const sortField = ref('Relevance')
 const sortAsc = ref(true)
 

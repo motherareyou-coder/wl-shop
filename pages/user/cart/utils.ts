@@ -17,15 +17,16 @@ export function useCheckOut(
 			categoryId: d.spu?.categoryId || d.categoryId,
 		})),
 	)
-	function getInfo(obj = {}) {
-		console.log('getInfo', productList.value)
+	const additional = ref()
+	function getInfo() {
 		if (productList.value?.length) {
+			console.log('additional.value', additional.value)
 			const params = {
 				couponId: coupon.value?.id,
 				pointStatus: data?.value?.pointStatus || false,
 				deliveryType: data?.value?.deliveryType || 1,
 				addressId: data?.value?.addressId,
-				...obj,
+				...(additional.value || {}),
 			}
 			items.value.forEach((item, i) => {
 				Object.entries(item).forEach(([k, v]) => {
@@ -40,13 +41,13 @@ export function useCheckOut(
 				if (res.code == 1011003006)
 					coupon.value = null
 			})
-			console.log(productList.value)
+			console.log('productList.value', productList.value)
 			const spuIds = productList.value.map((d) => {
 				d.skuId = d.sku?.id || d.skuId
 				d.spuId = d.spu?.id || d.spuId || d.id
 				return d.spuId
 			})
-			$api('trade/order/settlement-product', { params: { spuIds } }).then((res) => {
+			additional.value || $api('trade/order/settlement-product', { params: { spuIds } }).then((res) => {
 				productList.value?.forEach((d) => {
 					res.forEach((dd) => {
 						if (dd.spuId == d.spuId) {
@@ -69,5 +70,6 @@ export function useCheckOut(
 		info,
 		getInfo,
 		items,
+		additional,
 	}
 }

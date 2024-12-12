@@ -5,11 +5,15 @@ defineOptions({ name: 'ProductPrice' })
 
 const props = defineProps({
 	plain: { type: Boolean, default: () => false },
+	unit: { type: String },
 })
 
 const { currency } = useRuntimeConfig().public
-const unit = ref(currency || '£')
+const unit = ref((currency || '£'))
 const data = defineModel('data')
+watchEffect(() => {
+	unit.value = props.unit ?? unit.value
+})
 
 const isNumber = ref(true)
 const price = computed(() => {

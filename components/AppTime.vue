@@ -10,7 +10,7 @@ const str = computed(() => dayjs(props.data).format(props.format))
 </script>
 
 <template>
-	<span v-if="props.data">
+	<template v-if="props.data">
 		{{ str }}
-	</span>
+	</template>
 </template>

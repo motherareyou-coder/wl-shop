@@ -15,6 +15,7 @@ useHead({
 	title: `${$t('Cart')} ${$t('appTitle')}`,
 })
 
+const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -29,7 +30,7 @@ function handleSubmit() {
 	}
 	else {
 		ElMessage.info(msg)
-		router.push($path('/login'))
+		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
 	}
 }
 
@@ -54,16 +55,13 @@ const productList = computed(
 )
 
 const { info, getInfo, items } = useCheckOut(productList, coupon)
-watch(items, getInfo, { immediate: true, deep: true })
-watch(coupon, getInfo, { immediate: true, deep: true })
-watch(
-	info,
-	(v) => {
-		if (v?.coupons)
-			coupons.value = v.coupons
-	},
-	{ immediate: true },
-)
+watch(items, getInfo, { deep: true })
+watch(coupon, getInfo, { deep: true })
+watch(info,	(v) => {
+	if (v?.coupons)
+		coupons.value = v.coupons
+})
+getInfo()
 
 const open1 = ref(false)
 
@@ -136,7 +134,7 @@ function checkAllChange(selected: boolean) {
 						<nuxt-link :to="$path(`/product-list`)" class="mi-btn cart-empty__btn" style="background-color: #fff;color: #000;">
 							{{ $t('Shop now') }}
 						</nuxt-link>
-						<nuxt-link v-if="!userStore.$state.nickname" :to="$path(`/login`)" class="mi-btn cart-empty__btn">
+						<nuxt-link v-if="!userStore.$state.nickname" :to="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`" class="mi-btn cart-empty__btn">
 							{{ $t('Login / Sign up') }}
 						</nuxt-link>
 					</div>

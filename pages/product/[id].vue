@@ -4,37 +4,143 @@ import { isArray, isString, sortBy, uniqBy } from 'lodash-es'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 // import './index.scss'
-import type { Activity, CombinationActivityDetail, ProductDetail } from '~/types'
+import type { BargainActivity, BargainHelp, CombinationActivityDetail, PayOrderSubmit, ProductDetail, SeckillActivity, SKU } from '~/types'
 
+const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
 const id = route.params.id ? Number(route.params.id) : null
-const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
 provide('id', id)
-
-const combinationActivity = ref<CombinationActivityDetail | null>()
-combinationActivityId && $api<CombinationActivityDetail>('promotion/combination-activity/get-detail', {
-	params: { id: combinationActivityId },
-}).then((res) => {
-	combinationActivity.value = res
-})
-const skuDisabled = ref(false)
-provide('combinationActivityId', combinationActivityId)
-provide('skuDisabled', skuDisabled)
-
-// 秒杀---start
-const pickData = ref<Activity>()
-provide('pickData', pickData)
-// 秒杀---end
-
-const { data: info } = await useAPI<ProductDetail>(
-	'product/spu/get-detail',
-	{ params: { id } },
-)
+const { data: info } = await useAPI<ProductDetail>('product/spu/get-detail', { params: { id } })
+provide('info', info)
 useHead({
 	title: `${info.value?.name} ${$t('appTitle')}`,
 })
-const curSku = ref()
+
+// 开团---start
+const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
+const combinationActivity = ref<CombinationActivityDetail | null>(combinationActivityId ? { id: combinationActivityId } as CombinationActivityDetail : null)
+if (combinationActivityId) {
+	$api<CombinationActivityDetail>('promotion/combination-activity/get-detail', { params: { id: combinationActivityId } }).then((res) => {
+		combinationActivity.value = res
+	})
+	useHead({
+		title: `${$t('拼团')} ${info.value?.name} ${$t('appTitle')}`,
+	})
+}
+const skuDisabled = ref(false)
+provide('combinationActivity', combinationActivity)
+provide('combinationActivityId', combinationActivityId)
+provide('skuDisabled', skuDisabled)
+watchEffect(() => {
+	info.value?.skus.forEach((sku) => {
+		const item = combinationActivity.value?.products?.find(s => s.skuId === sku.id)
+		if (item) {
+			sku.marketPrice = sku.price
+			sku.price = item.combinationPrice
+			sku.combinationPrice = item.combinationPrice
+		}
+	})
+})
+// 开团---end
+
+// 秒杀---start
+const seckillActivityId = route.query.seckillActivityId ? Number(route.query.seckillActivityId) : null
+const seckillActivity = ref<SeckillActivity | null>(seckillActivityId ? { id: seckillActivityId } as SeckillActivity : null)
+provide('seckillActivity', seckillActivity)
+if (seckillActivityId) {
+	$api<SeckillActivity>('promotion/seckill-activity/get-detail', { params: { id: seckillActivityId } }).then((res) => {
+		seckillActivity.value = res
+	})
+	useHead({
+		title: `${$t('秒杀')} ${info.value?.name} ${$t('appTitle')}`,
+	})
+}
+watchEffect(() => {
+	info.value?.skus.forEach((sku) => {
+		const item = seckillActivity.value?.products?.find(s => s.skuId === sku.id)
+		if (item) {
+			sku.marketPrice = sku.price
+			sku.price = item.seckillPrice
+			sku.seckillPrice = item.seckillPrice
+			sku.stock = item.stock
+		}
+	})
+})
+// 秒杀---end
+
+const curSku = ref<SKU | null>()
+provide('curSku', curSku)
+// 砍价---start
+const bargainActivityId = route.query.bargainActivityId ? Number(route.query.bargainActivityId) : null
+const bargainRecordId = route.query.bargainRecordId ? Number(route.query.bargainRecordId) : null
+const bargainActivity = ref<BargainActivity | null>(bargainActivityId ? { id: bargainActivityId } as BargainActivity : null)
+const bargainRecord = ref<BargainActivity | null>()
+const bargainHelpList = ref<BargainHelp[]>([])
+const hasHelp = computed(() => !!bargainHelpList.value?.find(d => d.userId === userStore.$state.id))
+const isCurrentUser = computed(() => bargainRecord.value?.userId === userStore.$state.id)
+provide('bargainActivity', bargainActivity)
+provide('bargainRecord', bargainRecord)
+provide('bargainHelpList', bargainHelpList)
+provide('hasHelp', hasHelp)
+provide('isCurrentUser', isCurrentUser)
+function getBargainRecord() {
+	$api<BargainActivity>('promotion/bargain-record/get-detail', { params: { id: bargainRecordId, activityId: bargainActivityId } }).then((res) => {
+		bargainRecord.value = res
+	})
+	$api<BargainHelp[]>('promotion/bargain-help/list', { params: { recordId: bargainRecordId } }).then((res) => {
+		bargainHelpList.value = res
+	})
+}
+if (bargainActivityId) {
+	$api<BargainActivity>('promotion/bargain-activity/get-detail', { params: { id: bargainActivityId } }).then((res) => {
+		bargainActivity.value = res
+		curSku.value = info.value?.skus.find(s => s.id === res.skuId)
+	})
+	useHead({
+		title: `${$t('砍价')} ${info.value?.name} ${$t('appTitle')}`,
+	})
+	if (bargainRecordId === null) {
+		$api<{ list: BargainActivity[] }>('promotion/bargain-record/page', { params: { pageNo: 1, pageSize: 1000, activityId: bargainActivityId } }).then((res) => {
+			const d = res?.list.filter(dd => dd.activityId === bargainActivityId)[0]
+			if (d) {
+				if (d.status === 1 || (d.status === 2 && (!d.orderId || d.payStatus == false))) {
+					router.push({
+						path: $path(`/product/${id}`),
+						query: {
+							bargainActivityId,
+							bargainRecordId: d.id,
+						},
+					})
+				}
+			}
+		})
+	}
+	else {
+		getBargainRecord()
+	}
+}
+watchEffect(() => {
+	info.value?.skus.forEach((sku) => {
+		const item = bargainActivity.value?.products?.find(s => s.skuId === sku.id)
+		if (item) {
+			sku.price = item.seckillPrice
+			sku.seckillPrice = item.seckillPrice
+			sku.stock = item.stock
+		}
+	})
+})
+// 砍价---end
+
+const inTimerange = ref(true)
+const isAcActivity = computed(() => !!(
+	seckillActivity.value
+	|| combinationActivity.value
+	|| bargainActivity.value
+))
+provide('inTimerange', inTimerange)
+provide('isAcActivity', isAcActivity)
+
 const selected = ref({})
 watch(
 	info,
@@ -62,8 +168,18 @@ watch(
 	{ deep: true },
 )
 watchEffect(() => {
-	if (combinationActivity.value)
-		skuDisabled.value = !!combinationActivity.value?.products.find(p => p.skuId === curSku.value?.id)
+	if (!inTimerange.value) {
+		skuDisabled.value = true
+	}
+	else if (combinationActivity.value) {
+		skuDisabled.value = !combinationActivity.value?.products?.find(p => p.skuId === curSku.value?.id)
+	}
+	else if (seckillActivity.value) {
+		skuDisabled.value = !seckillActivity.value?.products?.find(p => p.skuId === curSku.value?.id)
+	}
+	else {
+		skuDisabled.value = false
+	}
 })
 const properties = computed(() => {
 	if (!info.value)
@@ -109,6 +225,14 @@ const { data: stared } = await useAPI<boolean>(
 )
 
 const count = ref(1)
+watchEffect(() => {
+	if (curSku.value) {
+		count.value = Math.min(count.value, curSku.value.stock)
+	}
+	else {
+		count.value = 1
+	}
+})
 
 function toggleStar() {
 	if (stared.value) {
@@ -140,33 +264,123 @@ function goCart() {
 	)
 }
 
-function goCheckout() {
+function goSeckill() {
 	if (!count.value || !curSku.value)
 		return
-	if (pickData.value) {
-		localStorage.setItem(`seckillActivityId-${pickData.value.id}`, JSON.stringify({
+	if (seckillActivity.value) {
+		localStorage.setItem(`seckillActivityId-${seckillActivity.value.id}`, JSON.stringify({
 			...info.value,
-			count: 1,
+			count: count.value,
 			sku: curSku.value,
 			skuId: curSku.value?.skuId,
 			spuId: id,
 		}))
-		router.push($path(`/user/checkout?seckillActivityId=${pickData.value.id}`))
+		router.push({
+			path: $path('/user/checkout'),
+			query: { seckillActivityId: seckillActivity.value.id },
+		})
 	}
 }
-
-function goCombination() {
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-expect-error
+function goCombination({ combinationHeadId } = {}) {
 	if (!count.value || !curSku.value)
 		return
 	if (!skuDisabled.value) {
 		localStorage.setItem(`combinationActivityId-${combinationActivityId}`, JSON.stringify({
 			...info.value,
-			count: 1,
+			count: count.value,
 			sku: curSku.value,
 			skuId: curSku.value?.skuId,
 			spuId: id,
 		}))
-		router.push($path(`/user/checkout?combinationActivityId=${combinationActivityId}`))
+		router.push({
+			path: $path('/user/checkout'),
+			query: { combinationActivityId, combinationHeadId },
+		})
+	}
+}
+
+function goNoraml() {
+	router.push($path(`/product/${id}`))
+}
+function goBargain() {
+	$api<number>('promotion/bargain-record/create', {
+		method: 'post',
+		body: { activityId: bargainActivityId },
+	}).then((bargainRecordId: number) => {
+		router.push({
+			path: `/product/${id}`,
+			query: {
+				bargainActivityId,
+				bargainRecordId,
+			},
+		})
+	})
+}
+
+watch(() => route.fullPath, () => window.location.reload())
+
+const { t } = useI18n()
+const { copy } = useClipboard()
+function checkUser() {
+	if (!userStore.$state.id) {
+		ElMessage.info(t('Please sign in first'))
+		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
+		return false
+	}
+	return true
+}
+function handleCommand(type: string, data: any) {
+	switch (type) {
+		case 'star':
+			toggleStar()
+			break
+		case 'submit':
+			goCart()
+			break
+		case 'seckill':
+			goSeckill()
+			break
+		case 'combination':
+			goCombination(data)
+			break
+		case 'normal':
+			goNoraml()
+			break
+		case 'bargain':
+			goBargain()
+			break
+		case 'invite':
+			copy(window.location.href)
+			ElMessage.info(t('链接已复制'))
+			break
+		case 'help':
+			if (!checkUser())
+				return
+			if (bargainRecord.value) {
+				$api('promotion/bargain-help/create', { method: 'post', body: { recordId: bargainRecordId } }).then(() => {
+					bargainRecord.value!.helpCount = (bargainRecord.value!.helpCount || 0) + 1
+					getBargainRecord()
+				})
+			}
+			break
+		case 'bargain-buy':
+			localStorage.setItem(`bargainRecordId-${bargainRecordId}`, JSON.stringify({
+				...info.value,
+				count: count.value,
+				sku: curSku.value,
+				skuId: curSku.value?.id,
+				spuId: info.value?.id,
+			}))
+			router.push($path(`/user/checkout?bargainRecordId=${bargainRecordId}&activityId=${bargainActivityId}`))
+			break
+		case 'bargin-pay':
+			bargainRecord.value && router.push($path(`/user/checkout?orderId=${bargainRecord.value.orderId}&payOrderId=${bargainRecord.value.payOrderId}`))
+			break
+		case 'bargin-order':
+			bargainRecord.value?.orderId && router.push($path(`/user/orderview/${bargainRecord.value.orderId}`))
+			break
 	}
 }
 </script>
@@ -175,17 +389,9 @@ function goCombination() {
 	<div class="product_v4">
 		<div v-if="info" class="xm-page-area">
 			<component
-				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
-				v-model:count="count"
-				v-model:sku="curSku"
-				v-model:selected="selected"
-				:info="info"
-				:star="stared"
-				:properties="properties"
-				@star="toggleStar"
-				@submit="goCart"
-				@buy="goCheckout"
-				@combination="goCombination"
+				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]" v-model:count="count"
+				v-model:sku="curSku" v-model:selected="selected" :info="info" :star="stared" :properties="properties"
+				@command="handleCommand"
 			/>
 		</div>
 	</div>

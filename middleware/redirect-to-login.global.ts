@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 		}
 		else if (!userStore.$state.accessToken) {
 			// 重定向到登录页
-			return navigateTo(localePath('/login'))
+			return navigateTo(`${localePath(`/login`)}?redirect=${encodeURIComponent(to.fullPath)}`)
 		}
 		else if (!userStore.$state.nickname) {
 			await userStore.getInfo()

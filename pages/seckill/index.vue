@@ -55,9 +55,10 @@ onBeforeUnmount(() => clearInterval(timer))
 			<div
 				class="site-banner site-banner--dark site-banner--right site-banner--full site-banner--links site-banner--links--undefined site-banner--links--style-1"
 			>
-				<img v-if="appStore.isPC" class="site-banner__image" src="@/assets/imgs/daily-picks-banner.webp">
+				<AppSwiper v-if="current" :key="current.id" :data="current.sliderPicUrls" />
+				<img v-else-if="appStore.isPC" class="site-banner__image" src="@/assets/imgs/daily-picks-banner.webp">
 				<img
-					v-if="appStore.isMobile" class="site-banner__image"
+					v-else-if="appStore.isMobile" class="site-banner__image"
 					src="@/assets/imgs/daily-picks-banner--mobile.webp"
 				>
 			</div>

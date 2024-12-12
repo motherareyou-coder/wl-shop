@@ -71,10 +71,10 @@ watch(
 							class="content__user-info content__user-info--logged-in"
 						>
 							<div class="user-info__avatar-wrapper">
-								<img
+								<app-image
 									class="user-info__avatar"
 									:src="userStore.avatar || '/avatar.png'"
-								>
+								/>
 							</div>
 							<span class="user-info__nickname">
 								{{ userStore.nickname || $t('login') }}

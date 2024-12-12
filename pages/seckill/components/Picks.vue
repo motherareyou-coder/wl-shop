@@ -11,7 +11,7 @@ const { data, load } = useInfiteLoad<SeckillActivity>(p =>
 
 const router = useRouter()
 function handleClick(item: SeckillActivity) {
-	router.push($path(`/product/${item.spuId}`))
+	router.push($path(`/product/${item.spuId}?seckillActivityId=${item.id}`))
 }
 
 const now = inject('now')
@@ -81,6 +81,12 @@ const now = inject('now')
 						</div>
 					</div>
 					<div class="daily-picks-area__item-spacer"></div>
+					<div class="flex items-center">
+						<span>{{ $t('limit stock') }}</span>
+						<el-progress class="w-2/4 ml-2" :percentage="100 * (item.stock / item.totalStock)" :text-inside="true" :stroke-width="20">
+							{{ item.stock }}/{{ item.totalStock }}
+						</el-progress>
+					</div>
 					<p class="daily-picks-area__item-info">
 						{{ $t('节省') }}
 						<product-price :data="item.marketPrice - item.seckillPrice" />

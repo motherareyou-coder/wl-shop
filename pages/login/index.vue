@@ -8,6 +8,8 @@ definePageMeta({ layout: 'login' })
 const router = useRouter()
 const route = useRoute()
 
+const redirect = decodeURIComponent(route.query.redirect || '')
+
 const tab = ref(route.query.type == 1 ? 1 : 0)
 
 const { t } = useI18n()
@@ -80,7 +82,7 @@ function handleLogin() {
 		wrapLoading(promise.then((res) => {
 			userStore.needAddCart = true
 			userStore.setToken(res)
-			router.push('/')
+			router.push(redirect || '/')
 		}))
 	})
 }
@@ -96,7 +98,7 @@ function handleRegister() {
 				confirmPassword: form.value.confirmPassword,
 			} }).then((res) => {
 				userStore.setToken(res)
-				router.push('/')
+				router.push(redirect || '/')
 			}),
 		)
 	})

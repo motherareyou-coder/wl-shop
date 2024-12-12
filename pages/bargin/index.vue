@@ -15,10 +15,21 @@ function getData<BargainActivity>(params: any) {
 </script>
 
 <template>
+	<section class="site-grid site-grid--none site-grid--full">
+		<div
+			class="site-banner site-banner--dark site-banner--right site-banner--full site-banner--links site-banner--links--undefined site-banner--links--style-1"
+		>
+			<img v-if="appStore.isPC" class="site-banner__image" src="@/assets/imgs/daily-picks-banner.webp">
+			<img
+				v-else-if="appStore.isMobile" class="site-banner__image"
+				src="@/assets/imgs/daily-picks-banner--mobile.webp"
+			>
+		</div>
+	</section>
 	<div class="site-container-1400 w-full mx-auto">
 		<app-list :method="getData" row-key="id" class="bargin-list">
 			<template #default="{ row }: { row: BargainActivity }">
-				<nuxt-link :to="$path(`/bargin/${row.id}`)">
+				<nuxt-link :to="$path(`/product/${row.spuId}?bargainActivityId=${row.id}`)">
 					<div class="bargin-item flex bg-white rounded" :class="[appStore.isPC ? '' : 'mx-2']">
 						<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" />
 						<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">

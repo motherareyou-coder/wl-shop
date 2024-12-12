@@ -1,8 +1,8 @@
 <script setup lang="tsx">
+import paypalPic from '@/assets/imgs/paypal.png'
 import { useAppStore } from '@/stores/app'
 import { pick } from 'lodash-es'
 import type { CartItem, Coupon, OrderSettlement, PayOrderSubmit } from '~/types'
-import paypalPic from '@/assets/imgs/paypal.png'
 import CouponDialog from '../cart/components/CouponDialog.vue'
 import { useCheckOut } from '../cart/utils'
 import Address from './components/Address.vue'
@@ -20,6 +20,7 @@ const orderId = route.query.orderId ? Number(route.query.orderId) : null
 const bargainRecordId = route.query.bargainRecordId ? Number(route.query.bargainRecordId) : null
 const seckillActivityId = route.query.seckillActivityId ? Number(route.query.seckillActivityId) : null
 const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
+const combinationHeadId = route.query.combinationHeadId ? Number(route.query.combinationHeadId) : null
 const productList = ref<CartItem[]>([])
 
 const cantUseCoupon = !!(orderId || bargainRecordId || seckillActivityId || combinationActivityId)
@@ -48,10 +49,18 @@ const shipOptions = ref([
 		expect_time: $t('Expected to be delivered within 2 ~ 5 working days'),
 	},
 ])
-const { data: payOptions1 } = await useAPI<string[]>(
+const appStore = useAppStore()
+const deviceType = computed(() => appStore.deviceType)
+const couponVisible = ref(false)
+const coupon = ref<Coupon>()
+const coupons = ref<Coupon[]>([])
+
+const { info, getInfo, items, additional } = useCheckOut(productList, coupon, data)
+const { data: payOptions1, refresh } = await useAPI<string[]>(
 	'pay/channel/get-enable-code-list',
-	{ params: { appId: 1 } },
+	{ params: { appId: info.value?.appId ?? 1 } },
 )
+watch(() => info.value?.appId, refresh)
 const Pays = [
 	{
 		// title: `${$t('Mock')} / ${$t('Debit Card')}`,
@@ -75,13 +84,6 @@ watch(payOptions1, (v) => {
 	data.value.payKey = v?.[0]
 }, { immediate: true })
 
-const appStore = useAppStore()
-const deviceType = computed(() => appStore.deviceType)
-const couponVisible = ref(false)
-const coupon = ref<Coupon>()
-const coupons = ref<Coupon[]>([])
-
-const { info, getInfo, items } = useCheckOut(productList, coupon, data)
 if (orderId) {
 	$api('trade/order/get-detail', {
 		params: { id: orderId },
@@ -100,23 +102,26 @@ if (orderId) {
 else if (bargainRecordId) {
 	const d = JSON.parse(localStorage.getItem(`bargainRecordId-${bargainRecordId}`))
 	productList.value = [d]
-	watch(() => data.value.pointStatus, getInfo)
+	data.value.pointStatus = false
+	additional.value = { bargainRecordId }
 	watch(() => data.value.addressId, getInfo)
-	getInfo({ bargainRecordId })
+	// getInfo({ bargainRecordId })
 }
 else if (seckillActivityId) {
 	const d = JSON.parse(localStorage.getItem(`seckillActivityId-${seckillActivityId}`))
 	productList.value = [d]
-	watch(() => data.value.pointStatus, getInfo)
+	data.value.pointStatus = false
+	additional.value = { seckillActivityId }
 	watch(() => data.value.addressId, getInfo)
-	getInfo({ seckillActivityId })
+	// getInfo({ seckillActivityId })
 }
 else if (combinationActivityId) {
 	const d = JSON.parse(localStorage.getItem(`combinationActivityId-${combinationActivityId}`))
 	productList.value = [d]
-	watch(() => data.value.pointStatus, getInfo)
+	data.value.pointStatus = false
+	additional.value = { combinationActivityId, combinationHeadId }
 	watch(() => data.value.addressId, getInfo)
-	getInfo({ seckillActivityId })
+	// getInfo({ combinationActivityId, combinationHeadId })
 }
 else {
 	$api('trade/cart/list', {}).then((res) => {
@@ -127,19 +132,18 @@ else {
 		if (productList.value.length === 0)
 			router.push($path(`/user/cart`))
 	})
-	watch(items, getInfo, { immediate: true, deep: true })
-	watch(coupon, getInfo, { immediate: true, deep: true })
+	watch(items, getInfo, { deep: true })
+	watch(coupon, getInfo, { deep: true })
 	watch(
 		info,
 		(v) => {
 			if (v && v.coupons)
 				coupons.value = v.coupons
 		},
-		{ immediate: true },
 	)
 	watch(() => data.value.pointStatus, getInfo)
 	watch(() => data.value.addressId, getInfo)
-	getInfo()
+	// getInfo()
 }
 
 const { loading, wrapLoading } = useLoading()
@@ -641,7 +645,7 @@ const shipOpen = ref(true)
 							>{{ $t('No coupon used') }}</span>
 						</div>
 					</section>
-					<section v-if="!orderId" class="points-info">
+					<section v-if="!seckillActivityId && !combinationActivityId && !orderId" class="points-info">
 						<h2 class="points-info__title">
 							{{ $t('Points') }}
 						</h2>
@@ -682,10 +686,9 @@ const shipOpen = ref(true)
 				>
 					<div class="checkout-footer__price-total">
 						<div class="mi-price">
-							<span>{{ $t('Total') }}: </span><ProductPrice
-								:data="
-									info?.price?.totalPrice || info?.totalPrice
-								"
+							<span>{{ $t('Total') }}: </span>
+							<ProductPrice
+								:data="info?.price?.payPrice || info?.payPrice"
 							/>
 						</div>
 					</div>

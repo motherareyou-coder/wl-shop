@@ -79,6 +79,7 @@ export const useUserStore = defineStore('UserStore', {
 		},
 		reset() {
 			this.$reset()
+			useCartStore().clearCart()
 			this.accessToken = ''
 			this.refreshToken = ''
 			this.expiresTime = ''

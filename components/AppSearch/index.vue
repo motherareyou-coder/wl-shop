@@ -8,7 +8,7 @@ const query = ref('')
 
 const router = useRouter()
 function goSearch() {
-	router.replace($path(`/product-list?query=${query.value}`))
+	router.push($path(`/product-list?query=${query.value}`))
 	show.value = false
 	query.value = ''
 }

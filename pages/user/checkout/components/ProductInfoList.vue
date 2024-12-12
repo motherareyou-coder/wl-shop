@@ -55,15 +55,28 @@ const appStore = useAppStore()
 						<ul class="product-price">
 							<div class="mi-price flex flex-col">
 								<template v-if="item.sku">
-									<product-price
-										:data="item.price"
-									/>
-									<del>
+									<template v-if="item.sku.marketPrice">
 										<product-price
-											:data="item.sku?.price"
-											plain
+											:data="item.sku.price"
 										/>
-									</del>
+										<del>
+											<product-price
+												:data="item.sku.marketPrice"
+												plain
+											/>
+										</del>
+									</template>
+									<template v-else>
+										<product-price
+											:data="item.price"
+										/>
+										<del>
+											<product-price
+												:data="item.sku.price"
+												plain
+											/>
+										</del>
+									</template>
 								</template>
 								<template v-else>
 									<product-price

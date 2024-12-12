@@ -27,8 +27,9 @@ const route = useRoute()
 const router = useRouter()
 function logout() {
 	userStore.logout().then(() => {
-		if (route.path.includes('user') && !route.path.includes('user/cart'))
-			router.replace(route.fullPath)
+		if (route.path.includes('user') && !route.path.includes('user/cart')) {
+			router.push($path('/'))
+		}
 	})
 }
 
@@ -173,12 +174,12 @@ function handleDelete(p: CartItem) {
 								</el-dropdown-item>
 							</template>
 							<template v-else>
-								<nuxt-link :to="$path('/login')">
+								<nuxt-link :to="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`">
 									<el-dropdown-item>
 										{{ $t('Sign in') }}
 									</el-dropdown-item>
 								</nuxt-link>
-								<nuxt-link :to="$path('/login?type=1')">
+								<nuxt-link :to="`${$path(`/login?type=1`)}&redirect=${encodeURIComponent(route.fullPath)}`">
 									<el-dropdown-item>
 										{{ $t('Sign up') }}
 									</el-dropdown-item>

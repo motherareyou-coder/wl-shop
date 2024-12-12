@@ -15,6 +15,17 @@ function getData<CombinationActivity>(params: any) {
 </script>
 
 <template>
+	<section class="site-grid site-grid--none site-grid--full">
+		<div
+			class="site-banner site-banner--dark site-banner--right site-banner--full site-banner--links site-banner--links--undefined site-banner--links--style-1"
+		>
+			<img v-if="appStore.isPC" class="site-banner__image" src="@/assets/imgs/daily-picks-banner.webp">
+			<img
+				v-else-if="appStore.isMobile" class="site-banner__image"
+				src="@/assets/imgs/daily-picks-banner--mobile.webp"
+			>
+		</div>
+	</section>
 	<div class="site-container-1400 w-full mx-auto">
 		<app-list :method="getData" row-key="id" class="combination-list">
 			<template #default="{ row }: { row: CombinationActivity }">

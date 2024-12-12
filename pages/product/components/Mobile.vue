@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import type { ProductDetail, SKU } from '~/types'
+import type { BargainActivity, CombinationActivityDetail, ProductDetail, SeckillActivity, SKU } from '~/types'
 import Activities from './Activities.vue'
+import ActivityTips from './ActivityTips.vue'
+import BargainHelpList from './BargainHelpList.vue'
+import Buttons from './Buttons.vue'
+import Countdown from './Countdown.vue'
 import Coupon from './Coupon.vue'
 import Review from './Review/index.vue'
 import './Mobile.scss'
@@ -11,7 +15,8 @@ const props = defineProps({
 	sku: { type: Object },
 	properties: { type: Array as () => ProductDetail['propertyList'] },
 })
-const emit = defineEmits(['star', 'submit', 'buy', 'combination'])
+const emit0 = defineEmits(['command'])
+const emit = (type: string, ...args: any[]) => emit0('command', type, ...args)
 const count = defineModel<number>('count')
 const info = computed(() => props.info)
 const sku = defineModel<SKU>('sku')
@@ -30,10 +35,15 @@ document.body.onscroll = () => {
 
 const showActivities = ref(false)
 
-const pickData = inject('pickData')
-const combinationActivityId = inject('combinationActivityId')
-const skuDisabled = inject('skuDisabled')
+const skuDisabled = inject('skuDisabled') as Ref<boolean>
 const disabled = computed(() => !sku.value || skuDisabled.value)
+
+const seckillActivity = inject('seckillActivity') as Ref<SeckillActivity>
+const combinationActivity = inject('combinationActivity') as Ref<CombinationActivityDetail>
+const bargainActivity = inject('bargainActivity') as Ref<BargainActivity>
+const bargainRecord = inject('bargainRecord') as Ref<BargainActivity>
+
+const isAcActivity = inject('isAcActivity') as Ref<boolean>
 </script>
 
 <template>
@@ -42,30 +52,7 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 			<div class="xm-navbar__title">
 				<span class="xm-text header">{{ info.name }} </span>
 			</div>
-			<div class="xm-navbar-buynow">
-				<el-button
-					type="info"
-					:disabled="!sku?.stock"
-					@click.prevent="emit('submit')"
-				>
-					{{ (pickData || combinationActivityId) ? $t('原价购买') : $t('立即购买') }}
-				</el-button>
-				<el-button
-					v-if="pickData" type="primary"
-					:disabled="disabled"
-					@click.prevent="emit('buy')"
-				>
-					{{ $t('立即购买') }}
-				</el-button>
-				<el-button
-					v-if="combinationActivityId"
-					type="primary"
-					:disabled="disabled"
-					@click.prevent="emit('combination')"
-				>
-					{{ $t('立即开团') }}
-				</el-button>
-			</div>
+			<Buttons class="xm-navbar-buynow" @command="emit" />
 		</div>
 	</div>
 	<main class="product--mobile">
@@ -76,23 +63,14 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 			/>
 		</section>
 		<section class="product--mobile__section product-information">
-			<div v-if="pickData" class="product-information__events-header">
-				<div class="bar-items bar-items--yellow bar-items--daily-pick">
-					<h2 class="bar-items__title">
-						{{ $t('DAILY PICKS') }}
-					</h2>
-					<div class="bar-items__countdown">
-						<span class="bar-items__desc">{{ $t('Ends in') }}</span>
-						<app-count-down class="bar-items__num" :end-time="pickData.endTime" />
-					</div>
-				</div>
-			</div>
+			<Countdown v-if="isAcActivity" />
 			<div class="product-information__wrapper">
 				<div class="product-information__top">
 					<div class="product-information__price">
 						<ProductPrice :data="sku?.price || info.price" />
 					</div>
 					<el-icon
+						v-if="!isAcActivity"
 						class="product-information__share"
 						:class="{ active: props.star }"
 						@click="emit('star')"
@@ -109,9 +87,9 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 				<div class="product-information__events-info">
 					<section class="event-description">
 						<ul class="event-description__tags">
-							<li v-if="pickData" class="event-description__tag">
-								<span>{{ $t('Save up to') }}
-									<ProductPrice :data="pickData.marketPrice - pickData.seckillPrice" />
+							<li v-if="seckillActivity && sku" class="event-description__tag">
+								<span>{{ $t('节省') }}
+									<ProductPrice :data="sku.marketPrice - sku.price" />
 								</span>
 							</li>
 						</ul>
@@ -120,12 +98,14 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 			</div>
 		</section>
 		<section
+			v-if="!isAcActivity"
 			class="product--mobile__section product--mobile__section--card events-info"
 		>
 			<Activities collapse @click="showActivities = true" />
 			<Coupon />
 		</section>
 		<section
+			v-if="!bargainActivity"
 			class="product--mobile__section product--mobile__section--card"
 		>
 			<section
@@ -159,7 +139,10 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 						</ul>
 					</template>
 				</section>
-				<section class="quantity-section">
+				<section
+					v-if="!bargainActivity"
+					class="quantity-section"
+				>
 					<h3 class="product--mobile__title">
 						{{ $t('Quantity') }}
 					</h3>
@@ -168,13 +151,14 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 							<el-input-number
 								v-model="count"
 								:min="1"
-								:max="sku?.stock"
+								:max="seckillActivity?.singleLimitCount ?? combinationActivity?.singleLimitCount ?? sku?.stock"
 							/>
 						</div>
 					</div>
 				</section>
 			</section>
 		</section>
+		<ActivityTips v-if="isAcActivity" @click="emit('combination', $event)" />
 		<div
 			class="xm-navbar xm-navbar--mobile-update"
 			:class="{
@@ -202,6 +186,16 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 						>
 							<a>{{ $t('Reviews') }} </a>
 						</li>
+						<li
+							v-if="bargainRecord"
+							class="xm-navbar__nav-item"
+							:class="{
+								'xm-navbar__nav-item--current': tab === 2,
+							}"
+							@click="tab = 2"
+						>
+							<a>{{ $t('砍价列表') }}</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -221,6 +215,7 @@ const disabled = computed(() => !sku.value || skuDisabled.value)
 					/>
 				</div>
 				<Review v-else-if="tab === 1" />
+				<BargainHelpList v-else-if="tab === 2" />
 			</keep-alive>
 		</div>
 		<el-drawer

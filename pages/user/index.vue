@@ -188,7 +188,7 @@ function sendCode() {
 const router = useRouter()
 function logout() {
 	userStore.logout().then(() => {
-		router.replace($path('/'))
+		router.push($path('/'))
 	})
 }
 </script>

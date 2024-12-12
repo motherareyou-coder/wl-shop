@@ -17,6 +17,10 @@ export const useCartStore = defineStore('CartStore', {
 		},
 	},
 	actions: {
+		clearCart() {
+			this.validList = []
+			this.invalidList = []
+		},
 		addToBackEnd() {
 			Promise.all(
 				this.validList.map((c) => {

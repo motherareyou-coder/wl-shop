@@ -10,16 +10,6 @@ const { data } = await useAPI<Activity[]>(
 	'promotion/activity/list-by-spu-id',
 	{ params: { spuId: id } },
 )
-const pickData = inject('pickData') as Ref<Activity | null>
-watch(data, (v) => {
-	v?.forEach((d) => {
-		if (d.type === 1) {
-			const now = new Date().getTime()
-			if (new Date(d.startTime).getTime() <= now && new Date(d.endTime).getTime() > now)
-				pickData.value = d
-		}
-	})
-}, { immediate: true })
 
 const typeTitle = {
 	1: $t('秒杀'),
@@ -33,10 +23,7 @@ const typeTitle = {
 }
 
 const finalData = computed(() => {
-	return [1, 2, 3, 4, 5, 6, 7, 8].map(type => ({
-		typeTitle: typeTitle[type],
-		data: data.value?.filter(d => d.type === type) || [],
-	})).filter(d => d.data.length)
+	return data.value?.sort((a, b) => a.type - b.type)?.map(d => ({ ...d, typeTitle: typeTitle[d.type] }))
 })
 </script>
 
@@ -55,40 +42,39 @@ const finalData = computed(() => {
 			</button>
 		</div>
 		<section v-else class="product__section product__section-spacer offers-section">
-			<ul v-for="tData in finalData" :key="tData.typeTitle" class="offers-section__list">
-				<li class="offers-section__item type-dot">
-					{{ tData.typeTitle }}
-				</li>
-				<li v-for="a in tData.data" :key="a.id" class="offers-section__item">
-					<span class="name">{{ a.name }}</span>
-					<app-time :data="a.startTime" />
-					-
-					<app-time :data="a.endTime" />
+			<ul class="offers-section__list">
+				<li v-for="a in finalData" :key="a.typeTitle" class="offers-section__item">
+					<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+					<span>
+						{{ a.typeTitle }}:
+						{{ a.name }}
+						<app-time :data="a.startTime" />
+						-
+						<app-time :data="a.endTime" />
+						<!-- 秒杀 -->
+						<nuxt-link
+							v-if="a.type === 1" type="primary" class="offers-section__link"
+							:to="$path(`/product/${id}?seckillActivityId=${a.id}`)"
+						>
+							{{ $t('learn more') }}
+						</nuxt-link>
+						<!-- 砍价 -->
+						<nuxt-link
+							v-if="a.type === 2" type="primary" class="offers-section__link"
+							:to="$path(`/product/${id}?bargainActivityId=${a.id}`)"
+						>
+							{{ $t('learn more') }}
+						</nuxt-link>
+						<!-- 拼团 -->
+						<nuxt-link
+							v-if="a.type === 3" type="primary" class="offers-section__link"
+							:to="$path(`/product/${id}?combinationActivityId=${a.id}`)"
+						>
+							{{ $t('learn more') }}
+						</nuxt-link>
+					</span>
 				</li>
 			</ul>
 		</section>
 	</template>
 </template>
-
-<style lang="scss" scoped>
-.offers-section__item {
-	padding-left: 1rem !important;
-	.name {
-		margin-right: 0.5rem;
-	}
-}
-.type-dot {
-	position: relative;
-	&::before {
-		content: ' ';
-		display: block;
-		position: absolute;
-		left: 0;
-		width: 6px;
-		height: 6px;
-		top: 50%;
-		transform: translateY(-50%);
-		background-color: var(--mi-color-primary);
-	}
-}
-</style>

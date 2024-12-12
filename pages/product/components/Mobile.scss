@@ -1480,7 +1480,11 @@ body .button-close {
     flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap
+    white-space: nowrap;
+
+    .mi-tag__content{
+        white-space: nowrap;
+    }
 }
 
 .product--mobile .events-info__container .events-info__item {
@@ -9114,7 +9118,7 @@ body.ReactModal__Body--open {
         // color: #fff;
         display: flex;
         font-size: .75rem;
-        height: auto;
+        // height: auto;
         justify-content: center;
         line-height: 1;
         padding: .625rem 1.875rem;

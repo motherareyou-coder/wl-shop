@@ -132,25 +132,6 @@ export interface Property {
 	valueName: string
 }
 
-const properties = [
-	{
-		propertyId: 1,
-		propertyName: 'Color',
-		options: [
-			{ valueId: 1, valueName: 'Red' },
-			{ valueId: 2, valueName: 'Blue' },
-		],
-	},
-	{
-		propertyId: 2,
-		propertyName: 'Storage',
-		options: [
-			{ valueId: 1, valueName: '12GB + 256GB' },
-			{ valueId: 2, valueName: '12GB + 512GB' },
-		],
-	},
-]
-
 export interface SKU {
 	id: number
 	properties: Property[]
@@ -161,6 +142,8 @@ export interface SKU {
 	stock: number
 	weight: number
 	volume: number
+	seckillPrice?: number
+	combinationPrice?: number
 }
 
 export interface ProductDetail {
@@ -1180,6 +1163,7 @@ export interface BargainActivity {
 	orderId?: string
 	payOrderId?: string
 	payStatus?: string
+	helpCount?: number
 	[property: string]: any
 }
 
@@ -1194,7 +1178,7 @@ export interface BargainHelp {
 	/**
 	 * 创建时间
 	 */
-	createTime: Date
+	createTime: string | number
 	/**
 	 * 助力用户的昵称
 	 */
@@ -1273,6 +1257,11 @@ export interface SeckillActivity {
 	 * 秒杀库存（总共）
 	 */
 	totalStock: number
+	products: {
+		seckillPrice: number
+		skuId: number
+		stock: number
+	}[]
 	[property: string]: any
 }
 
@@ -1318,7 +1307,7 @@ export interface CombinationActivityDetail {
 	/**
 	 * 活动结束时间
 	 */
-	endTime: Date
+	endTime: string | number
 	/**
 	 * 拼团活动编号
 	 */
@@ -1330,7 +1319,10 @@ export interface CombinationActivityDetail {
 	/**
 	 * 商品信息数组
 	 */
-	products: Product[]
+	products: {
+		combinationPrice: number
+		skuId: number
+	}[]
 	/**
 	 * 单次限购数量
 	 */
@@ -1342,7 +1334,7 @@ export interface CombinationActivityDetail {
 	/**
 	 * 活动开始时间
 	 */
-	startTime: Date
+	startTime: string | number
 	/**
 	 * 活动状态
 	 */

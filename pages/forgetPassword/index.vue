@@ -26,6 +26,7 @@ const formRef = ref()
 const showPsw = ref(false)
 const showPsw1 = ref(false)
 const router = useRouter()
+const route = useRoute()
 
 function sendCode() {
 	$api('member/auth/send-sms-email-code', {
@@ -49,7 +50,7 @@ function updatePsw() {
 				code: form.value.code,
 			},
 		}).then(() => {
-			router.push($path('/login'))
+			router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
 		}))
 	})
 }
