@@ -15,7 +15,7 @@ function handleClick(a: CombinationRecord) {
 			<li v-for="a in data" :key="a.id" class="offers-section__item flex items-center ">
 				<app-image :src="a.avatar" class="w-8 h-8 rounded-full mr-2" />
 				<span>
-					{{ $t("还差") + a.userCount + $t('人成团') }}
+					{{ $t("还差x人成团", { number: a.userCount }) }}
 				</span>
 				<span class="flex-1"></span>
 				<el-link type="primary" class="justify-self-end" @click="handleClick(a)">

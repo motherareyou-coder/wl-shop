@@ -78,7 +78,10 @@ const now = new Date().getTime()
 							:style="appStore.isPC ? 'border: 1px solid rgb(224, 224, 224);' : ''"
 						>
 							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-40 h-40' : 'w-28 h-28']" />
-							<div class="flex flex-col justify-between py-2" :class="appStore.isPC ? ' leading-8' : ' leading-6'">
+							<div
+								class="flex flex-col justify-between py-2"
+								:class="appStore.isPC ? ' leading-8' : ' leading-6'"
+							>
 								<div>{{ row.spuName }}</div>
 								<div>
 									<product-price :data="row.combinationPrice" />
@@ -86,11 +89,15 @@ const now = new Date().getTime()
 								<div>
 									<UserGroup :id="row.id" class="mr-2" />
 									<span v-if="row.userSize != row.userCount">
-										{{ $t('还差') }} : {{ row.userSize - row.userCount }}
+										{{ $t('还差x人成团', { number: row.userSize - row.userCount }) }}
 									</span>
 								</div>
 								<div>
-									<app-count-down v-if="row.expireTime > now" :end-time="row.expireTime" />
+									<app-count-down
+										v-if="row.expireTime > now"
+										class="bar-items__num"
+										:end-time="row.expireTime"
+									/>
 									<span v-else>{{ $t('已过期') }}</span>
 								</div>
 							</div>
@@ -109,24 +116,30 @@ const now = new Date().getTime()
 	background: #fff;
 	z-index: 20;
 	margin-top: -2px;
+
 	.mi-tabs__header {
 		margin: 0;
 		padding: 0 8px;
 	}
+
 	.mi-tabs__item {
 		padding: 0 20px !important;
 	}
+
 	li {
 		margin: 10px 16px;
 	}
+
 	.is-active {
 		color: var(--text-primary);
 	}
 }
+
 .order-list-wrapper--mobile {
 	.status {
 		color: #616161;
 	}
+
 	.order--paying .status,
 	.order--waiting .status {
 		color: #ff6700;

@@ -30,11 +30,11 @@ const appStore = useAppStore()
 			<span v-if="appStore.isPC" class="whitespace-nowrap">
 				{{ $t('原价购买') }} <product-price :data="info.marketPrice" plain unit="" />
 			</span>
-			<template v-if="appStore.isMobile">
+			<span v-if="appStore.isMobile" class="whitespace-nowrap">
 				<product-price :data="info.marketPrice" plain unit="" />
 				<br>
 				{{ $t('原价购买') }}
-			</template>
+			</span>
 		</el-button>
 		<el-button
 			v-else
@@ -55,11 +55,11 @@ const appStore = useAppStore()
 			<template v-if="appStore.isPC">
 				{{ $t('立即购买') }} <product-price :data="curSku?.seckillPrice" plain unit="" />
 			</template>
-			<template v-if="appStore.isMobile">
+			<span v-if="appStore.isMobile" class="whitespace-nowrap">
 				<product-price :data="curSku?.seckillPrice" plain unit="" />
 				<br v-if="curSku?.seckillPrice">
 				{{ $t('立即购买') }}
-			</template>
+			</span>
 		</el-button>
 		<el-button
 			v-if="combinationActivity"
@@ -71,11 +71,11 @@ const appStore = useAppStore()
 			<template v-if="appStore.isPC">
 				{{ $t('立即开团') }} <product-price :data="curSku?.combinationPrice" plain unit="" />
 			</template>
-			<template v-if="appStore.isMobile">
+			<span v-if="appStore.isMobile" class="whitespace-nowrap">
 				<product-price :data="curSku?.combinationPrice" plain unit="" />
 				<br v-if="curSku?.combinationPrice">
 				{{ $t('立即开团') }}
-			</template>
+			</span>
 		</el-button>
 		<template v-if="bargainActivity">
 			<template v-if="bargainRecord">

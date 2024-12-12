@@ -26,3 +26,23 @@
 .order-list__nav .title-active {
     color: #ff6700
 }
+
+.bar-items__num {
+	display: inline-block
+}
+.bar-items__num strong {
+	display: inline-block;
+	font-weight: 400;
+	position: relative;
+	text-align: center
+}
+
+.bar-items__num strong:last-child:before,
+.bar-items__num strong:nth-child(2):before {
+	content: ":";
+	display: inline-block
+}
+
+.bar-items__num strong:last-child {
+	margin-right: 0
+}

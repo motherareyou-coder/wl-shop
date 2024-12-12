@@ -43,7 +43,7 @@ const classList = computed(() => appStore.isPC ? 'product__section product__sect
 			</li>
 			<li class="offers-section__item">
 				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
-				{{ $t('至少') + combinationActivity.userSize + $t('人成团，在规定时间内达到指定人数，即可享受优惠价购买') }}
+				{{ $t('最少成团人数', { number: combinationActivity.userSize }) }}
 			</li>
 		</ul>
 	</section>
@@ -56,7 +56,7 @@ const classList = computed(() => appStore.isPC ? 'product__section product__sect
 			</li>
 			<li class="offers-section__item">
 				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
-				{{ $t('至少') + bargainActivity.helpMaxCount + $t('人成团，在规定时间内达到指定人数，即可享受优惠价购买') }}
+				{{ $t('最少成团人数', { number: bargainActivity.helpMaxCount }) }}
 			</li>
 		</ul>
 	</section>
