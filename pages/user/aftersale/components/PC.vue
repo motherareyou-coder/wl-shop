@@ -67,10 +67,10 @@ function formatAfterStatusDescription(item: AfterSale) {
 const loading1 = ref(false)
 
 function handleCancel({ id }: AfterSale) {
-	ElMessageBox.confirm(
-		t('Are you confirm to cancel?'),
-		{ confirmButtonClass: 'mi-button--info' },
-	).then(() => {
+	ElMessageBox.confirm(t('Are you confirm to cancel?'), {
+		center: true,
+		confirmButtonClass: 'mi-button--info',
+	}).then(() => {
 		loading1.value = true
 		$api('trade/after-sale/cancel', {
 			method: 'delete',

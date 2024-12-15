@@ -59,6 +59,7 @@ function handleEdit(data: Address) {
 const { t } = useI18n()
 function handleDelete(data: Address, i: number) {
 	ElMessageBox.confirm(t('Are you sure to delete this address?'), {
+		center: true,
 		confirmButtonClass: 'mi-button--info',
 	})
 		.then(() =>

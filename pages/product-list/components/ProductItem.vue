@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SkuSelect from '~/pages/product-list/components/SkuSelect.vue'
 import type { Activity, Product } from '~/types'
 
 const data = defineModel<Product>('data', { default: () => ({}) })
@@ -8,16 +9,14 @@ function onClick() {
 	router.push($path(`/product/${data.value.id}`))
 }
 const appStore = useAppStore()
-const cartStore = useCartStore()
 
 const { loading, wrapLoading } = useLoading()
-function handleAdd(g: Product) {
-	wrapLoading(
-		// TODO: 商品数据缺少skuId
-		cartStore.addCart(g, { id: g.skuId }, 1).then(() =>
-			router.push($path('/user/cart')),
-		),
-	)
+const skuState = ref<Product | null>()
+function handleAdd() {
+	skuState.value = null
+	wrapLoading(nextTick(() => {
+		skuState.value = data.value
+	}))
 }
 
 const { data: activities } = await useAPI<Activity[]>('promotion/activity/list-by-spu-id', { params: {	spuId: data.value.id } })
@@ -78,5 +77,6 @@ const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 				</el-button>
 			</div>
 		</div>
+		<SkuSelect v-if="skuState" :data="skuState" />
 	</li>
 </template>

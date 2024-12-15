@@ -43,3 +43,14 @@
 );
 
 @use 'element-plus/theme-chalk/src/index.scss' as *;
+
+// .mi-checkbox.is-checked .mi-checkbox__inner::before{
+// 	content: "\e609";
+// 	font-family: "micon" !important;
+// 	font-size: var(--action-icon);
+// }
+// .mi-checkbox .mi-checkbox__inner::before{
+// 	content: "\e60a";
+// 	font-family: "micon" !important;
+// 	font-size: var(--action-icon);
+// }

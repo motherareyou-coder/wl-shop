@@ -55,6 +55,7 @@ const msg2 = 'Are you confirm to delete?'
 const msg3 = 'Are you confirm to receive?'
 function delMsgBox(delMsg: string) {
 	return ElMessageBox.confirm(t(delMsg), {
+		center: true,
 		confirmButtonClass: 'mi-button--info',
 	})
 }

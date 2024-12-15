@@ -223,7 +223,7 @@ const data = computed(() => props.data)
 									</span>
 								</td>
 							</tr>
-							<tr v-if="data.refundStatus !== 0">
+							<tr v-if="data.refundStatus !== 0 && (data.refundPrice && data.refundPrice > 0)">
 								<td><span class="total__label">{{ $t('RefundPrice') }}:</span></td>
 								<td>+<ProductPrice class="order-total-count" :data="data.refundPrice" /></td>
 							</tr>

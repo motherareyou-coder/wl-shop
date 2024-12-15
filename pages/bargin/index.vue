@@ -29,39 +29,41 @@ function getData<BargainActivity>(params: any) {
 	<div class="site-container-1400 w-full mx-auto">
 		<app-list :method="getData" row-key="id" class="bargin-list">
 			<template #default="{ row }: { row: BargainActivity }">
-				<nuxt-link :to="$path(`/product/${row.spuId}?bargainActivityId=${row.id}`)">
-					<div class="bargin-item flex bg-white rounded" :class="[appStore.isPC ? '' : 'mx-2']">
-						<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" />
-						<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">
-							<div class=" my-1">
-								{{ row.name }}
-							</div>
-							<div>
-								<div class="flex  my-2 text-sm " :class="appStore.isPC ? 'items-center' : 'flex-col '">
-									<app-time :data="row.startTime" />
-									<span v-if="appStore.isPC">-</span>
-									<app-time :data="row.endTime" />
+				<li>
+					<nuxt-link :to="$path(`/product/${row.spuId}?bargainActivityId=${row.id}`)">
+						<div class="bargin-item flex bg-white rounded" :class="[appStore.isPC ? '' : 'mx-2']">
+							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" />
+							<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">
+								<div class=" my-1">
+									{{ row.name }}
 								</div>
-								<div class="flex items-center justify-between">
-									<span class="text-sm">
-										{{ $t('最低价') }}:
-										<product-price :data="row.bargainMinPrice" />
-									</span>
-									<el-button type="primary">
-										{{ $t('参与砍价') }}
-									</el-button>
+								<div>
+									<div class="flex  my-2 text-sm " :class="appStore.isPC ? 'items-center' : 'flex-col '">
+										<app-time :data="row.startTime" />
+										<span v-if="appStore.isPC">-</span>
+										<app-time :data="row.endTime" />
+									</div>
+									<div class="flex items-center justify-between">
+										<span class="text-sm">
+											{{ $t('最低价') }}:
+											<product-price :data="row.bargainMinPrice" />
+										</span>
+										<el-button type="primary">
+											{{ $t('参与砍价') }}
+										</el-button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</nuxt-link>
+					</nuxt-link>
+				</li>
 			</template>
 		</app-list>
 	</div>
 </template>
 
-<style scoped>
-.bargin-list:deep > div > ul {
+<style scopde>
+.site-container-1400:deep .bargin-list {
     grid-gap: var(--grid-gap);
     display: grid;
     gap: var(--grid-gap);

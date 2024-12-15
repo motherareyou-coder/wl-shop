@@ -72,36 +72,38 @@ const now = new Date().getTime()
 			<keep-alive>
 				<app-list :key="status" :method="method">
 					<template #default="{ row }: { row: CombinationRecord }">
-						<div
-							class="bg-white rounded flex items-center"
-							:class="[appStore.isPC ? 'mb-5' : 'm-2']"
-							:style="appStore.isPC ? 'border: 1px solid rgb(224, 224, 224);' : ''"
-						>
-							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-40 h-40' : 'w-28 h-28']" />
+						<li>
 							<div
-								class="flex flex-col justify-between py-2"
-								:class="appStore.isPC ? ' leading-8' : ' leading-6'"
+								class="bg-white rounded flex items-center"
+								:class="[appStore.isPC ? 'mb-5' : 'm-2']"
+								:style="appStore.isPC ? 'border: 1px solid rgb(224, 224, 224);' : ''"
 							>
-								<div>{{ row.spuName }}</div>
-								<div>
-									<product-price :data="row.combinationPrice" />
-								</div>
-								<div>
-									<UserGroup :id="row.id" class="mr-2" />
-									<span v-if="row.userSize != row.userCount">
-										{{ $t('还差x人成团', { number: row.userSize - row.userCount }) }}
-									</span>
-								</div>
-								<div>
-									<app-count-down
-										v-if="row.expireTime > now"
-										class="bar-items__num"
-										:end-time="row.expireTime"
-									/>
-									<span v-else>{{ $t('已过期') }}</span>
+								<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-40 h-40' : 'w-28 h-28']" />
+								<div
+									class="flex flex-col justify-between py-2"
+									:class="appStore.isPC ? ' leading-8' : ' leading-6'"
+								>
+									<div>{{ row.spuName }}</div>
+									<div>
+										<product-price :data="row.combinationPrice" />
+									</div>
+									<div>
+										<UserGroup :id="row.id" class="mr-2" />
+										<span v-if="row.userSize != row.userCount">
+											{{ $t('还差x人成团', { number: row.userSize - row.userCount }) }}
+										</span>
+									</div>
+									<div>
+										<app-count-down
+											v-if="row.expireTime > now"
+											class="bar-items__num"
+											:end-time="row.expireTime"
+										/>
+										<span v-else>{{ $t('已过期') }}</span>
+									</div>
 								</div>
 							</div>
-						</div>
+						</li>
 					</template>
 				</app-list>
 			</keep-alive>

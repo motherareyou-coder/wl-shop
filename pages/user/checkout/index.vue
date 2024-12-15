@@ -650,7 +650,7 @@ const shipOpen = ref(true)
 							{{ $t('Points') }}
 						</h2>
 						<div class="points-info__tip flex items-center">
-							<el-checkbox v-model="data.pointStatus" />
+							<app-checkbox v-model="data.pointStatus" />
 							<span style="margin: 0 0.5rem">
 								{{ $t('Points saved') }}
 							</span>

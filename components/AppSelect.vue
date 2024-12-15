@@ -26,7 +26,7 @@ function handleClick(o: Option) {
 </script>
 
 <template>
-	<el-select v-if="appStore.isPC" v-model="select">
+	<el-select v-if="appStore.isPC" v-model="select" style="width:10rem">
 		<el-option
 			v-for="o in props.options"
 			:key="o.value"

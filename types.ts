@@ -1,3 +1,12 @@
+export const TerminalEnum = {
+	UNKNOWN: 0, // 未知, 目的：在无法解析到 terminal 时，使用它
+	WECHAT_MINI_PROGRAM: 10, // 微信小程序
+	WECHAT_WAP: 11, // 微信公众号
+	H5: 20, // H5 网页
+	APP: 31, // 手机 App
+	PC: 40, // 手机 App
+}
+
 /**
  * UserInfo，用户 APP - 用户个人信息 Response VO
  */
@@ -252,7 +261,7 @@ export interface ProductBrowseHistory {
 	/**
 	 * 商品 SPU 名称
 	 */
-	spuName?: string
+	spuName: string
 	[property: string]: any
 }
 
@@ -1426,5 +1435,77 @@ export interface CombinationRecordDetail {
 	 * 当前用户参团记录对应的订单编号
 	 */
 	orderId: number
+	[property: string]: any
+}
+
+export interface CouponTemplate {
+	/**
+	 * 是否可以领取
+	 */
+	canTake: boolean
+	/**
+	 * 优惠券说明
+	 */
+	description?: string
+	/**
+	 * 折扣上限
+	 */
+	discountLimitPrice?: number
+	/**
+	 * 折扣百分比
+	 */
+	discountPercent?: number
+	/**
+	 * 优惠金额
+	 */
+	discountPrice?: number
+	/**
+	 * 优惠类型
+	 */
+	discountType: number
+	/**
+	 * 领取日期 - 结束天数
+	 */
+	fixedEndTerm?: number
+	/**
+	 * 领取日期 - 开始天数
+	 */
+	fixedStartTerm?: number
+	/**
+	 * 优惠劵模板编号
+	 */
+	id: number
+	/**
+	 * 优惠劵名
+	 */
+	name: string
+	/**
+	 * 商品范围
+	 */
+	productScope: number
+	/**
+	 * 商品范围编号的数组
+	 */
+	productScopeValues: number[]
+	/**
+	 * 每人限领个数
+	 */
+	takeLimitCount: number
+	/**
+	 * 是否设置满多少金额可用
+	 */
+	usePrice: number
+	/**
+	 * 固定日期 - 生效结束时间
+	 */
+	validEndTime?: Date
+	/**
+	 * 生效日期类型
+	 */
+	validityType: number
+	/**
+	 * 固定日期 - 生效开始时间
+	 */
+	validStartTime?: Date
 	[property: string]: any
 }

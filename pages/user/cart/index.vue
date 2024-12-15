@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CartItem, Coupon, ProductBrowseHistory } from '~/types'
+import type { CartItem, Coupon, ProductBrowseHistory, SKU } from '~/types'
 import CouponDialog from './components/CouponDialog.vue'
 import QtyInput from './components/QtyInput.vue'
 import Recommends from './components/Recommends.vue'
@@ -65,16 +65,14 @@ getInfo()
 
 const open1 = ref(false)
 
-function handleAdd(g: ProductBrowseHistory) {
-	// TODO: 浏览记录数据缺少skuId
-	wrapLoading(cartStore.addCart(g, { id: g.skuId }, 1))
-}
-
 const { t } = useI18n()
 function delMsgBox() {
 	return ElMessageBox.confirm(
 		t('Are you sure to remove this product from shopping cart?'),
-		{ confirmButtonClass: 'mi-button--info' },
+		{
+			center: true,
+			confirmButtonClass: 'mi-button--info',
+		},
 	)
 }
 
@@ -144,13 +142,12 @@ function checkAllChange(selected: boolean) {
 						<header
 							class="site-cart__card site-cart__header cart-header"
 						>
-							<el-checkbox
+							<app-checkbox
 								v-model="checkAll"
 								class="cart-header__checkbox"
+								:label="$t('CheckAll')"
 								@change="checkAllChange"
-							>
-								{{ $t('CheckAll') }}
-							</el-checkbox>
+							/>
 							<button
 								class="cursor-pointer cart-header__delete"
 								@click.prevent="handleDeleteAll"
@@ -190,7 +187,7 @@ function checkAllChange(selected: boolean) {
 									}"
 								>
 									<div class="cart-item__checkbox">
-										<el-checkbox
+										<app-checkbox
 											:model-value="item.selected"
 											@change="(v) => checkChange(item, v)"
 										/>
@@ -202,7 +199,7 @@ function checkAllChange(selected: boolean) {
 										>
 											<app-image
 												class="cart-item__image-content"
-												:src="item.spu?.picUrl"
+												:src="item.sku?.picUrl || item.spu?.picUrl"
 											/>
 										</nuxt-link>
 									</div>
@@ -414,7 +411,6 @@ function checkAllChange(selected: boolean) {
 				<Recommends
 					v-if="userStore.$state.nickname"
 					class="site-cart__recommend cart-recommend"
-					@add="handleAdd"
 				/>
 			</div>
 			<footer
@@ -440,7 +436,7 @@ function checkAllChange(selected: boolean) {
 				</section>
 				<section class="cart-footer__submit-area">
 					<div class="cart-footer__total">
-						<el-checkbox
+						<app-checkbox
 							v-model="checkAll"
 							class="cart-footer__checkbox"
 							@change="checkAllChange"

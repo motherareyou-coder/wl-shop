@@ -5,6 +5,7 @@ import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 // import './index.scss'
 import type { BargainActivity, BargainHelp, CombinationActivityDetail, PayOrderSubmit, ProductDetail, SeckillActivity, SKU } from '~/types'
+import { useProperties } from './utils'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -143,19 +144,6 @@ provide('isAcActivity', isAcActivity)
 
 const selected = ref({})
 watch(
-	info,
-	(v) => {
-		v?.skus.forEach((s) => {
-			s.propertyMap = s.properties.reduce((t, p) => {
-				t[p.propertyId] = p.valueId
-				return t
-			}, {})
-		})
-	},
-	{ immediate: true },
-)
-
-watch(
 	selected,
 	(v) => {
 		curSku.value = null
@@ -181,34 +169,7 @@ watchEffect(() => {
 		skuDisabled.value = false
 	}
 })
-const properties = computed(() => {
-	if (!info.value)
-		return []
-	if (isString(info.value.propertyList)) {
-		const a = JSON.parse(info.value.propertyList)
-		if (a.length)
-			return a
-	}
-	if (isArray(info.value.propertyList))
-		return info.value.propertyList
-	const arr = info.value.skus.map(s => s.properties).flat()
-	const map: Record<any, any> = {}
-	arr.forEach((c) => {
-		const { propertyId, propertyName, valueId, valueName } = c
-		const property = map[propertyId] || {
-			id: propertyId,
-			name: propertyName,
-			values: [],
-		}
-		property.values.push({ id: valueId, name: valueName })
-		property.values = uniqBy(property.values, 'id')
-		map[propertyId] = property
-	})
-	Object.entries(map).forEach(([k, v]) => {
-		selected.value[k] = v.values[0]?.id
-	})
-	return Object.values(map)
-})
+const properties = useProperties(info)
 watch(
 	() => info.value?.skus,
 	(v) => {
@@ -389,8 +350,13 @@ function handleCommand(type: string, data: any) {
 	<div class="product_v4">
 		<div v-if="info" class="xm-page-area">
 			<component
-				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]" v-model:count="count"
-				v-model:sku="curSku" v-model:selected="selected" :info="info" :star="stared" :properties="properties"
+				:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
+				v-model:count="count"
+				v-model:sku="curSku"
+				v-model:selected="selected"
+				:info="info"
+				:star="stared"
+				:properties="properties"
 				@command="handleCommand"
 			/>
 		</div>

@@ -53,7 +53,7 @@ function getData<ExperienceRecord>(params: any) {
 			</el-scrollbar>
 			<app-list :method="getData" row-key="">
 				<template #default="{ row }: { row: ExperienceRecord }">
-					<div class="record">
+					<li class="record">
 						<div>
 							<span>{{ row.title }}</span>
 							<span>+{{ row.experience }} </span>
@@ -67,7 +67,7 @@ function getData<ExperienceRecord>(params: any) {
 							<span>{{ row.description }}</span>
 							<app-time :data="row.createTime" />
 						</div>
-					</div>
+					</li>
 				</template>
 			</app-list>
 		</div>

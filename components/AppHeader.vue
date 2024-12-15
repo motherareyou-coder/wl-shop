@@ -142,6 +142,7 @@ function handleDelete(p: CartItem) {
 									:is-dot="appStore.isMobile"
 									:value="cartCount"
 									color="#ff6700"
+									class="shortcut__item--wrapper"
 								>
 									<i class="micon micon-shopping-cart shortcut__icon"></i>
 								</el-badge>
@@ -149,45 +150,54 @@ function handleDelete(p: CartItem) {
 						</template>
 					</el-popover>
 				</li>
-				<el-dropdown
+				<el-popover
 					v-if="appStore.isPC"
 					class="navigation__item shortcut__item"
+					popper-class="shortcut__view shortcut__view-account view-account"
+					:show-arrow="false"
+					:offset="0"
+					popper-style="padding:0;width: -webkit-max-content;width: -moz-max-content;width: max-content;min-width:0;"
+					width="max-content"
 				>
-					<nuxt-link class="navigation__link outline-none" :to="$path('/user')">
-						<i class="micon micon-account shortcut__icon"></i>
-					</nuxt-link>
-					<template #dropdown>
-						<el-dropdown-menu>
-							<template v-if="userStore.nickname">
-								<nuxt-link :to="$path('/user')">
-									<el-dropdown-item>
-										{{ $t('My account') }}
-									</el-dropdown-item>
-								</nuxt-link>
-								<nuxt-link :to="$path('/user/orderlist')">
-									<el-dropdown-item>
-										{{ $t('My orders') }}
-									</el-dropdown-item>
-								</nuxt-link>
-								<el-dropdown-item @click="logout">
-									{{ $t('Sign out') }}
-								</el-dropdown-item>
-							</template>
-							<template v-else>
-								<nuxt-link :to="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`">
-									<el-dropdown-item>
-										{{ $t('Sign in') }}
-									</el-dropdown-item>
-								</nuxt-link>
-								<nuxt-link :to="`${$path(`/login?type=1`)}&redirect=${encodeURIComponent(route.fullPath)}`">
-									<el-dropdown-item>
-										{{ $t('Sign up') }}
-									</el-dropdown-item>
-								</nuxt-link>
-							</template>
-						</el-dropdown-menu>
+					<template #reference>
+						<li class="navigation__item shortcut__item">
+							<nuxt-link class="navigation__link outline-none" :to="$path('/user')">
+								<i class="micon micon-account shortcut__icon"></i>
+							</nuxt-link>
+						</li>
 					</template>
-				</el-dropdown>
+					<ul class="view-account__list">
+						<template v-if="userStore.nickname">
+							<li class="view-account__item">
+								<a :href="$path('/user')" class="view-account__link">
+									{{ $t('My account') }}
+								</a>
+							</li>
+							<li class="view-account__item">
+								<a :href="$path('/user/orderlist')" class="view-account__link">
+									{{ $t('My orders') }}
+								</a>
+							</li>
+							<li class="view-account__item">
+								<a class="view-account__link cursor-pointer" @click="logout">
+									{{ $t('Sign out') }}
+								</a>
+							</li>
+						</template>
+						<template v-else>
+							<li class="view-account__item">
+								<a class="view-account__link" :href="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`">
+									{{ $t('Sign in') }}
+								</a>
+							</li>
+							<li class="view-account__item">
+								<a class="view-account__link" :href="`${$path(`/login?type=1`)}&redirect=${encodeURIComponent(route.fullPath)}`">
+									{{ $t('Sign up') }}
+								</a>
+							</li>
+						</template>
+					</ul>
+				</el-popover>
 				<li
 					v-if="showMobileMenu"
 					class="navigation__item shortcut__item shortcut__item-menu"
@@ -209,9 +219,18 @@ function handleDelete(p: CartItem) {
 
 <style lang="scss">
 .site-header--sticky {
-	.mi-badge__content.is-fixed{
+	.mi-badge__content.is-fixed {
 		padding: 2PX 4PX !important;
 		line-height: 1;
+	}
+	.shortcut__item--wrapper  {
+		.mi-badge__content:not(.is-dot) {
+			border:none;
+			height: 16px;
+			border-bottom-left-radius: 0;
+			right: calc(var(--mi-badge-size) / 2 - 7px);
+			top: -2px;
+		}
 	}
 }
 </style>

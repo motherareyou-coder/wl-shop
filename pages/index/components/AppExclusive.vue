@@ -50,9 +50,9 @@ Promise.all([
 	}).then(res => ({
 		picUrl: CouponImg,
 		desc: res?.list?.[0]?.description,
-		spuId: res?.list?.[0]?.spuId,
 		icon: 'micon micon-calendar-solid',
 		name: t('Coupon collection'),
+		url: '/coupon',
 	})),
 ])
 	.then((list) => {

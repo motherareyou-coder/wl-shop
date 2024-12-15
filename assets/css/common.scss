@@ -10,9 +10,12 @@ ul {
 li {
 	list-style: none;
 }
+
 @font-face {
-	font-family: "MiSans Latin"; /*字体名称，自己命名*/
-	src: url('../fonts/miSansLatin/MiSansLatinVF.ttf') format('truetype'); /* 修改为字体文件实际路径 */
+	font-family: "MiSans Latin";
+	/*字体名称，自己命名*/
+	src: url('../fonts/miSansLatin/MiSansLatinVF.ttf') format('truetype');
+	/* 修改为字体文件实际路径 */
 }
 
 p,
@@ -110,4 +113,87 @@ body {
 	justify-content: center !important;
 	--mi-pagination-bg-color: transparent !important;
 	--mi-pagination-button-disabled-bg-color: transparent !important;
+}
+
+
+.mi-message {
+	position: fixed;
+	top: 50% !important;
+	transform: translate(-50%, -50%);
+}
+
+.mi-message.mi-message--info {
+	align-items: center;
+	background: rgba(25, 25, 25, .8);
+	border-radius: 12px;
+	box-shadow: 0 4px 8px 0 rgba(25, 25, 25, .08);
+	border: none;
+	box-sizing: border-box;
+	color: #fff;
+	color: var(--text-reverse);
+	display: flex;
+	font-size: 16px;
+	font-weight: 400;
+	justify-content: space-between;
+	left: 50%;
+	max-width: 520px;
+	min-width: 318px;
+	padding: 24px 32px;
+	text-align: center;
+
+	.mi-icon {
+		display: none;
+	}
+
+	.mi-message__content {
+		word-wrap: break-word;
+		width: 100%;
+		color: #fff;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.mi-message.mi-message--info {
+		border-radius: 8px;
+		font-size: 14px;
+		max-width: 80%;
+		min-width: 60%;
+		padding: 16px 20px
+	}
+}
+
+.mi-message-box.mi-message-box--center {
+	.mi-message-box__content {
+		margin: 10px 0;
+		color: #191919;
+	}
+	.mi-message-box__btns {
+		align-items: center;
+		box-sizing: border-box;
+		flex-basis: auto;
+		flex-flow: column nowrap;
+		justify-content: center;
+		margin: 0 auto;
+		padding: 10px;
+		width: 100%;
+		display: grid;
+		gap: calc(var(--modal-footer-padding-horizontal) / 2);
+		grid-template-columns: repeat(2, 1fr);
+		width: 100%;
+
+		.mi-button {
+			height: auto;
+
+			&:first-child {
+				--mi-button-border-color: #191919;
+				--mi-button-hover-text-color: #666;
+				--mi-button-hover-bg-color: #fff;
+				--mi-button-hover-border-color: #666;
+				--mi-button-active-text-color: #666;
+				--mi-button-active-border-color: #666;
+				--mi-button-active-bg-color: #fff;
+				--mi-button-outline-color: #666;
+			}
+		}
+	}
 }

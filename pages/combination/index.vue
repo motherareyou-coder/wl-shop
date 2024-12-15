@@ -29,37 +29,39 @@ function getData<CombinationActivity>(params: any) {
 	<div class="site-container-1400 w-full mx-auto">
 		<app-list :method="getData" row-key="id" class="combination-list">
 			<template #default="{ row }: { row: CombinationActivity }">
-				<nuxt-link :to="$path(`/product/${row.spuId}?combinationActivityId=${row.id}`)">
-					<div class="combination-item flex bg-white rounded" :class="[appStore.isPC ? '' : 'mx-2']">
-						<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" />
-						<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">
-							<div class=" my-1">
-								{{ row.name }}
-							</div>
-							<span>
-								<product-price :data="row.combinationPrice" />
-								<del>
-									<product-price :data="row.marketPrice" plain />
-								</del>
-							</span>
-							<div class="flex items-center justify-between">
-								<div class="flex flex-col text-sm">
-									<span>{{ $t('拼团人数') }} : {{ row.userSize }}</span>
+				<li>
+					<nuxt-link :to="$path(`/product/${row.spuId}?combinationActivityId=${row.id}`)">
+						<div class="combination-item flex bg-white rounded" :class="[appStore.isPC ? '' : 'mx-2']">
+							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" />
+							<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">
+								<div class=" my-1">
+									{{ row.name }}
 								</div>
-								<el-button type="primary">
-									{{ $t('去拼团') }}
-								</el-button>
+								<span>
+									<product-price :data="row.combinationPrice" />
+									<del>
+										<product-price :data="row.marketPrice" plain />
+									</del>
+								</span>
+								<div class="flex items-center justify-between">
+									<div class="flex flex-col text-sm">
+										<span>{{ $t('拼团人数') }} : {{ row.userSize }}</span>
+									</div>
+									<el-button type="primary">
+										{{ $t('去拼团') }}
+									</el-button>
+								</div>
 							</div>
 						</div>
-					</div>
-				</nuxt-link>
+					</nuxt-link>
+				</li>
 			</template>
 		</app-list>
 	</div>
 </template>
 
 <style scoped>
-.combination-list:deep>div>ul {
+.site-container-1400:deep .combination-list {
 	grid-gap: var(--grid-gap);
 	display: grid;
 	gap: var(--grid-gap);

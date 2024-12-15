@@ -1558,50 +1558,52 @@
     }
 }
 
-.shortcut__view-cart-account .view-account__item {
+.shortcut__view-account .view-account__item {
     border-bottom: 1px solid #e7e7e7;
     border-bottom: 1px solid var(--brand-grey-20)
 }
 
-.shortcut__view-cart-account .view-account__item:last-child {
+.shortcut__view-account .view-account__item:last-child {
     border-bottom: none
 }
 
-.shortcut__view-cart-account .view-account__link {
+.shortcut__view-account .view-account__link {
     box-sizing: border-box;
     color: #898989;
     color: var(--text-secondary);
     display: inline-block;
     position: relative;
     text-align: center;
-    width: 100%
+    width: 100%;
+	font-size: 16px;
+	white-space: nowrap;
 }
 
 @media screen and (min-width: 721px)and (max-width:1024px) {
-    .shortcut__view-cart-account .view-account__link {
+    .shortcut__view-account .view-account__link {
         padding:1.5625vw 2.34375vw
     }
 }
 
 @media screen and (min-width: 1025px)and (max-width:1440px) {
-    .shortcut__view-cart-account .view-account__link {
+    .shortcut__view-account .view-account__link {
         padding:.625vw .9765625vw
     }
 }
 
 @media screen and (min-width: 1441px)and (max-width:1920px) {
-    .shortcut__view-cart-account .view-account__link {
+    .shortcut__view-account .view-account__link {
         padding:.8333333333vw 1.3020833333vw
     }
 }
 
 @media screen and (min-width: 1921px) {
-    .shortcut__view-cart-account .view-account__link {
+    .shortcut__view-account .view-account__link {
         padding:16px 25px
     }
 }
 
-.shortcut__view-cart-account .view-account__link:hover {
+.shortcut__view-account .view-account__link:hover {
     background-color: #fff;
     color: #191919;
     color: var(--text-base);

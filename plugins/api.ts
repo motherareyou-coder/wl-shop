@@ -1,8 +1,19 @@
+import { TerminalEnum } from '~/types'
+
 export default defineNuxtPlugin(() => {
 	// const { session } = useUserSession()
 	const { baseURL, tenantId } = useRuntimeConfig().public
 	const userStore = useUserStore()
 	const nuxtApp = useNuxtApp()
+	const appStore = useAppStore()
+
+	function getTerminal() {
+		if (appStore.isPC)
+			return TerminalEnum.PC
+		if (appStore.isMobile)
+			return TerminalEnum.H5
+		return ''
+	}
 
 	const api = $fetch.create({
 		baseURL,
@@ -15,6 +26,7 @@ export default defineNuxtPlugin(() => {
 			options.headers = new Headers(options.headers)
 			// 租户不论是否登陆，都需要传入
 			options.headers.set('tenant-id', `${tenantId}`)
+			options.headers.set('terminal', `${getTerminal()}`)
 			const token = userStore.accessToken
 			if (token) {
 				options.headers.set('Authorization', `${token}`)

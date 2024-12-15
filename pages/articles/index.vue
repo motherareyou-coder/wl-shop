@@ -37,7 +37,9 @@ function method(params) {
 			</div>
 			<app-list :key="categoryId" class="list-content" :method="method">
 				<template #default="{ row }">
-					<ArticleItem :data="row" :category-id="row.categoryId" />
+					<li>
+						<ArticleItem :data="row" :category-id="row.categoryId" />
+					</li>
 				</template>
 			</app-list>
 		</div>
@@ -75,20 +77,18 @@ function method(params) {
 	}
 	.list-content {
 		padding: 0 10px;
-		> div > ul {
-			margin: 0 -10px;
-			display: flex;
-			flex-flow: row wrap;
-			justify-content: space-between;
-			align-items: stretch;
+		margin: 0 -10px;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-items: stretch;
+		li {
+			width: 50%;
+			padding: 10px;
+		}
+		@media screen and (max-width: 800px) {
 			li {
-				width: 50%;
-				padding: 10px;
-			}
-			@media screen and (max-width: 800px) {
-				li {
-					width: 100%;
-				}
+				width: 100%;
 			}
 		}
 	}

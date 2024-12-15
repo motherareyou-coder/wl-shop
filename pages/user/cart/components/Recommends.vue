@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import SkuSelect from '~/pages/product-list/components/SkuSelect.vue'
 import type { ProductBrowseHistory } from '~/types'
 import './Recommends.scss'
-
-const emit = defineEmits(['add'])
 
 const { data: recommends } = await useAsyncData<ProductBrowseHistory[]>(() =>
 	$api('product/browse-history/page', {
@@ -10,8 +9,12 @@ const { data: recommends } = await useAsyncData<ProductBrowseHistory[]>(() =>
 	}).then(res => res.list),
 )
 
-function addToCart(r) {
-	emit('add', r)
+const skuState = ref<ProductBrowseHistory | null>()
+function addToCart(r: ProductBrowseHistory) {
+	skuState.value = null
+	nextTick(() => {
+		skuState.value = r
+	})
 }
 </script>
 
@@ -54,5 +57,6 @@ function addToCart(r) {
 				</div>
 			</li>
 		</ul>
+		<SkuSelect v-if="skuState" :data="skuState" />
 	</article>
 </template>

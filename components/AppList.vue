@@ -14,28 +14,26 @@ const appStore = useAppStore()
 </script>
 
 <template>
-	<div>
-		<div v-if="appStore.isPC">
-			<ul>
-				<li v-for="(item, i) in data2" :key="item[props.rowKey] || i">
-					<slot :row="item"></slot>
-				</li>
-			</ul>
-			<el-pagination
-				v-if="pagination.total"
-				v-model:current-page="pagination.currentPage"
-				v-model:page-size="pagination.pageSize"
-				:total="pagination.total"
-				layout="prev,pager,next,jumper"
-				class="mt-2"
-			/>
-		</div>
-		<div v-if="appStore.isMobile" v-infinite-scroll="load">
-			<ul>
-				<li v-for="(item, i) in data1" :key="item[props.rowKey] || i">
-					<slot :row="item"></slot>
-				</li>
-			</ul>
-		</div>
+	<template v-if="appStore.isPC">
+		<ul :class="$attrs.class">
+			<template v-for="(item, i) in data2" :key="item[props.rowKey] || i">
+				<slot :row="item"></slot>
+			</template>
+		</ul>
+		<el-pagination
+			v-if="pagination.total"
+			v-model:current-page="pagination.currentPage"
+			v-model:page-size="pagination.pageSize"
+			:total="pagination.total"
+			layout="prev,pager,next,jumper"
+			class="mt-2"
+		/>
+	</template>
+	<div v-if="appStore.isMobile" v-infinite-scroll="load">
+		<ul :class="$attrs.class">
+			<template v-for="(item, i) in data1" :key="item[props.rowKey] || i">
+				<slot :row="item"></slot>
+			</template>
+		</ul>
 	</div>
 </template>
