@@ -59,6 +59,10 @@ function delMsgBox(delMsg: string) {
 		confirmButtonClass: 'mi-button--info',
 	})
 }
+
+const trackVisible = ref(false)
+const tracks = ref<ExpressTrack[]>([])
+let track_get = false
 function handleCommand(type: string, data: any) {
 	switch (type) {
 		case 'cancel':
@@ -111,15 +115,23 @@ function handleCommand(type: string, data: any) {
 		case 'aftersale-view':
 			router.push($path(`/user/aftersaleview/${data.afterSaleId}`))
 			break
+		case 'track':
+			if (track_get) {
+				trackVisible.value = true
+			}
+			else {
+				$api<ExpressTrack[]>(
+					'trade/order/get-express-track-list',
+					{ params: { id } },
+				).then((res) => {
+					tracks.value = (res || []).reverse()
+					trackVisible.value = true
+					track_get = true
+				})
+			}
+			break
 	}
 }
-
-const { data: tracks } = await useAPI<ExpressTrack[]>(
-	'trade/order/get-express-track-list',
-	{
-		params: { id },
-	},
-)
 </script>
 
 <template>
@@ -127,8 +139,18 @@ const { data: tracks } = await useAPI<ExpressTrack[]>(
 		:is="{ pc: PC, mobile: Mobile }[appStore.deviceType as string]"
 		v-if="info"
 		:data="info"
-		:tracks="tracks"
 		:loading="loading"
 		@command="handleCommand"
 	/>
+	<app-modal v-model="trackVisible">
+		<el-timeline>
+			<el-timeline-item
+				v-for="(track, i) in tracks"
+				:key="i"
+				:timestamp="track.time"
+			>
+				{{ track.content }}
+			</el-timeline-item>
+		</el-timeline>
+	</app-modal>
 </template>

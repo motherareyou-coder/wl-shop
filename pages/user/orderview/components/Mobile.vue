@@ -4,7 +4,6 @@ import { statusText } from '../../orderlist/utils'
 
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
-	tracks: { type: Object as () => ExpressTrack[] },
 	loading: { type: Boolean },
 })
 const emit = defineEmits(['command'])
@@ -48,16 +47,10 @@ const data = computed(() => props.data)
 				</div>
 			</div>
 		</section>
-		<section v-if="props.tracks?.length" class="p-4 bg-white my-2 p-2 pb-0">
-			<el-timeline>
-				<el-timeline-item
-					v-for="(track, i) in props.tracks"
-					:key="i"
-					:timestamp="track.time"
-				>
-					{{ track.content }}
-				</el-timeline-item>
-			</el-timeline>
+		<section v-if="data.logisticsNo" class="p-4 bg-white my-2 p-2">
+			<el-button type="info" @click="emit('command', 'track')">
+				{{ $t('查看物流轨迹') }}
+			</el-button>
 		</section>
 		<section class="p-4 bg-white my-2">
 			<div>
