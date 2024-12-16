@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { OrderDetail } from '~/types'
 import { statusText } from '../utils'
+import './Mobile.scss'
 
 const statusOptions = [
 	{ value: '', label: $t('All Order') },
@@ -60,61 +61,72 @@ function goDetail({ id }: OrderDetail) {
 			v-infinite-scroll="load"
 			class="infinite-scroll infinite-scroll--mobile"
 		>
-			<ul>
+			<ul class="order-list">
 				<li
 					v-for="order in data"
 					:key="order.id"
-					class="my-4 p-4 bg-white"
+					class="order-item"
 					:class="[
 						`order--${statusClass[order.status]?.toLowerCase()}`,
 					]"
 				>
-					<div class="flex justify-between">
-						<div>
-							<!--{{ `${$t('Order number')} ${order.no}` }}-->
-							{{ `${order.no}` }}
+					<div class="order-item__header">
+						<div class="order-item__header__left">
+							<div class="order-item__time">
+								{{ `${order.no}` }}
+							</div>
 						</div>
-						<div class="status whitespace-nowrap">
-							{{
-								statusText[order.status]
-									&& $t(statusText[order.status])
-							}}
+						<div class="order-item__header__right">
+							<span class="order-item__status">
+								{{
+									statusText[order.status]
+										&& $t(statusText[order.status])
+								}}
+							</span>
 						</div>
 					</div>
-					<div
-						class="my-2 py-3"
-						style="
-							border-top: 1px solid var(--border-light-variant);
-							border-bottom: 1px solid var(--border-light-variant);
-						"
-					>
-						<nuxt-link :to="$path(`/user/orderview/${order.id}`)">
+					<div class="order-item__content">
+						<nuxt-link class="order-item__link" :to="$path(`/user/orderview/${order.id}`)">
 							<div
 								v-for="item in order.items"
 								:key="item.id"
-								class="flex"
+								class="commodity-item"
 							>
-								<app-image
-									class="mr-5 w-16 h-16"
-									:src="item.picUrl"
-								/>
-								<div>
-									<p>{{ item.spuName }}</p>
+								<div class="commodity-item__image">
+									<app-image
+										class="mr-5 w-16 h-16"
+										:src="item.picUrl"
+									/>
+								</div>
+								<div class="commodity-item__info">
+									<p>{{ item.spuName }} {{ item.properties?.length > 1 ? item.properties?.map(p => p.valueName).join(' ') : '' }}</p>
 								</div>
 							</div>
 						</nuxt-link>
 					</div>
-					<div class="flex justify-between items-center">
-						<div>
-							<span>
+					<div class="order-item__footer">
+						<div class="order-item__footer__left">
+							<span class="order-item__totalprice">
 								{{ $t('Total') }}
 								<ProductPrice :data="order.payPrice" />
 							</span>
 						</div>
-						<div>
-							<el-button @click="goDetail(order)">
-								{{ $t('ORDER DETAILS') }}
-							</el-button>
+						<div class="order-item__footer__right">
+							<nuxt-link
+								v-if="order.status === 0"
+								:to="
+									$path(
+										`/user/checkout?orderId=${order.id}`,
+									)
+								"
+							>
+								<el-button
+									class="order-item__button order-item__button--active"
+									size="small"
+								>
+									{{ $t('Pay Now') }}
+								</el-button>
+							</nuxt-link>
 						</div>
 					</div>
 				</li>

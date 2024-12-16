@@ -173,7 +173,7 @@ watch(status, resetData)
 														class="goods-list-gooods-info__information information"
 													>
 														<div>
-															{{ item.spuName }}
+															{{ item.spuName }} {{ item.properties?.length > 1 ? item.properties?.map(p => p.valueName).join(' ') : '' }}
 														</div>
 														<div>
 															<ProductPrice

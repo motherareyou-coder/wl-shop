@@ -9,10 +9,10 @@ const { data, pagination, getData } = useTablePagination<AfterSale>((p = {}) =>
 	}),
 )
 
-const wayText = computed(() => ({
-	10: $t('Refund only'),
-	20: $t('Return and refund'),
-}))
+const wayText = {
+	10: t('Refund only'),
+	20: t('Return and refund'),
+}
 
 // 售后取消按钮展示
 function cancelBtnShow(item: AfterSale) {
@@ -117,9 +117,9 @@ function goDetail({ id }: AfterSale) {
 					class="mb-5 p-6"
 					style="border: 1px solid #e0e0e0"
 				>
-					<div class="text-xl">
+					<div class="text-xl flex justify-between">
 						<span>{{ $t('AfterSale number') }}: {{ item.no }}</span>
-						<span>{{ item.status }}</span>
+						<span>{{ formatAfterStatusDescription(item) }}</span>
 					</div>
 					<div class="flex my-4">
 						<nuxt-link
@@ -130,7 +130,7 @@ function goDetail({ id }: AfterSale) {
 						</nuxt-link>
 						<div class="flex flex-col justify-between flex-1">
 							<span style="color: #000">
-								{{ item.spuName }}
+								{{ item.spuName }} {{ item.properties?.length > 0 ? item.properties?.map(p => p.valueName).join(' ') : '' }}
 							</span>
 							<span class="text-xs" style="color: #b4b4be">
 								{{
@@ -155,7 +155,6 @@ function goDetail({ id }: AfterSale) {
 						<span v-if="wayText[item.way]" class="mr-4">{{ wayText[item.way] }}
 						</span>
 						<span style="color: var(--title-light)">
-							<!-- {{ item.applyReason }} -->
 							{{ formatAfterStatusDescription(item) }}
 						</span>
 					</div>

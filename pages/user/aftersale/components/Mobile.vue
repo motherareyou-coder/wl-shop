@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AfterSale } from '~/types'
+import './Mobile.scss'
 
 const { t } = useI18n()
 const { data, load, loading, pagination, total } = useInfiteLoad<AfterSale>(params =>
@@ -8,10 +9,20 @@ const { data, load, loading, pagination, total } = useInfiteLoad<AfterSale>(para
 	}),
 )
 
-const wayText = computed(() => ({
-	10: $t('Refund only'),
-	20: $t('Return and refund'),
-}))
+const statusClass = {
+	10: 'paying',
+	20: 'ship',
+	30: 'ship',
+	40: 'ship',
+	50: 'done',
+	61: 'close',
+	62: 'close',
+	63: 'close',
+}
+const wayText = {
+	10: t('Refund only'),
+	20: t('Return and refund'),
+}
 
 // 售后取消按钮展示
 function cancelBtnShow(item: AfterSale) {
@@ -89,71 +100,72 @@ function handleCancel({ id }: AfterSale) {
 </script>
 
 <template>
-	<div class="aftersale-orders">
+	<div class="aftersale-orders order-list-wrapper--mobile">
 		<el-empty v-if="!loading && total === 0" :description="$t('No data')" />
 		<div
 			v-else
 			v-infinite-scroll="load"
 			class="infinite-scroll infinite-scroll--mobile"
 		>
-			<ul>
+			<ul class="order-list">
 				<li
 					v-for="item in data"
 					:key="item.id"
-					class="bg-white my-4 p-4"
+					class="order-item"
+					:class="[
+						`order--${statusClass[item.status]}`,
+					]"
 				>
-					<div>
-						<span>{{ $t('AfterSale number') }}: {{ item.no }}</span>
-						<span>{{ item.status }}</span>
+					<div class="order-item__header">
+						<div class="order-item__header__left">
+							<span class="order-item__time">{{ item.no }}</span>
+						</div>
+						<div class="order-item__header__right">
+							<span class="order-item__status">{{ formatAfterStatusDescription(item) }}</span>
+						</div>
 					</div>
-					<div class="my-4">
-						<nuxt-link
-							:to="$path(`/user/aftersaleview/${item.id}`)"
-							class="flex"
-						>
-							<app-image class="mr-5 h-20 w-20" :src="item.picUrl" />
-							<div class="flex flex-col justify-between flex-1">
-								<span style="color: #000">
-									{{ item.spuName }}
-								</span>
-								<span class="text-xs" style="color: #b4b4be">
-									{{
-										item.properties
-											?.map((p) => p.valueName)
-											.join(' ')
-									}}
-								</span>
-								<span
-									class="text-xs flex justify-between items-center"
-								>
-									<span>
-										<ProductPrice :data="item.payPrice" />
+					<div class="order-item__content">
+						<nuxt-link class="order-item__link" :to="$path(`/user/aftersaleview/${item.id}`)">
+							<div
+								class="commodity-item"
+							>
+								<div class="commodity-item__image">
+									<app-image class="mr-5 h-20 w-20" :src="item.picUrl" />
+								</div>
+								<div class="commodity-item__info">
+									<p style="color: #000">
+										{{ item.spuName }} {{ item.properties?.length > 0 ? item.properties?.map(p => p.valueName).join(' ') : '' }}
+									</p>
+									<p>
 										<span style="color: #b4b4be">
 											{{ ` x ${item.count}` }}
 										</span>
-									</span>
-								</span>
+									</p>
+								</div>
 							</div>
 						</nuxt-link>
 					</div>
-					<div class="my-2">
-						<span v-if="wayText[item.way]" class="mr-4">{{ wayText[item.way] }}
-						</span>
-						<span style="color: var(--title-light)">
-							<!-- {{ item.applyReason }} -->
-							{{ formatAfterStatusDescription(item) }}
-						</span>
-					</div>
-					<div class="flex justify-end pt-2">
-						<el-button
-							v-if="cancelBtnShow(item)"
-							type="info"
-							style="font-size: 12px"
-							:disabled="loading1"
-							@click="handleCancel(item)"
-						>
-							{{ $t('Cancel') }}
-						</el-button>
+					<div class="order-item__footer">
+						<div class="order-item__footer__left">
+							<span class="whitespace-nowrap">
+								<span v-if="wayText[item.way]" class="mr-2">{{ wayText[item.way] }}</span>
+								<span style="color: var(--title-light)">
+									<!-- {{ item.applyReason }} -->
+									{{ formatAfterStatusDescription(item) }}
+								</span>
+							</span>
+						</div>
+						<div class="order-item__footer__right">
+							<el-button
+								v-if="cancelBtnShow(item)"
+								type="info"
+								style="font-size: 12px"
+								:disabled="loading1"
+								@click="handleCancel(item)"
+							>
+								{{ $t('Cancel') }}
+							</el-button>
+						</div>
 					</div>
 				</li>
 			</ul>
