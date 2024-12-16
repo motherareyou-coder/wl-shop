@@ -835,7 +835,7 @@ export interface AfterSale {
 	 */
 	spuName: string
 	/**
-	 * 售后状态
+	 * 售后状态(10.申请中,会员申请退款,退款申请待商家处理 20.卖家通过,商家同意退款,请退货并填写物流信息 30.待卖家收货,会员填写退货物流信息,退货退款申请待商家处理 40.等待平台退款,商家收货,无（有赞无该状态）50.完成,商家确认退款,退款成功 61.买家取消售后,会员取消退款,退款关闭 62.卖家拒绝,商家拒绝退款,商家不同意退款申请 63.卖家拒绝收货,商家拒绝收货,商家拒绝收货，不同意退款)
 	 */
 	status: number
 	/**
@@ -1507,5 +1507,24 @@ export interface CouponTemplate {
 	 * 固定日期 - 生效开始时间
 	 */
 	validStartTime?: Date
+	[property: string]: any
+}
+
+/**
+ * AfterSaleLog，管理后台 - App 交易售后日志 Response VO
+ */
+export interface AfterSaleLog {
+	/**
+	 * 操作明细
+	 */
+	content: string
+	/**
+	 * 创建时间
+	 */
+	createTime: Date
+	/**
+	 * 编号
+	 */
+	id: number
 	[property: string]: any
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AfterSale } from '~/types'
+import type { AfterSale, AfterSaleLog } from '~/types'
 
 definePageMeta({
 	showBread: true,
@@ -74,6 +74,19 @@ function handleCancel() {
 	})
 }
 
+const statusText = {
+	10: t('申请中,会员申请退款,退款申请待商家处理 '),
+	20: t('卖家通过,商家同意退款,请退货并填写物流信息 '),
+	30: t('待卖家收货,会员填写退货物流信息,退货退款申请待商家处理 '),
+	40: t('等待平台退款,商家收货,无（有赞无该状态）'),
+	50: t('完成,商家确认退款,退款成功 '),
+	61: t('买家取消售后,会员取消退款,退款关闭 '),
+	62: t('卖家拒绝,商家拒绝退款,商家不同意退款申请 '),
+	63: t('卖家拒绝收货,商家拒绝收货,商家拒绝收货，不同意退款'),
+}
+const logVisible = ref(false)
+const { data: logs } = await useAPI<AfterSaleLog[]>('trade/after-sale-log/list', { params: { afterSaleId: id } })
+
 const appStore = useAppStore()
 </script>
 
@@ -86,53 +99,59 @@ const appStore = useAppStore()
 					: '',
 			]"
 		>
-			<section class="aftersale-steps bg-white py-2">
-				<el-steps
-					:active="data?.status"
-					finish-status="success"
-					process-status="success"
-					align-center
-				>
-					<el-step :title="$t('SubmitAfterSale')" />
-					<el-step :title="$t('Processing')" />
-					<el-step :title="$t('Done')" />
-				</el-steps>
+			<section class="bg-white py-2">
+				<div class="my-steps">
+					<div class="my-step" :class="{ active: data.status >= 10 }">
+						<div class="bar">
+							{{ $t('SubmitAfterSale') }}
+						</div>
+						<div>
+							<app-time :data="data?.createTime" />
+						</div>
+					</div>
+					<div class="my-step" :class="{ active: data.status > 10 }">
+						<div class="bar">
+							{{ $t('Processing') }}
+						</div>
+						<div>
+							<app-time :data="data?.updateTime" />
+						</div>
+					</div>
+					<div class="my-step" :class="{ active: data.status >= 50 }">
+						<div class="bar">
+							{{ $t('Done') }}
+						</div>
+						<div>
+							<app-time :data="data?.refundTime" />
+						</div>
+					</div>
+				</div>
 			</section>
-			<section
-				v-if="data && data.logisticsNo"
-				class="my-2 bg-white p-4"
-			>
+			<section class="my-2 bg-white p-4">
+				<div class="flex items-center cursor-pointer" :class="[appStore.isMobile ? 'w-full justify-between' : 'inline-flex']" @click="logVisible = true">
+					<div class="flex flex-col">
+						<div>{{ logs[0]?.content }}</div>
+						<div class="text-slate-400 text-sm">
+							<app-time :data="logs[0]?.createTime " />
+						</div>
+					</div>
+					<i class="micon micon-link-arrow ml-5"></i>
+				</div>
+			</section>
+			<section v-if="data && data.logisticsNo" class="my-2 bg-white p-4">
 				<p>{{ $t('AfterSale logisticsNo') }}: {{ data.logisticsNo }}</p>
 			</section>
-			<section
-				v-if="data && (data.status === 20)"
-				class="my-2 bg-white p-4"
-			>
-				<div
-					class="flex justify-between items-center cursor-pointer"
-					@click="handleShow"
-				>
+			<section v-if="data && (data.status === 20)" class="my-2 bg-white p-4">
+				<div class="flex items-center cursor-pointer" :class="[appStore.isMobile ? 'w-full justify-between' : 'inline-flex']" @click="handleShow">
 					<div>
-						<div class="mb-2">
-							{{ $t('Please fill in the return logistics information.') }}
-						</div>
-						<div class="text-slate-400 text-sm">
-							<app-time :data="data?.deliveryTime" />
-						</div>
+						{{ $t('Please fill in the return logistics information.') }}
 					</div>
-					<div>
-						<el-icon>
-							<ElIconArrowRight />
-						</el-icon>
-					</div>
+					<i class="micon micon-link-arrow ml-5"></i>
 				</div>
 			</section>
 			<section v-if="data" class="my-2 bg-white p-4">
 				<div class="flex">
-					<nuxt-link
-						class="flex mr-5"
-						:to="$path(`/product/${data.id}`)"
-					>
+					<nuxt-link class="flex mr-5" :to="$path(`/product/${data.id}`)">
 						<app-image class="h-20 w-20" :src="data.picUrl" />
 					</nuxt-link>
 					<div class="flex flex-col justify-between flex-1">
@@ -208,11 +227,7 @@ const appStore = useAppStore()
 			<section
 				v-if="data?.status < 2"
 				class="py-2 px-4 my-2"
-				:class="[
-					appStore.isMobile
-						? 'order-action-container sticky bottom-0 bg-white'
-						: '',
-				]"
+				:class="[appStore.isMobile ? 'order-action-container sticky bottom-0 bg-white' : '']"
 			>
 				<div class="flex justify-end">
 					<el-button
@@ -232,6 +247,7 @@ const appStore = useAppStore()
 				:model="form"
 				:show-message="false"
 				hide-required-asterisk
+				label-position="top"
 			>
 				<el-form-item
 					prop="logisticsId"
@@ -252,7 +268,7 @@ const appStore = useAppStore()
 					:label="$t('Tracking number')"
 					:rules="{ required: true }"
 				>
-					<el-input v-model="form.logisticsNo" type="textarea" />
+					<el-input v-model="form.logisticsNo" />
 				</el-form-item>
 			</el-form>
 			<template #footer>
@@ -266,43 +282,73 @@ const appStore = useAppStore()
 				</el-button>
 			</template>
 		</app-modal>
+		<el-drawer
+			v-model="logVisible"
+			:title="$t('售后日志')"
+			append-to-body
+			:direction="appStore.isMobile ? 'btt' : 'rtl'"
+			style="min-height: 50vh"
+		>
+			<el-timeline>
+				<el-timeline-item
+					v-for="(log, i) in logs"
+					:key="i"
+					:timestamp="log.time"
+				>
+					<div>
+						{{ log.content }}
+					</div>
+					<div class="text-slate-400 text-sm">
+						<app-time :data="log.createTime" />
+					</div>
+				</el-timeline-item>
+			</el-timeline>
+		</el-drawer>
 	</div>
 </template>
 
-<style lang="scss">
-.aftersale-detail-contianer {
-  .aftersale-steps {
-    --mi-color-success: var(--mi-text-color-primary);
+<style lang="scss" scoped>
+.aftersale-detail-contianer:deep {
+	.my-steps {
+		display: flex;
+		text-align: center;
+		--step-width: 200px;
+		--step-height: 28px;
 
-    .mi-step__icon {
-      width: 16px;
-      height: 16px;
-    }
+		@media screen and (max-width: 720px) {
+			overflow-x: auto;
+			--step-width: 33%;
+			--step-height: 16px;
+			padding: 10px;
+			font-size: 14px;
+		}
 
-    .mi-step__title {
-      font-size: 12px;
-    }
+		.my-step {
+			display: flex;
+			flex-direction: column;
+			width: var(--step-width);
+			flex-shrink: 0;
 
-    .mi-step__line {
-      top: 7px;
-    }
+			.bar {
+				height: var(--step-height);
+				line-height: var(--step-height);
+				border-radius: calc(var(--step-height) / 2);
+				background-color: #EEEEEE;
+				color: var(--brand-black-50);
+				margin-bottom: calc(var(--step-height) / 8);
+			}
 
-    .mi-step__icon-inner {
-      // display: none;
-    }
-
-    .mi-step__icon {
-      .mi-icon {
-        font-size: 12px;
-      }
-    }
-
-    .is-success .mi-step__icon {
-    }
-  }
+			&.active {
+				.bar {
+					background-color: #6EB655;
+					color: #fff;
+				}
+			}
+		}
+	}
 }
 
 .order-action-container {
-  box-shadow: 0 -2px 4px 0 rgba(25, 25, 25, 0.08);
+	box-shadow: 0 -2px 4px 0 rgba(25, 25, 25, 0.08);
 }
 </style>
