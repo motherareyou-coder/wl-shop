@@ -273,4 +273,6 @@ export default {
 	'Product information': '产品信息',
 	'最少成团人数': ({ values }) => `至少${values.number}人成团，在规定时间内达到指定人数，即可享受优惠价购买`,
 	'还差x人成团': ({ values }) => `还差${values.number}人成团`,
+	'Please complete the payment within': '请在有效时间内支付',
+	'. Unpaid orders (except for COD ones) will be cancelled automatically afterwards.': '.未付款的订单（货到付款除外）将在之后自动取消。',
 }

@@ -313,14 +313,15 @@ const appStore = useAppStore()
 		display: flex;
 		text-align: center;
 		--step-width: 200px;
-		--step-height: 28px;
+		--step-height: 20px;
+		font-size: 14px;
+		color: #424242;
 
 		@media screen and (max-width: 720px) {
 			overflow-x: auto;
 			--step-width: 33%;
-			--step-height: 16px;
 			padding: 10px;
-			font-size: 14px;
+			font-size: 12px;
 		}
 
 		.my-step {
@@ -332,10 +333,15 @@ const appStore = useAppStore()
 			.bar {
 				height: var(--step-height);
 				line-height: var(--step-height);
-				border-radius: calc(var(--step-height) / 2);
+				border-top-right-radius: calc(var(--step-height) / 2);
+				border-bottom-right-radius: calc(var(--step-height) / 2);
 				background-color: #EEEEEE;
-				color: var(--brand-black-50);
-				margin-bottom: calc(var(--step-height) / 8);
+				margin-bottom: var(--step-height);
+			}
+			&:first-child{
+				.bar{
+					border-radius: calc(var(--step-height) / 2);
+				}
 			}
 
 			&.active {

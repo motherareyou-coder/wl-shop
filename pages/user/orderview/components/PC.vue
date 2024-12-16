@@ -9,6 +9,14 @@ const props = defineProps({
 })
 const emit = defineEmits(['command'])
 const data = computed(() => props.data)
+
+const statusType = {
+	0: 'waiting',
+	10: 'paid',
+	20: 'ship',
+	30: 'delivered',
+	40: 'close',
+}
 </script>
 
 <template>
@@ -27,18 +35,18 @@ const data = computed(() => props.data)
 							v-if="data.status === 0"
 							class="btn"
 							:disabled="props.loading"
-							@click="emit('command', 'cancel')"
+							type="primary"
+							@click="emit('command', 'pay')"
 						>
-							{{ $t('CancelOrder') }}
+							{{ $t('Pay Now') }}
 						</el-button>
 						<el-button
 							v-if="data.status === 0"
 							class="btn"
 							:disabled="props.loading"
-							type="info"
-							@click="emit('command', 'pay')"
+							@click="emit('command', 'cancel')"
 						>
-							{{ $t('Pay Now') }}
+							{{ $t('CancelOrder') }}
 						</el-button>
 						<el-button
 							v-if="data.status === 40 || data.status === 30"
@@ -63,19 +71,65 @@ const data = computed(() => props.data)
 				<section class="expressInfo">
 					<h2
 						class="deliver-status-title"
-						:class="[`deliver-status-title--${data.status}`]"
+						:class="[`deliver-status-title--${statusType[data.status]}`]"
 					>
 						{{
 							statusText[data.status]
 								&& $t(statusText[data.status])
 						}}
 					</h2>
-					<section v-if="data.status === 0" class="showPayInfo">
+					<section class="deliver-status-descp">
 						<div class="order-express__pay-countdown">
-							<span>{{ $t('Awaiting payment') }}</span>
+							<span class="color-mi" fmp-c="3">*</span>
+							{{ $t('Please complete the payment within') }}
+							<app-count-down :end-time="data.payExpireTime" class="inline-flex" />
+							{{ $t('. Unpaid orders (except for COD ones) will be cancelled automatically afterwards.') }}
 						</div>
 					</section>
-					<section class="deliver-status-descp"></section>
+					<section v-if="false" class="order-express">
+						<ul class="order-express__express-box">
+							<li class="express-item" :class="[data.status >= 0 ? 'active' : 'noraml']">
+								<div class="express-item__container" :class="[data.status >= 0 ? 'express-item__container--active active--last-child' : 'express-item__container--normal']">
+									<p>{{ $t('Order placed') }}</p>
+								</div>
+								<div class="express-time">
+									<app-time :data="data.createTime" />
+								</div>
+							</li>
+							<li class="express-item" :class="[data.status >= 20 ? 'active' : 'noraml']">
+								<div class="express-item__container" :class="[data.status >= 20 ? 'express-item__container--active active--last-child' : 'express-item__container--normal']">
+									<p>{{ $t('Paid') }}</p>
+								</div>
+								<div class="express-time">
+									<app-time :data="data.createTime" />
+								</div>
+							</li>
+							<li class="express-item" :class="[data.status >= 30 ? 'active' : 'noraml']">
+								<div class="express-item__container" :class="[data.status >= 30 ? 'express-item__container--active active--last-child' : 'express-item__container--normal']">
+									<p>{{ $t('Processed') }}</p>
+								</div>
+								<div class="express-time">
+									<app-time :data="data.createTime" />
+								</div>
+							</li>
+							<li class="express-item" :class="[data.status >= 40 ? 'active' : 'noraml']">
+								<div class="express-item__container" :class="[data.status >= 40 ? 'express-item__container--active active--last-child' : 'express-item__container--normal']">
+									<p>{{ $t('Shipped') }}</p>
+								</div>
+								<div class="express-time">
+									<app-time :data="data.createTime" />
+								</div>
+							</li>
+							<li class="express-item" :class="[data.status === 10 ? 'active' : 'noraml']">
+								<div class="express-item__container" :class="[data.status === 50 ? 'express-item__container--active active--last-child' : 'express-item__container--normal']">
+									<p>{{ $t('Delivered') }}</p>
+								</div>
+								<div class="express-time">
+									<app-time :data="data.createTime" />
+								</div>
+							</li>
+						</ul>
+					</section>
 				</section>
 				<section v-if="data.logisticsNo">
 					<el-button type="info" @click="emit('command', 'track')">
