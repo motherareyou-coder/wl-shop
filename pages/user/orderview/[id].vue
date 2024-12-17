@@ -130,6 +130,10 @@ function handleCommand(type: string, data: any) {
 				})
 			}
 			break
+		case 'review':
+			localStorage.setItem(`orderItem-${data.id}`, JSON.stringify(data))
+			router.push($path(`/user/orderview/review/${data.id}`))
+			break
 	}
 }
 </script>

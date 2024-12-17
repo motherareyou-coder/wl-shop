@@ -62,8 +62,8 @@ function getData<BargainActivity>(params: any) {
 	</div>
 </template>
 
-<style scopde>
-.site-container-1400:deep .bargin-list {
+<style>
+.bargin-list {
     grid-gap: var(--grid-gap);
     display: grid;
     gap: var(--grid-gap);

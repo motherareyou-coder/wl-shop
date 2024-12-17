@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ExpressTrack, OrderDetail } from '~/types'
-import { statusText } from '../../orderlist/utils'
+import { getStatusText } from '../../orderlist/utils'
 
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
@@ -21,7 +21,7 @@ const data = computed(() => props.data)
 					</span>
 				</p>
 				<p class="whitespace-nowrap ml-1" style="color: var(--primary-base)">
-					{{ statusText[data.status] && $t(statusText[data.status]) }}
+					{{ $t(getStatusText(data)) }}
 				</p>
 			</div>
 			<div class="mt-1">
@@ -99,6 +99,14 @@ const data = computed(() => props.data)
 							@click="emit('command', 'aftersale', item)"
 						>
 							{{ $t('After Sale') }}
+						</el-button>
+						<el-button
+							v-if="item.commentStatus === false && [30].includes(data.status)"
+							style="padding: 6px; font-size: 12px"
+							:disabled="props.loading"
+							@click="emit('command', 'review', item)"
+						>
+							{{ $t('评价') }}
 						</el-button>
 					</span>
 				</div>

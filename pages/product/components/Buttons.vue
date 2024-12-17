@@ -52,9 +52,9 @@ const appStore = useAppStore()
 			:disabled="skuDisabled"
 			@click.prevent="emit('seckill')"
 		>
-			<template v-if="appStore.isPC">
+			<span v-if="appStore.isPC" class="whitespace-nowrap">
 				{{ $t('立即购买') }} <product-price :data="curSku?.seckillPrice" plain unit="" />
-			</template>
+			</span>
 			<span v-if="appStore.isMobile" class="whitespace-nowrap">
 				<product-price :data="curSku?.seckillPrice" plain unit="" />
 				<br v-if="curSku?.seckillPrice">
@@ -68,13 +68,15 @@ const appStore = useAppStore()
 			:disabled="skuDisabled"
 			@click.prevent="emit('combination')"
 		>
-			<template v-if="appStore.isPC">
+			<span v-if="appStore.isPC" class="whitespace-nowrap">
 				{{ $t('立即开团') }} <product-price :data="curSku?.combinationPrice" plain unit="" />
-			</template>
+			</span>
 			<span v-if="appStore.isMobile" class="whitespace-nowrap">
 				<product-price :data="curSku?.combinationPrice" plain unit="" />
 				<br v-if="curSku?.combinationPrice">
-				{{ $t('立即开团') }}
+				<span class="whitespace-nowrap">
+					{{ $t('立即开团') }}
+				</span>
 			</span>
 		</el-button>
 		<template v-if="bargainActivity">

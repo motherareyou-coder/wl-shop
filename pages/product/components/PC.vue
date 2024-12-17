@@ -113,7 +113,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 						</h2>
 						<div class="information-section__product-info">
 							<div class="information-section__product-sku-info">
-								{{ sku?.properties.map(p => p.valueName).join(', ') }}
+								{{ info.introduction }}
 							</div>
 							<template v-if="seckillActivity">
 								<Countdown />
@@ -263,12 +263,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 		</main>
 		<keep-alive>
 			<div v-if="tab === 0" class="site-container" style="margin: 0 auto">
-				<app-image
-					v-for="img in info.sliderPicUrls"
-					:key="img"
-					:src="img"
-					style="width: 100%"
-				/>
+				<div v-html="info.description"></div>
 			</div>
 			<Review v-else-if="tab === 1" />
 			<BargainHelpList v-else-if="tab === 2" />

@@ -60,8 +60,8 @@ function getData<CombinationActivity>(params: any) {
 	</div>
 </template>
 
-<style scoped>
-.site-container-1400:deep .combination-list {
+<style>
+.combination-list {
 	grid-gap: var(--grid-gap);
 	display: grid;
 	gap: var(--grid-gap);

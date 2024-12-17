@@ -38,11 +38,18 @@ function handleClick(d: ProductSpu) {
 						<span v-if="i % 3 === 0" class="store-goods__subtitle" style="color: rgb(255, 105, 0);">
 							{{ d.introduction }}
 						</span>
+						<div class="mi-marketing-label__tags store-goods__tag-list">
+							<ul class="tag__list">
+								<el-tag	v-if="d.marketPrice != d.price" class="tag__item">
+									{{ Math.ceil(100 * (d.marketPrice - d.price) / d.marketPrice) }}% off
+								</el-tag>
+							</ul>
+						</div>
 					</div>
 					<div class="store-goods__info--lower">
 						<div class="mi-price store-goods__price">
 							<product-price :data="d.price" />
-							<del class="notranslate">
+							<del v-if="d.marketPrice != d.price" class="notranslate">
 								<product-price :data="d.marketPrice" plain />
 							</del>
 						</div>

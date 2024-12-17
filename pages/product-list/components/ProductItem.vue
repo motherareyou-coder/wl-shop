@@ -44,6 +44,9 @@ const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 								</template>
 								<ActivityTag v-else class="tag__item" :type="a.type" />
 							</template>
+							<el-tag	v-if="data.marketPrice != data.price" class="tag__item">
+								{{ Math.ceil(100 * (data.marketPrice - data.price) / data.marketPrice) }}% off
+							</el-tag>
 						</ul>
 					</div>
 				</div>
@@ -59,7 +62,7 @@ const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 						<product-price
 							:data="data.price"
 						/>
-						<del v-if="data.marketPrice" class="notranslate">
+						<del v-if="data.marketPrice != data.price" class="notranslate">
 							<product-price
 								:data="data.marketPrice"
 								plain

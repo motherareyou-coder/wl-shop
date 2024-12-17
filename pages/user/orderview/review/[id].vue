@@ -1,52 +1,37 @@
 <script setup lang="ts">
 import type { UploadFile } from 'element-plus'
 import { isArray } from 'lodash-es'
-import type { OrderDetail, OrderItem, TradeConfig } from '~/types'
 
 const route = useRoute()
 const router = useRouter()
-const info: OrderDetail = JSON.parse(
-	localStorage.getItem('after-sale-apply') || '{}',
-)
-const item: OrderItem
-	= info.items?.find(d => `${d.id}` === route.query.item)
-
-const { data: config } = await useAPI<TradeConfig>(
-	'trade/config/get',
-)
+const item = JSON.parse(localStorage.getItem(`orderItem-${route.params.id}`) || '{}')
+console.log(item)
 
 const data = ref({
-	way: 10,
-	applyReason: null,
-	applyDescription: '',
-	refundPrice: item.payPrice,
-	applyPicUrls: [] as string[],
+	anonymous: false,
+	orderItemId: 2312312,
+	descriptionScores: '',
+	benefitScores: '',
+	content: '',
+	picUrls: [] as string[],
 })
 const images = ref<UploadFile[]>([])
 
-const options = (info.status === 20
-	? config.value?.afterSaleReturnReasons
-	: config.value?.afterSaleRefundReasons
-)?.map(v => ({ label: v, value: v })) || [
-	{ label: $t('Don\'t want it anymore'), value: 1 },
-	{ label: $t('Dislike'), value: 2 },
-]
-
 const loading = ref(false)
 function submit() {
-	$api('trade/after-sale/create', {
+	$api('trade/order/item/create-comment', {
 		method: 'post',
 		body: {
+			anonymous: data.value.anonymous,
 			orderItemId: item.id,
-			refundPrice: data.value.refundPrice,
-			way: data.value.way,
-			applyReason: data.value.applyReason,
-			applyDescription: data.value.applyDescription,
-			applyPicUrls: data.value.applyPicUrls,
+			descriptionScores: data.value.descriptionScores,
+			benefitScores: data.value.benefitScores,
+			content: data.value.content,
+			picUrls: data.value.picUrls,
 		},
 	})
-		.then((res) => {
-			router.replace($path(`/user/aftersaleview/${res}`))
+		.then(() => {
+			router.replace($path(`/user/orderview/${item.orderId}`))
 		})
 		.finally(() => {
 			loading.value = false
@@ -67,7 +52,7 @@ function handleSubmit() {
 				method: 'post',
 				body: form,
 			}).then((res) => {
-				data.value.applyPicUrls = isArray(res) ? res : [res]
+				data.value.picUrls = isArray(res) ? res : [res]
 				submit()
 			})
 		}
@@ -76,16 +61,14 @@ function handleSubmit() {
 		}
 	})
 }
-
 function handleRemove(file: UploadFile) {
 	images.value = images.value.filter(f => f != file)
 }
-
 const appStore = useAppStore()
 </script>
 
 <template>
-	<div class="aftersale-apply-wrapper">
+	<div class="order-review-wrapper">
 		<div
 			:class="[
 				appStore.isPC
@@ -94,11 +77,8 @@ const appStore = useAppStore()
 			]"
 		>
 			<section class="bg-white p-4 my-2">
-				<p v-if="appStore.isPC" class="text-3xl mb-5">
-					{{ $t('After Sale') }}
-				</p>
 				<p v-if="appStore.isPC" class="text-2xl mb-5">
-					{{ $t('Order items') }}
+					{{ $t('商品评价') }}
 				</p>
 				<div class="flex">
 					<nuxt-link
@@ -125,9 +105,6 @@ const appStore = useAppStore()
 				</div>
 			</section>
 			<section class="bg-white p-4 my-2">
-				<p>
-					{{ $t('After sale type') }}
-				</p>
 				<el-form
 					ref="formRef"
 					:model="data"
@@ -139,84 +116,74 @@ const appStore = useAppStore()
 							<table class="mi-descriptions__table">
 								<tbody>
 									<tr>
-										<td colspan="2" class="py-2">
-											<el-radio-group v-model="data.way">
-												<el-radio :value="10">
-													{{ $t('Refund only') }}
-												</el-radio>
-												<el-radio v-if="info.status === 20" :value="20">
-													{{ $t('Return and refund') }}
-												</el-radio>
-											</el-radio-group>
-										</td>
-									</tr>
-									<tr>
 										<td class="whitespace-nowrap pr-2 py-2">
-											{{ $t('Refund price') }}
-										</td>
-										<td class="w-full py-2" :class="[appStore.isMobile ? 'text-right' : '']">
-											<ProductPrice :data="data.refundPrice" />
-										</td>
-									</tr>
-									<tr>
-										<td class="whitespace-nowrap pr-2 py-2">
-											{{ $t('Apply reason') }}
+											{{ $t('商品质量') }}
 										</td>
 										<td class="w-full py-2" :class="[appStore.isMobile ? 'text-right' : '']">
 											<el-form-item
-												prop="applyReason"
+												prop="descriptionScores"
 												:rules="{ required: true }"
 												style="margin-bottom: 0;height: auto;display: inline-block;"
 											>
-												<app-select
-													v-model="data.applyReason"
-													:options="options"
-												/>
+												<el-rate v-model="data.descriptionScores" />
 											</el-form-item>
 										</td>
 									</tr>
-									<tr v-if="appStore.isMobile">
-										<td colspan="2" class="py-2">
-											{{ $t('Apply description') }}
+									<tr>
+										<td class="whitespace-nowrap pr-2 py-2">
+											{{ $t('服务态度') }}
+										</td>
+										<td class="w-full py-2" :class="[appStore.isMobile ? 'text-right' : '']">
+											<el-form-item
+												prop="benefitScores"
+												:rules="{ required: true }"
+												style="margin-bottom: 0;height: auto;display: inline-block;"
+											>
+												<el-rate v-model="data.benefitScores" />
+											</el-form-item>
 										</td>
 									</tr>
 									<tr>
-										<td v-if="appStore.isPC" class="whitespace-nowrap pr-2 py-2" style="vertical-align: text-bottom;">
-											{{ $t('Apply description') }}
-										</td>
-										<td :colspan="appStore.isMobile ? 2 : 1" class="py-2">
-											<div class="refund-description flex flex-col w-full">
-												<el-input
-													v-model="data.applyDescription"
-													:rows="5"
-													type="textarea"
-												/>
-												<el-upload
-													v-model:file-list="images"
-													action="#"
-													list-type="picture-card"
-													:auto-upload="false"
-													class="m-1"
-													:limit="3"
-													multiple
-													:disabled="images.length >= 3"
-												>
-													<el-icon>
-														<ElIconPlus />
-													</el-icon>
-													<template #file="{ file }">
-														<div class="upload-list__item-thumbnail">
-															<img :src="file.url">
-															<span class="upload-list__item-actions">
-																<el-icon
-																	class="cursor-pointer"
-																	@click="handleRemove(file)"
-																><ElIconDelete /></el-icon>
-															</span>
-														</div>
-													</template>
-												</el-upload>
-											</div>
+										<td :colspan="2" class="py-2">
+											<el-form-item
+												prop="content"
+												:rules="{ required: true }"
+												class="w-full"
+												style="margin-bottom: 0;"
+											>
+												<div class="description flex flex-col w-full">
+													<el-input
+														v-model="data.content"
+														:rows="5"
+														type="textarea"
+													/>
+													<el-upload
+														v-model:file-list="images"
+														action="#"
+														list-type="picture-card"
+														:auto-upload="false"
+														class="m-1"
+														:limit="3"
+														multiple
+														:disabled="images.length >= 3"
+													>
+														<el-icon>
+															<ElIconPlus />
+														</el-icon>
+														<template #file="{ file }">
+															<div class="upload-list__item-thumbnail">
+																<img :src="file.url">
+																<span class="upload-list__item-actions">
+																	<el-icon
+																		class="cursor-pointer"
+																		@click="handleRemove(file)"
+																	><ElIconDelete /></el-icon>
+																</span>
+															</div>
+														</template>
+													</el-upload>
+												</div>
+											</el-form-item>
 										</td>
 									</tr>
 								</tbody>
@@ -248,8 +215,8 @@ const appStore = useAppStore()
 </template>
 
 <style lang="scss">
-.aftersale-apply-wrapper {
-	.refund-description {
+.order-review-wrapper {
+	.description {
 		background-color: #f9fafb;
 		.mi-textarea {
 			--mi-input-bg-color: #f9fafb;

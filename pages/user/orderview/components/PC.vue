@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ExpressTrack, OrderDetail } from '~/types'
-import { statusText } from '../../orderlist/utils'
+import type { OrderDetail } from '~/types'
+import { getStatusText, statusClass } from '../../orderlist/utils'
 import './PC.scss'
 
 const props = defineProps({
@@ -9,14 +9,6 @@ const props = defineProps({
 })
 const emit = defineEmits(['command'])
 const data = computed(() => props.data)
-
-const statusType = {
-	0: 'waiting',
-	10: 'paid',
-	20: 'ship',
-	30: 'delivered',
-	40: 'close',
-}
 </script>
 
 <template>
@@ -71,14 +63,11 @@ const statusType = {
 				<section class="expressInfo">
 					<h2
 						class="deliver-status-title"
-						:class="[`deliver-status-title--${statusType[data.status]}`]"
+						:class="[`deliver-status-title--${statusClass[data.status]}`]"
 					>
-						{{
-							statusText[data.status]
-								&& $t(statusText[data.status])
-						}}
+						{{ $t(getStatusText(data)) }}
 					</h2>
-					<section class="deliver-status-descp">
+					<section v-if="data.status === 0" class="deliver-status-descp">
 						<div class="order-express__pay-countdown">
 							<span class="color-mi" fmp-c="3">*</span>
 							{{ $t('Please complete the payment within') }}
@@ -199,6 +188,14 @@ const statusType = {
 									@click="emit('command', 'aftersale', item)"
 								>
 									{{ $t('After Sale') }}
+								</el-button>
+								<el-button
+									v-if="item.commentStatus === false && [30].includes(data.status)"
+									style="padding: 6px;font-size: 12px;border-radius: 0;"
+									:disabled="props.loading"
+									@click="emit('command', 'review', item)"
+								>
+									{{ $t('评价') }}
 								</el-button>
 							</div>
 						</div>

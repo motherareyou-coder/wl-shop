@@ -1,45 +1,17 @@
 <script setup lang="ts">
 import type { OrderDetail } from '~/types'
-import { statusText } from '../utils'
+import { getQueryFromStatusType, getStatusText, statusClass, statusOptions } from '../utils'
 import './Mobile.scss'
 
-const statusOptions = [
-	{ value: '', label: $t('All Order') },
-	{ value: 0, label: $t('Awaiting payment') },
-	{ value: 10, label: $t('Awaiting ship') },
-	{ value: 20, label: $t('Shipping') },
-	{ value: 30, label: $t('Awaiting review') },
-]
-const statusClass = {
-	0: 'paying',
-	10: 'waiting',
-	20: 'ship',
-	30: 'delivered',
-	40: 'close',
-}
-
 const route = useRoute()
-const status = ref('')
+const statusType = ref(-1)
 watchEffect(() => {
-	status.value = (route.query.type as string) || ''
+	statusType.value = Number(route.query.type || -1)
 })
-const { data, load, reset } = useInfiteLoad<OrderDetail>((params) => {
-	const p = {
-		...params,
-		status: status.value,
-	}
-	if (status.value === 30)
-		p.commentStatus = false
-	return $api('trade/order/page', {
-		params: p,
-	})
-})
-watch(status, reset)
-
-const router = useRouter()
-function goDetail({ id }: OrderDetail) {
-	router.push($path(`/user/orderview/${id}`))
-}
+const { data, load, reset } = useInfiteLoad<OrderDetail>(p =>
+	$api('trade/order/page', { params: { ...p, ...getQueryFromStatusType(statusType.value) } }),
+)
+watch(statusType, reset)
 </script>
 
 <template>
@@ -50,8 +22,8 @@ function goDetail({ id }: OrderDetail) {
 					v-for="option in statusOptions"
 					:key="option.value"
 					class="whitespace-nowrap"
-					:class="{ 'is-active': `${status}` === `${option.value}` }"
-					@click="status = option.value"
+					:class="{ 'is-active': `${statusType}` === `${option.value}` }"
+					@click="statusType = option.value"
 				>
 					{{ option.label }}
 				</li>
@@ -66,9 +38,7 @@ function goDetail({ id }: OrderDetail) {
 					v-for="order in data"
 					:key="order.id"
 					class="order-item"
-					:class="[
-						`order--${statusClass[order.status]?.toLowerCase()}`,
-					]"
+					:class="`order--${statusClass[order.status]?.toLowerCase()}`"
 				>
 					<div class="order-item__header">
 						<div class="order-item__header__left">
@@ -78,10 +48,7 @@ function goDetail({ id }: OrderDetail) {
 						</div>
 						<div class="order-item__header__right">
 							<span class="order-item__status">
-								{{
-									statusText[order.status]
-										&& $t(statusText[order.status])
-								}}
+								{{ $t(getStatusText(order)) }}
 							</span>
 						</div>
 					</div>

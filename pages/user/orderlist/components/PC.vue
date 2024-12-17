@@ -1,30 +1,23 @@
 <script setup lang="ts">
 import type { OrderDetail } from '~/types'
-import { statusOptions, statusText } from '../utils'
+import { getQueryFromStatusType, getStatusText, statusClass, statusOptions } from '../utils'
 import './PC.scss'
 
-const statusClass = {
-	0: 'paying',
-	10: 'waiting',
-	20: 'ship',
-	30: 'delivered',
-	40: 'close',
-}
 const route = useRoute()
-const status = ref('')
+const statusType = ref(-1)
 watchEffect(() => {
-	status.value = (route.query.type as string) || ''
+	statusType.value = Number(route.query.type || -1)
 })
 const {
-	data: orderList,
+	data,
 	pagination,
 	resetData,
 } = useTablePagination<OrderDetail>((p = {}) =>
 	$api('trade/order/page', {
-		params: { ...p, status: status.value },
+		params: { ...p, ...getQueryFromStatusType(statusType.value) },
 	}),
 )
-watch(status, resetData)
+watch(statusType, resetData)
 </script>
 
 <template>
@@ -53,36 +46,22 @@ watch(status, resetData)
 								v-for="option in statusOptions"
 								:key="option.value"
 								class="title"
-								@click="status = option.value"
+								@click="statusType = option.value"
 							>
-								<span
-									:class="{
-										'title-active':
-											`${status}` === `${option.value}`,
-									}"
-								>
+								<span :class="{ 'title-active': `${statusType}` === `${option.value}` }">
 									{{ $t(option.label) }}
 								</span>
 							</li>
 						</ul>
 						<ul>
-							<section v-for="order in orderList" :key="order.no">
+							<section v-for="order in data" :key="order.no">
 								<li
 									class="order-item"
-									:class="[
-										`order-item--${statusClass[
-											order.status
-										]?.toLowerCase()}`,
-									]"
+									:class="`order-item--${statusClass[order.status]?.toLowerCase()}`"
 								>
 									<div class="order-item-header">
-										<p
-											class="order-item-header--title show-tag"
-										>
-											{{
-												statusText[order.status]
-													&& $t(statusText[order.status])
-											}}
+										<p class="order-item-header--title show-tag">
+											{{ $t(getStatusText(order)) }}
 										</p>
 										<p class="info"></p>
 									</div>

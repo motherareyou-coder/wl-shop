@@ -71,4 +71,13 @@ export default {
 	'剩余': 'Stock remained',
 	'拼团价': 'Grouping price',
 	'去参加': 'Participate',
+	'待付款': 'Awaiting payment',
+	'待发货': 'Awaiting ship',
+	'已发货': 'Shipping',
+	'待评价': 'Awaiting review',
+	'已完成': 'Done',
+	'已关闭': 'Canceled',
+	'商品评价': 'Review',
+	'商品质量': 'Quality',
+	'服务态度': 'Service',
 }
