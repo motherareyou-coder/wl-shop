@@ -8,7 +8,7 @@ const item = JSON.parse(localStorage.getItem(`orderItem-${route.params.id}`) || 
 console.log(item)
 
 const data = ref({
-	anonymous: false,
+	anonymous: true,
 	orderItemId: 2312312,
 	descriptionScores: '',
 	benefitScores: '',
@@ -115,6 +115,14 @@ const appStore = useAppStore()
 						<div class="mi-descriptions__body">
 							<table class="mi-descriptions__table">
 								<tbody>
+									<tr>
+										<td class="whitespace-nowrap pr-2 py-2">
+											{{ $t('是否匿名') }}
+										</td>
+										<td class="w-full py-2" :class="[appStore.isMobile ? 'text-right' : '']">
+											<app-checkbox v-model="data.anonymous" />
+										</td>
+									</tr>
 									<tr>
 										<td class="whitespace-nowrap pr-2 py-2">
 											{{ $t('商品质量') }}

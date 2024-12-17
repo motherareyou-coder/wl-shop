@@ -80,4 +80,5 @@ export default {
 	'商品评价': 'Review',
 	'商品质量': 'Quality',
 	'服务态度': 'Service',
+	'是否匿名': 'Anonymous',
 }

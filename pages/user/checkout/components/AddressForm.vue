@@ -12,7 +12,7 @@ watch(data, (v) => {
 		v.cityId = Number(v.cityId)
 	if (isString(v.areaId))
 		v.areaId = Number(v.areaId)
-}, { deep: true })
+}, { deep: true, immediate: true })
 
 const paramsStore = useParamsStore()
 paramsStore.getCountries()

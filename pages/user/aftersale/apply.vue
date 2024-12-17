@@ -144,7 +144,7 @@ const appStore = useAppStore()
 												<el-radio :value="10">
 													{{ $t('Refund only') }}
 												</el-radio>
-												<el-radio v-if="info.status === 20" :value="20">
+												<el-radio v-if="info.status === 30" :value="20">
 													{{ $t('Return and refund') }}
 												</el-radio>
 											</el-radio-group>
