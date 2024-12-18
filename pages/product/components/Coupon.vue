@@ -16,7 +16,7 @@ watch(isOpen, v => v || reset())
 function getCoupon(c: Coupon) {
 	$api('promotion/coupon/take', {
 		method: 'post',
-		params: { templateId: c.id },
+    body: { templateId: c.id },
 	}).then(() => {
 		reset()
 	})

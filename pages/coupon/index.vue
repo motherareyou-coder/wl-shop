@@ -18,7 +18,7 @@ const key = ref(1)
 function getCoupon(c: CouponTemplate) {
 	$api('promotion/coupon/take', {
 		method: 'post',
-		params: { templateId: c.id },
+		body: { templateId: c.id },
 	}).then(() => {
 		key.value++
 	})
@@ -52,9 +52,10 @@ function getCoupon(c: CouponTemplate) {
 							<ProductPrice :data="coupon.discountPrice" />
 						</p>
 						<p class="user-coupon__item--time">
-							<app-time :data="coupon.validStartTime" />
+             				 <!--格式化时间为年月日-->
+							<app-time :data="coupon.validStartTime"/>
 							-
-							<app-time :data="coupon.validEndTime" />
+							<app-time :data="coupon.validEndTime"/>
 						</p>
 						<p class="user-coupon__item--desc">
 							<span>{{ $t('Apply for') }} {{ coupon.productScope }}</span>
