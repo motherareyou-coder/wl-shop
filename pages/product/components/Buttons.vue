@@ -28,10 +28,12 @@ const appStore = useAppStore()
 			@click.prevent="emit('normal')"
 		>
 			<span v-if="appStore.isPC" class="whitespace-nowrap">
-				{{ $t('原价购买') }} <product-price :data="info.marketPrice" plain unit="" />
+				<!--{{ $t('原价购买') }} <product-price :data="info.marketPrice" plain unit="" />-->
+				{{ $t('原价购买') }} <product-price :data="info.price" plain unit="" />
 			</span>
 			<span v-if="appStore.isMobile" class="whitespace-nowrap">
-				<product-price :data="info.marketPrice" plain unit="" />
+				<!--<product-price :data="info.marketPrice" plain unit="" />-->
+				<product-price :data="info.price" plain unit="" />
 				<br>
 				{{ $t('原价购买') }}
 			</span>

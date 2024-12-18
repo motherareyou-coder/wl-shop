@@ -25,7 +25,7 @@ const classList = computed(() => appStore.isPC ? 'product__section product__sect
 			<li class="offers-section__item">
 				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
 				{{ $t('剩余') }}
-				<el-progress class="inline-block w-2/4 ml-2" :percentage="100 * (seckillActivity.stock / seckillActivity.totalStock)" :text-inside="true" :stroke-width="16">
+				<el-progress class="inline-block w-2/4 ml-2" :percentage="(100 * (seckillActivity.totalStock / seckillActivity.stock))/seckillActivity.totalStock" :text-inside="true" :stroke-width="16">
 					{{ seckillActivity.stock }}/{{ seckillActivity.totalStock }}
 				</el-progress>
 			</li>

@@ -38,12 +38,13 @@ const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 				<div v-if="appStore.isPC || activities?.length" class="item__info-section">
 					<div class="mi-marketing-label__tags item__marketing-tags">
 						<ul class="tag__list">
-							<template v-for="(a, i) in activities" :key="a.type">
-								<template v-if="a.type === 5">
-									<ActivityTag v-if="i === first5" class="tag__item" :name="a.name" />
-								</template>
-								<ActivityTag v-else class="tag__item" :type="a.type" />
-							</template>
+              <!--参与活动-->
+							<!--<template v-for="(a, i) in activities" :key="a.type">-->
+							<!--	<template v-if="a.type === 5">-->
+							<!--		<ActivityTag v-if="i === first5" class="tag__item" :name="a.name" />-->
+							<!--	</template>-->
+							<!--	<ActivityTag v-else class="tag__item" :type="a.type" />-->
+							<!--</template>-->
 							<el-tag	v-if="data.marketPrice != data.price" class="tag__item">
 								{{ Math.ceil(100 * (data.marketPrice - data.price) / data.marketPrice) }}% off
 							</el-tag>

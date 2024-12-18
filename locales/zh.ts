@@ -269,7 +269,7 @@ export default {
 	'Today': '今日',
 	'learn more': '了解更多',
 	'Daily Seckill': '每日秒杀',
-	'limit stock': '剩余库存',
+	'limit': '剩余',
 	'Product information': '产品信息',
 	'最少成团人数': ({ values }) => `至少${values.number}人成团，在规定时间内达到指定人数，即可享受优惠价购买`,
 	'还差x人成团': ({ values }) => `还差${values.number}人成团`,
