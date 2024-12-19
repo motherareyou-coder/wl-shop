@@ -5,24 +5,39 @@ const id = inject('id')
 
 const { data, load, reset } = useInfiteLoad<Coupon>(params =>
 	$api('promotion/coupon-template/list', {
-		params: { ...params, spuId: id, count: 100 },
+		params: { ...params, spuId: id, count: 10,productScope:2 },
 	}),
 )
 
 const isOpen = ref(false)
+const key = ref(1)
+const { t } = useI18n()
+const msg = $t('Please sign in first')
+const appStore = useAppStore()
+const router = useRouter()
+const route = useRoute()
+const userStore = useUserStore()
+
 // 每次打开Modal时重置
 watch(isOpen, v => v || reset())
-
 function getCoupon(c: Coupon) {
+  //需要先登陆
+  if (!userStore.nickname) {
+    ElMessage.info(msg)
+    router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
+  }
+  if (!c.canTake) {
+    ElMessage.info(t('Received'))
+    return
+  }
 	$api('promotion/coupon/take', {
 		method: 'post',
     body: { templateId: c.id },
 	}).then(() => {
 		reset()
-	})
+	});
 }
 
-const appStore = useAppStore()
 </script>
 
 <template>
@@ -88,13 +103,26 @@ const appStore = useAppStore()
 							<strong>{{ c.name }}</strong>
 						</div>
 						<div class="coupon-list__item--desc">
-							<h6 class="coupon-list__item--name">
-								{{ c.name }}
+							<h6 class="coupon-list__item--name"  v-if="c.discountType === 1">
+								<!--{{ c.name }}-->
+                <ProductPrice :data="c.discountPrice"/> <span class="coupon-list__item--name-span">{{ $t('Full') }}
+                <ProductPrice :data="c.usePrice" unit=""/>{{ $t('Available') }}</span>
 							</h6>
-							<p class="coupon-list__item--date">
-								<app-time :data="c.validStartTime" />
+							<h6 class="coupon-list__item--name"  v-if="c.discountType === 2">
+								<!--{{ c.name }}-->
+                {{ c.discountPercent / 10.0 }} {{ $t('Discount') }}
+                <span class="user-coupon__item--value-span">{{ $t('Full') }}
+                <ProductPrice :data="c.usePrice" unit=""/>{{ $t('Available') }}</span>
+							</h6>
+							<p class="coupon-list__item--date" v-if="c.validityType === 1">
+                {{ $t('Expiry') }}：
+								<app-time :data="c.validStartTime" format="YYYY-MM-DD"/>
 								-
-								<app-time :data="c.validEndTime" />
+								<app-time :data="c.validEndTime" format="YYYY-MM-DD"/>
+							</p>
+							<p class="coupon-list__item--date" v-if="c.validityType === 2">
+                <!--有效期：领取后x天内可用-->
+                {{ $t('Expiry') }}：{{ $t('Available within') }} {{ c.fixedEndTerm }} {{ $t('days of collection') }}
 							</p>
 							<p class="coupon-list__item--range">
 								{{ c.description }}
@@ -102,11 +130,15 @@ const appStore = useAppStore()
 						</div>
 					</div>
 					<div class="coupon-list__item--right">
+            <!--coupon.canTake 为false时，按钮禁用-->
 						<div
 							class="coupon-list__item--collect"
+              :disabled="c.canTake"
 							@click="getCoupon(c)"
 						>
-							{{ $t('Get Now') }}
+							<!--{{ $t('Get Now') }}-->
+              <!--领取和已领取-->
+              {{ c.canTake ? $t('Get Now') : $t('Received') }}
 						</div>
 					</div>
 				</li>

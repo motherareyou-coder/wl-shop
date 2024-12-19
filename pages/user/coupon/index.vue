@@ -10,13 +10,13 @@ const route = useRoute()
 const status = ref(0)
 watchEffect(() => {
 	const type = Number(route.query.type)
-	status.value = Number.isNaN(type) ? 0 : type
+	status.value = Number.isNaN(type) ? 1 : type
 })
 
 const tags = ref([
-	{ label: $t('unused'), value: 0 },
-	{ label: $t('used'), value: 1 },
-	{ label: $t('expired'), value: 2 },
+	{ label: $t('unused'), value: 1 },
+	{ label: $t('used'), value: 2 },
+	{ label: $t('expired'), value: 3 },
 ])
 
 const { data, load, reset, loading, total } = useInfiteLoad<Coupon>(params =>
@@ -61,27 +61,37 @@ watch(status, reset)
 					v-for="coupon in data"
 					:key="coupon.id"
 					class="user-coupon__item--wrapper"
-					:class="{ disabled: coupon.status != 0 }"
+					:class="{ disabled: coupon.status != 1 }"
 				>
-					<div class="user-coupon__item in">
-						<p class="user-coupon__item--name">
-							{{ coupon.name }} | {{ coupon.productScope }}
-						</p>
-						<p class="user-coupon__item--value">
-							<ProductPrice :data="coupon.discountPrice" />
-						</p>
-						<p class="user-coupon__item--time">
-							<app-time :data="coupon.validStartTime" />
-							-
-							<app-time :data="coupon.validEndTime" />
-						</p>
-						<p class="user-coupon__item--desc">
-							<span>{{ $t('Apply for') }} {{ coupon.productScope }}</span>
-						</p>
-					</div>
+          <div class="user-coupon__item in">
+            <p class="user-coupon__item--name">
+              <!--{{ coupon.name }} | {{ coupon.description }}-->
+              {{ coupon.name }}
+            </p>
+            <p class="user-coupon__item--value" v-if="coupon.discountType === 1">
+              <!--则扣价格-->
+              <ProductPrice :data="coupon.discountPrice"/>
+              <span class="user-coupon__item--value-span">{{ $t('Full') }}
+                <ProductPrice :data="coupon.usePrice" unit=""/>{{ $t('Available') }}</span>
+            </p>
+            <p class="user-coupon__item--value" v-if="coupon.discountType === 2">
+              <!--折扣价格-->
+              <!--<ProductPrice :data="" />-->
+              {{ coupon.discountPercent / 10.0 }} {{ $t('Discount') }}
+              <span class="user-coupon__item--value-span">{{ $t('Full') }}
+              <ProductPrice :data="coupon.usePrice" unit=""/>{{ $t('Available') }}</span>
+            </p>
+            <p class="user-coupon__item--time">
+              <!--格式化时间为年月日-->
+              {{ $t('Expiry') }}：
+              <app-time :data="coupon.validStartTime" format="YYYY-MM-DD"/>
+              ~
+              <app-time :data="coupon.validEndTime" format="YYYY-MM-DD"/>
+            </p>
+          </div>
 					<div class="user-coupon__item--btn">
 						<nuxt-link
-							v-if="coupon.status === 0"
+							v-if="coupon.status === 1"
 							:to="
 								$path(
 									`/product-list?productScope=${coupon.productScope}&productScopeValues=${coupon.productScopeValues}`,
@@ -94,7 +104,7 @@ watch(status, reset)
 							</span>
 						</nuxt-link>
 						<button
-							v-if="coupon.status === 1"
+							v-if="coupon.status === 2"
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
 						>
 							<span class="mi-btn__text">
@@ -102,7 +112,7 @@ watch(status, reset)
 							</span>
 						</button>
 						<button
-							v-if="coupon.status === 2"
+							v-if="coupon.status === 3"
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
 						>
 							<span class="mi-btn__text">

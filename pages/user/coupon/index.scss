@@ -405,6 +405,15 @@
     text-overflow: ellipsis;
     word-break: break-word
 }
+.user-coupon__item--value-span {
+    font-size: 14px;
+    color: rgb(255, 105, 0);
+}
+
+.coupon-list__item--name-span{
+    font-size: 10px;
+    color: rgb(255, 105, 0);
+}
 
 @media screen and (max-width: 720px) {
     .user-coupon__list .user-coupon__item--wrapper .user-coupon__item .user-coupon__item--value {

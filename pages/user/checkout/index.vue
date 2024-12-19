@@ -624,9 +624,9 @@ const shipOpen = ref(true)
 											class="coupon-time card-item"
 										>
 											{{ $t('Expiry') }}:
-											<app-time :data="coupon.validStartTime" />
+											<app-time :data="coupon.validStartTime" format="YYYY-MM-DD"/>
 											-
-											<app-time :data="coupon.validEndTime" />
+											<app-time :data="coupon.validEndTime" format="YYYY-MM-DD"/>
 										</li>
 									</ul>
 									<el-icon

@@ -269,7 +269,7 @@ function checkAllChange(selected: boolean) {
 									<h3>{{ $t('Total') }}</h3>
 									<ProductPrice
 										class="orange"
-										:data="info?.price.totalPrice"
+										:data="info?.price.payPrice"
 									/>
 								</div>
 								<ul class="cart-summary__list">
@@ -279,6 +279,18 @@ function checkAllChange(selected: boolean) {
 											:data="info?.price.totalPrice"
 										/>
 									</li>
+                  <li
+                      class="cart-summary__item cart-summary__item--shipping"
+                  >
+										<span class="cart-summary__item-title">
+											{{ $t('优惠') }}
+										</span>
+                    <span class="cart-summary__item-fee">
+											<ProductPrice class="price-summary__item-fee"
+                          :data="info?.price.vipPrice"
+                      />
+										</span>
+                  </li>
 									<li
 										v-if="info?.price.couponPrice"
 										class="cart-summary__item cart-summary__item--saved"
