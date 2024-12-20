@@ -14,6 +14,9 @@ const id = route.params.id ? Number(route.params.id) : null
 provide('id', id)
 const { data: info } = await useAPI<ProductDetail>('product/spu/get-detail', { params: { id } })
 provide('info', info)
+const curSku = ref<SKU | null>()
+provide('curSku', curSku)
+const selected = ref<Record<any, any>>({})
 useHead({
 	title: `${info.value?.name} ${$t('appTitle')}`,
 })
@@ -33,16 +36,24 @@ const skuDisabled = ref(false)
 provide('combinationActivity', combinationActivity)
 provide('combinationActivityId', combinationActivityId)
 provide('skuDisabled', skuDisabled)
-watchEffect(() => {
+watch([info, combinationActivity], () => {
+	const ps = combinationActivity.value?.products || []
+	if (!ps.length)
+		return
 	info.value?.skus.forEach((sku) => {
-		const item = combinationActivity.value?.products?.find(s => s.skuId === sku.id)
+		const item = ps.find(s => s.skuId === sku.id)
 		if (item) {
 			sku.marketPrice = sku.price
 			sku.price = item.combinationPrice
 			sku.combinationPrice = item.combinationPrice
 		}
 	})
-})
+	if (!ps.find(s => s.skuId === curSku.value?.id)) {
+		info.value?.skus.find(s => s.id === ps[0].skuId)?.properties.forEach((p) => {
+			selected.value[p.propertyId] = p.valueId
+		})
+	}
+}, { immediate: true })
 // 开团---end
 
 // 秒杀---start
@@ -70,8 +81,6 @@ watchEffect(() => {
 })
 // 秒杀---end
 
-const curSku = ref<SKU | null>()
-provide('curSku', curSku)
 // 砍价---start
 const bargainActivityId = route.query.bargainActivityId ? Number(route.query.bargainActivityId) : null
 const bargainRecordId = route.query.bargainRecordId ? Number(route.query.bargainRecordId) : null
@@ -142,7 +151,6 @@ const isAcActivity = computed(() => !!(
 provide('inTimerange', inTimerange)
 provide('isAcActivity', isAcActivity)
 
-const selected = ref({})
 watch(
 	selected,
 	(v) => {

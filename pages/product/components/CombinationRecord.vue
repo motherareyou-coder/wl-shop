@@ -7,6 +7,7 @@ const { data } = await useAPI<CombinationRecord[]>('promotion/combination-record
 function handleClick(a: CombinationRecord) {
 	emit('click', { combinationHeadId: a.id })
 }
+const skuDisabled = inject('skuDisabled') as Ref<boolean>
 </script>
 
 <template>
@@ -18,7 +19,7 @@ function handleClick(a: CombinationRecord) {
 					{{ $t("还差x人成团", { number: a.userCount }) }}
 				</span>
 				<span class="flex-1"></span>
-				<el-link type="primary" class="justify-self-end" @click="handleClick(a)">
+				<el-link type="primary" class="justify-self-end" :disabled="skuDisabled" @click="handleClick(a)">
 					{{ $t('去参加') }}
 				</el-link>
 			</li>

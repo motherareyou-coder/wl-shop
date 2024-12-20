@@ -10,8 +10,9 @@ const emit = defineEmits(['change'])
 const selected = defineModel<boolean>()
 
 function handleClick() {
-	selected.value = !selected.value
-	emit('change', selected.value)
+	const v = !selected.value
+	selected.value = v
+	emit('change', v)
 }
 </script>
 

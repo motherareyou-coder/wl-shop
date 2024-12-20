@@ -52,15 +52,22 @@ const shipOptions = ref([
 const appStore = useAppStore()
 const deviceType = computed(() => appStore.deviceType)
 const couponVisible = ref(false)
-const coupon = ref<Coupon>()
+const coupon = ref<Coupon | null>()
 const coupons = ref<Coupon[]>([])
+const unwatch = watch(coupons, () => {
+	if (coupons.value.length && route.query.couponId && !coupon.value) {
+		const match = coupons.value.find(c => c.id === Number(route.query.couponId))
+		coupon.value = match
+		match && unwatch()
+	}
+})
 
 const { info, getInfo, items, additional } = useCheckOut(productList, coupon, data)
 const { data: payOptions1, refresh } = await useAPI<string[]>(
 	'pay/channel/get-enable-code-list',
 	{ params: { appId: info.value?.appId ?? 1 } },
 )
-watch(() => info.value?.appId, refresh)
+watch(() => info.value?.appId, () => refresh())
 const Pays = [
 	{
 		// title: `${$t('Mock')} / ${$t('Debit Card')}`,
@@ -81,7 +88,7 @@ const Pays = [
 ]
 const payOptions = computed(() => payOptions1.value?.length === 0 ? Pays : payOptions1.value?.map(k => Pays.find(p => p.key === k)))
 watch(payOptions1, (v) => {
-	data.value.payKey = v?.[0]
+	data.value.payKey = v?.[0] || 'mock'
 }, { immediate: true })
 
 if (orderId) {
@@ -152,7 +159,7 @@ function handleSubmit() {
 	if (!orderId) {
 		if (!data.value.addressId)
 			return ElMessage.info(msg)
-		const body = {
+		const body: any = {
 			items: items.value,
 			...pick(data.value, [
 				'deliveryType',
@@ -163,6 +170,8 @@ function handleSubmit() {
 				'remark',
 			]),
 		}
+		if (coupon.value)
+			body.couponId = coupon.value.id
 		if (bargainRecordId)
 			body.bargainRecordId = bargainRecordId
 		if (seckillActivityId)
@@ -624,9 +633,9 @@ const shipOpen = ref(true)
 											class="coupon-time card-item"
 										>
 											{{ $t('Expiry') }}:
-											<app-time :data="coupon.validStartTime" format="YYYY-MM-DD"/>
+											<app-time :data="coupon.validStartTime" format="YYYY-MM-DD" />
 											-
-											<app-time :data="coupon.validEndTime" format="YYYY-MM-DD"/>
+											<app-time :data="coupon.validEndTime" format="YYYY-MM-DD" />
 										</li>
 									</ul>
 									<el-icon

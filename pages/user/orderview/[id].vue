@@ -151,9 +151,13 @@ function handleCommand(type: string, data: any) {
 			<el-timeline-item
 				v-for="(track, i) in tracks"
 				:key="i"
-				:timestamp="track.time"
 			>
-				{{ track.content }}
+				<div>
+					{{ track.content }}
+				</div>
+				<div class="text-slate-400 text-sm">
+					<app-time :data="track.time" />
+				</div>
 			</el-timeline-item>
 		</el-timeline>
 	</app-modal>

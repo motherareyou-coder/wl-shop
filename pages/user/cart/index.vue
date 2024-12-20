@@ -20,19 +20,6 @@ const router = useRouter()
 const appStore = useAppStore()
 const userStore = useUserStore()
 const cartStore = useCartStore()
-const msg = $t('Please sign in first')
-function handleSubmit() {
-	if (
-
-		userStore.nickname
-	) {
-		router.push($path('/user/checkout'))
-	}
-	else {
-		ElMessage.info(msg)
-		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
-	}
-}
 
 const { loading, wrapLoading } = useLoading(false)
 provide('loading', loading)
@@ -111,6 +98,17 @@ function checkAllChange(selected: boolean) {
 			selected,
 		}
 		wrapLoading(cartStore.updateSelected(body))
+	}
+}
+
+const msg = $t('Please sign in first')
+function handleSubmit() {
+	if (userStore.nickname) {
+		router.push({ path: $path('/user/checkout'), query: { couponId: coupon.value?.id } })
+	}
+	else {
+		ElMessage.info(msg)
+		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
 	}
 }
 </script>
@@ -279,18 +277,19 @@ function checkAllChange(selected: boolean) {
 											:data="info?.price.totalPrice"
 										/>
 									</li>
-                  <li
-                      class="cart-summary__item cart-summary__item--shipping"
-                  >
+									<li
+										class="cart-summary__item cart-summary__item--shipping"
+									>
 										<span class="cart-summary__item-title">
 											{{ $t('优惠') }}
 										</span>
-                    <span class="cart-summary__item-fee">
-											<ProductPrice class="price-summary__item-fee"
-                          :data="info?.price.vipPrice"
-                      />
+										<span class="cart-summary__item-fee">
+											<ProductPrice
+												class="price-summary__item-fee"
+												:data="info?.price.vipPrice"
+											/>
 										</span>
-                  </li>
+									</li>
 									<li
 										v-if="info?.price.couponPrice"
 										class="cart-summary__item cart-summary__item--saved"

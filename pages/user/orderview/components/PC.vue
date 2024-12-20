@@ -71,7 +71,15 @@ const data = computed(() => props.data)
 						<div class="order-express__pay-countdown">
 							<span class="color-mi" fmp-c="3">*</span>
 							{{ $t('Please complete the payment within') }}
-							<app-count-down :end-time="data.payExpireTime" class="inline-flex" />
+							<app-count-down :end-time="data.payExpireTime" class="inline-flex" style="color:var(--mi-color-primary)">
+								<template #default="scope">
+									<strong>{{ scope.data.h }}</strong>
+									<strong>:</strong>
+									<strong>{{ scope.data.m }}</strong>
+									<strong>:</strong>
+									<strong>{{ scope.data.s }}</strong>
+								</template>
+							</app-count-down>
 							{{ $t('. Unpaid orders (except for COD ones) will be cancelled automatically afterwards.') }}
 						</div>
 					</section>

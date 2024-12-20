@@ -5,7 +5,7 @@ const id = inject('id')
 
 const { data, load, reset } = useInfiteLoad<Coupon>(params =>
 	$api('promotion/coupon-template/list', {
-		params: { ...params, spuId: id, count: 10,productScope:2 },
+		params: { ...params, spuId: id, count: 10, productScope: 2 },
 	}),
 )
 
@@ -21,23 +21,22 @@ const userStore = useUserStore()
 // 每次打开Modal时重置
 watch(isOpen, v => v || reset())
 function getCoupon(c: Coupon) {
-  //需要先登陆
-  if (!userStore.nickname) {
-    ElMessage.info(msg)
-    router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
-  }
-  if (!c.canTake) {
-    ElMessage.info(t('Received'))
-    return
-  }
+	// 需要先登陆
+	if (!userStore.nickname) {
+		ElMessage.info(msg)
+		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
+	}
+	if (!c.canTake) {
+		ElMessage.info(t('Received'))
+		return
+	}
 	$api('promotion/coupon/take', {
 		method: 'post',
-    body: { templateId: c.id },
+		body: { templateId: c.id },
 	}).then(() => {
 		reset()
-	});
+	})
 }
-
 </script>
 
 <template>
@@ -97,32 +96,33 @@ function getCoupon(c: Coupon) {
 					v-for="c in data"
 					:key="c.id"
 					class="coupon-list__item coupon-list__item--get-coupon coupon-list--yellow"
+					:class="{ disabled: !c.canTake }"
 				>
 					<div class="coupon-list__item--left">
 						<div class="coupon-list__item--tag">
 							<strong>{{ c.name }}</strong>
 						</div>
 						<div class="coupon-list__item--desc">
-							<h6 class="coupon-list__item--name"  v-if="c.discountType === 1">
-								<!--{{ c.name }}-->
-                <ProductPrice :data="c.discountPrice"/> <span class="coupon-list__item--name-span">{{ $t('Full') }}
-                <ProductPrice :data="c.usePrice" unit=""/>{{ $t('Available') }}</span>
+							<h6 v-if="c.discountType === 1" class="coupon-list__item--name">
+								<!-- {{ c.name }} -->
+								<ProductPrice :data="c.discountPrice" /> <span class="coupon-list__item--name-span">{{ $t('Full') }}
+									<ProductPrice :data="c.usePrice" unit="" />{{ $t('Available') }}</span>
 							</h6>
-							<h6 class="coupon-list__item--name"  v-if="c.discountType === 2">
-								<!--{{ c.name }}-->
-                {{ c.discountPercent / 10.0 }} {{ $t('Discount') }}
-                <span class="user-coupon__item--value-span">{{ $t('Full') }}
-                <ProductPrice :data="c.usePrice" unit=""/>{{ $t('Available') }}</span>
+							<h6 v-if="c.discountType === 2" class="coupon-list__item--name">
+								<!-- {{ c.name }} -->
+								{{ c.discountPercent / 10.0 }} {{ $t('Discount') }}
+								<span class="user-coupon__item--value-span">{{ $t('Full') }}
+									<ProductPrice :data="c.usePrice" unit="" />{{ $t('Available') }}</span>
 							</h6>
-							<p class="coupon-list__item--date" v-if="c.validityType === 1">
-                {{ $t('Expiry') }}：
-								<app-time :data="c.validStartTime" format="YYYY-MM-DD"/>
+							<p v-if="c.validityType === 1" class="coupon-list__item--date">
+								{{ $t('Expiry') }}：
+								<app-time :data="c.validStartTime" format="YYYY-MM-DD" />
 								-
-								<app-time :data="c.validEndTime" format="YYYY-MM-DD"/>
+								<app-time :data="c.validEndTime" format="YYYY-MM-DD" />
 							</p>
-							<p class="coupon-list__item--date" v-if="c.validityType === 2">
-                <!--有效期：领取后x天内可用-->
-                {{ $t('Expiry') }}：{{ $t('Available within') }} {{ c.fixedEndTerm }} {{ $t('days of collection') }}
+							<p v-if="c.validityType === 2" class="coupon-list__item--date">
+								<!-- 有效期：领取后x天内可用 -->
+								{{ $t('Expiry') }}：{{ $t('Available within') }} {{ c.fixedEndTerm }} {{ $t('days of collection') }}
 							</p>
 							<p class="coupon-list__item--range">
 								{{ c.description }}
@@ -130,16 +130,17 @@ function getCoupon(c: Coupon) {
 						</div>
 					</div>
 					<div class="coupon-list__item--right">
-            <!--coupon.canTake 为false时，按钮禁用-->
-						<div
+						<!-- coupon.canTake 为false时，按钮禁用 -->
+						<el-button
+							type="info"
 							class="coupon-list__item--collect"
-              :disabled="c.canTake"
+							:disabled="!c.canTake"
 							@click="getCoupon(c)"
 						>
-							<!--{{ $t('Get Now') }}-->
-              <!--领取和已领取-->
-              {{ c.canTake ? $t('Get Now') : $t('Received') }}
-						</div>
+							<!-- {{ $t('Get Now') }} -->
+							<!-- 领取和已领取 -->
+							{{ c.canTake ? $t('Get Now') : $t('Received') }}
+						</el-button>
 					</div>
 				</li>
 			</ul>

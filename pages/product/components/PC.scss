@@ -4292,6 +4292,16 @@ body.social-share-modal-common__Body--overflow-hidden {
     }
 }
 
+.coupon-list__wrapper .coupon-list__item.disabled {
+    color: #d0d0d0;
+    .coupon-list__item--tag,
+    .coupon-list__item--range {
+        color: #d0d0d0;
+    }
+}
+.coupon-list__wrapper .coupon-list__item.disabled .coupon-list__item--collect {
+    background-color: #d0d0d0;
+}
 .coupon-list__wrapper .coupon-list__item--right .coupon-list__item--collect {
     background-color: #191919;
     border: none;
@@ -4310,7 +4320,7 @@ body.social-share-modal-common__Body--overflow-hidden {
         height: 2.7777777778vw;
         line-height: 1.9444444444vw;
         margin-bottom: .6944444444vw;
-        padding: .4166666667vw
+        padding: .4166666667vw !important;
     }
 }
 
@@ -4321,7 +4331,7 @@ body.social-share-modal-common__Body--overflow-hidden {
         height: 2.7777777778vw;
         line-height: 1.9444444444vw;
         margin-bottom: .6944444444vw;
-        padding: .4166666667vw
+        padding: .4166666667vw !important;
     }
 }
 
@@ -4332,7 +4342,7 @@ body.social-share-modal-common__Body--overflow-hidden {
         height: 1.5625vw;
         line-height: 1.09375vw;
         margin-bottom: .390625vw;
-        padding: .234375vw
+        padding: .234375vw !important;
     }
 }
 
@@ -4343,7 +4353,7 @@ body.social-share-modal-common__Body--overflow-hidden {
         height: 1.5625vw;
         line-height: 1.09375vw;
         margin-bottom: .390625vw;
-        padding: .234375vw
+        padding: .234375vw !important;
     }
 }
 

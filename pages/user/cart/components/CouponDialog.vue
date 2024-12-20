@@ -94,28 +94,28 @@ function handleConfirm() {
 								:value="item.id"
 							>
 								<div class="name">
-									<!--{{-->
-									<!--	[item.discountPrice, item.name].join(-->
-									<!--		' | ',-->
-									<!--	)-->
-									<!--}}-->
-                  {{ item.name }}
+									<!-- {{ -->
+									<!--	[item.discountPrice, item.name].join( -->
+									<!--		' | ', -->
+									<!--	) -->
+									<!-- }} -->
+									{{ item.name }}
 								</div>
-								<div class="price" v-if="item.discountType === 1">
+								<div v-if="item.discountType === 1" class="price">
 									<ProductPrice :data="item.discountPrice" />
-                  <span>{{ $t('Full') }}
-                  <ProductPrice :data="item.usePrice" unit=""/>{{ $t('Available') }}</span>
+									<span>{{ $t('Full') }}
+										<ProductPrice :data="item.usePrice" unit="" />{{ $t('Available') }}</span>
 								</div>
-								<div class="price" v-if="item.discountType === 2">
-                  {{ item.discountPercent / 10.0 }} {{ $t('Discount') }}
-                  <span>{{ $t('Full') }}
-                  <ProductPrice :data="item.usePrice" unit=""/>{{ $t('Available') }}</span>
+								<div v-if="item.discountType === 2" class="price">
+									{{ item.discountPercent / 10.0 }} {{ $t('Discount') }}
+									<span>{{ $t('Full') }}
+										<ProductPrice :data="item.usePrice" unit="" />{{ $t('Available') }}</span>
 								</div>
 								<div class="timerange">
-                  {{ $t('Expiry') }}：
-									<app-time :data="item.validStartTime" format="YYYY-MM-DD"/>
+									{{ $t('Expiry') }}：
+									<app-time :data="item.validStartTime" format="YYYY-MM-DD" />
 									~
-									<app-time :data="item.validEndTime"  format="YYYY-MM-DD"/>
+									<app-time :data="item.validEndTime" format="YYYY-MM-DD" />
 								</div>
 								<div class="desc">
 									{{ item.description }}
