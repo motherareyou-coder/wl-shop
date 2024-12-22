@@ -19,6 +19,9 @@ provide('curSku', curSku)
 const selected = ref<Record<any, any>>({})
 useHead({
 	title: `${info.value?.name} ${$t('appTitle')}`,
+	meta: [
+		{ name: 'keywords', content: info.value?.introduction },
+	],
 })
 
 // 开团---start
