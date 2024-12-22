@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	devtools: { enabled: false },
-	ssr: process.env.NODE_ENV === 'production',
+	ssr: true, // process.env.NODE_ENV === 'production',
 	app: {
 		head: {
 			charset: 'utf-8',
@@ -14,6 +14,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/i18n',
 		'@vueuse/nuxt',
 		'@pinia/nuxt',
+		'pinia-plugin-persistedstate/nuxt',
 		'@nuxt/ui',
 		'@nuxt/icon',
 		'@element-plus/nuxt',

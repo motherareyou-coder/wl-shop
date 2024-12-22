@@ -47,6 +47,30 @@ export interface UserInfo {
 	[property: string]: any
 }
 
+export interface AuthToken {
+	/**
+	 * 访问令牌
+	 */
+	accessToken: string
+	/**
+	 * 过期时间
+	 */
+	expiresTime: string
+	/**
+	 * 社交用户 openid
+	 */
+	openid?: string
+	/**
+	 * 刷新令牌
+	 */
+	refreshToken: string
+	/**
+	 * 用户编号
+	 */
+	userId: number
+	[property: string]: any
+}
+
 /**
  * Level，用户 App - 会员等级
  */

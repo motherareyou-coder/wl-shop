@@ -36,4 +36,7 @@ export const useParamsStore = defineStore('ParamsStore', {
 				})
 		},
 	},
+	persist: {
+		storage: import.meta.client ? localStorage : undefined,
+	},
 })

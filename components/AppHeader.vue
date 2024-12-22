@@ -167,7 +167,7 @@ function handleDelete(p: CartItem) {
 						</li>
 					</template>
 					<ul class="view-account__list">
-						<template v-if="userStore.nickname">
+						<template v-if="userStore.id">
 							<li class="view-account__item">
 								<a :href="$path('/user')" class="view-account__link">
 									{{ $t('My account') }}

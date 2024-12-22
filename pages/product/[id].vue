@@ -90,8 +90,8 @@ const bargainRecordId = route.query.bargainRecordId ? Number(route.query.bargain
 const bargainActivity = ref<BargainActivity | null>(bargainActivityId ? { id: bargainActivityId } as BargainActivity : null)
 const bargainRecord = ref<BargainActivity | null>()
 const bargainHelpList = ref<BargainHelp[]>([])
-const hasHelp = computed(() => !!bargainHelpList.value?.find(d => d.userId === userStore.$state.id))
-const isCurrentUser = computed(() => bargainRecord.value?.userId === userStore.$state.id)
+const hasHelp = computed(() => !!bargainHelpList.value?.find(d => d.userId === userStore.id))
+const isCurrentUser = computed(() => bargainRecord.value?.userId === userStore.id)
 provide('bargainActivity', bargainActivity)
 provide('bargainRecord', bargainRecord)
 provide('bargainHelpList', bargainHelpList)
@@ -296,7 +296,7 @@ watch(() => route.fullPath, () => window.location.reload())
 const { t } = useI18n()
 const { copy } = useClipboard()
 function checkUser() {
-	if (!userStore.$state.id) {
+	if (!userStore.id) {
 		ElMessage.info(t('Please sign in first'))
 		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
 		return false

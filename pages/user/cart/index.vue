@@ -103,7 +103,7 @@ function checkAllChange(selected: boolean) {
 
 const msg = $t('Please sign in first')
 function handleSubmit() {
-	if (userStore.nickname) {
+	if (userStore.id) {
 		router.push({ path: $path('/user/checkout'), query: { couponId: coupon.value?.id } })
 	}
 	else {
@@ -115,235 +115,236 @@ function handleSubmit() {
 
 <template>
 	<CartNav :value="1" />
-	<el-form :disabled="loading">
-		<main class="site-cart" :class="{ 'site-cart--empty': finalList.length === 0 }">
-			<div class="site-cart__container">
-				<section v-if="finalList.length === 0" class="site-cart__empty cart-empty">
-					<i class="micon micon-warning cart-empty__warning-icon"></i>
-					<h3 class="cart-empty__title">
-						{{ $t('Your shopping cart is empty.') }}
-					</h3>
-					<span v-if="!userStore.$state.nickname" class="cart-empty__subtitle">
-						{{ $t('Login to view your shopping cart and have better experience.') }}
-					</span>
-					<div class="cart-empty__btn-group">
-						<nuxt-link :to="$path(`/product-list`)" class="mi-btn cart-empty__btn" style="background-color: #fff;color: #000;">
-							{{ $t('Shop now') }}
-						</nuxt-link>
-						<nuxt-link v-if="!userStore.$state.nickname" :to="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`" class="mi-btn cart-empty__btn">
-							{{ $t('Login / Sign up') }}
-						</nuxt-link>
-					</div>
-				</section>
-				<template v-else>
-					<article class="site-cart__detail">
-						<header
-							class="site-cart__card site-cart__header cart-header"
-						>
-							<app-checkbox
-								v-model="checkAll"
-								class="cart-header__checkbox"
-								:label="$t('CheckAll')"
-								@change="checkAllChange"
-							/>
-							<button
-								class="cursor-pointer cart-header__delete"
-								@click.prevent="handleDeleteAll"
+	<client-only>
+		<el-form :disabled="loading">
+			<main class="site-cart" :class="{ 'site-cart--empty': finalList.length === 0 }">
+				<div class="site-cart__container">
+					<section v-if="finalList.length === 0" class="site-cart__empty cart-empty">
+						<i class="micon micon-warning cart-empty__warning-icon"></i>
+						<h3 class="cart-empty__title">
+							{{ $t('Your shopping cart is empty.') }}
+						</h3>
+						<span v-if="!userStore.id" class="cart-empty__subtitle">
+							{{ $t('Login to view your shopping cart and have better experience.') }}
+						</span>
+						<div class="cart-empty__btn-group">
+							<nuxt-link :to="$path(`/product-list`)" class="mi-btn cart-empty__btn" style="background-color: #fff;color: #000;">
+								{{ $t('Shop now') }}
+							</nuxt-link>
+							<nuxt-link v-if="!userStore.id" :to="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`" class="mi-btn cart-empty__btn">
+								{{ $t('Login / Sign up') }}
+							</nuxt-link>
+						</div>
+					</section>
+					<template v-else>
+						<article class="site-cart__detail">
+							<header
+								class="site-cart__card site-cart__header cart-header"
 							>
-								{{ $t('Delete') }}
-							</button>
-						</header>
-						<aside v-if="appStore.isMobile" class="cart-delivery">
-							<div class="cart-delivery__info">
-							<!-- <i class="cart-delivery__cart-icon">
+								<app-checkbox
+									v-model="checkAll"
+									class="cart-header__checkbox"
+									:label="$t('CheckAll')"
+									@change="checkAllChange"
+								/>
+								<button
+									class="cursor-pointer cart-header__delete"
+									@click.prevent="handleDeleteAll"
+								>
+									{{ $t('Delete') }}
+								</button>
+							</header>
+							<aside v-if="appStore.isMobile" class="cart-delivery">
+								<div class="cart-delivery__info">
+									<!-- <i class="cart-delivery__cart-icon">
 								<Icon />
 							</i>
 							<span class="cart-delivery__title">
 								{{ $t('Free shipping') }}
 							</span> -->
-							</div>
-							<div class="cart-delivery__spacer"></div>
-							<button
-								class="mi-btn--link cart-delivery__delete"
-								@click.prevent="handleDeleteAll"
-							>
-								{{ $t('Delete') }}
-							</button>
-						</aside>
-						<section
-							v-for="item in finalList"
-							:key="item.id"
-							class="site-cart__card site-cart__group cart-group"
-						>
-							<article
-								class="site-cart__item cart-group__item cart-item"
-							>
-								<section
-									class="cart-item__grid cart-item__goods"
-									:class="{
-										'cart-item__goods--invalid': item.disabled,
-									}"
+								</div>
+								<div class="cart-delivery__spacer"></div>
+								<button
+									class="mi-btn--link cart-delivery__delete"
+									@click.prevent="handleDeleteAll"
 								>
-									<div class="cart-item__checkbox">
-										<app-checkbox
-											:model-value="item.selected"
-											@change="(v) => checkChange(item, v)"
-										/>
-									</div>
-									<div class="cart-item__gap"></div>
-									<div class="cart-item__image">
-										<nuxt-link
-											:to="$path(`/product/${item.spu.id}`)"
-										>
-											<app-image
-												class="cart-item__image-content"
-												:src="item.sku?.picUrl || item.spu?.picUrl"
+									{{ $t('Delete') }}
+								</button>
+							</aside>
+							<section
+								v-for="item in finalList"
+								:key="item.id"
+								class="site-cart__card site-cart__group cart-group"
+							>
+								<article
+									class="site-cart__item cart-group__item cart-item"
+								>
+									<section
+										class="cart-item__grid cart-item__goods"
+										:class="{
+											'cart-item__goods--invalid': item.disabled,
+										}"
+									>
+										<div class="cart-item__checkbox">
+											<app-checkbox
+												:model-value="item.selected"
+												@change="(v) => checkChange(item, v)"
 											/>
-										</nuxt-link>
-									</div>
-									<div class="cart-item__gap"></div>
-									<div class="cart-item__detail">
-										<div class="cart-item__product">
+										</div>
+										<div class="cart-item__gap"></div>
+										<div class="cart-item__image">
 											<nuxt-link
 												:to="$path(`/product/${item.spu.id}`)"
 											>
-												<h3
-													class="cart-item__product-title"
-												>
-													{{ item.spu?.name }}
-													{{ item.sku?.properties.map(p => p.valueName).join(' ') }}
-												</h3>
+												<app-image
+													class="cart-item__image-content"
+													:src="item.sku?.picUrl || item.spu?.picUrl"
+												/>
 											</nuxt-link>
-											<div
-												v-if="appStore.isPC"
-												class="cart-item__price"
-											>
-												<ProductPrice
-													:data="item.sku?.price"
-													class="cart-item__price-expect"
-												/>
-											</div>
 										</div>
-										<div class="cart-item__action">
-											<div
-												v-if="appStore.isMobile"
-												class="cart-item__price"
-											>
-												<ProductPrice
-													:data="item.sku?.price"
-													class="cart-item__price-expect"
-												/>
-											</div>
-											<div class="quantity-section">
-												<QtyInput
-													v-model="item.count"
-													:max="item.sku?.stock"
-													class="quantity-section__content"
-													:disabled="item.disabled"
-													@change="(v) => updateCount(item, v)"
-												/>
-											</div>
-											<div class="action-section">
-												<button
-													class="mi-btn mi-btn--icon"
-													style="color: var(--brand-black-30);"
-													@click.prevent="handleDelete(item)"
+										<div class="cart-item__gap"></div>
+										<div class="cart-item__detail">
+											<div class="cart-item__product">
+												<nuxt-link
+													:to="$path(`/product/${item.spu.id}`)"
 												>
-													<i class="micon micon-delete"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</section>
-							</article>
-						</section>
-					</article>
-					<article class="site-cart__summary">
-						<main class="site-cart__summary-area">
-							<section
-								class="site-cart__card site-cart__summary cart-summary"
-							>
-								<div class="cart-summary__total">
-									<h3>{{ $t('Total') }}</h3>
-									<ProductPrice
-										class="orange"
-										:data="info?.price.payPrice"
-									/>
-								</div>
-								<ul class="cart-summary__list">
-									<li class="cart-summary__item">
-										<span>{{ $t('Subtotal') }}</span>
-										<ProductPrice
-											:data="info?.price.totalPrice"
-										/>
-									</li>
-									<li
-										class="cart-summary__item cart-summary__item--shipping"
-									>
-										<span class="cart-summary__item-title">
-											{{ $t('优惠') }}
-										</span>
-										<span class="cart-summary__item-fee">
-											<ProductPrice
-												class="price-summary__item-fee"
-												:data="info?.price.vipPrice"
-											/>
-										</span>
-									</li>
-									<li
-										v-if="info?.price.couponPrice"
-										class="cart-summary__item cart-summary__item--saved"
-										:class="{
-											'cart-summary__item--open': open1,
-										}"
-									>
-										<span>{{ $t('Saved') }}</span>
-										<span
-											class="cart-summary__item-fee cart-summary__item-fee--highlight notranslate"
-										>
-											-<ProductPrice
-												:data="info?.price.couponPrice"
-											/>
-											<div
-												class="inline-block cursor-pointer cart-summary__item-more"
-											>
-												<el-icon
-													class="micon micon-down cart-summary__item-more-icon"
-													@click="open1 = !open1"
-												/>
-											</div>
-										</span>
-										<div class="cart-summary__box">
-											<ul class="cart-summary__detail">
-												<li class="cart-summary__item">
-													<span>{{ $t('Coupons') }}</span>
-													<span
-														class="cart-summary__item-fee notranslate"
+													<h3
+														class="cart-item__product-title"
 													>
-														-<ProductPrice
-															:data="
-																info?.price
-																	.couponPrice
-															"
-														/>
-													</span>
-												</li>
-											</ul>
+														{{ item.spu?.name }}
+														{{ item.sku?.properties.map(p => p.valueName).join(' ') }}
+													</h3>
+												</nuxt-link>
+												<div
+													v-if="appStore.isPC"
+													class="cart-item__price"
+												>
+													<ProductPrice
+														:data="item.sku?.price"
+														class="cart-item__price-expect"
+													/>
+												</div>
+											</div>
+											<div class="cart-item__action">
+												<div
+													v-if="appStore.isMobile"
+													class="cart-item__price"
+												>
+													<ProductPrice
+														:data="item.sku?.price"
+														class="cart-item__price-expect"
+													/>
+												</div>
+												<div class="quantity-section">
+													<QtyInput
+														v-model="item.count"
+														:max="item.sku?.stock"
+														class="quantity-section__content"
+														:disabled="item.disabled"
+														@change="(v) => updateCount(item, v)"
+													/>
+												</div>
+												<div class="action-section">
+													<button
+														class="mi-btn mi-btn--icon"
+														style="color: var(--brand-black-30);"
+														@click.prevent="handleDelete(item)"
+													>
+														<i class="micon micon-delete"></i>
+													</button>
+												</div>
+											</div>
 										</div>
-									</li>
-									<li
-										class="cart-summary__item cart-summary__item--shipping"
-									>
-										<span class="cart-summary__item-title">
-											{{ $t('Shipping fee') }}
-										</span>
-										<span class="cart-summary__item-fee">
+									</section>
+								</article>
+							</section>
+						</article>
+						<article class="site-cart__summary">
+							<main class="site-cart__summary-area">
+								<section
+									class="site-cart__card site-cart__summary cart-summary"
+								>
+									<div class="cart-summary__total">
+										<h3>{{ $t('Total') }}</h3>
+										<ProductPrice
+											class="orange"
+											:data="info?.price.payPrice"
+										/>
+									</div>
+									<ul class="cart-summary__list">
+										<li class="cart-summary__item">
+											<span>{{ $t('Subtotal') }}</span>
 											<ProductPrice
-												:data="info?.price.deliveryPrice"
+												:data="info?.price.totalPrice"
 											/>
-										</span>
-									</li>
-								<!-- <li class="cart-summary__item">
+										</li>
+										<li
+											class="cart-summary__item cart-summary__item--shipping"
+										>
+											<span class="cart-summary__item-title">
+												{{ $t('优惠') }}
+											</span>
+											<span class="cart-summary__item-fee">
+												<ProductPrice
+													class="price-summary__item-fee"
+													:data="info?.price.vipPrice"
+												/>
+											</span>
+										</li>
+										<li
+											v-if="info?.price.couponPrice"
+											class="cart-summary__item cart-summary__item--saved"
+											:class="{
+												'cart-summary__item--open': open1,
+											}"
+										>
+											<span>{{ $t('Saved') }}</span>
+											<span
+												class="cart-summary__item-fee cart-summary__item-fee--highlight notranslate"
+											>
+												-<ProductPrice
+													:data="info?.price.couponPrice"
+												/>
+												<div
+													class="inline-block cursor-pointer cart-summary__item-more"
+												>
+													<el-icon
+														class="micon micon-down cart-summary__item-more-icon"
+														@click="open1 = !open1"
+													/>
+												</div>
+											</span>
+											<div class="cart-summary__box">
+												<ul class="cart-summary__detail">
+													<li class="cart-summary__item">
+														<span>{{ $t('Coupons') }}</span>
+														<span
+															class="cart-summary__item-fee notranslate"
+														>
+															-<ProductPrice
+																:data="
+																	info?.price
+																		.couponPrice
+																"
+															/>
+														</span>
+													</li>
+												</ul>
+											</div>
+										</li>
+										<li
+											class="cart-summary__item cart-summary__item--shipping"
+										>
+											<span class="cart-summary__item-title">
+												{{ $t('Shipping fee') }}
+											</span>
+											<span class="cart-summary__item-fee">
+												<ProductPrice
+													:data="info?.price.deliveryPrice"
+												/>
+											</span>
+										</li>
+										<!-- <li class="cart-summary__item">
 									<div class="paypal-message">
 										<p
 											class="paypal-message__paypal-credit paypal-message--left"
@@ -360,124 +361,122 @@ function handleSubmit() {
 										</p>
 									</div>
 								</li> -->
-								</ul>
-								<footer class="site-cart__footer cart-footer">
-									<section class="cart-footer__coupon-area">
-										<div class="cart-coupons__left">
-											<el-icon class="cart-coupons__icon">
-												<Icon name="icon:coupon" />
-											</el-icon>
-											<span class="cart-coupons__title">
-												{{ $t('Coupons') }}
-											</span>
+									</ul>
+									<footer class="site-cart__footer cart-footer">
+										<section class="cart-footer__coupon-area">
+											<div class="cart-coupons__left">
+												<el-icon class="cart-coupons__icon">
+													<Icon name="icon:coupon" />
+												</el-icon>
+												<span class="cart-coupons__title">
+													{{ $t('Coupons') }}
+												</span>
+												<span
+													v-if="coupon"
+													class="cart-coupons__tip"
+												>
+													({{ $t('Selected') }})
+												</span>
+												<span
+													v-else-if="coupons.length"
+													class="cart-coupons__tip"
+												>
+													({{ $t('Save up to') }}
+													<ProductPrice
+														:data="
+															Math.max(
+																...coupons.map(
+																	(d) =>
+																		d.discountPrice,
+																),
+															)
+														"
+													/>)
+												</span>
+											</div>
 											<span
-												v-if="coupon"
-												class="cart-coupons__tip"
+												class="cursor-pointer inline-block cart-coupons__btn cart-coupons__highlight"
+												@click="couponShow = true"
 											>
-												({{ $t('Selected') }})
+												{{ coupons.length }}
+												{{ $t('optionals') }}
+												<i class="micon micon-link-arrow"></i>
 											</span>
-											<span
-												v-else-if="coupons.length"
-												class="cart-coupons__tip"
+										</section>
+										<section class="cart-footer__submit-area">
+											<el-button
+												class="mi-btn mi-btn--primary cart-footer__submit"
+												:disabled="!info?.price.totalPrice"
+												@click="handleSubmit"
 											>
-												({{ $t('Save up to') }}
-												<ProductPrice
-													:data="
-														Math.max(
-															...coupons.map(
-																(d) =>
-																	d.discountPrice,
-															),
-														)
-													"
-												/>)
-											</span>
-										</div>
-										<span
-											class="cursor-pointer inline-block cart-coupons__btn cart-coupons__highlight"
-											@click="couponShow = true"
-										>
-											{{ coupons.length }}
-											{{ $t('optionals') }}
-											<i class="micon micon-link-arrow"></i>
-										</span>
-									</section>
-									<section class="cart-footer__submit-area">
-										<el-button
-											class="mi-btn mi-btn--primary cart-footer__submit"
-											:disabled="!info?.price.totalPrice"
-											@click="handleSubmit"
-										>
-											{{ $t('Checkout') }}
-										</el-button>
-									</section>
-								</footer>
-							</section>
-							<CartService
-								class="site-cart__card site-cart__support-service"
+												{{ $t('Checkout') }}
+											</el-button>
+										</section>
+									</footer>
+								</section>
+								<CartService
+									class="site-cart__card site-cart__support-service"
+								/>
+							</main>
+						</article>
+					</template>
+					<Recommends v-if="userStore.id" class="site-cart__recommend cart-recommend" />
+				</div>
+				<footer
+					v-if="appStore.isMobile"
+					class="site-cart__footer cart-footer cart-footer--page"
+				>
+					<section class="cart-footer__coupon-area">
+						<div class="cart-coupons__left">
+							<i class="cart-coupons__icon">
+								<Icon name="icon:coupon" />
+							</i>
+							<span class="cart-coupons__title">
+								{{ $t('Coupons') }}
+							</span>
+						</div>
+						<div
+							class="cart-coupons__btn flex align-center"
+							@click="couponShow = true"
+						>
+							{{ $t('View more') }}
+							<i class="micon micon-link-arrow"></i>
+						</div>
+					</section>
+					<section class="cart-footer__submit-area">
+						<div class="cart-footer__total">
+							<app-checkbox
+								v-model="checkAll"
+								class="cart-footer__checkbox"
+								@change="checkAllChange"
 							/>
-						</main>
-					</article>
-				</template>
-				<Recommends
-					v-if="userStore.$state.nickname"
-					class="site-cart__recommend cart-recommend"
-				/>
-			</div>
-			<footer
-				v-if="appStore.isMobile"
-				class="site-cart__footer cart-footer cart-footer--page"
-			>
-				<section class="cart-footer__coupon-area">
-					<div class="cart-coupons__left">
-						<i class="cart-coupons__icon">
-							<Icon name="icon:coupon" />
-						</i>
-						<span class="cart-coupons__title">
-							{{ $t('Coupons') }}
-						</span>
-					</div>
-					<div
-						class="cart-coupons__btn flex align-center"
-						@click="couponShow = true"
-					>
-						{{ $t('View more') }}
-						<i class="micon micon-link-arrow"></i>
-					</div>
-				</section>
-				<section class="cart-footer__submit-area">
-					<div class="cart-footer__total">
-						<app-checkbox
-							v-model="checkAll"
-							class="cart-footer__checkbox"
-							@change="checkAllChange"
-						/>
-						<div class="cart-footer__price">
-							<div class="cart-footer__price-total">
-								<div class="mi-price">
-									<span>{{ $t('Total') }}: </span>
-									<ProductPrice
-										:data="info?.price.totalPrice"
-									/>
+							<div class="cart-footer__price">
+								<div class="cart-footer__price-total">
+									<div class="mi-price">
+										<span>{{ $t('Total') }}: </span>
+										<ProductPrice
+											:data="info?.price.totalPrice"
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<el-button
-						type="info"
-						class="cart-footer__submit"
-						:disabled="!info?.price.totalPrice"
-						@click="handleSubmit"
-					>
-						{{ $t('Checkout') }}
-					</el-button>
-				</section>
-			</footer>
-		</main>
-		<CouponDialog
-			v-model:visible="couponShow"
-			v-model="coupon"
-			v-model:list="coupons"
-		/>
-	</el-form>
+						<el-button
+							type="info"
+							class="cart-footer__submit"
+							:disabled="!info?.price.totalPrice"
+							@click="handleSubmit"
+						>
+							{{ $t('Checkout') }}
+						</el-button>
+					</section>
+				</footer>
+			</main>
+			<CouponDialog
+				v-model:visible="couponShow"
+				v-model="coupon"
+				v-model:list="coupons"
+			/>
+		</el-form>
+	</client-only>
 </template>

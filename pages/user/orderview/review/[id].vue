@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { UploadFile } from 'element-plus'
 import { isArray } from 'lodash-es'
+import type { OrderDetail } from '~/types'
 
 const route = useRoute()
 const router = useRouter()
-const item = JSON.parse(localStorage.getItem(`orderItem-${route.params.id}`) || '{}')
-console.log(item)
+const item = useLocalStorage(`orderItem-${route.params.id}`, {}) as unknown as Ref<OrderDetail>
 
 const data = ref({
 	anonymous: true,
@@ -23,7 +23,7 @@ function submit() {
 		method: 'post',
 		body: {
 			anonymous: data.value.anonymous,
-			orderItemId: item.id,
+			orderItemId: item.value.id,
 			descriptionScores: data.value.descriptionScores,
 			benefitScores: data.value.benefitScores,
 			content: data.value.content,
@@ -31,7 +31,7 @@ function submit() {
 		},
 	})
 		.then(() => {
-			router.replace($path(`/user/orderview/${item.orderId}`))
+			router.replace($path(`/user/orderview/${item.value.orderId}`))
 		})
 		.finally(() => {
 			loading.value = false

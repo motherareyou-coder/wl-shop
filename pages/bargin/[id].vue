@@ -38,8 +38,8 @@ if (!recordId.value) {
 	})
 }
 
-const hasHelp = computed(() => !!helpList.value?.find(d => d.userId === userStore.$state.id))
-const isCurrentUser = computed(() => recordInfo.value.userId == userStore.$state.id)
+const hasHelp = computed(() => !!helpList.value?.find(d => d.userId === userStore.id))
+const isCurrentUser = computed(() => recordInfo.value.userId == userStore.id)
 
 const sku = ref<SKU>()
 const productInfo = ref<ProductDetail>({})
@@ -56,7 +56,7 @@ watchEffect(() => {
 
 const { t } = useI18n()
 function checkUser() {
-	if (!userStore.$state.id) {
+	if (!userStore.id) {
 		ElMessage.info(t('Please sign in first'))
 		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
 		return false

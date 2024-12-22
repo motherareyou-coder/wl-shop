@@ -27,8 +27,8 @@ export const useAppStore = defineStore('AppStore', {
 				}
 			}
 			onResize()
-
-			window?.addEventListener('resize', onResize)
+			if (import.meta.client)
+				window?.addEventListener('resize', onResize)
 		},
 	},
 })

@@ -59,11 +59,10 @@ export default defineNuxtPlugin(() => {
 	})
 
 	const handleAuthorized = () => {
-		console.log(userStore.nickname)
-		userStore.nickname && userStore.logout()
+		userStore.id && userStore.logout()
 		// 登录超时
 		// eslint-disable-next-line prefer-promise-reject-errors
-		return Promise.reject({ code: 401, msg: userStore.nickname ? nuxtApp.$i18n.t('Your login has expired') : nuxtApp.$i18n.t('Please sign in first') })
+		return Promise.reject({ code: 401, msg: userStore.id ? nuxtApp.$i18n.t('Your login has expired') : nuxtApp.$i18n.t('Please sign in first') })
 	}
 
 	// Axios 无感知刷新令牌，参考 https://www.dashingdog.cn/article/11 与 https://segmentfault.com/a/1190000020210980 实现

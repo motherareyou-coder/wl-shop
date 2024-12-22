@@ -5,11 +5,8 @@ import type { OrderDetail, OrderItem, TradeConfig } from '~/types'
 
 const route = useRoute()
 const router = useRouter()
-const info: OrderDetail = JSON.parse(
-	localStorage.getItem('after-sale-apply') || '{}',
-)
-const item: OrderItem
-	= info.items?.find(d => `${d.id}` === route.query.item)
+const info = useLocalStorage('after-sale-apply', {}) as unknown as Ref<OrderDetail>
+const item = (info.value.items?.find(d => `${d.id}` === route.query.item) || {}) as OrderItem
 
 const { data: config } = await useAPI<TradeConfig>(
 	'trade/config/get',
@@ -24,7 +21,7 @@ const data = ref({
 })
 const images = ref<UploadFile[]>([])
 
-const options = (info.status === 20
+const options = (info.value.status === 20
 	? config.value?.afterSaleReturnReasons
 	: config.value?.afterSaleRefundReasons
 )?.map(v => ({ label: v, value: v })) || [

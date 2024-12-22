@@ -1,42 +1,15 @@
-import { remove } from 'lodash-es'
 import { defineStore } from 'pinia'
-import type { CartItem, UserInfo } from '~/types'
-
-export interface AuthToken {
-	/**
-	 * 访问令牌
-	 */
-	accessToken: string
-	/**
-	 * 过期时间
-	 */
-	expiresTime: string
-	/**
-	 * 社交用户 openid
-	 */
-	openid?: string
-	/**
-	 * 刷新令牌
-	 */
-	refreshToken: string
-	/**
-	 * 用户编号
-	 */
-	userId: number
-	[property: string]: any
-}
-
-const ONE_DAY = 24 * 3600 * 1000
+import type { AuthToken, UserInfo } from '~/types'
 
 export const useUserStore = defineStore('UserStore', {
 	state: () => {
 		return {
+			id: null,
 			nickname: '',
 			avatar: '',
-			accessToken: localStorage.getItem('access-token') || '',
-			refreshToken: localStorage.getItem('refresh-token') || '',
-			expiresTime: Number(localStorage.getItem('expires-time')) || '',
-			cartList: (JSON.parse(localStorage.getItem('temp-cart') || '[]') || []) as CartItem[],
+			accessToken: useLocalStorage('access-token', ''),
+			refreshToken: useLocalStorage('refresh-token', ''),
+			// expiresTime: useLocalStorage('expires-time', ''),
 			needAddCart: false,
 		} as unknown as UserInfo
 	},
@@ -44,8 +17,10 @@ export const useUserStore = defineStore('UserStore', {
 	actions: {
 		getInfo() {
 			const nuxtApp = useNuxtApp()
-			return nuxtApp
-				.$api<UserInfo>('member/user/get')
+			return (this.accessToken
+				? nuxtApp
+					.$api<UserInfo>('member/user/get')
+				: Promise.reject(new Error('未登录')))
 				.then((res: UserInfo) => {
 					if (localStorage.getItem('access-token'))
 						this.$patch(res)
@@ -54,17 +29,12 @@ export const useUserStore = defineStore('UserStore', {
 					this.needAddCart = false
 					return res
 				})
-				.catch(() => this.reset())
+				.catch(() => this.reset(false))
 		},
 		setToken({ accessToken, refreshToken, expiresTime }: AuthToken) {
-			let time = new Date(expiresTime).getTime()
-			const onedayafter = new Date().getTime() + ONE_DAY
-			if (time < onedayafter) {
-				time = onedayafter
-			}
 			this.accessToken = accessToken
 			this.refreshToken = refreshToken
-			this.expiresTime = time
+			// this.expiresTime = expiresTime
 			localStorage.setItem('access-token', accessToken)
 			localStorage.setItem('refresh-token', refreshToken)
 			// localStorage.setItem('expires-time', `${time}`)
@@ -77,15 +47,18 @@ export const useUserStore = defineStore('UserStore', {
 					this.reset()
 				})
 		},
-		reset() {
+		reset(b = true) {
 			this.$reset()
-			useCartStore().clearCart()
+			b && useCartStore().clearCart()
 			this.accessToken = ''
 			this.refreshToken = ''
-			this.expiresTime = ''
+			// this.expiresTime = ''
 			localStorage.removeItem('access-token')
 			localStorage.removeItem('refresh-token')
 			// localStorage.removeItem('expires-time')
 		},
+	},
+	persist: {
+		storage: import.meta.client ? localStorage : undefined,
 	},
 })

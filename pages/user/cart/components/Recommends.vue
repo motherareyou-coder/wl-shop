@@ -50,9 +50,9 @@ function addToCart(r: ProductBrowseHistory) {
 								<ProductPrice :data="r.price" />
 							</div>
 						</div>
-						<i class="cart-recommend__cart" @click="addToCart(r)">
-							<Icon name="icon:cart" />
-						</i>
+						<button class="cart-recommend__cart" @click.prevent="addToCart(r)">
+							<i class="micon micon-add-to-cart-filled"></i>
+						</button>
 					</div>
 				</div>
 			</li>

@@ -7,15 +7,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 		if (to.meta.needLogin === false) {
 			// 明确定义无需登录
 		}
-		else if (!userStore.$state.accessToken) {
+		else if (!userStore.accessToken) {
 			// 重定向到登录页
 			return navigateTo(`${localePath(`/login`)}?redirect=${encodeURIComponent(to.fullPath)}`)
 		}
-		else if (!userStore.$state.nickname) {
+		else if (!userStore.id) {
 			await userStore.getInfo()
 		}
 	}
-	else if (to.path.includes('login') && userStore.$state.accessToken) {
+	else if (to.path.includes('login') && userStore.accessToken) {
 		return navigateTo(localePath('/'))
 	}
 })

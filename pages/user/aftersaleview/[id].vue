@@ -93,6 +93,7 @@ const appStore = useAppStore()
 <template>
 	<div class="aftersale-detail-contianer">
 		<div
+			v-if="data"
 			:class="[
 				appStore.isPC
 					? 'site-container-1400 bg-white mb-10 mx-auto w-full p-10'
@@ -127,7 +128,7 @@ const appStore = useAppStore()
 					</div>
 				</div>
 			</section>
-			<section class="my-2 bg-white p-4">
+			<section v-if="logs?.length" class="my-2 bg-white p-4">
 				<div class="flex items-center cursor-pointer" :class="[appStore.isMobile ? 'w-full justify-between' : 'inline-flex']" @click="logVisible = true">
 					<div class="flex flex-col">
 						<div>{{ logs[0]?.content }}</div>

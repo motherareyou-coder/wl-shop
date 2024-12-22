@@ -5,7 +5,7 @@ import './detail.scss'
 
 const route = useRoute()
 const id = route.params.id
-const categoryId = route.query.categoryId || ''
+const categoryId = Number(route.query.categoryId || '')
 const { data } = await useAPI<Article>(
 	'promotion/article/get',
 	{ params: { id } },
@@ -16,13 +16,11 @@ $api('promotion/article/add-browse-count', {
 	params: { id },
 })
 
-const { data: recommends } = await useAPI<Article>(
-	'promotion/article/mall/page',
-	{ params: { pageNo: 1, pageSize: 4, categoryId } },
-).then((res) => {
-	res.data.value = res.data.value.list
-	return res
-})
+const { data: recommends } = await useAsyncData<Article>(() =>
+	$api('promotion/article/mall/page', {
+		params: { pageNo: 1, pageSize: 4, categoryId },
+	}).then(res => res.list),
+)
 </script>
 
 <template>
@@ -37,7 +35,7 @@ const { data: recommends } = await useAPI<Article>(
 						<app-time :data="data?.createTime" />
 						<span class="view-count">
 							<el-icon class="view-count-icon"><ElIconView /></el-icon>
-							{{ data.browseCount }}
+							{{ data?.browseCount }}
 						</span>
 					</div>
 					<div

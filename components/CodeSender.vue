@@ -5,7 +5,7 @@ const props = defineProps({
 const emit = defineEmits(['click'])
 
 function useTimeout(key = 'timeout') {
-	const timeout = ref(0)
+	const timeout = useLocalStorage(key, 0)
 	let timer = -1
 	function start() {
 		clearInterval(timer)
@@ -15,7 +15,6 @@ function useTimeout(key = 'timeout') {
 			}
 			else {
 				timeout.value--
-				localStorage.setItem(key, `${timeout.value}`)
 			}
 		}, 1000) as unknown as number
 	}
@@ -23,21 +22,12 @@ function useTimeout(key = 'timeout') {
 		clearInterval(timer)
 		timeout.value = 0
 	}
-	try {
-		const t = Number(localStorage.getItem('login-timeout'))
-		if (!Number.isNaN(t) && t > 0) {
-			timeout.value = t
-			start()
-		}
-		else {
-			timeout.value = 0
-		}
+	if (!Number.isNaN(timeout.value) && timeout.value > 0) {
+		start()
 	}
-	catch (error) {
-		console.warn(error)
+	else {
 		timeout.value = 0
 	}
-
 	return { timeout, start, stop }
 }
 

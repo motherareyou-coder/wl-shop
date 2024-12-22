@@ -22,7 +22,7 @@ const userStore = useUserStore()
 watch(isOpen, v => v || reset())
 function getCoupon(c: Coupon) {
 	// 需要先登陆
-	if (!userStore.nickname) {
+	if (!userStore.id) {
 		ElMessage.info(msg)
 		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
 	}

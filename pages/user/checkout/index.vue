@@ -107,27 +107,30 @@ if (orderId) {
 	})
 }
 else if (bargainRecordId) {
-	const d = JSON.parse(localStorage.getItem(`bargainRecordId-${bargainRecordId}`))
-	productList.value = [d]
+	const d = useLocalStorage(`bargainRecordId-${bargainRecordId}`, {})
+	productList.value = [d.value]
 	data.value.pointStatus = false
 	additional.value = { bargainRecordId }
 	watch(() => data.value.addressId, getInfo)
+	watch(() => data.value.pointStatus, getInfo)
 	// getInfo({ bargainRecordId })
 }
 else if (seckillActivityId) {
-	const d = JSON.parse(localStorage.getItem(`seckillActivityId-${seckillActivityId}`))
-	productList.value = [d]
+	const d = useLocalStorage(`seckillActivityId-${seckillActivityId}`, {})
+	productList.value = [d.value]
 	data.value.pointStatus = false
 	additional.value = { seckillActivityId }
 	watch(() => data.value.addressId, getInfo)
+	watch(() => data.value.pointStatus, getInfo)
 	// getInfo({ seckillActivityId })
 }
 else if (combinationActivityId) {
-	const d = JSON.parse(localStorage.getItem(`combinationActivityId-${combinationActivityId}`))
-	productList.value = [d]
+	const d = useLocalStorage(`combinationActivityId-${combinationActivityId}`, {})
+	productList.value = [d.value]
 	data.value.pointStatus = false
 	additional.value = { combinationActivityId, combinationHeadId }
 	watch(() => data.value.addressId, getInfo)
+	watch(() => data.value.pointStatus, getInfo)
 	// getInfo({ combinationActivityId, combinationHeadId })
 }
 else {
