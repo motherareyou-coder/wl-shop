@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	devtools: { enabled: false },
-	ssr: true, // process.env.NODE_ENV === 'production',
+	ssr: process.env.NODE_ENV === 'production',
 	app: {
 		head: {
 			charset: 'utf-8',
@@ -101,7 +101,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		// public中的键也可以在客户端使用
 		public: {
-			baseURL: '/api',
+			baseURL: process.env.NODE_ENV === 'production' ? '/app-api' : '/api',
 			tenantId: 1,
 			currency: '$',
 		},
@@ -114,8 +114,8 @@ export default defineNuxtConfig({
 		// 	},
 		// },
 		routeRules: {
-			'/app-api': {
-				proxy: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
+			'/app-api**': {
+				proxy: 'http://10.10.10.17:48080',
 			},
 		},
 	},
