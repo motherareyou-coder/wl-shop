@@ -302,6 +302,10 @@ export interface Address {
 	 */
 	areaName: string
 	/**
+	 * 省份名字
+	 */
+	stateId: number
+	/**
 	 * 是否默认地址
 	 */
 	defaultStatus: boolean

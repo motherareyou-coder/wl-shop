@@ -8,11 +8,12 @@ const data = defineModel<Address>({ default: () => ({}) })
 watch(data, (v) => {
 	if (isString(v.countryId))
 		v.countryId = Number(v.countryId)
-	if (isString(v.cityId))
-		v.cityId = Number(v.cityId)
+	if (isString(v.stateId))
+		v.stateId = Number(v.stateId)
 	if (isString(v.areaId))
 		v.areaId = Number(v.areaId)
-}, { deep: true, immediate: true })
+	data.value.areaCity = [v.stateId, v.areaId]
+}, { immediate: true })
 
 const paramsStore = useParamsStore()
 paramsStore.getCountries()
@@ -34,18 +35,18 @@ function refreshStates() {
 		})
 }
 function refreshCities(stateId: number) {
-	return	$api('system/area/getAreaCityByStateId', {
-		params: { stateId },
-	}).then((res) => {
-		if (!Array.isArray(res)) {
-			res = [res]
-		}
-		return res?.map(d => ({
-			label: d.name,
-			value: d.id,
-			leaf: true,
-		})) || []
-	})
+	return !stateId
+		? Promise.resolve([])
+		: $api('system/area/getAreaCityByStateId', { params: { stateId } }).then((res) => {
+			if (!Array.isArray(res)) {
+				res = [res]
+			}
+			return res?.map(d => ({
+				label: d.name,
+				value: d.id,
+				leaf: true,
+			})) || []
+		})
 }
 
 const rules = {
@@ -158,7 +159,7 @@ const columns = [
 	// 	options: states.value,
 	// 	width: '49%',
 	// 	onChange: () => {
-	// 		data.value.cityId = ''
+	// 		data.value.stateId = ''
 	// 	},
 	// },
 	{ label: t('City'), prop: 'areaCity', width: '49%' },
