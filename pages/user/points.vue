@@ -2,7 +2,7 @@
 import type { PayWalletTransaction, PointRecord } from '~/types'
 
 const userStore = useUserStore()
-const user = computed(() => userStore.$state)
+const user = computed(() => userStore.user)
 const createTime = ref([])
 const type = ref('')
 const {

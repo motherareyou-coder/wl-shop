@@ -137,15 +137,18 @@ function handleDelete(p: CartItem) {
 						<span v-else>{{ $t('Your cart is empty') }}</span>
 						<template #reference>
 							<nuxt-link class="navigation__link" :to="$path('/user/cart')">
-								<el-badge
-									:show-zero="false"
-									:is-dot="appStore.isMobile"
-									:value="cartCount"
-									color="#ff6700"
-									class="shortcut__item--wrapper"
-								>
-									<i class="micon micon-shopping-cart shortcut__icon"></i>
-								</el-badge>
+								<!-- ssr模式下刷新页面角标消失，暂时用client-only解决 -->
+								<client-only>
+									<el-badge
+										:show-zero="false"
+										:is-dot="appStore.isMobile"
+										:value="cartCount"
+										color="#ff6700"
+										class="shortcut__item--wrapper"
+									>
+										<i class="micon micon-shopping-cart shortcut__icon"></i>
+									</el-badge>
+								</client-only>
 							</nuxt-link>
 						</template>
 					</el-popover>

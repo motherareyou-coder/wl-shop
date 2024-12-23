@@ -56,7 +56,7 @@ watch(status, resetData)
 						:class="{ active: isBalance === 0 }"
 						@click="isBalance = 0"
 					>
-						{{ `${$t('Points')}: ${userStore.$state.point}` }}
+						{{ `${$t('Points')}: ${userStore.info?.point}` }}
 					</span>
 				</li>
 			</ul>

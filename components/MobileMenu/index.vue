@@ -73,11 +73,11 @@ watch(
 							<div class="user-info__avatar-wrapper">
 								<app-image
 									class="user-info__avatar"
-									:src="userStore.avatar || '/avatar.png'"
+									:src="userStore.info?.avatar || '/avatar.png'"
 								/>
 							</div>
 							<span class="user-info__nickname">
-								{{ userStore.nickname || $t('login') }}
+								{{ userStore.info?.nickname || $t('login') }}
 							</span>
 						</div>
 						<el-icon><ElIconArrowRight /></el-icon>

@@ -7,7 +7,7 @@ definePageMeta({
 })
 const appStore = useAppStore()
 const userStore = useUserStore()
-const user = computed(() => userStore.$state)
+const user = computed(() => userStore.user)
 
 const { data: steps } = await useAPI<MemberLevel>(
 	'member/level/list',
