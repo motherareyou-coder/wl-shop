@@ -120,7 +120,7 @@ function handleRegister() {
 							<div class="mi-layout__logo-wrap">
 								<Icon name="icon:shop" class="mi-layout__logo" />
 							</div>
-							Xiaomi Account
+							Account
 						</div>
 						<div class="mi-nav">
 							<div class="mi-nav__item">

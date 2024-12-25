@@ -97,15 +97,16 @@ const rules = {
 		},
 	],
 	mobile: [
-		{ required: true, message: t('Mobile') + t('is required') },
-		{
-			message: t('It should be max 11 digit number.'),
-			validator(rule, v, cb) {
-				if (!/^\d{1,11}$/.test(v))
-					cb(new Error(t('It should be max 11 digit number.')))
-				else cb()
-			},
-		},
+		{ required: true, message: t('Mobile') + t('is required') }
+    // ,
+		// {
+		// 	message: t('It should be max 11 digit number.'),
+		// 	validator(rule, v, cb) {
+		// 		if (!/^\d{1,11}$/.test(v))
+		// 			cb(new Error(t('It should be max 11 digit number.')))
+		// 		else cb()
+		// 	},
+		// },
 	],
 	email: [
 		{ required: true, message: t('Email') + t('is required') },

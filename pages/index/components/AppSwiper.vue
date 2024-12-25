@@ -78,13 +78,14 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 }
 
 const router = useRouter()
-function onClick({ id }: Banner) {
+function onClick({ id,url }: Banner) {
 	if (id) {
 		$api('promotion/banner/add-browse-count', {
 			method: 'put',
 			params: { id },
 		}).then(() => {
-			router.push($path(`/product/${id}`))
+      //添加点击量,并跳转
+			router.push($path(`/${url}`))
 		})
 	}
 }

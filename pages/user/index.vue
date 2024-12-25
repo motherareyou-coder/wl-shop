@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import BgImg from '@/assets/imgs/user-center-bg.jpg'
 import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
+import addressIcon from '@/assets/imgs/user/address.png'
+import couponIcon from '@/assets/imgs/user/coupon.png'
+import favoritesIcon from '@/assets/imgs/user/Favorites.png'
+import groupOrderIcon from '@/assets/imgs/user/groupOrder.png'
+import levelIcon from '@/assets/imgs/user/level.png'
+import myOrdersIcon from '@/assets/imgs/user/myOrders.png'
+import signIcon from '@/assets/imgs/user/sign.png'
 import type { PayWallet } from '~/types'
 import './index.scss'
 
@@ -36,27 +43,32 @@ const { data: wallet } = await useAPI<PayWallet>('pay/wallet/get')
 const linkList = [
 	{
 		title: $t('My Orders'),
-		icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
+		// icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
+		icon: myOrdersIcon,
 		url: '/user/orderlist',
 	},
 	{
 		title: $t('拼团记录'),
-		icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
+		// icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
+		icon: groupOrderIcon,
 		url: '/user/combination',
 	},
 	{
 		title: $t('Coupons'),
-		icon: 'https://i05.appmifile.com/791_operatorx_operatorx_opx/06/06/2024/e1b8a664a4b5df21bc0977b135892354.png',
+		// icon: 'https://i05.appmifile.com/791_operatorx_operatorx_opx/06/06/2024/e1b8a664a4b5df21bc0977b135892354.png',
+		icon: couponIcon,
 		url: '/user/coupon',
 	},
 	{
 		title: $t('Sign'),
-		icon: 'https://i05.appmifile.com/143_operatorx_operatorx_opx/06/06/2024/d1a5a49897e12ddf746db4461c696812.png',
+		// icon: 'https://i05.appmifile.com/143_operatorx_operatorx_opx/06/06/2024/d1a5a49897e12ddf746db4461c696812.png',
+		icon: signIcon,
 		url: '/user/signin',
 	},
 	{
 		title: $t('Address Book'),
-		icon: 'https://i05.appmifile.com/87_operatorx_operatorx_opx/06/06/2024/de057751b5b6119d34a827cc57f55f79.png',
+		// icon: 'https://i05.appmifile.com/87_operatorx_operatorx_opx/06/06/2024/de057751b5b6119d34a827cc57f55f79.png',
+		icon: addressIcon,
 		url: '/user/address',
 	},
 	// {
@@ -72,7 +84,8 @@ const linkList = [
 	// },
 	{
 		title: $t('Level'),
-		icon: 'https://i05.appmifile.com/681_operatorx_operatorx_opx/06/06/2024/ebccf17dd62553652278d76353868aa4.png',
+		// icon: 'https://i05.appmifile.com/681_operatorx_operatorx_opx/06/06/2024/ebccf17dd62553652278d76353868aa4.png',
+		icon: levelIcon,
 		url: '/user/level',
 	},
 	// {
@@ -82,7 +95,8 @@ const linkList = [
 	// },
 	{
 		title: $t('Favorites') + (favCount.value ? `(${favCount.value})` : ''),
-		icon: 'https://i05.appmifile.com/843_operatorx_operatorx_opx/06/06/2024/d4f9359112e712e9519a61e0fe05c389.png',
+		// icon: 'https://i05.appmifile.com/843_operatorx_operatorx_opx/06/06/2024/d4f9359112e712e9519a61e0fe05c389.png',
+		icon: favoritesIcon,
 		url: '/user/favorite',
 	},
 ]

@@ -29,9 +29,21 @@ pnpm run dev
 pnpm run build
 ```
 
+
+
 本地预览构建 Locally preview production build:
 
 ```bash
 # pnpm
 pnpm run preview
 ```
+
+
+
+### nuxt 配置seo信息
+    useHead({
+        title: `${info.value?.name} ${$t('appTitle')}`,
+        meta: [
+            { name: 'keywords', content: info.value?.introduction },
+        ],
+    })

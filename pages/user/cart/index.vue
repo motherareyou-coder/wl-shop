@@ -278,60 +278,109 @@ function handleSubmit() {
 												:data="info?.price.totalPrice"
 											/>
 										</li>
-										<li
-											class="cart-summary__item cart-summary__item--shipping"
-										>
-											<span class="cart-summary__item-title">
-												{{ $t('优惠') }}
-											</span>
-											<span class="cart-summary__item-fee">
-												<ProductPrice
-													class="price-summary__item-fee"
-													:data="info?.price.vipPrice"
-												/>
-											</span>
-										</li>
-										<li
-											v-if="info?.price.couponPrice"
-											class="cart-summary__item cart-summary__item--saved"
-											:class="{
-												'cart-summary__item--open': open1,
-											}"
-										>
-											<span>{{ $t('Saved') }}</span>
-											<span
-												class="cart-summary__item-fee cart-summary__item-fee--highlight notranslate"
-											>
-												-<ProductPrice
-													:data="info?.price.couponPrice"
-												/>
-												<div
-													class="inline-block cursor-pointer cart-summary__item-more"
-												>
-													<el-icon
-														class="micon micon-down cart-summary__item-more-icon"
-														@click="open1 = !open1"
-													/>
-												</div>
-											</span>
-											<div class="cart-summary__box">
-												<ul class="cart-summary__detail">
-													<li class="cart-summary__item">
-														<span>{{ $t('Coupons') }}</span>
-														<span
-															class="cart-summary__item-fee notranslate"
-														>
-															-<ProductPrice
-																:data="
-																	info?.price
-																		.couponPrice
-																"
-															/>
-														</span>
-													</li>
-												</ul>
-											</div>
-										</li>
+										<!--<li-->
+										<!--	class="cart-summary__item cart-summary__item&#45;&#45;shipping"-->
+										<!--&gt;-->
+										<!--	<span class="cart-summary__item-title">-->
+										<!--		{{ $t('优惠') }}-->
+										<!--	</span>-->
+										<!--	<span class="cart-summary__item-fee">-->
+										<!--		<ProductPrice-->
+										<!--			class="price-summary__item-fee"-->
+										<!--			:data="info?.price.discountPrice"-->
+										<!--		/>-->
+										<!--	</span>-->
+										<!--</li>-->
+										<!--<li-->
+										<!--	class="cart-summary__item cart-summary__item&#45;&#45;shipping"-->
+										<!--&gt;-->
+										<!--	<span class="cart-summary__item-title">-->
+										<!--		{{ $t('会员折扣') }}-->
+										<!--	</span>-->
+										<!--	<span class="cart-summary__item-fee">-->
+										<!--		<ProductPrice-->
+										<!--			class="price-summary__item-fee"-->
+										<!--			:data="info?.price.vipPrice"-->
+										<!--		/>-->
+										<!--	</span>-->
+										<!--</li>-->
+                    <li
+                        v-if="info?.promotions"
+                        class="price-summary__item price-summary__item--saved"
+                        :class="{ 'price-summary__item--open': open1 }"
+                    >
+                      <span>{{ $t('优惠') }}</span>
+                      <span>
+                        <ProductPrice
+                          class="price-summary__item-fee"
+                          :data="info.promotions.reduce((t, c) => t - c.discountPrice, 0)"
+                        />
+                      <button class="price-summary__item-more">
+                        <el-icon
+                            class="cursor-pointer price-summary__item-more-icon"
+                            @click="open1 = !open1"
+                        >
+                          <ElIconArrowDown />
+                        </el-icon>
+                      </button>
+                    </span>
+                      <div class="price-summary__box">
+                        <ul class="price-summary__detail">
+                          <li
+                              v-for="(d, i) in info.promotions" :key="i"
+                              class="price-summary__item"
+                          >
+                            <span>{{ d.description }}</span>
+                            <ProductPrice
+                                class="price-summary__item-fee"
+                                :data="0 - d.discountPrice"
+                            />
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+
+										<!--<li-->
+										<!--	v-if="info?.price.couponPrice"-->
+										<!--	class="cart-summary__item cart-summary__item&#45;&#45;saved"-->
+										<!--	:class="{-->
+										<!--		'cart-summary__item&#45;&#45;open': open1,-->
+										<!--	}"-->
+										<!--&gt;-->
+										<!--	<span>{{ $t('Saved') }}</span>-->
+										<!--	<span-->
+										<!--		class="cart-summary__item-fee cart-summary__item-fee&#45;&#45;highlight notranslate"-->
+										<!--	>-->
+										<!--		-<ProductPrice-->
+										<!--			:data="info?.price.couponPrice"-->
+										<!--		/>-->
+										<!--		<div-->
+										<!--			class="inline-block cursor-pointer cart-summary__item-more"-->
+										<!--		>-->
+										<!--			<el-icon-->
+										<!--				class="micon micon-down cart-summary__item-more-icon"-->
+										<!--				@click="open1 = !open1"-->
+										<!--			/>-->
+										<!--		</div>-->
+										<!--	</span>-->
+										<!--	<div class="cart-summary__box">-->
+										<!--		<ul class="cart-summary__detail">-->
+										<!--			<li class="cart-summary__item">-->
+										<!--				<span>{{ $t('Coupons') }}</span>-->
+										<!--				<span-->
+										<!--					class="cart-summary__item-fee notranslate"-->
+										<!--				>-->
+										<!--					-<ProductPrice-->
+										<!--						:data="-->
+										<!--							info?.price-->
+										<!--								.couponPrice-->
+										<!--						"-->
+										<!--					/>-->
+										<!--				</span>-->
+										<!--			</li>-->
+										<!--		</ul>-->
+										<!--	</div>-->
+										<!--</li>-->
 										<li
 											class="cart-summary__item cart-summary__item--shipping"
 										>
