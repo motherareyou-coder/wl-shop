@@ -185,20 +185,20 @@ function handleRegister() {
 												</div>
 											</div>
 										</div>
-										<div class="mi-sns-login">
-											<div class="mi-sns-login__title">
-												{{ $t('More options') }}
-											</div>
-											<div class="mi-sns-login__content">
-												<div class="mi-sns-login__list">
-													<div class="mi-sns-login__item">
-														<span class="mi-sns-login__icon" style="background-color: #5470BD;padding:8px">
-															<Icon name="icon:facebook" />
-														</span>
-													</div>
-												</div>
-											</div>
-										</div>
+										<!--<div class="mi-sns-login">-->
+										<!--	<div class="mi-sns-login__title">-->
+										<!--		{{ $t('More options') }}-->
+										<!--	</div>-->
+										<!--	<div class="mi-sns-login__content">-->
+										<!--		<div class="mi-sns-login__list">-->
+										<!--			<div class="mi-sns-login__item">-->
+										<!--				<span class="mi-sns-login__icon" style="background-color: #5470BD;padding:8px">-->
+										<!--					<Icon name="icon:facebook" />-->
+										<!--				</span>-->
+										<!--			</div>-->
+										<!--		</div>-->
+										<!--	</div>-->
+										<!--</div>-->
 									</el-form>
 								</el-tab-pane>
 								<el-tab-pane :label="$t('register')" :name="1">

@@ -28,7 +28,7 @@ function getData<ExperienceRecord>(params: any) {
 		>
 			<h1 v-if="appStore.isPC" class="mt-0">
 				{{ $t('Level') }}
-				{{ user?.level?.level }}
+				V{{ user?.level?.level }}
 			</h1>
 			<el-scrollbar>
 				<ul class="level-list whitespace-nowrap">
@@ -39,15 +39,23 @@ function getData<ExperienceRecord>(params: any) {
 							active: user?.level?.level >= step.level,
 						}"
 					>
-						<span>{{
-							`${step.discountPercent}% ${$t('off')}`
-						}}</span>
-						<app-image class="w-12 h-12 my-2" :src="step.icon" />
-						<span>{{ step.name }}</span>
-						<span
+						<!--<span>{{-->
+						<!--	`${step.discountPercent}% ${$t('off')}`-->
+						<!--}}</span>-->
+						<!--<app-image class="w-12 h-12 my-2" :src="step.icon" />-->
+            <span>{{ step.name }}</span>
+            <span>{{ step.experience }}</span>
+            <el-tag class="tag__item">
+              {{ step.discountPercent }}% off
+            </el-tag>
+            <span
 							v-if="i !== steps.length - 1"
 							class="experience"
-						>{{ step.experience }}</span>
+						></span>
+						<!--<span-->
+						<!--	v-if="i !== steps.length - 1"-->
+						<!--	class="experience"-->
+						<!--&gt;{{ step.experience }}</span>-->
 					</li>
 				</ul>
 			</el-scrollbar>
@@ -56,7 +64,7 @@ function getData<ExperienceRecord>(params: any) {
 					<li class="record">
 						<div>
 							<span>{{ row.title }}</span>
-							<span>+{{ row.experience }} </span>
+							<span>{{ row.experience }} </span>
 						</div>
 						<div
 							class="text-sm"

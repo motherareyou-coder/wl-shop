@@ -56,7 +56,7 @@ const classList = computed(() => appStore.isPC ? 'product__section product__sect
 			</li>
 			<li class="offers-section__item">
 				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
-				{{ $t('最少成团人数', { number: bargainActivity.helpMaxCount }) }}
+				{{ $t('最多砍价人数', { number: bargainActivity.helpMaxCount }) }}
 			</li>
 		</ul>
 	</section>

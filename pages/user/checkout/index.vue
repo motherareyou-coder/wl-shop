@@ -1,5 +1,6 @@
 <script setup lang="tsx">
 import paypalPic from '@/assets/imgs/paypal.png'
+import cardsPic from '@/assets/imgs/cards.png'
 import { useAppStore } from '@/stores/app'
 import { pick } from 'lodash-es'
 import type { CartItem, Coupon, OrderSettlement, PayOrderSubmit } from '~/types'
@@ -72,7 +73,8 @@ const Pays = [
 	{
 		// title: `${$t('Mock')} / ${$t('Debit Card')}`,
 		title: `${$t('Mock Pay')}`,
-		image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
+		// image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
+		image: cardsPic,
 		key: 'mock',
 	},
 	{
@@ -82,7 +84,8 @@ const Pays = [
 	},
 	{
 		title: 'Wallet',
-		image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
+		// image: 'https://i01.appmifile.com/webfile/globalimg/checkout/cards.png',
+		image: cardsPic,
 		key: 'wallet',
 	},
 ]

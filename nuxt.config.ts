@@ -104,6 +104,7 @@ export default defineNuxtConfig({
 			baseURL: process.env.NODE_ENV === 'production' ? '/app-api' : '/api',
 			tenantId: 1,
 			currency: '$',
+			domain: 'https://www.iswink.com'
 		},
 	},
 	nitro: {

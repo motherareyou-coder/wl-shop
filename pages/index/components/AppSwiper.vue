@@ -85,7 +85,7 @@ function onClick({ id,url }: Banner) {
 			params: { id },
 		}).then(() => {
       //添加点击量,并跳转
-			router.push($path(`/${url}`))
+			router.push($path(`${url}`))
 		})
 	}
 }

@@ -63,6 +63,7 @@ export default {
 	'当前价格': 'Current Price',
 	'剩余库存': 'Stock remained',
 	'最少成团人数': ({ values }) => `A minimum of ${values.number} people can be purchased at a discounted price if the specified number of people reaches the specified number within the specified time`,
+	'最多砍价人数': ({ values }) => `A maximum of ${values.number} people can be purchased at a discounted price if the specified number of people reaches the specified number within the specified time`,
 	'砍价列表': 'Haggling list',
 	'市场价': 'Market price',
 	'秒杀价': 'Lightning price',

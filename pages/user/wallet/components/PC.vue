@@ -88,7 +88,11 @@ watch(status, resetData)
 			<el-table v-if="isBalance" :data="list">
 				<el-table-column prop="bizType" width="200" />
 				<el-table-column prop="title" />
-				<el-table-column prop="createTime" width="200" />
+        <el-table-column prop="createTime" width="200" >
+          <template #default="{ row }">
+            <app-time :data="row.createTime" />
+          </template>
+        </el-table-column>
 				<el-table-column prop="price" width="100">
 					<template #default="{ row }">
 						<span
@@ -105,7 +109,11 @@ watch(status, resetData)
 			<el-table v-else :data="list">
 				<el-table-column prop="title" width="200" />
 				<el-table-column prop="description" />
-				<el-table-column prop="createTime" width="200" />
+        <el-table-column prop="createTime" width="200" >
+          <template #default="{ row }">
+            <app-time :data="row.createTime" />
+          </template>
+        </el-table-column>
 				<el-table-column prop="point" width="100">
 					<template #default="{ row }">
 						<span

@@ -3,6 +3,7 @@ import './index.scss'
 
 defineOptions({ name: 'AppFooter' })
 
+const { domain } = useRuntimeConfig().public
 const form = ref({ email: '' })
 const rules = {
 	email: [{ type: 'email' }, { required: true }],
@@ -15,26 +16,25 @@ const list = [
 			{ label: 'Mi Points FAQ', src: 'https://www.mi.com/uk/' },
 			{ label: 'Where to Buy', src: 'https://www.mi.com/uk/' },
 			{ label: 'Coupon Code', src: 'https://www.mi.com/uk/' },
-			{ label: 'Trade-in', src: 'https://www.mi.com/uk/' },
 		],
 	},
 	{
 		label: $t('ABOUT US'),
 		children: [
-			{ label: 'Xiaomi', src: 'https://www.mi.com/uk/' },
-			{ label: 'Leadership Team', src: 'https://www.mi.com/uk/' },
-			{ label: 'Privacy Policy', src: 'https://www.mi.com/uk/' },
-			{ label: 'Integrity & Compliance', src: 'https://www.mi.com/uk/' },
-			{ label: 'Trust Centre', src: 'https://www.mi.com/uk/' },
-			{ label: 'Xiaomi Accessibility', src: 'https://www.mi.com/uk/' },
+			{ label: 'isWink', src: domain },
+			{ label: 'Leadership Team', src: domain },
+			{ label: 'Privacy Policy', src: domain },
+			{ label: 'Integrity & Compliance', src: domain },
+			{ label: 'Trust Centre', src: domain },
+			{ label: 'Accessibility', src: domain },
 		],
 	},
 	{
 		label: $t('CONTRACT US'),
 		children: [
-			{ label: 'Twitter', src: 'https://www.mi.com/uk/' },
-			{ label: 'Youtube', src: 'https://www.mi.com/uk/' },
-			{ label: 'Facebook', src: 'https://www.mi.com/uk/' },
+			{ label: 'Twitter', src: 'https://www.twitter.com/' },
+			{ label: 'Youtube', src: 'https://www.youtube.com/' },
+			{ label: 'Facebook', src: 'https://www.facebook.com/' },
 		],
 	},
 ]
@@ -85,7 +85,7 @@ function submit() {
 						information about referring a complaint to the Financial
 						Ombudsman Service (FOS) at
 						<nuxt-link
-							to="http://financial-ombudsman.org.uk/"
+							:to="domain"
 							target="_blank"
 						>
 							financial-ombudsman.org.uk
@@ -142,7 +142,7 @@ function submit() {
 								<li class="site-footer__follow-item">
 									<nuxt-link
 										class="site-footer__follow-link"
-										to="https://www.mi.com/uk/"
+										to="https://www.facebook.com/"
 									>
 										<Icon name="icon:facebook" />
 									</nuxt-link>
@@ -150,7 +150,7 @@ function submit() {
 								<li class="site-footer__follow-item">
 									<nuxt-link
 										class="site-footer__follow-link"
-										to="https://www.mi.com/uk/"
+										to="https://www.youtube.com/"
 									>
 										<Icon name="icon:youtube" />
 									</nuxt-link>
@@ -158,7 +158,7 @@ function submit() {
 								<li class="site-footer__follow-item">
 									<nuxt-link
 										class="site-footer__follow-link"
-										to="https://www.mi.com/uk/"
+										to="https://www.instagram.com/"
 									>
 										<Icon name="icon:instagram" />
 									</nuxt-link>
@@ -166,7 +166,7 @@ function submit() {
 								<li class="site-footer__follow-item">
 									<nuxt-link
 										class="site-footer__follow-link"
-										to="https://www.mi.com/uk/"
+										to="https://www.twitter.com/"
 									>
 										<Icon name="icon:twitter" />
 									</nuxt-link>
@@ -174,7 +174,7 @@ function submit() {
 								<li class="site-footer__follow-item">
 									<nuxt-link
 										class="site-footer__follow-link"
-										to="https://www.mi.com/uk/"
+										to="https://www.tiktok.com/"
 									>
 										<Icon name="icon:tiktok" />
 									</nuxt-link>
@@ -220,10 +220,10 @@ function submit() {
 				</section>
 				<section class="site-footer__footer">
 					<div class="site-footer__legal">
-						Copyright © 2010 - 2024 All Rights Reserved
+						Copyright © 2024 - 2034 iswink.All Rights Reserved
 					</div>
 					<div class="site-footer__settings">
-						<nuxt-link to="https://www.mi.com/uk/" target="_blank">
+						<nuxt-link :to="domain" target="_blank">
 							Site Map
 						</nuxt-link>
 					</div>

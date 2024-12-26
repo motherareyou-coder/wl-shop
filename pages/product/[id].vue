@@ -276,7 +276,13 @@ function goCombination({ combinationHeadId } = {}) {
 function goNoraml() {
 	router.push($path(`/product/${id}`))
 }
+const msg = $t('Please sign in first')
 function goBargain() {
+  // 需要先登陆
+  if (!userStore.id) {
+    ElMessage.info(msg)
+    router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
+  }
 	$api<number>('promotion/bargain-record/create', {
 		method: 'post',
 		body: { activityId: bargainActivityId },

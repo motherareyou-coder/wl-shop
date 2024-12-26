@@ -5,7 +5,7 @@ import './Recommends.scss'
 
 const { data: recommends } = await useAsyncData<ProductBrowseHistory[]>(() =>
 	$api('product/browse-history/page', {
-		params: { pageNo: 1, pageSize: 12 },
+		params: { pageNo: 1, pageSize: 8 },
 	}).then(res => res.list),
 )
 
