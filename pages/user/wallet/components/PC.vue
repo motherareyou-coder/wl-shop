@@ -4,6 +4,7 @@ import type { PayWallet, PayWalletTransaction, PointRecord } from '~/types'
 const { data } = await useAPI<PayWallet>('pay/wallet/get')
 
 const route = useRoute()
+const router = useRouter()
 // eslint-disable-next-line eqeqeq
 const isBalance = ref(route.query.type as string == 0 ? 0 : 1)
 const status = ref<string | number>('')
@@ -29,7 +30,10 @@ const {
 	)
 })
 const userStore = useUserStore()
-watch(isBalance, resetData)
+watch(isBalance, (v) => {
+	router.replace({ path: route.path, query: { type: v ? 1 : 0 } })
+	resetData()
+})
 watch(status, resetData)
 </script>
 
@@ -88,11 +92,11 @@ watch(status, resetData)
 			<el-table v-if="isBalance" :data="list">
 				<el-table-column prop="bizType" width="200" />
 				<el-table-column prop="title" />
-        <el-table-column prop="createTime" width="200" >
-          <template #default="{ row }">
-            <app-time :data="row.createTime" />
-          </template>
-        </el-table-column>
+				<el-table-column prop="createTime" width="200">
+					<template #default="{ row }">
+						<app-time :data="row.createTime" />
+					</template>
+				</el-table-column>
 				<el-table-column prop="price" width="100">
 					<template #default="{ row }">
 						<span
@@ -109,11 +113,11 @@ watch(status, resetData)
 			<el-table v-else :data="list">
 				<el-table-column prop="title" width="200" />
 				<el-table-column prop="description" />
-        <el-table-column prop="createTime" width="200" >
-          <template #default="{ row }">
-            <app-time :data="row.createTime" />
-          </template>
-        </el-table-column>
+				<el-table-column prop="createTime" width="200">
+					<template #default="{ row }">
+						<app-time :data="row.createTime" />
+					</template>
+				</el-table-column>
 				<el-table-column prop="point" width="100">
 					<template #default="{ row }">
 						<span

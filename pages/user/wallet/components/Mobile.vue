@@ -8,6 +8,7 @@ const type = ref('')
 const {
 	data: list,
 	load,
+	loading,
 	reset,
 } = useInfiteLoad<PayWallet>(
 	params =>
@@ -62,6 +63,7 @@ watch(type, reset)
 					</div>
 					<app-time class="time" :data="item.createTime" />
 				</li>
+				<el-empty v-if="!loading && !list.length" :description="$t('No data')" />
 			</ul>
 		</div>
 	</div>

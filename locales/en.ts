@@ -82,4 +82,6 @@ export default {
 	'商品质量': 'Quality',
 	'服务态度': 'Service',
 	'是否匿名': 'Anonymous',
+	'参与成功，请邀请好友砍价': 'Bargain created, please invite friends to help',
+	'恭喜帮砍成功': 'Congratulations for helping to bargain for ',
 }

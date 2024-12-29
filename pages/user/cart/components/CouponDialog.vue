@@ -157,7 +157,7 @@ function handleConfirm() {
 		</main>
 		<footer class="footer">
 			<div class="note">
-				<Icon name="icon:coupon" class="highlight" />
+				<i class="micon micon-coupons coupon-icon highlight"></i>
 				<span v-if="active">
 					1 {{ $t('selected save') }}
 					<ProductPrice

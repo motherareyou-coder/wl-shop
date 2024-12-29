@@ -37,6 +37,8 @@ const combinationActivity = inject('combinationActivity') as Ref<CombinationActi
 const bargainActivity = inject('bargainActivity') as Ref<BargainActivity>
 const bargainRecord = inject('bargainRecord') as Ref<BargainActivity>
 const isCurrentUser = inject('isCurrentUser') as Ref<boolean>
+if (bargainRecord.value)
+	tab.value = 2
 
 const isAcActivity = inject('isAcActivity') as Ref<boolean>
 </script>
@@ -113,7 +115,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 						</h2>
 						<div class="information-section__product-info">
 							<div class="information-section__product-sku-info">
-                {{ sku?.properties.map(p => p.valueName).join(', ') }}
+								{{ sku?.properties.map(p => p.valueName).join(', ') }}
 							</div>
 							<div class="information-section__product-sku-info">
 								{{ info.introduction }}
@@ -129,11 +131,11 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 								</ul>
 								<div class="information-section__product-price">
 									<strong>
-										<!--{{ $t('秒杀价') }}-->
+										<!-- {{ $t('秒杀价') }} -->
 									</strong>
 									<ProductPrice :data="sku?.seckillPrice" />
 									<del>
-										<!--{{ $t('市场价') }}-->
+										<!-- {{ $t('市场价') }} -->
 										<ProductPrice :data="sku?.marketPrice || info.marketPrice" plain />
 									</del>
 								</div>
@@ -144,12 +146,12 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 									<ProductPrice v-if="skuDisabled" :data="sku?.price" />
 									<template v-else>
 										<strong>
-											<!--{{ $t('拼团价') }}-->
+											<!-- {{ $t('拼团价') }} -->
 										</strong>
 										<ProductPrice :data="sku?.combinationPrice" />
 									</template>
 									<del>
-										<!--{{ $t('市场价') }}-->
+										<!-- {{ $t('市场价') }} -->
 										<ProductPrice :data="sku?.marketPrice || info.marketPrice" plain />
 									</del>
 								</div>
@@ -160,13 +162,13 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 									<ProductPrice v-if="skuDisabled" :data="sku?.marketPrice" />
 									<template v-else>
 										<strong>
-											<!--{{ $t('当前价格') }}-->
+											<!-- {{ $t('当前价格') }} -->
 										</strong>
-										<!--<ProductPrice :data="bargainActivity.bargainFirstPrice" />-->
+										<!-- <ProductPrice :data="bargainActivity.bargainFirstPrice" /> -->
 										<ProductPrice :data="bargainRecord?.bargainPrice || bargainActivity.bargainFirstPrice" />
 									</template>
 									<del>
-										<!--{{ $t('最低价格') }}-->
+										<!-- {{ $t('最低价格') }} -->
 										<ProductPrice :data="bargainActivity.bargainMinPrice" plain />
 									</del>
 								</div>

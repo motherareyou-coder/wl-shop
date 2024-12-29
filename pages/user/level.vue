@@ -39,23 +39,23 @@ function getData<ExperienceRecord>(params: any) {
 							active: user?.level?.level >= step.level,
 						}"
 					>
-						<!--<span>{{-->
-						<!--	`${step.discountPercent}% ${$t('off')}`-->
-						<!--}}</span>-->
-						<!--<app-image class="w-12 h-12 my-2" :src="step.icon" />-->
-            <span>{{ step.name }}</span>
-            <span>{{ step.experience }}</span>
-            <el-tag class="tag__item">
-              {{ step.discountPercent }}% off
-            </el-tag>
-            <span
+						<!-- <span>{{ -->
+						<!--	`${step.discountPercent}% ${$t('off')}` -->
+						<!-- }}</span> -->
+						<!-- <app-image class="w-12 h-12 my-2" :src="step.icon" /> -->
+						<span>{{ step.name }}</span>
+						<span>{{ step.experience }}</span>
+						<el-tag class="tag__item" :type="user?.level?.level >= step.level ? 'primary' : 'info'">
+							{{ step.discountPercent }}% off
+						</el-tag>
+						<span
 							v-if="i !== steps.length - 1"
 							class="experience"
 						></span>
-						<!--<span-->
-						<!--	v-if="i !== steps.length - 1"-->
-						<!--	class="experience"-->
-						<!--&gt;{{ step.experience }}</span>-->
+						<!-- <span -->
+						<!--	v-if="i !== steps.length - 1" -->
+						<!--	class="experience" -->
+						<!-- &gt;{{ step.experience }}</span> -->
 					</li>
 				</ul>
 			</el-scrollbar>

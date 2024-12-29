@@ -12,7 +12,7 @@ watch(data, (v) => {
 		v.stateId = Number(v.stateId)
 	if (isString(v.areaId))
 		v.areaId = Number(v.areaId)
-	data.value.areaCity = [v.stateId, v.areaId]
+	data.value.areaCity = v.stateId === v.areaId ? [v.stateId] : [v.stateId, v.areaId]
 }, { immediate: true })
 
 const paramsStore = useParamsStore()
@@ -31,6 +31,7 @@ function refreshStates() {
 			return res?.map(d => ({
 				label: d.name,
 				value: d.id,
+				leaf: d.leaf, // TODO: 需要后端返回是否叶子节点
 			})) || []
 		})
 }
@@ -97,8 +98,8 @@ const rules = {
 		},
 	],
 	mobile: [
-		{ required: true, message: t('Mobile') + t('is required') }
-    // ,
+		{ required: true, message: t('Mobile') + t('is required') },
+		// ,
 		// {
 		// 	message: t('It should be max 11 digit number.'),
 		// 	validator(rule, v, cb) {
@@ -135,7 +136,8 @@ const CityProps = {
 	},
 }
 function cityChange(v) {
-	data.value.areaId = v?.[1]
+	data.value.stateId = v?.[0]
+	data.value.areaId = v?.[1] || v?.[0]
 }
 
 const columns = [
@@ -185,7 +187,9 @@ defineExpose({
 		class="mi-form address-form mi-form-block"
 		:model="data"
 		:rules="rules"
+		size="large"
 		label-position="top"
+		require-asterisk-position="right"
 	>
 		<el-form-item
 			v-for="c in columns"
@@ -218,8 +222,32 @@ defineExpose({
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-checkbox v-model="data.defaultStatus">
+		<el-checkbox v-model="data.defaultStatus" size="large">
 			{{ t('Set as default address') }}
 		</el-checkbox>
 	</el-form>
 </template>
+
+<style lang="scss" scoped>
+.mi-form--large:deep {
+	.mi-form-item:last-of-type{
+		margin-bottom: 0;
+	}
+	.mi-input--large {
+		--mi-input-border-radius: 12px;
+	}
+
+	.mi-input--prefix .mi-input__wrapper {
+		padding-left: 1px;
+	}
+
+	.mi-input__prefix {
+		border-radius: var(--mi-input-border-radius, var(--mi-border-radius-base));
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		background: #f3f3f3;
+		padding: 0 8px;
+		margin-right: 15px;
+	}
+}
+</style>

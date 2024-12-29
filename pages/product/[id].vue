@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app'
-import { isArray, isString, sortBy, uniqBy } from 'lodash-es'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 // import './index.scss'
 import type { BargainActivity, BargainHelp, CombinationActivityDetail, PayOrderSubmit, ProductDetail, SeckillActivity, SKU } from '~/types'
 import { useProperties } from './utils'
 
+const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
@@ -17,12 +17,6 @@ provide('info', info)
 const curSku = ref<SKU | null>()
 provide('curSku', curSku)
 const selected = ref<Record<any, any>>({})
-useHead({
-	title: `${info.value?.name} ${$t('appTitle')}`,
-	meta: [
-		{ name: 'keywords', content: info.value?.introduction },
-	],
-})
 
 // 开团---start
 const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
@@ -30,9 +24,6 @@ const combinationActivity = ref<CombinationActivityDetail | null>(combinationAct
 if (combinationActivityId) {
 	$api<CombinationActivityDetail>('promotion/combination-activity/get-detail', { params: { id: combinationActivityId } }).then((res) => {
 		combinationActivity.value = res
-	})
-	useHead({
-		title: `${$t('拼团')} ${info.value?.name} ${$t('appTitle')}`,
 	})
 }
 const skuDisabled = ref(false)
@@ -66,9 +57,6 @@ provide('seckillActivity', seckillActivity)
 if (seckillActivityId) {
 	$api<SeckillActivity>('promotion/seckill-activity/get-detail', { params: { id: seckillActivityId } }).then((res) => {
 		seckillActivity.value = res
-	})
-	useHead({
-		title: `${$t('秒杀')} ${info.value?.name} ${$t('appTitle')}`,
 	})
 }
 watchEffect(() => {
@@ -110,15 +98,12 @@ if (bargainActivityId) {
 		bargainActivity.value = res
 		curSku.value = info.value?.skus.find(s => s.id === res.skuId)
 	})
-	useHead({
-		title: `${$t('砍价')} ${info.value?.name} ${$t('appTitle')}`,
-	})
 	if (bargainRecordId === null) {
 		$api<{ list: BargainActivity[] }>('promotion/bargain-record/page', { params: { pageNo: 1, pageSize: 1000, activityId: bargainActivityId } }).then((res) => {
 			const d = res?.list.filter(dd => dd.activityId === bargainActivityId)[0]
 			if (d) {
 				if (d.status === 1 || (d.status === 2 && (!d.orderId || d.payStatus == false))) {
-					router.push({
+					router.replace({
 						path: $path(`/product/${id}`),
 						query: {
 							bargainActivityId,
@@ -276,19 +261,20 @@ function goCombination({ combinationHeadId } = {}) {
 function goNoraml() {
 	router.push($path(`/product/${id}`))
 }
-const msg = $t('Please sign in first')
+const msg = t('Please sign in first')
 function goBargain() {
-  // 需要先登陆
-  if (!userStore.id) {
-    ElMessage.info(msg)
-    router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
-  }
+	// 需要先登陆
+	if (!userStore.id) {
+		ElMessage.info(msg)
+		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
+	}
 	$api<number>('promotion/bargain-record/create', {
 		method: 'post',
 		body: { activityId: bargainActivityId },
 	}).then((bargainRecordId: number) => {
+		ElMessage.info(t('参与成功，请邀请好友砍价'))
 		router.push({
-			path: `/product/${id}`,
+			path: $path(`/product/${id}`),
 			query: {
 				bargainActivityId,
 				bargainRecordId,
@@ -299,7 +285,6 @@ function goBargain() {
 
 watch(() => route.fullPath, () => window.location.reload())
 
-const { t } = useI18n()
 const { copy } = useClipboard()
 function checkUser() {
 	if (!userStore.id) {
@@ -309,6 +294,7 @@ function checkUser() {
 	}
 	return true
 }
+const { currency } = useRuntimeConfig().public
 function handleCommand(type: string, data: any) {
 	switch (type) {
 		case 'star':
@@ -337,7 +323,8 @@ function handleCommand(type: string, data: any) {
 			if (!checkUser())
 				return
 			if (bargainRecord.value) {
-				$api('promotion/bargain-help/create', { method: 'post', body: { recordId: bargainRecordId } }).then(() => {
+				$api<number>('promotion/bargain-help/create', { method: 'post', body: { recordId: bargainRecordId } }).then((res) => {
+					res && ElMessage.info(`${t('恭喜帮砍成功')} ${currency}${res}`)
 					bargainRecord.value!.helpCount = (bargainRecord.value!.helpCount || 0) + 1
 					getBargainRecord()
 				})
@@ -361,6 +348,23 @@ function handleCommand(type: string, data: any) {
 			break
 	}
 }
+
+const head = computed(() => {
+	const name = info.value?.name || ''
+	const appTitle = t('appTitle')
+	let title = `${name} ${appTitle}`
+	if (combinationActivityId)
+		title = `${t('拼团')} ${name} ${appTitle}`
+	else if (seckillActivityId)
+		title = `${t('秒杀')} ${name} ${appTitle}`
+	else if (bargainActivityId)
+		title = `${t('砍价')} ${name} ${appTitle}`
+	return {
+		title,
+		meta: [{ name: 'keywords', content: info.value?.introduction }],
+	}
+})
+useHead(head)
 </script>
 
 <template>

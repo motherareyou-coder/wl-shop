@@ -78,7 +78,7 @@ const propList = [
 	'id',
 	'name',
 	'mobile',
-	'cityId',
+	'stateId',
 	'areaId',
 	'detailAddress',
 	'defaultStatus',
@@ -197,7 +197,10 @@ function RenderAddress(props1: { data: Address, index: number }) {
 				: null}
 			<div class="user-address__card-text">
 				<div class="user-address__card-title--wrapper">
-					<h2 class="user-address__card-title">{props1.data.name} {props1.data.lastName} </h2>
+					<h2 class="user-address__card-title">
+						{props1.data.name}
+						{props1.data.lastName}
+					</h2>
 					{appStore.isMobile
 					&& props.isCheckout
 					&& props1.data.defaultStatus
@@ -330,6 +333,7 @@ function RenderAddress(props1: { data: Address, index: number }) {
 						type="info"
 						:disabled="loading"
 						class="w-full"
+						size="large"
 						@click="handleSubmit"
 					>
 						{{ $t('Save') }}

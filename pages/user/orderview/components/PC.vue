@@ -12,7 +12,7 @@ const data = computed(() => props.data)
 </script>
 
 <template>
-	<div class="order-view-main mb-10">
+	<div class="order-view-main my-10">
 		<div class="user-layout__container miv4">
 			<div class="user-main">
 				<div class="order-view-main--title">

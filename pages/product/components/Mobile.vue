@@ -42,6 +42,8 @@ const seckillActivity = inject('seckillActivity') as Ref<SeckillActivity>
 const combinationActivity = inject('combinationActivity') as Ref<CombinationActivityDetail>
 const bargainActivity = inject('bargainActivity') as Ref<BargainActivity>
 const bargainRecord = inject('bargainRecord') as Ref<BargainActivity>
+if (bargainRecord.value)
+	tab.value = 2
 
 const isAcActivity = inject('isAcActivity') as Ref<boolean>
 </script>

@@ -12,6 +12,7 @@ const appStore = useAppStore()
 		class="mi-modal"
 		width="40rem"
 		center
+		v-bind="$attrs"
 	>
 		<template #header>
 			<slot name="header"></slot>
@@ -28,6 +29,7 @@ const appStore = useAppStore()
 		direction="btt"
 		style="min-height:50vh"
 		center
+		v-bind="$attrs"
 	>
 		<template #header>
 			<slot name="header"></slot>
@@ -38,3 +40,10 @@ const appStore = useAppStore()
 		</template>
 	</el-drawer>
 </template>
+
+<style lang="scss">
+.mi-form-item.is-required:not(.is-no-asterisk).asterisk-right>.mi-form-item__label:after,
+.mi-form-item.is-required:not(.is-no-asterisk).asterisk-right>.mi-form-item__label-wrap>.mi-form-item__label:after {
+	color: var(--text-secondary)
+}
+</style>

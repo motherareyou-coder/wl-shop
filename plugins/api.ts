@@ -47,14 +47,13 @@ export default defineNuxtPlugin(() => {
 				return p
 			}
 			else {
-				ElMessage.error(msg)
+				// 传_context才能保证这里zindex和客户端的保持一致
+				ElMessage.info(msg, nuxtApp.vueApp._context)
 				return Promise.reject(response._data)
 			}
 		},
 		onResponseError({ response }) {
-			ElMessage.error(
-				response._data?.data?.msg || response.statusText,
-			)
+			ElMessage.info(response._data?.data?.msg || response.statusText, nuxtApp.vueApp._context)
 		},
 	})
 
