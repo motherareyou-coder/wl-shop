@@ -12,7 +12,7 @@ watch(data, (v) => {
 		v.stateId = Number(v.stateId)
 	if (isString(v.areaId))
 		v.areaId = Number(v.areaId)
-	data.value.areaCity = v.stateId === v.areaId ? [v.stateId] : [v.stateId, v.areaId]
+	data.value.areaCity = (v.stateId === v.areaId || !v.areaId) ? [v.stateId] : [v.stateId, v.areaId]
 }, { immediate: true })
 
 const paramsStore = useParamsStore()
