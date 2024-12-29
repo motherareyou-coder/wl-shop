@@ -591,7 +591,7 @@
 .feature-tab .feature-tab--item-main .item-image img {
     border-radius: 6px 0 0 6px;
     height: var(--grid-main-row-height);
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     width: 100%
 }
