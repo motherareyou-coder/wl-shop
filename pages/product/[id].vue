@@ -324,7 +324,7 @@ function handleCommand(type: string, data: any) {
 				return
 			if (bargainRecord.value) {
 				$api<number>('promotion/bargain-help/create', { method: 'post', body: { recordId: bargainRecordId } }).then((res) => {
-					res && ElMessage.info(`${t('恭喜帮砍成功')} ${currency}${res}`)
+					res && ElMessage.info(`${t('恭喜帮砍成功')} ${currency}${res/100}`)
 					bargainRecord.value!.helpCount = (bargainRecord.value!.helpCount || 0) + 1
 					getBargainRecord()
 				})

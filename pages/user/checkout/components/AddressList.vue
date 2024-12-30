@@ -198,8 +198,7 @@ function RenderAddress(props1: { data: Address, index: number }) {
 			<div class="user-address__card-text">
 				<div class="user-address__card-title--wrapper">
 					<h2 class="user-address__card-title">
-						{props1.data.name}
-						{props1.data.lastName}
+						{props1.data.name} {props1.data.lastName}
 					</h2>
 					{appStore.isMobile
 					&& props.isCheckout

@@ -55,7 +55,6 @@ function submit() {
 					<p class="footnote__item site-footer__payment-terms">
 						<nuxt-link
 							to="https://www.paypal.com/uk/webapps/mpp/paypal-virtual-credit/faq"
-							target="_blank"
 						>
 							PayPal Credit
 						</nuxt-link>
@@ -74,7 +73,6 @@ function submit() {
 						commission for introducing customers to
 						<nuxt-link
 							to="https://www.paypal.com/uk/webapps/mpp/paypal-virtual-credit/faq"
-							target="_blank"
 						>
 							PayPal Credit
 						</nuxt-link>. You may be able to obtain finance for your purchase
@@ -86,7 +84,6 @@ function submit() {
 						Ombudsman Service (FOS) at
 						<nuxt-link
 							:to="domain"
-							target="_blank"
 						>
 							financial-ombudsman.org.uk
 						</nuxt-link>. PayPal Pay in 3: PayPal Pay in 3 is not regulated by
@@ -123,7 +120,6 @@ function submit() {
 									>
 										<nuxt-link
 											:to="c.src"
-											target="_blank"
 											class="column-section__link"
 										>
 											{{ c.label }}
@@ -223,7 +219,7 @@ function submit() {
 						Copyright © 2024 - 2034 iswink.All Rights Reserved
 					</div>
 					<div class="site-footer__settings">
-						<nuxt-link :to="domain" target="_blank">
+						<nuxt-link :to="domain">
 							Site Map
 						</nuxt-link>
 					</div>

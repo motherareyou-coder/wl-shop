@@ -306,6 +306,10 @@ export interface Address {
 	 */
 	stateId: number
 	/**
+	 * 城市id
+	 */
+	cityId: number
+	/**
 	 * 是否默认地址
 	 */
 	defaultStatus: boolean

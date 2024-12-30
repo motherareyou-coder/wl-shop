@@ -54,22 +54,22 @@ const rules = {
 	name: [
 		{ required: true, message: t('Name') + t('is required') },
 		{
-			min: 2,
+			min: 1,
 			max: 17,
-			message: t('It should be 2-17 letters or spaces.'),
+			message: t('It should be 1-17 letters or spaces.'),
 		},
 	],
 	lastName: [
 		{ required: true, message: t('Last Name') + t('is required') },
 		{
-			min: 2,
+			min: 1,
 			max: 17,
-			message: t('It should be 2-17 letters or spaces.'),
+			message: t('It should be 1-17 letters or spaces.'),
 		},
 	],
 	postCode: [
 		{ required: true, message: t('Post code') + t('is required') },
-		{ min: 5, max: 10, message: t('It should be 5-10 digits.') },
+		{ min: 3, max: 10, message: t('It should be 5-10 digits.') },
 	],
 	areaId: [{ required: true, message: t('Area') + t('is required') }],
 	countryCode: [{ required: true, message: t('City') + t('is required') }],
@@ -116,7 +116,7 @@ const rules = {
 			message: t('It should be email format.'),
 		},
 		{
-			min: 7,
+			min: 5,
 			max: 50,
 			message: t('It should be 7-50 characters.'),
 		},
@@ -137,6 +137,7 @@ const CityProps = {
 }
 function cityChange(v) {
 	data.value.stateId = v?.[0]
+  data.value.cityId = v?.[1]
 	data.value.areaId = v?.[1] || v?.[0]
 }
 

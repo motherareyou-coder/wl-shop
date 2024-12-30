@@ -84,4 +84,9 @@ export default {
 	'是否匿名': 'Anonymous',
 	'参与成功，请邀请好友砍价': 'Bargain created, please invite friends to help',
 	'恭喜帮砍成功': 'Congratulations for helping to bargain for ',
+	'立即邀请好友砍价': 'Invite friends now',
+	'立即帮好友砍价': 'Haggle for a friend',
+	'立即帮砍': 'Haggle Now',
+	'已帮砍': 'Have helped',
+	'链接已复制': 'The active link has been copied',
 }
