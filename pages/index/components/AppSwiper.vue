@@ -19,20 +19,13 @@ const { data } = await useAPI<Banner[]>(
 	'promotion/banner/list',
 	{ params: { position: 1 } },
 )
-watch(
-	data,
-	(v) => {
-		if (v && v.length < 3)
-			data.value = [...v, ...v]
-	},
-	{ immediate: true },
-)
 
 interface Banner {
 	id: string
 	title: string
 	url: string
 	picUrl: string
+	h5PicUrl: string
 }
 
 let swiper: SwiperClass | null = null
@@ -78,17 +71,19 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 }
 
 const router = useRouter()
-function onClick({ id,url }: Banner) {
+function onClick({ id, url }: Banner) {
 	if (id) {
 		$api('promotion/banner/add-browse-count', {
 			method: 'put',
 			params: { id },
 		}).then(() => {
-      //添加点击量,并跳转
+			// 添加点击量,并跳转
 			router.push($path(`${url}`))
 		})
 	}
 }
+
+const appStore = useAppStore()
 </script>
 
 <template>
@@ -118,8 +113,17 @@ function onClick({ id,url }: Banner) {
 				>
 					<div class="carousel-banner__slide">
 						<app-image
+							v-if="appStore.isPC"
 							style="width: 100%; height: 100%"
-							:src="item.picUrl"
+							:src=" item.picUrl "
+							:alt="item.title"
+							fit="cover"
+							class="slide__background"
+						/>
+						<app-image
+							v-if="appStore.isMobile"
+							style="width: 100%; height: 100%"
+							:src="item.h5PicUrl"
 							:alt="item.title"
 							fit="cover"
 							class="slide__background"

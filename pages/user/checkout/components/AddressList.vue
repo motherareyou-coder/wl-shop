@@ -79,6 +79,7 @@ const propList = [
 	'name',
 	'mobile',
 	'stateId',
+	'cityId',
 	'areaId',
 	'detailAddress',
 	'defaultStatus',

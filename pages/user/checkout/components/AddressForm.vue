@@ -10,9 +10,12 @@ watch(data, (v) => {
 		v.countryId = Number(v.countryId)
 	if (isString(v.stateId))
 		v.stateId = Number(v.stateId)
+	if (isString(v.cityId))
+		v.cityId = Number(v.cityId)
 	if (isString(v.areaId))
 		v.areaId = Number(v.areaId)
-	data.value.areaCity = (v.stateId === v.areaId || !v.areaId) ? [v.stateId] : [v.stateId, v.areaId]
+	const cityId = v.cityId || v.areaId
+	data.value.areaCity = (v.stateId === cityId || !cityId) ? [v.stateId] : [v.stateId, cityId]
 }, { immediate: true })
 
 const paramsStore = useParamsStore()
@@ -52,7 +55,7 @@ function refreshCities(stateId: number) {
 
 const rules = {
 	name: [
-		{ required: true, message: t('Name') + t('is required') },
+		{ required: true, message: `${t('Name')} ${t('is required')}` },
 		{
 			min: 1,
 			max: 17,
@@ -60,7 +63,7 @@ const rules = {
 		},
 	],
 	lastName: [
-		{ required: true, message: t('Last Name') + t('is required') },
+		{ required: true, message: `${t('Last Name')} ${t('is required')}` },
 		{
 			min: 1,
 			max: 17,
@@ -68,13 +71,13 @@ const rules = {
 		},
 	],
 	postCode: [
-		{ required: true, message: t('Post code') + t('is required') },
-		{ min: 3, max: 10, message: t('It should be 5-10 digits.') },
+		{ required: true, message: `${t('Post code')} ${t('is required')}` },
+		{ min: 5, max: 10, message: t('It should be 5-10 digits.') },
 	],
-	areaId: [{ required: true, message: t('Area') + t('is required') }],
-	countryCode: [{ required: true, message: t('City') + t('is required') }],
+	areaCity: [{ required: true, message: `${t('City')} ${t('is required')}` }],
+	countryId: [{ required: true, message: `${t('Country')} ${t('is required')}` }],
 	houseNumber: [
-		{ required: true, message: t('House number') + t('is required') },
+		{ required: true, message: `${t('House number')} ${t('is required')}` },
 		{
 			min: 1,
 			max: 10,
@@ -98,7 +101,7 @@ const rules = {
 		},
 	],
 	mobile: [
-		{ required: true, message: t('Mobile') + t('is required') },
+		{ required: true, message: `${t('Mobile')} ${t('is required')}` },
 		// ,
 		// {
 		// 	message: t('It should be max 11 digit number.'),
@@ -110,7 +113,7 @@ const rules = {
 		// },
 	],
 	email: [
-		{ required: true, message: t('Email') + t('is required') },
+		{ required: true, message: `${t('Email')} ${t('is required')}` },
 		{
 			type: 'email',
 			message: t('It should be email format.'),
@@ -137,7 +140,7 @@ const CityProps = {
 }
 function cityChange(v) {
 	data.value.stateId = v?.[0]
-  data.value.cityId = v?.[1]
+	data.value.cityId = v?.[1]
 	data.value.areaId = v?.[1] || v?.[0]
 }
 
@@ -151,6 +154,8 @@ const columns = [
 			const country = countries.value?.find(c => c.value === v)
 			data.value.countryPhoneCode = country?.phonecode ? `+${country.phonecode}` : ''
 			data.value.areaCity = []
+			data.value.stateId = ''
+			data.value.cityId = ''
 			data.value.areaId = ''
 		},
 	},
@@ -232,14 +237,14 @@ defineExpose({
 <style lang="scss" scoped>
 .mi-form--large:deep {
 	.mi-form-item:last-of-type{
-		margin-bottom: 0;
+		margin-bottom: 10px;
 	}
 	.mi-input--large {
 		--mi-input-border-radius: 12px;
 	}
 
 	.mi-input--prefix .mi-input__wrapper {
-		padding-left: 1px;
+		padding-left: 2px;
 	}
 
 	.mi-input__prefix {
@@ -249,6 +254,10 @@ defineExpose({
 		background: #f3f3f3;
 		padding: 0 8px;
 		margin-right: 15px;
+	}
+	.mi-form-item.is-required:not(.is-no-asterisk).asterisk-right>.mi-form-item__label:after,
+	.mi-form-item.is-required:not(.is-no-asterisk).asterisk-right>.mi-form-item__label-wrap>.mi-form-item__label:after {
+		color: var(--text-secondary)
 	}
 }
 </style>

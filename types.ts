@@ -302,7 +302,7 @@ export interface Address {
 	 */
 	areaName: string
 	/**
-	 * 省份名字
+	 * 省份编号
 	 */
 	stateId: number
 	/**

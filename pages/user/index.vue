@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import BgImg from '@/assets/imgs/user-center-bg.jpg'
-import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
 import addressIcon from '@/assets/imgs/user/address.png'
 import couponIcon from '@/assets/imgs/user/coupon.png'
 import favoritesIcon from '@/assets/imgs/user/Favorites.png'
@@ -8,6 +6,8 @@ import groupOrderIcon from '@/assets/imgs/user/groupOrder.png'
 import levelIcon from '@/assets/imgs/user/level.png'
 import myOrdersIcon from '@/assets/imgs/user/myOrders.png'
 import signIcon from '@/assets/imgs/user/sign.png'
+import BgImg from '@/assets/imgs/user-center-bg.jpg'
+import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
 import type { PayWallet } from '~/types'
 import './index.scss'
 
@@ -414,7 +414,7 @@ function logout() {
 			class="edit-modal-main"
 			destroy-on-close
 			:show-close="false"
-			style="min-height: 70vh"
+			:style="appStore.isMobile ? 'min-height: 70vh' : ''"
 		>
 			<el-form ref="formRef" class="edit-modal__form" :model="formState.data" :rules="formState.rules" label-position="top" :show-message="false" hide-required-asterisk>
 				<el-form-item class="m-0">
