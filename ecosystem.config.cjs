@@ -5,7 +5,7 @@ module.exports = {
             exec_mode: "cluster",
             instances: "max", // 进程数
             port: "3000", // 端口，根据需要指定
-            script: "./.output/server/index.mjs", // 启动入口，相对于 .output 目录的路径
+            script: "server/index.mjs", // 启动入口，相对于 .output 目录的路径
             args: "start",
             env: {
                 MODE: "production"
