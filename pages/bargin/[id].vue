@@ -132,12 +132,25 @@ function handlePay(orderId: string | number, payOrderId: string | number) {
 }
 
 function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
-	if (displayMode === 'iframe') {
-		window.open(displayContent, '_blank', 'width=500,height=400')
-	}
-	else if (displayMode === 'url') {
-		window.open(displayContent, '_blank', 'width=500,height=400')
-	}
+  // 获取屏幕宽度和高度
+  var screenWidth = window.screen.width;
+  var screenHeight = window.screen.height;
+
+  var width= 800
+  var height = 650
+  // 计算新窗口的左边距和上边距，以便居中显示
+  var left = (screenWidth - width) / 2;
+  var top = (screenHeight - height) / 2;
+  var newWindow
+  if (displayMode === 'iframe') {
+    newWindow = window.open(displayContent, '_blank', `width=${width},height=${height},top=${top},left=${left}`)
+  } else if (displayMode === 'url') {
+    newWindow = window.open(displayContent, '_blank', `width=${width},height=${height},top=${top},left=${left}`)
+  }
+  // 确保新窗口获得焦点（可选）
+  if (newWindow) {
+    newWindow.focus();
+  }
 }
 </script>
 
