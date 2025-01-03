@@ -47,7 +47,7 @@ const shipOptions = ref([
   {
     name: $t('Standard delivery'),
     type: 1, // 快递发货
-    expect_time: $t('Expected to be delivered within 2 ~ 5 working days'),
+    expect_time: $t('Expected to be delivered within 5 ~ 14 working days'),
   },
 ])
 const appStore = useAppStore()
@@ -443,7 +443,14 @@ const shipOpen = ref(true)
                           </div>
                           <div class="item-price">
 														<span>
-															{{ $t('Free') }}
+                              <ProductPrice
+                                  :data="
+                                  info?.price?.deliveryPrice
+                                  || info?.deliveryPrice
+                                  || $t('Free')
+                                "
+                                    class="price-summary__item-fee"
+                                />
 														</span>
                           </div>
                         </div>

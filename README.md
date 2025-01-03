@@ -47,3 +47,7 @@ pnpm run preview
             { name: 'keywords', content: info.value?.introduction },
         ],
     })
+
+    1. 标题标签（Title Tag）
+    2. 描述标签（Meta Description）
+    3. 关键词标签（Meta Keywords）

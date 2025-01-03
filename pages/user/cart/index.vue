@@ -276,32 +276,6 @@ function handleSubmit() {
 											:data="info?.price.totalPrice"
 										/>
 									</li>
-									<!-- <li -->
-									<!--	class="cart-summary__item cart-summary__item&#45;&#45;shipping" -->
-									<!-- &gt; -->
-									<!--	<span class="cart-summary__item-title"> -->
-									<!--		{{ $t('优惠') }} -->
-									<!--	</span> -->
-									<!--	<span class="cart-summary__item-fee"> -->
-									<!--		<ProductPrice -->
-									<!--			class="cart-summary__item-fee" -->
-									<!--			:data="info?.price.discountPrice" -->
-									<!--		/> -->
-									<!--	</span> -->
-									<!-- </li> -->
-									<!-- <li -->
-									<!--	class="cart-summary__item cart-summary__item&#45;&#45;shipping" -->
-									<!-- &gt; -->
-									<!--	<span class="cart-summary__item-title"> -->
-									<!--		{{ $t('会员折扣') }} -->
-									<!--	</span> -->
-									<!--	<span class="cart-summary__item-fee"> -->
-									<!--		<ProductPrice -->
-									<!--			class="cart-summary__item-fee" -->
-									<!--			:data="info?.price.vipPrice" -->
-									<!--		/> -->
-									<!--	</span> -->
-									<!-- </li> -->
 									<li
 										v-if="info?.promotions"
 										class="cart-summary__item cart-summary__item--saved"

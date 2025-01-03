@@ -48,9 +48,9 @@ const finalData = computed(() => {
 					<span>
 						{{ a.typeTitle }}:
 						{{ a.name }}
-						<app-time :data="a.startTime" />
+						<app-time :data="a.startTime" format="YYYY-MM-DD"/>
 						-
-						<app-time :data="a.endTime" />
+						<app-time :data="a.endTime" format="YYYY-MM-DD"/>
 						<!-- 秒杀 -->
 						<nuxt-link
 							v-if="a.type === 1" type="primary" class="offers-section__link"

@@ -2,13 +2,14 @@
 import './CartService.scss'
 
 defineOptions({ name: 'CartService' })
+const { shortDomain } = useRuntimeConfig().public
 const tab = ref('1')
 </script>
 
 <template>
 	<section class="why-buy-from-mi">
 		<el-collapse v-model="tab">
-			<el-collapse-item title="Why buy from mi.com" name="1">
+			<el-collapse-item :title="`Why buy from ${shortDomain}`" name="1">
 				<div class="why-buy-from-mi__separator"></div>
 				<div class="why-buy-from-mi__list">
 					<div class="why-buy-from-mi__item">
@@ -20,7 +21,7 @@ const tab = ref('1')
 								Fast delivery
 							</div>
 							<div class="why-buy-from-mi__item-desc">
-								2-5 days FREE delivery<br>Door-to-door
+								5-14 days FREE delivery<br>Door-to-door
 								standard delivery
 							</div>
 						</div>

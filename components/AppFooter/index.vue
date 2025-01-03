@@ -13,9 +13,10 @@ const list = [
 	{
 		label: $t('SUPPORT'),
 		children: [
-			{ label: 'Mi Points FAQ', src: 'https://www.mi.com/uk/' },
-			{ label: 'Where to Buy', src: 'https://www.mi.com/uk/' },
-			{ label: 'Coupon Code', src: 'https://www.mi.com/uk/' },
+			{ label: 'Points FAQ', src: 'https://www.mi.com/uk/' },
+      { label: 'Sign FAQ', src: 'https://www.mi.com/uk/' },
+      { label: 'Level of Member FAQ', src: 'https://www.mi.com/uk/' },
+			{ label: 'Discount FAQ', src: 'https://www.mi.com/uk/' },
 		],
 	},
 	{
