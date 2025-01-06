@@ -7,6 +7,11 @@ import levelIcon from '@/assets/imgs/user/level.png'
 import myOrdersIcon from '@/assets/imgs/user/myOrders.png'
 import signIcon from '@/assets/imgs/user/sign.png'
 import BgImg from '@/assets/imgs/user-center-bg.jpg'
+import noLoginUserPic from '@/assets/imgs/nologin-user.png'
+import returnsPic from '@/assets/imgs/Returns.png'
+import unpaidPic from '@/assets/imgs/Unpaid.png'
+import reviewsPic from '@/assets/imgs/Reviews.png'
+import shippingPic from '@/assets/imgs/Shipping.png'
 import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
 import type { PayWallet } from '~/types'
 import './index.scss'
@@ -219,7 +224,7 @@ function logout() {
 						<section class="account-avatar-wrapper">
 							<app-image
 								class="account-avatar"
-								:src="user.avatar"
+								:src="user?.avatar || noLoginUserPic"
 							/>
 						</section>
 						<div class="info-box">
@@ -335,7 +340,7 @@ function logout() {
 						<nuxt-link :to="$path('/user/orderlist?type=0')">
 							<img
 								class="orders-nav__icon"
-								src="https://i02.appmifile.com/321_operatorx_operatorx_opx/09/12/2021/51e6d2dc6305cc3250d71be3fad1c40c.png"
+								:src="unpaidPic"
 								alt="Unpaid"
 							>
 							<span class="orders-item__title">
@@ -347,7 +352,7 @@ function logout() {
 						<nuxt-link :to="$path('/user/orderlist?type=20')">
 							<img
 								class="orders-nav__icon"
-								src="https://i02.appmifile.com/614_operatorx_operatorx_opx/09/12/2021/9f29b095aee59d25f488324878e80f31.png"
+								:src="shippingPic"
 								alt="Shipping"
 							>
 							<span class="orders-item__title">
@@ -359,7 +364,7 @@ function logout() {
 						<nuxt-link :to="$path('/user/orderlist?type=30')">
 							<img
 								class="orders-nav__icon"
-								src="https://i02.appmifile.com/213_operatorx_operatorx_opx/09/12/2021/bdfa2888681dc590f4e20ee6545549b2.png"
+								:src="reviewsPic"
 								alt="Reviews"
 							>
 							<span class="orders-item__title">
@@ -371,7 +376,7 @@ function logout() {
 						<nuxt-link :to="$path('/user/aftersale')">
 							<img
 								class="orders-nav__icon"
-								src="https://i02.appmifile.com/613_operatorx_operatorx_opx/09/12/2021/e355c76f8bbaddcfb285e03454bdf2ed.png"
+								:src="returnsPic"
 								alt="Returns"
 							>
 							<span class="orders-item__title">
