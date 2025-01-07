@@ -190,6 +190,7 @@ export interface ProductDetail {
 	}[]
 	id: number
 	name: string
+	keyword: string
 	introduction: string
 	description: string
 	categoryId: 1
@@ -1087,6 +1088,10 @@ export interface Article {
 	 * 文章简介
 	 */
 	introduction: string
+	/**
+	 * 文章关键字
+	 */
+	keyWords: string
 	/**
 	 * 图文封面
 	 */

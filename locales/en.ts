@@ -1,6 +1,6 @@
 export default {
 	'language': 'English',
-	'appTitle': 'Shop',
+	'appTitle': 'iswink',
 
 	'login': 'Sign in',
 	'register': 'Sign up',

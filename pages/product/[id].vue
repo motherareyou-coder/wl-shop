@@ -361,7 +361,10 @@ const head = computed(() => {
 		title = `${t('砍价')} ${name} ${appTitle}`
 	return {
 		title,
-		meta: [{ name: 'keywords', content: info.value?.introduction }],
+		meta: [
+        { name: 'keywords', content: info.value?.keyword },
+        { name: 'description', content: info.value?.introduction },
+    ],
 	}
 })
 useHead(head)

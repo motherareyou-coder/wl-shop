@@ -1,6 +1,6 @@
 export default {
 	'language': '简体中文',
-	'appTitle': '商城',
+	'appTitle': 'iswink',
 
 	'login': '登录',
 	'register': '注册',
@@ -15,7 +15,7 @@ export default {
 	'lifestyle': '潮流生活',
 
 	'discover': '探索更多',
-	'support': '小米支援',
+	'support': 'iswink支援',
 	'Enter email address': '输入邮箱地址',
 
 	'cart': '购物车',

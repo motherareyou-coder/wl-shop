@@ -5,6 +5,7 @@ import './detail.scss'
 
 const route = useRoute()
 const id = route.params.id
+const {shortDomain} = useRuntimeConfig().public
 const categoryId = Number(route.query.categoryId || '')
 const { data } = await useAPI<Article>(
 	'promotion/article/get',
@@ -21,6 +22,15 @@ const { data: recommends } = await useAsyncData<Article>(() =>
 		params: { pageNo: 1, pageSize: 4, categoryId },
 	}).then(res => res.list),
 )
+useHead({
+  // title: `${t('home')} ${t('appTitle')}`,
+  // title: ` ${t('appTitle')}`,
+  title: `${shortDomain} ${ data.value?.title }`,
+  meta: [
+    {name: 'keywords', content: `${ data.value?.keyWords }`},
+    {name: 'description', content: `${ data.value?.introduction }`}
+  ],
+})
 </script>
 
 <template>
