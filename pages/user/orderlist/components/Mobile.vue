@@ -25,7 +25,7 @@ watch(statusType, reset)
 					:class="{ 'is-active': `${statusType}` === `${option.value}` }"
 					@click="statusType = option.value"
 				>
-					{{ option.label }}
+					{{ $t(option.label) }}
 				</li>
 			</ul>
 		</div>
