@@ -42,7 +42,7 @@ export default defineNuxtPlugin(() => {
 			else if (code === 401) {
 				// eslint-disable-next-line ts/no-use-before-define
 				const p = refreshToken(url, options)
-				console.log(url, p)
+				// console.log(url, p)
 
 				return p
 			}

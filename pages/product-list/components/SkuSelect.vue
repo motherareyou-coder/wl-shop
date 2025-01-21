@@ -42,6 +42,7 @@ watchEffect(() => {
 		selected.value[p.propertyId] = p.valueId
 	})
 })
+
 watch(selected, (v) => {
 	skus.value?.forEach((s) => {
 		if (Object.entries(v).every(([k, v]) => s.propertyMap[k] === v)) {
@@ -51,6 +52,10 @@ watch(selected, (v) => {
 }, { deep: true })
 
 const count = ref(1)
+
+const dynamicMax = computed(() => {
+  return sku.value?.stock == 0 ? 1 : sku.value?.stock
+})
 
 function handleClick(pId: number, vId: number) {
 	selected.value[pId] = vId
@@ -65,12 +70,14 @@ function handleBuy() {
 		categoryId: info.value.categoryId,
 	}, sku.value!, count.value).then(() => {
 		visible.value = false
-		ElMessage.info(t('Add to cart'))
+		ElMessage.info({
+      message: t('Add to cart'),
+      duration: 800
+    })
 	})
 }
 
 watch(info, () => {
-	console.log(info.value)
 	if (skus.value.length === 0) {
 		return
 	}
@@ -147,11 +154,17 @@ const appStore = useAppStore()
 							</h3>
 							<div class="quantity-section__container">
 								<div class="quantity-section-v4__content">
+									<!--<el-input-number-->
+									<!--	v-model="count"-->
+									<!--	:step="1"-->
+									<!--	:min="1"-->
+									<!--	:max="sku?.stock"-->
+									<!--/>-->
 									<el-input-number
 										v-model="count"
 										:step="1"
 										:min="1"
-										:max="sku?.stock"
+										:max="dynamicMax"
 									/>
 								</div>
 							</div>
@@ -231,11 +244,17 @@ const appStore = useAppStore()
 							</h3>
 							<div class="quantity-section__container">
 								<div class="quantity-section-v4__content">
-									<el-input-number
-										v-model="count"
-										:min="1"
-										:max=" sku?.stock"
-									/>
+									<!--<el-input-number-->
+									<!--	v-model="count"-->
+									<!--	:min="1"-->
+									<!--	:max="sku?.stock"-->
+									<!--/>-->
+                  <el-input-number
+                      v-model="count"
+                      :step="1"
+                      :min="1"
+                      :max="dynamicMax"
+                  />
 								</div>
 							</div>
 						</section>

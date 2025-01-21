@@ -43,7 +43,7 @@ watch(
 
 		if (categoryId.value) {
 			curCat.value = categories.value?.find(c => c.childCategory.find(cc => cc.id == categoryId.value))
-			console.log(curCat.value)
+			// console.log(curCat.value)
 			expanded.value = appStore.isPC && !!curCat.value
 		}
 	},

@@ -85,7 +85,7 @@ function prev() {
 
 const router = useRouter()
 function goDetail(item) {
-	console.log(item)
+	// console.log(item)
 	if (item.spuId)
 		router.push($path(`/produtct/${item.spuId}`))
 	else if (item.url)
