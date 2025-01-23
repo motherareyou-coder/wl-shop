@@ -89,4 +89,12 @@ export default {
 	'立即帮砍': 'Haggle Now',
 	'已帮砍': 'Have helped',
 	'链接已复制': 'The active link has been copied',
+	'订单': 'Order',
+	'商品': 'Product',
+	'图片': 'Image',
+	'发送': 'Send',
+	'选择订单': 'Send Order',
+	'选择商品': 'Send Product',
+	'在线客服': 'Online customer service',
+	'连接客服失败': 'Failed to connect to the online customer service',
 }

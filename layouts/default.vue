@@ -13,6 +13,7 @@ defineOptions({
 		<UserBreadcrumb />
 		<slot></slot>
 		<AppFooter />
+		<AppChat />
 	</div>
 </template>
 
