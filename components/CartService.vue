@@ -76,8 +76,12 @@ const tab = ref('1')
 				</div>
 				<div class="why-buy-from-mi__separator"></div>
 				<div class="why-buy-from-mi__tel">
-					Need more help? Chat now or call
-					<a href="tel: 0800 021 1888">0800 021 1888</a>
+					Need more help? Chat now
+          <!--邮件-->
+					<!--<a href="mailto:iswink@iswink.com">iswink@iswink.com</a>-->
+          <!--whatsApp-->
+          <a href="https://wa.me/1234567890">WhatsApp</a>
+
 				</div>
 			</el-collapse-item>
 		</el-collapse>

@@ -1,3 +1,4 @@
+//生产部署时，放到 out 目录下
 module.exports = {
     apps: [
         {

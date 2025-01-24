@@ -3,6 +3,7 @@ import './index.scss'
 
 defineOptions({name: 'AppFooter'})
 
+const {t} = useI18n()
 const {domain} = useRuntimeConfig().public
 const form = ref({email: ''})
 const rules = {
@@ -30,24 +31,24 @@ const list = [
     label: $t('SUPPORT'),
     children: [
       {label: 'Points FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/7'},
-      {label: 'Sign FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/7'},
-      {label: 'Level of Member FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/7'},
-      {label: 'Discount FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/7'},
+      {label: 'Sign FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/8'},
+      {label: 'Level of Member FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/9'},
+      {label: 'Discount FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/10'},
     ],
   },
   {
-    label: $t('ABOUT US'),
+    label: $t('SHOP AND PROMOTIONS'),
     children: [
-      {label: 'isWink', src: domain},
-      {label: 'Leadership Team', src: domain},
-      {label: 'Privacy Policy', src: domain},
-      {label: 'Integrity & Compliance', src: domain},
-      {label: 'Trust Centre', src: domain},
-      {label: 'Accessibility', src: domain},
+      // {label: 'isWink', src: domain},
+      {label: 'All Products', src: domain + '/' + getBrowserLanguage() + "/product-list"},
+      {label: 'Daily Seckill', src: domain + `/` + getBrowserLanguage() + '/seckill'},
+      {label: 'Group Buying Event', src: domain + `/` + getBrowserLanguage() + '/combination'},
+      {label: 'Bargin Event', src: domain + `/` + getBrowserLanguage() + '/bargin'},
+      {label: 'Coupon collection', src: domain + `/` + getBrowserLanguage() + '/coupon'},
     ],
   },
   {
-    label: $t('CONTRACT US'),
+    label: $t('FOLLOW US'),
     children: [
       {label: 'Twitter', src: 'https://www.twitter.com/'},
       {label: 'Youtube', src: 'https://www.youtube.com/'},
@@ -55,68 +56,76 @@ const list = [
     ],
   },
 ]
-const formRef = ref()
+const formRef = ref({
+  email: ''
+})
 
 function submit() {
   formRef.value?.validate((v) => {
     if (!v)
       return ElMessage.info('The email address is invalid.')
+    //提交数据到后台
+    formRef.loading = true
+    $api('crm/clue/create-email-subscription', {
+      method: 'post',
+      body: {email: form.value.email},
+    }).then(() => {
+      formRef.visible = false
+      ElMessage.info(t('订阅成功'))
+    }).finally(() => {
+      formRef.loading = false
+    })
   })
+
 }
 </script>
 
 <template>
   <footer class="site-footer">
-    <div class="site-footer__footnote footnote">
-      <div class="site-container">
-        <div class="footnote__list site-footer__terms">
-          <p class="footnote__item site-footer__payment-terms">
-            <nuxt-link
-                to="https://www.paypal.com/uk/webapps/mpp/paypal-virtual-credit/faq"
-            >
-              PayPal Credit
-            </nuxt-link>
-            and PayPal Pay in 3 are trading names of PayPal UK Ltd,
-            Whittaker House, Whittaker Avenue, Richmond-Upon-Thames,
-            Surrey, United Kingdom, TW9 1EH. PayPal Credit: Terms
-            and conditions apply. Credit subject to status, UK
-            residents only, Xiaomi Technology UK Limited is an
-            appointed representative of Product Partnerships Limited
-            for the purpose of credit broking. Product Partnerships
-            Limited is authorised and regulated by the Financial
-            Conduct Authority with registration 959828 and address
-            Second Floor, Atlas House, 31 King Street, Leeds LS1
-            2HL. United Kingdom. Xiaomi Technology UK Limited acts
-            as a credit broker not a lender. We do not receive any
-            commission for introducing customers to
-            <nuxt-link
-                to="https://www.paypal.com/uk/webapps/mpp/paypal-virtual-credit/faq"
-            >
-              PayPal Credit
-            </nuxt-link>
-            . You may be able to obtain finance for your purchase
-            from other lenders and you are encouraged to seek
-            alternative quotations. If you would like to know how we
-            handle complaints, please ask for a copy of our
-            complaints handling process. You can also find
-            information about referring a complaint to the Financial
-            Ombudsman Service (FOS) at
-            <nuxt-link
-                :to="domain"
-            >
-              financial-ombudsman.org.uk
-            </nuxt-link>
-            . PayPal Pay in 3: PayPal Pay in 3 is not regulated by
-            the Financial Conduct Authority. Pay in 3 eligibility is
-            subject to status and approval. 18+. UK residents only.
-            Pay in 3 is a form of credit. Check if affordable and
-            how you will repay. May make other borrowing more
-            difficult or expensive. See product terms for more
-            details.
-          </p>
-        </div>
-      </div>
-    </div>
+    <!--<div class="site-footer__footnote footnote">-->
+    <!--  <div class="site-container">-->
+    <!--    <div class="footnote__list site-footer__terms">-->
+    <!--      <p class="footnote__item site-footer__payment-terms">-->
+    <!--        <nuxt-link-->
+    <!--            to="https://www.paypal.com/"-->
+    <!--        >-->
+    <!--          Payment Security:-->
+    <!--        </nuxt-link>-->
+    <!--        When making transactions using PayPal, you will enjoy a high level of security protection.-->
+    <!--        <nuxt-link-->
+    <!--            to="https://www.paypal.com/"-->
+    <!--        >-->
+    <!--          Fees Terms:-->
+    <!--        </nuxt-link>-->
+    <!--        Using PayPal may incur additional fees (such as currency conversion fees). We recommend confirming any relevant fees prior to completing your transaction.-->
+    <!--        <nuxt-link-->
+    <!--            :to="domain"-->
+    <!--        >-->
+    <!--          Refund Policy:-->
+    <!--        </nuxt-link>-->
+    <!--        If you have any disputes regarding a transaction or need a refund, please follow our website's refund policy and promptly contact our customer support team.-->
+    <!--        <nuxt-link-->
+    <!--            :to="domain"-->
+    <!--        >-->
+    <!--          Information Protection:-->
+    <!--        </nuxt-link>-->
+    <!--        When making payments through PayPal, please be cautious in protecting your account information. We do not collect or store your PayPal account information.-->
+    <!--        <nuxt-link-->
+    <!--            :to="domain"-->
+    <!--        >-->
+    <!--          Transaction Restrictions:-->
+    <!--        </nuxt-link>-->
+    <!--        Certain regions or countries may have restrictions on making payments via PayPal, and we are not responsible for these limitations.-->
+    <!--        <nuxt-link-->
+    <!--            :to="domain"-->
+    <!--        >-->
+    <!--          Compliance with Laws:-->
+    <!--        </nuxt-link>-->
+    <!--        When making transactions using PayPal, you are required to comply with the relevant laws and regulations of your country/region.-->
+    <!--      </p>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
     <div class="site-footer__content">
       <div class="site-container">
         <section class="site-footer__main">
@@ -238,11 +247,11 @@ function submit() {
           <div class="site-footer__legal">
             Copyright © 2024 - 2034 iswink.All Rights Reserved
           </div>
-          <div class="site-footer__settings">
-            <nuxt-link :to="domain">
-              Site Map
-            </nuxt-link>
-          </div>
+          <!--<div class="site-footer__settings">-->
+          <!--  <nuxt-link :to="domain">-->
+          <!--    Site Map-->
+          <!--  </nuxt-link>-->
+          <!--</div>-->
         </section>
       </div>
     </div>

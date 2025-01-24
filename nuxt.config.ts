@@ -19,7 +19,23 @@ export default defineNuxtConfig({
 		'@nuxt/icon',
 		'@element-plus/nuxt',
 		'dayjs-nuxt',
+		// '@nuxtjs/seo',
+		// '@nuxtjs/google-analytics'
 	],
+	// site: {
+	// 	url: 'https://iswink.com',
+	// 	name: 'iswink shop',
+	// 	description: 'iswink shopping',
+	// 	defaultLocale: 'en',
+	// 	// exclude: ['/admin/_components/**'], // 过滤不需要的 url
+	// 	exclude: [], // 过滤不需要的 url
+	// 	cacheMaxAgeSeconds: 24 * 3600, // 缓存时间一天
+	// 	autoLastmod: true, // 自动检测每个 URL 的 lastmod 日期
+	// },
+	// routeRules: {
+		// Don't add any /secret/** URLs to the sitemap.xml
+		// '/admin/_components/**': { robots: false },
+	// },
 	imports: {
 		presets: [
 			{
