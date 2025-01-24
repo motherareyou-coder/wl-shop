@@ -4,12 +4,14 @@ import { isString } from 'lodash-es'
 import type { OrderDetail, ProductDetail } from '~/types'
 import MessageInput from './components/MessageInput.vue'
 import MessageItem, { type Message, MessageType } from './components/MessageItem.vue'
+import { emojiList } from './utils/emoji'
 import './index.scss'
 
 defineOptions({
 	name: 'AppChat',
 })
 
+const {shortDomain,kefuWsUrl} = useRuntimeConfig().public
 const route = useRoute()
 const userStore = useUserStore()
 const appStore = useAppStore()
@@ -24,7 +26,7 @@ const msgList = computed(() => chatStore.msgList)
 const msg = ref('')
 
 // const { status, data, send, open, close } = useWebSocket(`ws://122.190.56.101:6060/shop-server/infra/ws?token=${userStore.accessToken}`, {
-const { status, data, send, open, close } = useWebSocket(`ws://localhost:48080/infra/ws?token=${userStore.accessToken}`, {
+const { status, data, send, open, close } = useWebSocket(`${kefuWsUrl}?token=${userStore.accessToken}`, {
 	autoReconnect: {
 		retries: 5,
 		delay: 1000,
@@ -44,6 +46,7 @@ function handleOpen() {
 	status.value === 'CONNECTING' || open()
 }
 function handleSend({ type, value }: Pick<Message, 'type' | 'value'>) {
+  console.log("handleSend:",type,value)
 	const obj = {
 		type,
 		value,
@@ -67,43 +70,126 @@ function handleSend({ type, value }: Pick<Message, 'type' | 'value'>) {
 			break
 	}
 	pushMsg(obj)
-	send(JSON.stringify(obj))
+  // todo-wl 消息列表是否从后台获取
+	// send(JSON.stringify(obj))
+  //发送消息
+  // await KeFuApi.sendKefuMessage(data);
+  // //刷新消息
+  // await messageListRef.value.refreshMessageList();
 }
-function handleRecieve(data: string | Message) {
-	console.log('handleRecieve', data)
+//接收消息
+function handleReceive(data: string | Message) {
+	console.log('handleReceive', data)
 	if (!data)
 		return
-	const m = isString(data) ? JSON.parse(data) : data as Message
-	pushMsg(m)
+  if (data == 'pong') {
+    console.log("连接心跳...")
+    return
+  }
+	const m = isString(data) ? JSON.parse(data) : data;
+  if(m.type === 'kefu_message_read_status_change'){
+    console.log("The administrator has read the message");
+    return
+  }
+  receiveHandlerMsg(m)
 }
-async function pushMsg(data: Message) {
-	switch (data.type) {
-		case MessageType.Order:
-			data.value = (await $api<OrderDetail>(
-				'trade/order/get-detail',
-				{ params: { id: data.value } },
-			))
-			break
-		case MessageType.Product:
-			data.value = (await $api<ProductDetail>(
-				'product/spu/get-detail',
-				{ params: { id: data.value } },
-			))
-			break
-	}
-	msgList.value.push(data)
+
+//接收消息后处理，只能接收两种消息,文字+文字表情，图片
+async function receiveHandlerMsg(data: string) {
+  console.log("receiveHandlerMsg:", data)
+  let msgDataTemp = {};
+  switch (data.type) {
+    case 'kefu_message_type':
+      //接收到消息,消息三种类型，contentType.1 表情,文字 2.图片
+      let messageTemp = JSON.parse(data.content);
+      if (messageTemp.contentType === MessageType.Text || messageTemp.contentType === MessageType.Emoji) {
+        let textObj = replaceEmoji(messageTemp.content)
+        msgDataTemp.type = textObj.contentType
+        msgDataTemp.value = textObj.content
+      }
+      if (messageTemp.contentType === MessageType.Image) {
+        msgDataTemp.type = MessageType.Image
+        msgDataTemp.value = messageTemp.content
+      }
+      break
+  }
+  msgDataTemp.sender = shortDomain
+  msgDataTemp.senderAvatar = new URL('@/assets/emoji/iswink.png', import.meta.url).href
+  msgDataTemp.createTime = dayjs(data.createTime).format('YYYY-MM-DD HH:mm:ss');// 将时间戳格式化为指定格式
+  console.log("接收消息，加入列表", msgDataTemp);
+  msgList.value.push(msgDataTemp)
 }
-watch(data, handleRecieve, { immediate: true })
-const scrollbar = ref()
-function scrollToBottom() {
-	nextTick(() => {
-		scrollbar.value?.wrapRef.scrollTo({
-			top: scrollbar.value?.wrapRef.scrollHeight,
-			behavior: 'smooth',
-		})
-	})
+//将文本中的表情转换为图片
+const replaceEmoji = (content: string) => {
+  let newData = content
+  if (typeof newData !== 'object') {
+    const reg = /\[(.+?)]/g // [] 中括号
+    const zhEmojiName = newData.match(reg)
+    if (zhEmojiName) {
+      //后台发送多个表情时,只取一个表情
+      if (zhEmojiName.length > 1) {
+          newData = emojiList.find((emoji) => emoji.name === zhEmojiName[0])?.name;
+      } else {
+        zhEmojiName.forEach((item) => {
+          newData = emojiList.find((emoji) => emoji.name === item)?.name
+        });
+      }
+    }
+  }
+  if (newData !== content) {
+    return {
+      contentType: MessageType.Emoji,
+      content: newData
+    };
+  } else {
+    return {
+      contentType: MessageType.Text,
+      content: newData
+    }
+  }
 }
-useResizeObserver(computed(() => scrollbar.value?.wrapRef?.children[0]), scrollToBottom)
+
+//发送消息
+  async function pushMsg(data: Message) {
+    console.log("pushMsg:", data)
+    switch (data.type) {
+      case MessageType.Order:
+        data.value = JSON.stringify((await $api<OrderDetail>(
+            'trade/order/get-detail',
+            {params: {id: data.value}},
+        )))
+        break
+      case MessageType.Product:
+        data.value = JSON.stringify((await $api<ProductDetail>(
+            'product/spu/get-detail',
+            {params: {id: data.value}},
+        )))
+        break
+    }
+    $api('/promotion/kefu-message/send', {
+      method: 'post',
+      body: {
+        contentType:data.type,
+        content:data.value,
+      },
+    })
+    msgList.value.push(data)
+    console.log("加入msgList之后数据为：", msgList)
+  }
+
+  watch(data, handleReceive, {immediate: true})
+  const scrollbar = ref()
+
+  function scrollToBottom() {
+    nextTick(() => {
+      scrollbar.value?.wrapRef.scrollTo({
+        top: scrollbar.value?.wrapRef.scrollHeight,
+        behavior: 'smooth',
+      })
+    })
+  }
+
+  useResizeObserver(computed(() => scrollbar.value?.wrapRef?.children[0]), scrollToBottom)
 </script>
 
 <template>

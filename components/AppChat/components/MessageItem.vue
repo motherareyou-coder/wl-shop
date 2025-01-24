@@ -2,6 +2,7 @@
 import type { OrderDetail, ProductDetail } from '~/types'
 import OrderItem from './OrderItem.vue'
 import ProductItem from './ProductItem.vue'
+import { emojiList } from '../utils/emoji'
 
 const props = defineProps({
 	currentUser: { type: String },
@@ -20,13 +21,14 @@ export enum MessageType {
 	Emoji = 4,
 	Text = 5,
 }
+
 export interface Message {
 	type: MessageType
 	id?: number
 	sender: string
 	senderAvatar: string
 	createTime: string
-	value: string | number | OrderDetail | ProductDetail
+	value: string | number
 }
 </script>
 
@@ -37,7 +39,7 @@ export interface Message {
 				{{ data.createTime }}
 			</div>
 			<p v-if="data.type === MessageType.Text" v-html="data.value as string"></p>
-			<app-image v-if="data.type === MessageType.Emoji" :src="data.value as string" class="w-10 h-10" />
+			<app-image v-if="data.type === MessageType.Emoji" :src="emojiList.find(item => item.name === data.value)?.url as string" class="w-10 h-10" />
 			<app-image v-if="data.type === MessageType.Image" :src="data.value as string" class="max-h-80 rounded-lg" :preview-src-list="[data.value]" />
 			<div v-if="data.type === MessageType.Order">
 				<OrderItem v-model="data.value as OrderDetail" />

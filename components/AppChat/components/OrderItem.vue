@@ -6,9 +6,10 @@ import type { OrderDetail } from '~/types'
 const data = defineModel<OrderDetail>({ required: true })
 
 if (!isObject(data.value)) {
+  let orderId = JSON.parse(data.value)?.id
 	data.value = await $api<OrderDetail>(
 		'trade/order/get-detail',
-		{ params: { id: data.value } },
+		{ params: { id: orderId } },
 	)
 }
 </script>

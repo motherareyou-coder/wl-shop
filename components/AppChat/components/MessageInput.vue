@@ -69,7 +69,7 @@ function handleSend(type: Message['type'], value: Message['value']) {
 			<el-scrollbar>
 				<app-image
 					v-for="item in emojiList" :key="item.name" :title="item.name" class="emoji-img"
-					:src="item.url" @click="handleSend(MessageType.Emoji, item.url)"
+					:src="item.url" @click="handleSend(MessageType.Emoji, item.name)"
 				/>
 			</el-scrollbar>
 		</div>

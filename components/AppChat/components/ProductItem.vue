@@ -5,9 +5,10 @@ import type { ProductDetail } from '~/types'
 const data = defineModel<ProductDetail>({ required: true })
 
 if (!isObject(data.value)) {
+  let productId = JSON.parse(data.value)?.id
 	data.value = (await $api<ProductDetail>(
 		'product/spu/get-detail',
-		{ params: { id: data.value } },
+		{ params: { id: productId } },
 	))
 }
 const appStore = useAppStore()
