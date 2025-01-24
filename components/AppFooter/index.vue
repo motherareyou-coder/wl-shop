@@ -10,41 +10,25 @@ const rules = {
   email: [{type: 'email'}, {required: true}],
 }
 
-function getBrowserLanguage() {
-  const language = navigator.language || navigator.userLanguage;
-  const languageCode = language.slice(0, 2).toLowerCase();
-
-  // 根据需要进行映射
-  switch (languageCode) {
-    case 'zh':
-      return 'zh';
-    case 'en':
-      return 'en';
-      // 可以添加其他语言的映射
-    default:
-      return 'en'; // 默认返回英文
-  }
-}
-
 const list = [
   {
     label: $t('SUPPORT'),
     children: [
-      {label: 'Points FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/7'},
-      {label: 'Sign FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/8'},
-      {label: 'Level of Member FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/9'},
-      {label: 'Discount FAQ', src: domain + '/' + getBrowserLanguage() + '/articles/10'},
+      {label: 'Points FAQ', src: $path('/articles/7')},
+      {label: 'Sign FAQ', src: $path('/articles/8')},
+      {label: 'Level of Member FAQ', src: $path('/articles/9')},
+      {label: 'Discount FAQ', src: $path('/articles/10')},
     ],
   },
   {
     label: $t('SHOP AND PROMOTIONS'),
     children: [
       // {label: 'isWink', src: domain},
-      {label: 'All Products', src: domain + '/' + getBrowserLanguage() + "/product-list"},
-      {label: 'Daily Seckill', src: domain + `/` + getBrowserLanguage() + '/seckill'},
-      {label: 'Group Buying Event', src: domain + `/` + getBrowserLanguage() + '/combination'},
-      {label: 'Bargin Event', src: domain + `/` + getBrowserLanguage() + '/bargin'},
-      {label: 'Coupon collection', src: domain + `/` + getBrowserLanguage() + '/coupon'},
+      {label: 'All Products', src: $path('/product-list')},
+      {label: 'Daily Seckill', src: $path('/seckill')},
+      {label: 'Group Buying Event', src: $path('/combination')},
+      {label: 'Bargin Event', src: $path('/bargin')},
+      {label: 'Coupon collection', src: $path('/coupon')},
     ],
   },
   {
@@ -65,15 +49,15 @@ function submit() {
     if (!v)
       return ElMessage.info('The email address is invalid.')
     //提交数据到后台
-    formRef.loading = true
+    formRef.value.loading = true
     $api('crm/clue/create-email-subscription', {
       method: 'post',
       body: {email: form.value.email},
     }).then(() => {
-      formRef.visible = false
+      formRef.value.visible = false
       ElMessage.info(t('订阅成功'))
     }).finally(() => {
-      formRef.loading = false
+      formRef.value.loading = false
     })
   })
 

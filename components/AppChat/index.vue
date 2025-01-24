@@ -23,7 +23,8 @@ const visible = ref(false)
 const msgList = computed(() => chatStore.msgList)
 const msg = ref('')
 
-const { status, data, send, open, close } = useWebSocket(`ws://122.190.56.101:6060/shop-server/infra/ws?token=${userStore.accessToken}`, {
+// const { status, data, send, open, close } = useWebSocket(`ws://122.190.56.101:6060/shop-server/infra/ws?token=${userStore.accessToken}`, {
+const { status, data, send, open, close } = useWebSocket(`ws://localhost:48080/infra/ws?token=${userStore.accessToken}`, {
 	autoReconnect: {
 		retries: 5,
 		delay: 1000,
