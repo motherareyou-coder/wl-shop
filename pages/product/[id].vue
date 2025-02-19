@@ -10,6 +10,14 @@ const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
+const { shortDomain } = useRuntimeConfig().public
+const { gtag } = useGtag()
+//商品详情埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'product-detail'
+})
+
 const id = route.params.id ? Number(route.params.id) : null
 provide('id', id)
 const { data: info } = await useAPI<ProductDetail>('product/spu/get-detail', { params: { id } })

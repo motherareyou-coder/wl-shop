@@ -1,23 +1,18 @@
 export default {
 	'language': '简体中文',
 	'appTitle': 'iswink',
-
 	'login': '登录',
 	'register': '注册',
-
 	'home': '首页',
 	'user': '用户中心',
-
 	'store': '商城',
 	'mobile': '手机/平板',
 	'wearables': '智能穿戴',
 	'smarthome': '智能家电',
 	'lifestyle': '潮流生活',
-
 	'discover': '探索更多',
 	'support': 'iswink支援',
 	'Enter email address': '输入邮箱地址',
-
 	'cart': '购物车',
 	'Cart': '购物车',
 	'Shopping cart': '购物车',
@@ -26,6 +21,7 @@ export default {
 	'OrderView': '订单详情',
 	'Learn More': '了解更多',
 	'Featured Products': '特色产品',
+	'Special offers': '特别优惠',
 	'All Promotions': '所有促销活动',
 	'Follow Us': '关注我们',
 	'All Products': '所有产品',
@@ -82,7 +78,7 @@ export default {
 	'BUY': '原价购买',
 	'Overview': '概览',
 	'Likes': '点赞',
-	'Categoris': '类型',
+	'Categories': '类型',
 	'Shop Now': '现在购买',
 	'Shop now': '现在购买',
 	'Home': '主页',
@@ -215,7 +211,7 @@ export default {
 	'unknown state': '未知状态',
 	'Apply reason': '申请原因',
 	'Apply description': '相关描述',
-	'Don\'t want it anymore': '不想要了',
+	"Don't want it anymore": '不想要了',
 	'Dislike': '不喜欢',
 	'Select': '请选择',
 	'Submit': '提交',
@@ -277,9 +273,9 @@ export default {
 	'Daily Seckill': '每日秒杀',
 	'limit': '剩余',
 	'Product information': '产品信息',
+	'Please complete the payment within': '请在有效时间内支付',
+	'. Unpaid orders (except for COD ones) will be cancelled automatically afterwards.': '.未付款的订单（货到付款除外）将在之后自动取消。',
 	'最少成团人数': ({ values }) => `至少${values.number}人成团，在规定时间内达到指定人数，即可享受优惠价购买`,
 	'最多砍价人数': ({ values }) => `至多${values.number}人砍价，在规定时间内达到指定砍价人数，即可享受优惠价购买`,
 	'还差x人成团': ({ values }) => `还差${values.number}人成团`,
-	'Please complete the payment within': '请在有效时间内支付',
-	'. Unpaid orders (except for COD ones) will be cancelled automatically afterwards.': '.未付款的订单（货到付款除外）将在之后自动取消。',
 }

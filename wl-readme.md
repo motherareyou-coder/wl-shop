@@ -1,8 +1,8 @@
 ## 生成部署
 #### 1.生成部署文件
       pnpm install
-    pnpm run build
-    得到 .output 文件夹
+      pnpm run build
+      得到 .output 文件夹
 #### 2.部署到服务器
     PM2 部署linux
     5. 使用pm2启动Nuxt3项目

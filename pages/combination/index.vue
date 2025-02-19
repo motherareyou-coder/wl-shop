@@ -4,7 +4,13 @@ import type { CombinationActivity } from '~/types'
 useHead({
 	title: `${$t('拼团活动')} ${$t('appTitle')}`,
 })
-
+const { shortDomain } = useRuntimeConfig().public
+const { gtag } = useGtag()
+//拼团活动页面埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'combination-list'
+})
 const appStore = useAppStore()
 
 function getData<CombinationActivity>(params: any) {

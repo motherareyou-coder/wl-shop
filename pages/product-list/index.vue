@@ -10,6 +10,13 @@ const productScopeValues = ref([])
 const categoryId = ref<number | string | null>(null)
 const query = ref(route.query.query)
 const keyword = ref()
+const { shortDomain } = useRuntimeConfig().public
+const { gtag } = useGtag()
+//商品列表页面埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'product-list'
+})
 watchEffect(() => {
 	query.value = route.query.query
 	keyword.value = route.query.query
@@ -163,7 +170,7 @@ const activeNames = ref(categories.value?.map(d => d.id))
 			<div v-if="appStore.isPC" class="product-catalogue__filter">
 				<ul class="condition-list">
 					<li class="category-filter inline-flex items-center" @click="expanded = !expanded">
-						{{ $t('Categoris') }}
+						{{ $t('Categories') }}
 						<i class="micon micon-up condition-list__icon" :class="{ expand: expanded }"></i>
 					</li>
 					<template v-for="(f, i) in fileds" :key="f.value">

@@ -77,11 +77,12 @@ const tab = ref('1')
 				<div class="why-buy-from-mi__separator"></div>
 				<div class="why-buy-from-mi__tel">
 					Need more help? Chat now
-          <!--邮件-->
-					<!--<a href="mailto:iswink@iswink.com">iswink@iswink.com</a>-->
           <!--whatsApp-->
-          <a href="https://wa.me/1234567890">WhatsApp</a>
-
+          <!--<a href="https://wa.me/1234567890">WhatsApp</a>-->
+          <!--<a href="https://wa.me/1234567890">WhatsApp</a>-->
+          <a href="https://t.me/is_wink" target="_blank">Telegram</a>
+           or <!--邮件-->
+          <a href="mailto:iswink@iswink.com" target="_blank">Email</a>
 				</div>
 			</el-collapse-item>
 		</el-collapse>

@@ -7,6 +7,13 @@ const route = useRoute()
 const id = route.params.id
 const {shortDomain} = useRuntimeConfig().public
 const categoryId = Number(route.query.categoryId || '')
+
+const { gtag } = useGtag()
+//文章详情页面埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'articles-detail'
+})
 const { data } = await useAPI<Article>(
 	'promotion/article/get',
 	{ params: { id } },

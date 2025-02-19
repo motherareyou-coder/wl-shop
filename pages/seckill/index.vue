@@ -7,6 +7,13 @@ useHead({
 	title: `${$t('Daily Picks')} ${$t('appTitle')}`,
 })
 
+const { shortDomain } = useRuntimeConfig().public
+const { gtag } = useGtag()
+//秒杀活动页面埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'seckill-list'
+})
 const appStore = useAppStore()
 
 const { data: timeList } = await useAPI<SeckillConfig[]>('promotion/seckill-config/list')

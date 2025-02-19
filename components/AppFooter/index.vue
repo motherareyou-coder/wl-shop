@@ -4,7 +4,7 @@ import './index.scss'
 defineOptions({name: 'AppFooter'})
 
 const {t} = useI18n()
-const {domain} = useRuntimeConfig().public
+const {shortDomain,domain} = useRuntimeConfig().public
 const form = ref({email: ''})
 const rules = {
   email: [{type: 'email'}, {required: true}],
@@ -229,7 +229,7 @@ function submit() {
         </section>
         <section class="site-footer__footer">
           <div class="site-footer__legal">
-            Copyright © 2024 - 2034 iswink.All Rights Reserved
+            Copyright © 2024 - 2034 {{ shortDomain }}.All Rights Reserved
           </div>
           <!--<div class="site-footer__settings">-->
           <!--  <nuxt-link :to="domain">-->

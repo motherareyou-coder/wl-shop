@@ -5,6 +5,7 @@ definePageMeta({
 	layout: 'empty',
 })
 
+const {shortDomain,domain} = useRuntimeConfig().public
 const msg = $t('Password is inconsistent')
 const form = ref({ account: '', password: '', confirmPassword: '', code: '' })
 const rules = {
@@ -118,7 +119,7 @@ function updatePsw() {
 					</div>
 				</div>
 				<div class="mi-copyright">
-					Xiaomi Inc., All rights reserved - Beijing ICP - 10046444 - <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134" target="_blank" rel="noopener noreferrer">Beijing Public Security ICP-11010802020134</a> - Beijing ICP licence No. - 110507
+          Copyright © 2024 - 2034 {{ shortDomain }}.All Rights Reserved
 				</div>
 			</div>
 		</div>

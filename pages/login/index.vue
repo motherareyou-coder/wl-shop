@@ -7,7 +7,7 @@ definePageMeta({ layout: 'login' })
 
 const router = useRouter()
 const route = useRoute()
-
+const {shortDomain,domain} = useRuntimeConfig().public
 const redirect = decodeURIComponent(route.query.redirect || '')
 
 const tab = ref(route.query.type == 1 ? 1 : 0)
@@ -21,7 +21,7 @@ useHead({
 const userStore = useUserStore()
 
 const msg = $t('Password is inconsistent')
-const form = ref({ account: '', password: '', confirmPassword: '', code: '' })
+const form = ref({ account: '', password: '', confirmPassword: '', code: '',agreed: true })
 const rules = {
 	account: [{ required: true, message: '' }],
 	password: [{ required: true, message: '' }],
@@ -228,7 +228,7 @@ function handleRegister() {
 												<div class="flex">
 													<el-checkbox v-model="form.agreed" style="margin-right: 0.75rem;--mi-checkbox-height: 20px;" class="leading-5 height-5" />
 													<span class="leading-5">
-														{{ $t("I've read and agreed to Xiaomi's User Agreementand Privacy Policy") }}
+														{{ $t("I've read and agreed to User Agreementand Privacy Policy") }}
 													</span>
 												</div>
 											</el-form-item>
@@ -242,7 +242,8 @@ function handleRegister() {
 						</div>
 					</div>
 					<div class="mi-copyright">
-						Xiaomi Inc., All rights reserved - Beijing ICP - 10046444 - <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134" target="_blank" rel="noopener noreferrer">Beijing Public Security ICP-11010802020134</a> - Beijing ICP licence No. - 110507
+						<!--Xiaomi Inc., All rights reserved - Beijing ICP - 10046444 - <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134" target="_blank" rel="noopener noreferrer">Beijing Public Security ICP-11010802020134</a> - Beijing ICP licence No. - 110507-->
+            Copyright © 2024 - 2034 {{ shortDomain }}.All Rights Reserved
 					</div>
 				</div>
 			</div>

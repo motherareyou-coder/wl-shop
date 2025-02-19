@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import paypalPic from '@/assets/imgs/paypal.png'
 import cardsPic from '@/assets/imgs/cards.png'
+import usdtPic from '@/assets/imgs/usdt.png'
 import {useAppStore} from '@/stores/app'
 import {pick} from 'lodash-es'
 import type {CartItem, Coupon, OrderSettlement, PayOrderSubmit} from '~/types'
@@ -23,6 +24,13 @@ const seckillActivityId = route.query.seckillActivityId ? Number(route.query.sec
 const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
 const combinationHeadId = route.query.combinationHeadId ? Number(route.query.combinationHeadId) : null
 const productList = ref<CartItem[]>([])
+const { shortDomain } = useRuntimeConfig().public
+const { gtag } = useGtag()
+//确认支付页面埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'check-out'
+})
 
 const cantUseCoupon = !!(orderId || bargainRecordId || seckillActivityId || combinationActivityId)
 
@@ -81,6 +89,11 @@ const Pays = [
     title: 'PayPal',
     image: paypalPic,
     key: 'paypal',
+  },
+  {
+    title: 'USDT',
+    image: usdtPic,
+    key: 'cryptocurrencies',
   },
   {
     title: 'Wallet',

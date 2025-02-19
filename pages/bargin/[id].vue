@@ -3,6 +3,15 @@ import type { BargainActivity, BargainHelp, PayOrderSubmit, ProductDetail, SKU }
 
 const router = useRouter()
 const route = useRoute()
+
+const { shortDomain } = useRuntimeConfig().public
+const { gtag } = useGtag()
+//砍价详情页面埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'bargin-detail'
+})
+
 const activityId = Number(route.params.id)
 const recordId = ref()
 const recordInfo = ref<BargainActivity>({})

@@ -19,7 +19,7 @@ function handleClick(d: ProductSpu) {
 			<div class="store-title-flex store-title-flex--center">
 				<div class="store-title__content">
 					<h2 class="store-title store-title--center store-title--default">
-						Special offers
+            {{ $t('Special offers') }}
 					</h2>
 				</div>
 			</div>

@@ -11,6 +11,9 @@ importers:
       '@nuxt/ui':
         specifier: ^2.18.7
         version: 2.18.7(async-validator@4.2.5)(change-case@5.4.4)(magicast@0.3.5)(rollup@4.31.0)(vite@6.0.11(@types/node@22.5.2)(jiti@2.4.2)(sass@1.80.6)(terser@5.31.6)(yaml@2.7.0))(vue@3.5.13(typescript@5.5.4))
+      '@nuxtjs/google-gtag':
+        specifier: ^1.0.4
+        version: 1.0.4
       '@nuxtjs/seo':
         specifier: ^2.1.0
         version: 2.1.0(@unhead/vue@1.11.18(vue@3.5.13(typescript@5.5.4)))(h3@1.14.0)(magicast@0.3.5)(rollup@4.31.0)(typescript@5.5.4)(unhead@1.11.18)(vite@6.0.11(@types/node@22.5.2)(jiti@2.4.2)(sass@1.80.6)(terser@5.31.6)(yaml@2.7.0))(vue@3.5.13(typescript@5.5.4))
@@ -41,6 +44,9 @@ importers:
       nuxt:
         specifier: ^3.15.2
         version: 3.15.2(@parcel/watcher@2.4.1)(@types/node@22.5.2)(db0@0.2.1)(eslint@9.14.0(jiti@2.4.2))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.31.0)(sass@1.80.6)(terser@5.31.6)(typescript@5.5.4)(vite@6.0.11(@types/node@22.5.2)(jiti@2.4.2)(sass@1.80.6)(terser@5.31.6)(yaml@2.7.0))(yaml@2.7.0)
+      nuxt-gtag:
+        specifier: ^3.0.2
+        version: 3.0.2(magicast@0.3.5)(rollup@4.31.0)
       pinia:
         specifier: ^2.2.5
         version: 2.2.5(typescript@5.5.4)(vue@3.5.13(typescript@5.5.4))
@@ -956,6 +962,9 @@ packages:
 
   '@nuxtjs/color-mode@3.5.2':
     resolution: {integrity: sha512-cC6RfgZh3guHBMLLjrBB2Uti5eUoGM9KyauOaYS9ETmxNWBMTvpgjvSiSJp1OFljIXPIqVTJ3xtJpSNZiO3ZaA==}
+
+  '@nuxtjs/google-gtag@1.0.4':
+    resolution: {integrity: sha512-0Xgbx1uQ9pKeV2QdU9xoxJVdgH66qyGQJ0l8pzVxz5X476qvJunj6fbcjWk0gT+MEX/VOAhfT/zw0Z1z9q9oNg==}
 
   '@nuxtjs/i18n@8.5.6':
     resolution: {integrity: sha512-L+g+LygKNoaS/AXExk7tzS9wSNn9QdP1T9VdTjjEGYftpeFgv2U8AQsY0dQAhgPIbXXhIAkNYxTk4YcINj9CfA==}
@@ -3880,6 +3889,9 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
+  nuxt-gtag@3.0.2:
+    resolution: {integrity: sha512-0Spu/rffPxW7REebkjE22qQOuVZIQuyIuvd61InDdJU+d+gRIqWhrUuKBWdk43N/J1elj+cTK2kEdk5FQX7vdQ==}
+
   nuxt-link-checker@4.1.0:
     resolution: {integrity: sha512-z16I1tXTriyxjL1Hm1ydaXCrhodY0QhKfdZE52Q4icLxR/pcegJ4lxhrNUnTGTCtT8ITN9t2GnaKbL/VJ67nfw==}
 
@@ -6674,6 +6686,8 @@ snapshots:
       - magicast
       - rollup
       - supports-color
+
+  '@nuxtjs/google-gtag@1.0.4': {}
 
   '@nuxtjs/i18n@8.5.6(magicast@0.3.5)(rollup@4.31.0)(vue@3.5.13(typescript@5.5.4))(webpack-sources@3.2.3)':
     dependencies:
@@ -10108,6 +10122,17 @@ snapshots:
   nth-check@2.1.1:
     dependencies:
       boolbase: 1.0.0
+
+  nuxt-gtag@3.0.2(magicast@0.3.5)(rollup@4.31.0):
+    dependencies:
+      '@nuxt/kit': 3.15.2(magicast@0.3.5)(rollup@4.31.0)
+      defu: 6.1.4
+      pathe: 1.1.2
+      ufo: 1.5.4
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
 
   nuxt-link-checker@4.1.0(magicast@0.3.5)(rollup@4.31.0)(typescript@5.5.4)(vite@6.0.11(@types/node@22.5.2)(jiti@2.4.2)(sass@1.80.6)(terser@5.31.6)(yaml@2.7.0))(vue@3.5.13(typescript@5.5.4)):
     dependencies:

@@ -4,7 +4,13 @@ import type { BargainActivity } from '~/types'
 useHead({
 	title: `${$t('Bargin Event')} ${$t('appTitle')}`,
 })
-
+const { shortDomain } = useRuntimeConfig().public
+const { gtag } = useGtag()
+//砍价活动页面埋点
+gtag('event', 'screen_view', {
+  app_name: shortDomain,
+  screen_name: 'bargin-list'
+})
 const appStore = useAppStore()
 
 function getData<BargainActivity>(params: any) {
