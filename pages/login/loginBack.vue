@@ -1,0 +1,40 @@
+<template>
+  <!-- ... existing code ... -->
+</template>
+
+<script setup lang="ts">
+
+import type {AuthToken} from "~/types";
+
+defineOptions({ name: 'loginBack' })
+
+const router = useRouter()
+const route = useRoute()
+const userStore = useUserStore()
+
+onMounted(()=>{
+  // 获取路由参数中的token
+  const accessToken = route.query.accessToken as string;
+  const refreshToken = route.query.refreshToken as string;
+  const redirectUri = route.query.redirectUri as string;
+
+  if (accessToken) {
+    let authToken = {
+      accessToken: accessToken,
+      refreshToken: refreshToken
+    } as AuthToken
+    // 将token存储到store中
+    userStore.needAddCart = true
+    userStore.setToken(authToken);
+    // 跳转到登录后的页面
+    router.push(redirectUri);
+  } else {
+    // 如果没有token，可以重定向到登录页面或其他页面
+    router.push('/login');
+  }
+})
+</script>
+
+<style scoped>
+/* ... existing code ... */
+</style>

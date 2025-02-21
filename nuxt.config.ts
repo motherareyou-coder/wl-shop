@@ -210,9 +210,9 @@ export default defineNuxtConfig({
 		server: {
 			proxy: {
 				'/api': {
-					target: 'https://api.iswink.com',
+					// target: 'https://api.iswink.com',
 					// target: 'http://122.190.56.101:6060/shop-server',
-					// target: 'http://10.10.10.17:48080',
+					target: 'http://10.10.10.17:48080',
 					changeOrigin: true,
 					rewrite: path => path.replace('api', 'app-api'),
 				},
