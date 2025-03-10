@@ -26,21 +26,22 @@ export default defineNuxtConfig({
 		'dayjs-nuxt',
 		'@nuxtjs/seo',
 		'nuxt-gtag',
-		'@nuxtjs/tailwindcss'
+		'@nuxtjs/tailwindcss',
+		'nuxt-purgecss',
 	],
-	//排除冗余css样式
+	// 排除冗余css样式
 	tailwindcss: {
 		config: {
 			content: [
 				'./components/**/*.vue',
 				'./layouts/**/*.vue',
-				'./pages/**/*.vue'
+				'./pages/**/*.vue',
 			],
 			// 自动启用 PurgeCSS 优化
 			purge: {
-				enabled: process.env.NODE_ENV === 'production'
-			}
-		}
+				enabled: process.env.NODE_ENV === 'production',
+			},
+		},
 	},
 	gtag: {
 		// id: 'G-80R453F43Q', // 替换为你的 Google Analytics ID
@@ -58,7 +59,7 @@ export default defineNuxtConfig({
 			// 允许被哪个搜索引擎抓取
 			UserAgent: '*',
 			// 声明站点地图位置（推荐添加）
-			Sitemap: 'https://iswink.com/sitemap.xml'
+			Sitemap: 'https://iswink.com/sitemap.xml',
 		},
 		sitemap: {
 			gzip: true,
@@ -66,7 +67,7 @@ export default defineNuxtConfig({
 			// 配置 sitemap
 			hostname: 'https://iswink.com',
 			// exclude: ['/admin/**']
-		}
+		},
 	},
 	imports: {
 		presets: [
@@ -86,9 +87,9 @@ export default defineNuxtConfig({
 		defaultLocale: 'zh',
 	},
 	i18n: {
-		seo: true,// 启用自动 hreflang
+		seo: true, // 启用自动 hreflang
 		defaultLocale: 'zh',
-		baseUrl: 'https://www.iswink.com',// 启用自动 hreflang 路由生成绝对路径
+		baseUrl: 'https://www.iswink.com', // 启用自动 hreflang 路由生成绝对路径
 		vueI18n: './locales/i18n.config.ts',
 		detectBrowserLanguage: {
 			useCookie: false,
@@ -103,7 +104,7 @@ export default defineNuxtConfig({
 				// file: './locales/zh.ts',
 			},
 			{
-				//英语
+				// 英语
 				name: 'English',
 				code: 'en',
 				iso: 'en-US',
@@ -111,7 +112,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//葡萄牙语
+				// 葡萄牙语
 				name: 'Portuguese',
 				code: 'pt',
 				iso: 'pt-PT',
@@ -119,7 +120,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//俄语
+				// 俄语
 				name: 'Русский',
 				code: 'ru',
 				iso: 'ru-RU',
@@ -127,7 +128,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//希腊语
+				// 希腊语
 				name: 'Ελληνικά',
 				code: 'el',
 				iso: 'el-GR',
@@ -135,7 +136,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//法语
+				// 法语
 				name: 'Français',
 				code: 'fr',
 				iso: 'fr-FR',
@@ -143,7 +144,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//西班牙语
+				// 西班牙语
 				name: 'Español',
 				code: 'es',
 				iso: 'es-ES',
@@ -151,7 +152,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//德语
+				// 德语
 				name: 'Deutsch',
 				code: 'de',
 				iso: 'de-DE',
@@ -159,7 +160,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//意大利语
+				// 意大利语
 				name: 'Italiano',
 				code: 'it',
 				iso: 'it-IT',
@@ -167,7 +168,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//波兰语
+				// 波兰语
 				name: 'Polski',
 				code: 'pl',
 				iso: 'pl-PL',
@@ -175,7 +176,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//阿拉伯语
+				// 阿拉伯语
 				name: 'العربية',
 				code: 'ar',
 				iso: 'ar-SA',
@@ -183,7 +184,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//土耳其语
+				// 土耳其语
 				name: 'Türkçe',
 				code: 'tr',
 				iso: 'tr-TR',
@@ -191,7 +192,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//日语
+				// 日语
 				name: '日本語',
 				code: 'ja',
 				iso: 'ja-JP',
@@ -199,7 +200,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//印尼语
+				// 印尼语
 				name: 'Bahasa Indonesia',
 				code: 'id',
 				iso: 'id-ID',
@@ -207,7 +208,7 @@ export default defineNuxtConfig({
 				// file: './locales/en.ts',
 			},
 			{
-				//瑞典语
+				// 瑞典语
 				name: 'Svenska',
 				code: 'sv',
 				iso: 'sv-SE',
@@ -238,20 +239,22 @@ export default defineNuxtConfig({
 				},
 			},
 		},
-		build:{
-			rollupOptions:{
-				output:{
-					manualChunks:(id)=>{
-						if(id.includes('element-plugin')) {
-							return 'componentUi';
-						} else if(id.includes('axios')) {
-							return 'axios';
-						} else if(id.includes('lodash')) {
-							return 'lodash';
+		build: {
+			rollupOptions: {
+				output: {
+					manualChunks: (id) => {
+						if (id.includes('element-plugin')) {
+							return 'componentUi'
 						}
-					}
-				}
-			}
+						else if (id.includes('axios')) {
+							return 'axios'
+						}
+						else if (id.includes('lodash')) {
+							return 'lodash'
+						}
+					},
+				},
+			},
 		},
 		server: {
 			proxy: {
@@ -276,7 +279,7 @@ export default defineNuxtConfig({
 			shortDomain: 'iswink',
 			// kefuWsUrl: 'ws://localhost:48080/infra/ws'
 			// kefuWsUrl: 'ws://122.190.56.101:6060/infra/ws'
-			kefuWsUrl: 'ws://api.iswink/infra/ws'
+			kefuWsUrl: 'ws://api.iswink/infra/ws',
 		},
 	},
 	nitro: {
