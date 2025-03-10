@@ -1,6 +1,4 @@
 <script setup>
-import './AddressList.scss'
-
 const props = defineProps({
 	data: { type: Object },
 })
@@ -29,16 +27,19 @@ const data = computed(() => props.data || {})
 				<div class="user-address__card-content--wrapper">
 					{{
 						[
-              data.receiverHouseNumber,
-              data.receiverDetailAddress2,
-              data.receiverDetailAddress,
-              data.receiverAreaName,
-              data.receiverPostCode
+							data.receiverHouseNumber,
+							data.receiverDetailAddress2,
+							data.receiverDetailAddress,
+							data.receiverAreaName,
+							data.receiverPostCode,
 						].join(' ')
 					}}
-
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./AddressList.scss');
+</style>

@@ -8,7 +8,6 @@ import Buttons from './Buttons.vue'
 import Countdown from './Countdown.vue'
 import Coupon from './Coupon.vue'
 import Review from './Review/index.vue'
-import './PC.scss'
 
 const props = defineProps({
 	info: { type: Object as () => ProductDetail, required: true },
@@ -94,7 +93,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 							<app-image
 								class="product__image-content"
 								:src="sku?.picUrl || info.picUrl"
-                :alt="info.name"
+								:alt="info.name"
 							/>
 						</div>
 					</section>
@@ -115,10 +114,10 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 							</el-icon>
 						</h2>
 						<div class="information-section__product-info">
-              <!--sku规格-->
-							<!--<div class="information-section__product-sku-info">-->
-							<!--	{{ sku?.properties.map(p => p.valueName).join(', ') }}-->
-							<!--</div>-->
+							<!-- sku规格 -->
+							<!-- <div class="information-section__product-sku-info"> -->
+							<!--	{{ sku?.properties.map(p => p.valueName).join(', ') }} -->
+							<!-- </div> -->
 							<div class="information-section__product-sku-info">
 								{{ info.introduction }}
 							</div>
@@ -216,7 +215,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 											'sku-section-v4__button--disabled': selected[p.id] === v.id && skuDisabled,
 											'sku-section-v4__button--active': selected[p.id] === v.id,
 										}"
-                    :aria-label="v.name"
+										:aria-label="v.name"
 									>
 										{{ v.name }}
 									</button>
@@ -264,7 +263,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 					</section>
 					<section class="product__section add-cart-section">
 						<div class="add-cart-section__wrap">
-							<Buttons class="add-cart-section__submit-group" @command="emit" aria-label="addCart"/>
+							<Buttons class="add-cart-section__submit-group" aria-label="addCart" @command="emit" />
 						</div>
 					</section>
 				</article>
@@ -279,3 +278,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 		</keep-alive>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./PC.scss');
+</style>

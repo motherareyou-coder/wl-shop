@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import type { CouponTemplate } from '~/types'
-import '~/pages/user/coupon/index.scss'
-
-
 
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
 const userStore = useUserStore()
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
-  title: `${$t('Coupon')} ${$t('appTitle')}`,
+	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	title: `${$t('Coupon')} ${$t('appTitle')}`,
 })
 function getData<CouponTemplate>(params: any) {
 	return $api<CouponTemplate>('promotion/coupon-template/page', {
@@ -116,7 +113,7 @@ function useNowCoupon(c: CouponTemplate) {
 					<div class="user-coupon__item--btn">
 						<button
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
-              :aria-label="coupon.canTake ? $t('Get Now') : $t('Use now')"
+							:aria-label="coupon.canTake ? $t('Get Now') : $t('Use now')"
 							@click="getCoupon(coupon)"
 						>
 							<span class="mi-btn__text">
@@ -130,3 +127,7 @@ function useNowCoupon(c: CouponTemplate) {
 		</app-list>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('~/pages/user/coupon/index.scss');
+</style>

@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app'
+import type { BargainActivity, BargainHelp, CombinationActivityDetail, PayOrderSubmit, ProductDetail, SeckillActivity, SKU } from '~/types'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
-// import './index.scss'
-import type { BargainActivity, BargainHelp, CombinationActivityDetail, PayOrderSubmit, ProductDetail, SeckillActivity, SKU } from '~/types'
 import { useProperties } from './utils'
 
 const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 const { gtag } = useGtag()
-//商品详情埋点
+// 商品详情埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'product-detail'
+	app_name: shortDomain,
+	screen_name: 'product-detail',
 })
 
 const id = route.params.id ? Number(route.params.id) : null
@@ -332,7 +331,7 @@ function handleCommand(type: string, data: any) {
 				return
 			if (bargainRecord.value) {
 				$api<number>('promotion/bargain-help/create', { method: 'post', body: { recordId: bargainRecordId } }).then((res) => {
-					res && ElMessage.info(`${t('恭喜帮砍成功')} ${currency}${res/100}`)
+					res && ElMessage.info(`${t('恭喜帮砍成功')} ${currency}${res / 100}`)
 					bargainRecord.value!.helpCount = (bargainRecord.value!.helpCount || 0) + 1
 					getBargainRecord()
 				})
@@ -369,11 +368,11 @@ const head = computed(() => {
 		title = `${t('砍价')} ${name} ${appTitle}`
 	return {
 		title,
-    link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+		link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
 		meta: [
-        { name: 'keywords', content: info.value?.keyword },
-        { name: 'description', content: info.value?.introduction },
-    ],
+			{ name: 'keywords', content: info.value?.keyword },
+			{ name: 'description', content: info.value?.introduction },
+		],
 	}
 })
 useHead(head)

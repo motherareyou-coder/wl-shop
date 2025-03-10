@@ -6,7 +6,6 @@ import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import type { SeckillActivity, SeckillConfig } from '~/types'
 
-import './AppExclusive.scss'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -133,7 +132,7 @@ function goDetail(item) {
 							<app-image
 								:src="item.picUrl"
 								class="mi-image activity-customize__content-background"
-                :alt="item.name"
+								:alt="item.name"
 							/>
 						</div>
 						<div class="exclusive-offers-footer-bar">
@@ -160,3 +159,7 @@ function goDetail(item) {
 		</Swiper>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./AppExclusive.scss');
+</style>

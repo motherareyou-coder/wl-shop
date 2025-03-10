@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { AfterSale } from '~/types'
-import './PC.scss'
 
 const { t } = useI18n()
 const { data, pagination, getData } = useTablePagination<AfterSale>((p = {}) =>
@@ -126,7 +125,7 @@ function goDetail({ id }: AfterSale) {
 							:to="$path(`/product/${item.id}`)"
 							class="flex mr-2"
 						>
-							<app-image class="h-20 w-20" :src="item.picUrl" :alt="item.spuName"/>
+							<app-image class="h-20 w-20" :src="item.picUrl" :alt="item.spuName" />
 						</nuxt-link>
 						<div class="flex flex-col justify-between flex-1">
 							<span style="color: #000">
@@ -188,3 +187,7 @@ function goDetail({ id }: AfterSale) {
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./PC.scss');
+</style>

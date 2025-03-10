@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { CartItem, Category } from '~/types'
-import './AppHeader.scss'
 
 defineOptions({ name: 'AppHeader' })
 
@@ -129,8 +128,8 @@ function handleDelete(p: CartItem) {
 								<nuxt-link
 									:to="$path('/user/cart')"
 									class="mi-button mi-btn mi-btn--primary cart-footer__submit cart__jump-cart w-full"
-                  alt="userCart"
-                  aria-label="userCart"
+									alt="userCart"
+									aria-label="userCart"
 								>
 									{{ $t('Checkout') }}
 								</nuxt-link>
@@ -223,6 +222,7 @@ function handleDelete(p: CartItem) {
 </template>
 
 <style lang="scss">
+@import url('./AppHeader.scss');
 .site-header--sticky {
 	.mi-badge__content.is-fixed {
 		padding: 2PX 4PX !important;

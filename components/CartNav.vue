@@ -1,6 +1,4 @@
 <script setup>
-import './CartNav.scss'
-
 const props = defineProps({
 	value: { type: Number },
 })
@@ -45,3 +43,7 @@ const activeStep = computed(() => props.value)
 		</div>
 	</nav>
 </template>
+
+<style lang="scss">
+@import url('./CartNav.scss');
+</style>

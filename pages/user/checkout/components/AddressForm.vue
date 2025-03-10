@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { isString } from 'lodash-es'
 import type { Address, City, Country, State } from '~/types'
-import './AddressDialog.scss'
 
 const { t } = useI18n()
 const data = defineModel<Address>({ default: () => ({}) })
@@ -260,4 +259,8 @@ defineExpose({
 		color: var(--text-secondary)
 	}
 }
+</style>
+
+<style lang="scss">
+@import url('./AddressDialog.scss');
 </style>

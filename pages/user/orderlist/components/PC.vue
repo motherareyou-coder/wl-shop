@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { OrderDetail } from '~/types'
 import { getQueryFromStatusType, getStatusText, statusClass, statusOptions } from '../utils'
-import './PC.scss'
 
 const route = useRoute()
 const statusType = ref(-1)
@@ -142,7 +141,7 @@ watch(statusType, resetData)
 													>
 														<app-image
 															:src="item.picUrl"
-                              :alt="item.spuName"
+															:alt="item.spuName"
 														/>
 													</nuxt-link>
 												</div>
@@ -183,3 +182,7 @@ watch(statusType, resetData)
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./PC.scss');
+</style>

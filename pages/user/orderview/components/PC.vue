@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { OrderDetail } from '~/types'
 import { getStatusText, statusClass } from '../../orderlist/utils'
-import './PC.scss'
 
 const props = defineProps({
 	data: { type: Object as () => OrderDetail, required: true },
@@ -148,7 +147,7 @@ const data = computed(() => props.data)
 								<app-image
 									class="h-20 w-20"
 									:src="item.picUrl"
-                  :alt="item.spuName"
+									:alt="item.spuName"
 								/>
 							</nuxt-link>
 							<div class="flex flex-col justify-between flex-1">
@@ -301,3 +300,7 @@ const data = computed(() => props.data)
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./PC.scss');
+</style>

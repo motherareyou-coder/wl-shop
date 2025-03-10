@@ -2,7 +2,6 @@
 import { useTimeoutFn } from '@vueuse/core'
 import type { Category } from '~/types'
 import SubMenu from './SubMenu.vue'
-import './index.scss'
 
 defineOptions({ name: 'AppMenu' })
 const props = defineProps({
@@ -83,3 +82,7 @@ watch(() => route.fullPath, hide)
 		></div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url( './index.scss');
+</style>

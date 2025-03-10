@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { getStatusText, statusClass } from '~/pages/user/orderlist/utils'
 import type { OrderDetail } from '~/types'
-import '~/pages/user/orderlist/components/Mobile.scss'
 
 const emit = defineEmits(['send'])
 const { data, load, loading } = useInfiteLoad<OrderDetail>(p =>
@@ -43,7 +42,7 @@ const appStore = useAppStore()
 					<div class="order-item__content">
 						<div v-for="item in order.items" :key="item.id" class="commodity-item">
 							<div class="commodity-item__image">
-								<app-image class="mr-5 w-16 h-16" :src="item.picUrl" :alt="item.spuName"/>
+								<app-image class="mr-5 w-16 h-16" :src="item.picUrl" :alt="item.spuName" />
 							</div>
 							<div class="commodity-item__info">
 								<p>
@@ -71,3 +70,7 @@ const appStore = useAppStore()
 		</div>
 	</app-modal>
 </template>
+
+<style lang="scss">
+@import url('~/pages/user/orderlist/components/Mobile.scss');
+</style>

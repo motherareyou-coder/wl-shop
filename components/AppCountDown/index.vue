@@ -1,6 +1,4 @@
 <script setup>
-// import './index.scss'
-
 defineOptions({
 	name: 'AppCountDown',
 })

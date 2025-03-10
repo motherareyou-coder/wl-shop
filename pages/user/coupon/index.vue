@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Coupon } from '~/types'
-import './index.scss'
 
 definePageMeta({
 	title: 'Coupons',
@@ -63,32 +62,32 @@ watch(status, reset)
 					class="user-coupon__item--wrapper"
 					:class="{ disabled: coupon.status != 1 }"
 				>
-          <div class="user-coupon__item in">
-            <p class="user-coupon__item--name">
-              <!--{{ coupon.name }} | {{ coupon.description }}-->
-              {{ coupon.name }}
-            </p>
-            <p class="user-coupon__item--value" v-if="coupon.discountType === 1">
-              <!--则扣价格-->
-              <ProductPrice :data="coupon.discountPrice"/>
-              <span class="user-coupon__item--value-span">{{ $t('Full') }}
-                <ProductPrice :data="coupon.usePrice" unit=""/>{{ $t('Available') }}</span>
-            </p>
-            <p class="user-coupon__item--value" v-if="coupon.discountType === 2">
-              <!--折扣价格-->
-              <!--<ProductPrice :data="" />-->
-              {{ coupon.discountPercent / 10.0 }} {{ $t('Discount') }}
-              <span class="user-coupon__item--value-span">{{ $t('Full') }}
-              <ProductPrice :data="coupon.usePrice" unit=""/>{{ $t('Available') }}</span>
-            </p>
-            <p class="user-coupon__item--time">
-              <!--格式化时间为年月日-->
-              {{ $t('Expiry') }}：
-              <app-time :data="coupon.validStartTime" format="YYYY-MM-DD"/>
-              ~
-              <app-time :data="coupon.validEndTime" format="YYYY-MM-DD"/>
-            </p>
-          </div>
+					<div class="user-coupon__item in">
+						<p class="user-coupon__item--name">
+							<!-- {{ coupon.name }} | {{ coupon.description }} -->
+							{{ coupon.name }}
+						</p>
+						<p v-if="coupon.discountType === 1" class="user-coupon__item--value">
+							<!-- 则扣价格 -->
+							<ProductPrice :data="coupon.discountPrice" />
+							<span class="user-coupon__item--value-span">{{ $t('Full') }}
+								<ProductPrice :data="coupon.usePrice" unit="" />{{ $t('Available') }}</span>
+						</p>
+						<p v-if="coupon.discountType === 2" class="user-coupon__item--value">
+							<!-- 折扣价格 -->
+							<!-- <ProductPrice :data="" /> -->
+							{{ coupon.discountPercent / 10.0 }} {{ $t('Discount') }}
+							<span class="user-coupon__item--value-span">{{ $t('Full') }}
+								<ProductPrice :data="coupon.usePrice" unit="" />{{ $t('Available') }}</span>
+						</p>
+						<p class="user-coupon__item--time">
+							<!-- 格式化时间为年月日 -->
+							{{ $t('Expiry') }}：
+							<app-time :data="coupon.validStartTime" format="YYYY-MM-DD" />
+							~
+							<app-time :data="coupon.validEndTime" format="YYYY-MM-DD" />
+						</p>
+					</div>
 					<div class="user-coupon__item--btn">
 						<nuxt-link
 							v-if="coupon.status === 1"
@@ -105,7 +104,7 @@ watch(status, reset)
 						</nuxt-link>
 						<button
 							v-if="coupon.status === 2"
-              :aria-label="$t('used')"
+							:aria-label="$t('used')"
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
 						>
 							<span class="mi-btn__text">
@@ -114,7 +113,7 @@ watch(status, reset)
 						</button>
 						<button
 							v-if="coupon.status === 3"
-              :aria-label="$t('expired')"
+							:aria-label="$t('expired')"
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
 						>
 							<span class="mi-btn__text">
@@ -128,3 +127,7 @@ watch(status, reset)
 		</div>
 	</section>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>

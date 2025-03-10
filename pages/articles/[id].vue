@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import type { Article } from '~/types'
 import ArticleItem from './components/ArticleItem.vue'
-import './detail.scss'
 
 const route = useRoute()
 const id = route.params.id
-const {shortDomain,domain} = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 const categoryId = Number(route.query.categoryId || '')
 
 const { gtag } = useGtag()
-//文章详情页面埋点
+// 文章详情页面埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'articles-detail'
+	app_name: shortDomain,
+	screen_name: 'articles-detail',
 })
 const { data } = await useAPI<Article>(
 	'promotion/article/get',
@@ -30,14 +29,14 @@ const { data: recommends } = await useAsyncData<Article>(() =>
 	}).then(res => res.list),
 )
 useHead({
-  // title: `${t('home')} ${t('appTitle')}`,
-  // title: ` ${t('appTitle')}`,
-  title: `${shortDomain} ${ data.value?.title }`,
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
-  meta: [
-    {name: 'keywords', content: `${ data.value?.keyWords }`},
-    {name: 'description', content: `${ data.value?.introduction }`}
-  ],
+	// title: `${t('home')} ${t('appTitle')}`,
+	// title: ` ${t('appTitle')}`,
+	title: `${shortDomain} ${data.value?.title}`,
+	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	meta: [
+		{ name: 'keywords', content: `${data.value?.keyWords}` },
+		{ name: 'description', content: `${data.value?.introduction}` },
+	],
 })
 </script>
 
@@ -84,3 +83,7 @@ useHead({
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url( './detail.scss');
+</style>

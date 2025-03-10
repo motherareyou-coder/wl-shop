@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SkuSelect from '~/pages/product-list/components/SkuSelect.vue'
 import type { ProductBrowseHistory } from '~/types'
-import './Recommends.scss'
 
 const { data: recommends } = await useAsyncData<ProductBrowseHistory[]>(() =>
 	$api('product/browse-history/page', {
@@ -33,7 +32,7 @@ function addToCart(r: ProductBrowseHistory) {
 					<app-image
 						class="cart-recommend__image w-full"
 						:src="r.picUrl"
-            :alt="r.spuName"
+						:alt="r.spuName"
 					/>
 				</nuxt-link>
 				<div class="cart-recommend__product-info">
@@ -61,3 +60,7 @@ function addToCart(r: ProductBrowseHistory) {
 		<SkuSelect v-if="skuState" :data="skuState" />
 	</article>
 </template>
+
+<style lang="scss">
+@import url('./Recommends.scss');
+</style>

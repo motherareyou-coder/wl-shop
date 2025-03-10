@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { OrderDetail } from '~/types'
 import { getQueryFromStatusType, getStatusText, statusClass, statusOptions } from '../utils'
-import './Mobile.scss'
 
 const route = useRoute()
 const statusType = ref(-1)
@@ -63,7 +62,7 @@ watch(statusType, reset)
 									<app-image
 										class="mr-5 w-16 h-16"
 										:src="item.picUrl"
-                    :alt="item.spuName"
+										:alt="item.spuName"
 									/>
 								</div>
 								<div class="commodity-item__info">
@@ -104,6 +103,7 @@ watch(statusType, reset)
 </template>
 
 <style lang="scss">
+@import url('./Mobile.scss');
 .order-list-header--mobile {
 	position: sticky;
 	top: var(--header-height);

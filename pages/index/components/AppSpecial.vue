@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { chunk } from 'lodash-es'
 import type { ProductSpu } from '~/types'
-import './AppSpecial.scss'
 
 const { data: specialList } = await useAPI<ProductSpu[]>('product/spu/get-main-show-spu', { params: { count: 6 } })
 
@@ -19,7 +18,7 @@ function handleClick(d: ProductSpu) {
 			<div class="store-title-flex store-title-flex--center">
 				<div class="store-title__content">
 					<h2 class="store-title store-title--center store-title--default">
-            {{ $t('Special offers') }}
+						{{ $t('Special offers') }}
 					</h2>
 				</div>
 			</div>
@@ -56,13 +55,13 @@ function handleClick(d: ProductSpu) {
 					</div>
 				</div>
 				<div class="store-goods__product">
-					<app-image :src="d.picUrl" :alt="d.name"/>
+					<app-image :src="d.picUrl" :alt="d.name" />
 				</div>
 			</div>
 		</section>
 	</section>
 </template>
 
-<style scoped>
-
+<style lang="scss">
+@import url('./AppSpecial.scss');
 </style>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { AfterSale } from '~/types'
-import './Mobile.scss'
 
 const { t } = useI18n()
 const { data, load, loading, pagination, total } = useInfiteLoad<AfterSale>(params =>
@@ -130,7 +129,7 @@ function handleCancel({ id }: AfterSale) {
 								class="commodity-item"
 							>
 								<div class="commodity-item__image">
-									<app-image class="mr-5 h-20 w-20" :src="item.picUrl" :alt="item.spuName"/>
+									<app-image class="mr-5 h-20 w-20" :src="item.picUrl" :alt="item.spuName" />
 								</div>
 								<div class="commodity-item__info">
 									<p style="color: #000">
@@ -173,3 +172,7 @@ function handleCancel({ id }: AfterSale) {
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./Mobile.scss');
+</style>

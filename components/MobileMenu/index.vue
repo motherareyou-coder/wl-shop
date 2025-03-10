@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Category } from '~/types'
-import './index.scss'
 
 defineOptions({ name: 'MobileMenu' })
 const props = defineProps({
@@ -74,7 +73,7 @@ watch(
 								<app-image
 									class="user-info__avatar"
 									:src="userStore.info?.avatar || '/avatar.png'"
-                  alt="userNameAvatar"
+									alt="userNameAvatar"
 								/>
 							</div>
 							<span class="user-info__nickname">
@@ -123,7 +122,7 @@ watch(
 							<div class="submenu-product submenu-product-mobile">
 								<div class="flex flex-col">
 									<nuxt-link v-for="item in cat.childProduct" :key="item.id" :to="$path(`/product/${item.id}`)" class="header-product-item header-product-item-mobile">
-										<app-image class="mi-image header-product-item__image" :src="item.picUrl" :alt="item.name"/>
+										<app-image class="mi-image header-product-item__image" :src="item.picUrl" :alt="item.name" />
 										<div class="header-product-item__info">
 											<div class="header-product-item__title">
 												{{ item.name }}
@@ -150,6 +149,10 @@ watch(
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url( './index.scss');
+</style>
 
 <style lang="scss" scoped>
 .mi-collapse{

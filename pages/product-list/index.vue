@@ -2,7 +2,6 @@
 import type { Category } from '~/types'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
-import './index.scss'
 
 defineOptions({ name: 'ProductListCache' })
 const route = useRoute()
@@ -10,12 +9,12 @@ const productScopeValues = ref([])
 const categoryId = ref<number | string | null>(null)
 const query = ref(route.query.query)
 const keyword = ref()
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 const { gtag } = useGtag()
-//商品列表页面埋点
+// 商品列表页面埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'product-list'
+	app_name: shortDomain,
+	screen_name: 'product-list',
 })
 watchEffect(() => {
 	query.value = route.query.query
@@ -23,7 +22,7 @@ watchEffect(() => {
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
 	title: `${$t('Product List')} ${$t('appTitle')}`,
 })
 
@@ -155,7 +154,7 @@ const activeNames = ref(categories.value?.map(d => d.id))
 				</div>
 				<div class="condition-content">
 					<el-collapse v-model="activeNames" class="mi-accordion filter-accordion">
-						<button class="mi-collapse-item__header is-active" @click="handleClick()" :aria-label="$t('All products')">
+						<button class="mi-collapse-item__header is-active" :aria-label="$t('All products')" @click="handleClick()">
 							{{ $t('All products') }}
 						</button>
 						<el-collapse-item v-for="cat in categories" :key="cat.id" :title="cat.name" :name="cat.id">
@@ -237,3 +236,7 @@ const activeNames = ref(categories.value?.map(d => d.id))
 		</div>
 	</main>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>

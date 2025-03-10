@@ -1,6 +1,5 @@
 <script setup>
 import AddressList from './checkout/components/AddressList.vue'
-import './address.scss'
 
 definePageMeta({
 	title: 'Delivery address',
@@ -22,3 +21,7 @@ definePageMeta({
 		</div>
 	</section>
 </template>
+
+<style lang="scss">
+@import url('./address.scss');
+</style>

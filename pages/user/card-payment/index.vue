@@ -1,6 +1,4 @@
 <script setup>
-import './index.scss'
-
 const route = useRoute()
 const id = route.query.orderId
 
@@ -94,6 +92,10 @@ const data = ref({})
 		</main>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>
 
 <style lang="scss" scoped>
 .mi-form {

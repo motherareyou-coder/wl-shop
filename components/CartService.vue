@@ -1,6 +1,4 @@
 <script setup>
-import './CartService.scss'
-
 defineOptions({ name: 'CartService' })
 const { shortDomain } = useRuntimeConfig().public
 const tab = ref('1')
@@ -77,17 +75,21 @@ const tab = ref('1')
 				<div class="why-buy-from-mi__separator"></div>
 				<div class="why-buy-from-mi__tel">
 					Need more help? Chat now
-          <!--whatsApp-->
-          <!--<a href="https://wa.me/1234567890">WhatsApp</a>-->
-          <!--<a href="https://wa.me/1234567890">WhatsApp</a>-->
-          <a href="https://t.me/is_wink" target="_blank" aria-label="chatNowTelegram">Telegram</a>
-           or <!--邮件-->
-          <a href="mailto:iswink@iswink.com" target="_blank" aria-label="chatNowEmail">Email</a>
+					<!-- whatsApp -->
+					<!-- <a href="https://wa.me/1234567890">WhatsApp</a> -->
+					<!-- <a href="https://wa.me/1234567890">WhatsApp</a> -->
+					<a href="https://t.me/is_wink" target="_blank" aria-label="chatNowTelegram">Telegram</a>
+					or <!-- 邮件 -->
+					<a href="mailto:iswink@iswink.com" target="_blank" aria-label="chatNowEmail">Email</a>
 				</div>
 			</el-collapse-item>
 		</el-collapse>
 	</section>
 </template>
+
+<style lang="scss">
+@import url('./CartService.scss');
+</style>
 
 <style lang="scss" scoped>
 .why-buy-from-mi {

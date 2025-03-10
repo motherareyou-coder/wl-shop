@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { uniqBy } from 'lodash-es'
 import type { ProductBrowseHistory, ProductDetail, SKU } from '~/types'
-import '~/pages/product/components/PC.scss'
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -54,7 +53,7 @@ watch(selected, (v) => {
 const count = ref(1)
 
 const dynamicMax = computed(() => {
-  return sku.value?.stock == 0 ? 1 : sku.value?.stock
+	return sku.value?.stock == 0 ? 1 : sku.value?.stock
 })
 
 function handleClick(pId: number, vId: number) {
@@ -71,9 +70,9 @@ function handleBuy() {
 	}, sku.value!, count.value).then(() => {
 		visible.value = false
 		ElMessage.info({
-      message: t('Add to cart'),
-      duration: 800
-    })
+			message: t('Add to cart'),
+			duration: 800,
+		})
 	})
 }
 
@@ -98,7 +97,7 @@ const appStore = useAppStore()
 					<aside class="product__aside">
 						<section class="product__image-wrapper">
 							<div class="product__image">
-								<app-image class="max-w-full shrink-0 product__image-content" :src="sku?.picUrl || info.picUrl" :alt="info.name || info.spuName"/>
+								<app-image class="max-w-full shrink-0 product__image-content" :src="sku?.picUrl || info.picUrl" :alt="info.name || info.spuName" />
 							</div>
 						</section>
 					</aside>
@@ -139,7 +138,7 @@ const appStore = useAppStore()
 												'sku-section-v4__button--sold-out': selected[p.id] === v.id && !sku?.stock,
 												'sku-section-v4__button--active': selected[p.id] === v.id,
 											}"
-                      :aria-label="v.name"
+											:aria-label="v.name"
 										>
 											{{ v.name }}
 										</button>
@@ -155,12 +154,12 @@ const appStore = useAppStore()
 							</h3>
 							<div class="quantity-section__container">
 								<div class="quantity-section-v4__content">
-									<!--<el-input-number-->
-									<!--	v-model="count"-->
-									<!--	:step="1"-->
-									<!--	:min="1"-->
-									<!--	:max="sku?.stock"-->
-									<!--/>-->
+									<!-- <el-input-number -->
+									<!--	v-model="count" -->
+									<!--	:step="1" -->
+									<!--	:min="1" -->
+									<!--	:max="sku?.stock" -->
+									<!-- /> -->
 									<el-input-number
 										v-model="count"
 										:step="1"
@@ -187,7 +186,7 @@ const appStore = useAppStore()
 			</main>
 			<main v-if="appStore.isMobile" class="product--mobile" style="background:#fff;overflow: visible;">
 				<section class="product--mobile__section" style="display: block;">
-					<app-image class="w-32 h-32" :src="sku?.picUrl || info.picUrl" :alt="info.name"/>
+					<app-image class="w-32 h-32" :src="sku?.picUrl || info.picUrl" :alt="info.name" />
 				</section>
 				<section class="product--mobile__section product-information">
 					<div class="product-information__wrapper " style="padding-left: 0;padding-right: 0;">
@@ -230,7 +229,7 @@ const appStore = useAppStore()
 												'sku-section-v4__button--sold-out': selected[p.id] === v.id && !sku?.stock,
 												'sku-section-v4__button--active': selected[p.id] === v.id,
 											}"
-                      :aria-label="v.name"
+											:aria-label="v.name"
 										>
 											<span>{{ v.name }}</span>
 										</button>
@@ -246,17 +245,17 @@ const appStore = useAppStore()
 							</h3>
 							<div class="quantity-section__container">
 								<div class="quantity-section-v4__content">
-									<!--<el-input-number-->
-									<!--	v-model="count"-->
-									<!--	:min="1"-->
-									<!--	:max="sku?.stock"-->
-									<!--/>-->
-                  <el-input-number
-                      v-model="count"
-                      :step="1"
-                      :min="1"
-                      :max="dynamicMax"
-                  />
+									<!-- <el-input-number -->
+									<!--	v-model="count" -->
+									<!--	:min="1" -->
+									<!--	:max="sku?.stock" -->
+									<!-- /> -->
+									<el-input-number
+										v-model="count"
+										:step="1"
+										:min="1"
+										:max="dynamicMax"
+									/>
 								</div>
 							</div>
 						</section>
@@ -279,6 +278,7 @@ const appStore = useAppStore()
 </template>
 
 <style lang="scss">
+@import url( '~/pages/product/components/PC.scss');
 .sku-select {
 	@media screen and (min-width: 721px)and (max-width:1024px) {
 		--mi-dialog-width:75vw !important;

@@ -1,6 +1,4 @@
 <script setup>
-import './index.scss'
-
 defineOptions({ name: 'AppSearch' })
 
 const show = defineModel()
@@ -35,3 +33,7 @@ function goSearch() {
 		</div>
 	</el-drawer>
 </template>
+
+<style lang="scss">
+@import url( './index.scss');
+</style>

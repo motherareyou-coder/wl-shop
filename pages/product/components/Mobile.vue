@@ -7,7 +7,6 @@ import Buttons from './Buttons.vue'
 import Countdown from './Countdown.vue'
 import Coupon from './Coupon.vue'
 import Review from './Review/index.vue'
-import './Mobile.scss'
 
 const props = defineProps({
 	info: { type: Object as () => ProductDetail, required: true },
@@ -54,7 +53,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 			<div class="xm-navbar__title">
 				<span class="xm-text header">{{ info.name }} </span>
 			</div>
-			<Buttons class="xm-navbar-buynow" @command="emit" aria-label="buyNow"/>
+			<Buttons class="xm-navbar-buynow" aria-label="buyNow" @command="emit" />
 		</div>
 	</div>
 	<main class="product--mobile">
@@ -62,7 +61,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 			<app-image
 				class="gallery-slider__image"
 				:src="sku?.picUrl || info.picUrl"
-        :alt="info.name"
+				:alt="info.name"
 			/>
 		</section>
 		<section class="product--mobile__section product-information">
@@ -135,7 +134,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 										'sku-section-v4__button--disabled': selected[p.id] === v.id && skuDisabled,
 										'sku-section-v4__button--active': selected[p.id] === v.id,
 									}"
-                  :aria-label="v.name"
+									:aria-label="v.name"
 								>
 									<span>{{ v.name }}</span>
 								</button>
@@ -227,3 +226,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 		</el-drawer>
 	</main>
 </template>
+
+<style lang="scss">
+@import url('./Mobile.scss');
+</style>

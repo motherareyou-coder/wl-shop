@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import noLoginUserPic from '@/assets/imgs/nologin-user.png'
+import returnsPic from '@/assets/imgs/Returns.png'
+import reviewsPic from '@/assets/imgs/Reviews.png'
+import shippingPic from '@/assets/imgs/Shipping.png'
+import unpaidPic from '@/assets/imgs/Unpaid.png'
 import addressIcon from '@/assets/imgs/user/address.png'
 import couponIcon from '@/assets/imgs/user/coupon.png'
 import favoritesIcon from '@/assets/imgs/user/Favorites.png'
@@ -7,24 +12,17 @@ import levelIcon from '@/assets/imgs/user/level.png'
 import myOrdersIcon from '@/assets/imgs/user/myOrders.png'
 import signIcon from '@/assets/imgs/user/sign.png'
 import BgImg from '@/assets/imgs/user-center-bg.jpg'
-import noLoginUserPic from '@/assets/imgs/nologin-user.png'
-import returnsPic from '@/assets/imgs/Returns.png'
-import unpaidPic from '@/assets/imgs/Unpaid.png'
-import reviewsPic from '@/assets/imgs/Reviews.png'
-import shippingPic from '@/assets/imgs/Shipping.png'
 import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
 import type { PayWallet } from '~/types'
-import './index.scss'
-
 
 const appStore = useAppStore()
 const userStore = useUserStore()
 
 const route = useRoute()
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
-  title: `${$t('user')} ${$t('appTitle')}`,
+	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	title: `${$t('user')} ${$t('appTitle')}`,
 })
 const user = computed(() => userStore.user)
 
@@ -229,7 +227,7 @@ function logout() {
 							<app-image
 								class="account-avatar"
 								:src="user?.avatar || noLoginUserPic"
-                :alt="user.nickname"
+								:alt="user.nickname"
 							/>
 						</section>
 						<div class="info-box">
@@ -410,7 +408,7 @@ function logout() {
 		<button
 			v-if="appStore.isMobile"
 			class="sign-out__item"
-      :aria-label="$t('Sign Out')"
+			:aria-label="$t('Sign Out')"
 			@click.prevent="logout"
 		>
 			<i class="micon micon-sign-out sign-out__icon"></i>
@@ -441,7 +439,7 @@ function logout() {
 								<app-image
 									class="responsive-image clip-image clip-image--shadow avatar-img"
 									:src="formState.data.avatar"
-                  :alt="user.nickname"
+									:alt="user.nickname"
 								/>
 								<div class="edit-modal-avatar_edit">
 									<i class="micon micon-edit1 upload-avatar__icon"></i>
@@ -522,3 +520,7 @@ function logout() {
 		</app-modal>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>

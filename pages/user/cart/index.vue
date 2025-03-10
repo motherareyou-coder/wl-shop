@@ -5,21 +5,18 @@ import QtyInput from './components/QtyInput.vue'
 import Recommends from './components/Recommends.vue'
 import { useCheckOut } from './utils'
 
-import './index.scss'
-
 defineOptions({ name: 'Cart' })
 definePageMeta({
 	needLogin: false,
 })
 
-
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 
 const { gtag } = useGtag()
-//购物车页面埋点
+// 购物车页面埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'cart'
+	app_name: shortDomain,
+	screen_name: 'cart',
 })
 const route = useRoute()
 const router = useRouter()
@@ -27,8 +24,8 @@ const appStore = useAppStore()
 const userStore = useUserStore()
 const cartStore = useCartStore()
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
-  title: `${$t('Cart')} ${$t('appTitle')}`,
+	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	title: `${$t('Cart')} ${$t('appTitle')}`,
 })
 const { loading, wrapLoading } = useLoading(false)
 provide('loading', loading)
@@ -157,8 +154,8 @@ function handleSubmit() {
 							/>
 							<button
 								class="cursor-pointer cart-header__delete"
+								:aria-label="$t('Delete')"
 								@click.prevent="handleDeleteAll"
-                :aria-label="$t('Delete')"
 							>
 								{{ $t('Delete') }}
 							</button>
@@ -174,8 +171,8 @@ function handleSubmit() {
 							<div class="cart-delivery__spacer"></div>
 							<button
 								class="mi-btn--link cart-delivery__delete"
+								:aria-label="$t('Delete')"
 								@click.prevent="handleDeleteAll"
-                :aria-label="$t('Delete')"
 							>
 								{{ $t('Delete') }}
 							</button>
@@ -208,7 +205,7 @@ function handleSubmit() {
 											<app-image
 												class="cart-item__image-content"
 												:src="item.sku?.picUrl || item.spu?.picUrl"
-                        :alt="item.spu?.name"
+												:alt="item.spu?.name"
 											/>
 										</nuxt-link>
 									</div>
@@ -258,8 +255,8 @@ function handleSubmit() {
 												<button
 													class="mi-btn mi-btn--icon"
 													style="color: var(--brand-black-30);"
+													aria-label="delete"
 													@click.prevent="handleDelete(item)"
-                          aria-label="delete"
 												>
 													<i class="micon micon-delete"></i>
 												</button>
@@ -509,3 +506,7 @@ function handleSubmit() {
 		/>
 	</el-form>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>

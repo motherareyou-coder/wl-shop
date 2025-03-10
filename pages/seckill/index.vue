@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import type { SeckillActivity, SeckillConfig } from '~/types'
 import Picks from './components/Picks.vue'
-import './index.scss'
 
-
-
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 const route = useRoute()
 const { gtag } = useGtag()
-//秒杀活动页面埋点
+// 秒杀活动页面埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'seckill-list'
+	app_name: shortDomain,
+	screen_name: 'seckill-list',
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
-  title: `${$t('Daily Picks')} ${$t('appTitle')}`,
+	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	title: `${$t('Daily Picks')} ${$t('appTitle')}`,
 })
 const appStore = useAppStore()
 
@@ -102,3 +99,7 @@ onBeforeUnmount(() => clearInterval(timer))
 		</section>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>

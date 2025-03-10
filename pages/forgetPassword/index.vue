@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import './index.scss'
-
 definePageMeta({
 	layout: 'empty',
 })
 
-const {shortDomain,domain} = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 const msg = $t('Password is inconsistent')
 const form = ref({ account: '', password: '', confirmPassword: '', code: '' })
 const rules = {
@@ -119,9 +117,13 @@ function updatePsw() {
 					</div>
 				</div>
 				<div class="mi-copyright">
-          Copyright © 2024 - 2034 {{ shortDomain }}.All Rights Reserved
+					Copyright © 2024 - 2034 {{ shortDomain }}.All Rights Reserved
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>

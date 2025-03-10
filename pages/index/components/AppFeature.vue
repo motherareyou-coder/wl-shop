@@ -3,7 +3,6 @@ import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import type { Category } from '~/types'
 
-import './AppFeature.scss'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -77,7 +76,7 @@ function slideTo(i: number) {
 									<app-image
 										class="mi-image item-image"
 										:src="c.picUrl"
-                    :alt="c.name"
+										:alt="c.name"
 									/>
 								</div>
 								<div class="item-info">
@@ -105,3 +104,7 @@ function slideTo(i: number) {
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./AppFeature.scss');
+</style>

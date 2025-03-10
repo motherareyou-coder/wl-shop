@@ -2,7 +2,6 @@
 import type { Review } from '~/types'
 import Mobile from './Mobile.vue'
 import PC from './PC.vue'
-import './index.scss'
 
 const route = useRoute()
 const id = route.params.id
@@ -56,3 +55,7 @@ const appStore = useAppStore()
 		<div v-loading="loading"></div>
 	</div>
 </template>
+
+<style lang="scss">
+@import url('./index.scss');
+</style>
