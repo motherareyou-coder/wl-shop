@@ -142,6 +142,7 @@ const appStore = useAppStore()
 				>
 					<button
 						class="controller__button navigator__button navigator__button--prev with-transition"
+            aria-label="prev"
 						@click="prev"
 					>
 						<i
@@ -155,6 +156,7 @@ const appStore = useAppStore()
 				>
 					<button
 						class="controller__button navigator__button navigator__button--next with-transition"
+            aria-label="next"
 						@click="next"
 					>
 						<i
@@ -174,6 +176,7 @@ const appStore = useAppStore()
 								'controller__bar--current': realIndex === i,
 							}"
 							class="controller__button controller__bar with-transition"
+              aria-label="slide"
 							@click.prevent="slideTo(i)"
 						>
 							<span
@@ -184,6 +187,7 @@ const appStore = useAppStore()
 						</button>
 						<button
 							class="controller__button controller__icon-container with-transition"
+              aria-label="resume"
 						>
 							<el-icon class="controller__icon with-transition">
 								<ElIconVideoPlay

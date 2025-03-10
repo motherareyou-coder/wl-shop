@@ -98,7 +98,7 @@ const appStore = useAppStore()
 					<aside class="product__aside">
 						<section class="product__image-wrapper">
 							<div class="product__image">
-								<app-image class="max-w-full shrink-0 product__image-content" :src="sku?.picUrl || info.picUrl" />
+								<app-image class="max-w-full shrink-0 product__image-content" :src="sku?.picUrl || info.picUrl" :alt="info.name || info.spuName"/>
 							</div>
 						</section>
 					</aside>
@@ -139,6 +139,7 @@ const appStore = useAppStore()
 												'sku-section-v4__button--sold-out': selected[p.id] === v.id && !sku?.stock,
 												'sku-section-v4__button--active': selected[p.id] === v.id,
 											}"
+                      :aria-label="v.name"
 										>
 											{{ v.name }}
 										</button>
@@ -186,7 +187,7 @@ const appStore = useAppStore()
 			</main>
 			<main v-if="appStore.isMobile" class="product--mobile" style="background:#fff;overflow: visible;">
 				<section class="product--mobile__section" style="display: block;">
-					<app-image class="w-32 h-32" :src="sku?.picUrl || info.picUrl" />
+					<app-image class="w-32 h-32" :src="sku?.picUrl || info.picUrl" :alt="info.name"/>
 				</section>
 				<section class="product--mobile__section product-information">
 					<div class="product-information__wrapper " style="padding-left: 0;padding-right: 0;">
@@ -229,6 +230,7 @@ const appStore = useAppStore()
 												'sku-section-v4__button--sold-out': selected[p.id] === v.id && !sku?.stock,
 												'sku-section-v4__button--active': selected[p.id] === v.id,
 											}"
+                      :aria-label="v.name"
 										>
 											<span>{{ v.name }}</span>
 										</button>

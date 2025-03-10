@@ -152,6 +152,7 @@ function submit() {
                   <nuxt-link
                       class="site-footer__follow-link"
                       to="https://www.facebook.com/"
+                      aria-label="Facebook"
                   >
                     <Icon name="icon:facebook"/>
                   </nuxt-link>
@@ -160,6 +161,7 @@ function submit() {
                   <nuxt-link
                       class="site-footer__follow-link"
                       to="https://www.youtube.com/"
+                      aria-label="Youtube"
                   >
                     <Icon name="icon:youtube"/>
                   </nuxt-link>
@@ -168,6 +170,7 @@ function submit() {
                   <nuxt-link
                       class="site-footer__follow-link"
                       to="https://www.instagram.com/"
+                      aria-label="Instagram"
                   >
                     <Icon name="icon:instagram"/>
                   </nuxt-link>
@@ -176,6 +179,7 @@ function submit() {
                   <nuxt-link
                       class="site-footer__follow-link"
                       to="https://www.twitter.com/"
+                      aria-label="Twitter"
                   >
                     <Icon name="icon:twitter"/>
                   </nuxt-link>
@@ -184,6 +188,7 @@ function submit() {
                   <nuxt-link
                       class="site-footer__follow-link"
                       to="https://www.tiktok.com/"
+                      aria-label="Tiktok"
                   >
                     <Icon name="icon:tiktok"/>
                   </nuxt-link>
@@ -216,6 +221,7 @@ function submit() {
                   >
                   <button
                       class="site-footer__submit"
+                      :aria-label="$t('Enter email address')"
                       @click.prevent="submit"
                   >
                     <el-icon

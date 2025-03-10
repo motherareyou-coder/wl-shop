@@ -10,7 +10,7 @@ const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
-const { shortDomain } = useRuntimeConfig().public
+const { shortDomain,domain } = useRuntimeConfig().public
 const { gtag } = useGtag()
 //商品详情埋点
 gtag('event', 'screen_view', {
@@ -369,6 +369,7 @@ const head = computed(() => {
 		title = `${t('砍价')} ${name} ${appTitle}`
 	return {
 		title,
+    link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
 		meta: [
         { name: 'keywords', content: info.value?.keyword },
         { name: 'description', content: info.value?.introduction },

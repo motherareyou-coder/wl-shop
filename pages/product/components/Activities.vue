@@ -35,7 +35,7 @@ const finalData = computed(() => {
 					<el-tag>{{ a.name }}</el-tag>
 				</li>
 			</ul>
-			<button class="events-info__more">
+			<button class="events-info__more" aria-label="more">
 				<el-icon>
 					<ElIconArrowRight />
 				</el-icon>
@@ -44,7 +44,7 @@ const finalData = computed(() => {
 		<section v-else class="product__section product__section-spacer offers-section">
 			<ul class="offers-section__list">
 				<li v-for="a in finalData" :key="a.typeTitle" class="offers-section__item">
-					<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+					<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" :alt="a.name"></picture>
 					<span>
 						{{ a.typeTitle }}:
 						{{ a.name }}

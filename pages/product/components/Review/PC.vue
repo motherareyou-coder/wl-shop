@@ -30,7 +30,7 @@ const props = defineProps({
 				</div>
 				<div class="comment-multimedia hasBorder">
 					<div v-for="(img, index) in r.picUrls" :key="img" class="comment-image">
-						<app-image :src="img" :preview-src-list="r.picUrls" :initial-index="index" />
+						<app-image :src="img" :preview-src-list="r.picUrls" :initial-index="index" :alt="r.spuName"/>
 					</div>
 				</div>
 				<div v-if="r.replyContent" class="comment-additional pl-6">

@@ -11,11 +11,10 @@ defineOptions({ name: 'Cart' })
 definePageMeta({
 	needLogin: false,
 })
-useHead({
-	title: `${$t('Cart')} ${$t('appTitle')}`,
-})
 
-const { shortDomain } = useRuntimeConfig().public
+
+const { shortDomain,domain } = useRuntimeConfig().public
+
 const { gtag } = useGtag()
 //购物车页面埋点
 gtag('event', 'screen_view', {
@@ -27,7 +26,10 @@ const router = useRouter()
 const appStore = useAppStore()
 const userStore = useUserStore()
 const cartStore = useCartStore()
-
+useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  title: `${$t('Cart')} ${$t('appTitle')}`,
+})
 const { loading, wrapLoading } = useLoading(false)
 provide('loading', loading)
 
@@ -156,6 +158,7 @@ function handleSubmit() {
 							<button
 								class="cursor-pointer cart-header__delete"
 								@click.prevent="handleDeleteAll"
+                :aria-label="$t('Delete')"
 							>
 								{{ $t('Delete') }}
 							</button>
@@ -172,6 +175,7 @@ function handleSubmit() {
 							<button
 								class="mi-btn--link cart-delivery__delete"
 								@click.prevent="handleDeleteAll"
+                :aria-label="$t('Delete')"
 							>
 								{{ $t('Delete') }}
 							</button>
@@ -204,6 +208,7 @@ function handleSubmit() {
 											<app-image
 												class="cart-item__image-content"
 												:src="item.sku?.picUrl || item.spu?.picUrl"
+                        :alt="item.spu?.name"
 											/>
 										</nuxt-link>
 									</div>
@@ -254,6 +259,7 @@ function handleSubmit() {
 													class="mi-btn mi-btn--icon"
 													style="color: var(--brand-black-30);"
 													@click.prevent="handleDelete(item)"
+                          aria-label="delete"
 												>
 													<i class="micon micon-delete"></i>
 												</button>
@@ -294,7 +300,7 @@ function handleSubmit() {
 												class="cart-summary__item-fee"
 												:data="info.promotions.reduce((t, c) => t - c.discountPrice, 0)"
 											/>
-											<button class="cart-summary__item-more">
+											<button class="cart-summary__item-more" aria-label="cart-summary">
 												<el-icon
 													class="cursor-pointer cart-summary__item-more-icon"
 													@click.prevent="open1 = !open1"

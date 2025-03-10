@@ -14,7 +14,7 @@ const skuDisabled = inject('skuDisabled') as Ref<boolean>
 	<section v-if="data?.length">
 		<ul class="offers-section__list">
 			<li v-for="a in data" :key="a.id" class="offers-section__item flex items-center ">
-				<app-image :src="a.avatar" class="w-8 h-8 rounded-full mr-2" />
+				<app-image :src="a.avatar" class="w-8 h-8 rounded-full mr-2" :alt="a.spuName"/>
 				<span>
 					{{ $t("还差x人成团", { number: a.userCount }) }}
 				</span>

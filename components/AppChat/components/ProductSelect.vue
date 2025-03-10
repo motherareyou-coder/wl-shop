@@ -30,6 +30,7 @@ const appStore = useAppStore()
 						<app-image
 							class="shrink-0 cursor-pointer w-28 h-28"
 							:src="item.picUrl"
+              :alt="item.spuName"
 						/>
 						<div
 							class="w-full flex flex-col"

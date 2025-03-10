@@ -105,6 +105,7 @@ watch(status, reset)
 						</nuxt-link>
 						<button
 							v-if="coupon.status === 2"
+              :aria-label="$t('used')"
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
 						>
 							<span class="mi-btn__text">
@@ -113,6 +114,7 @@ watch(status, reset)
 						</button>
 						<button
 							v-if="coupon.status === 3"
+              :aria-label="$t('expired')"
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
 						>
 							<span class="mi-btn__text">

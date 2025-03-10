@@ -10,7 +10,7 @@ import it from './it'
 import pl from './pl'
 import ar from './ar'
 import tr from './tr'
-import jp from './jp'
+import ja from './ja'
 import id from './id'
 import sv from './sv'
 
@@ -30,7 +30,7 @@ export default defineI18nConfig(() => ({
 		pl,
 		ar,
 		tr,
-		jp,
+		ja,
 		id,
 		sv,
 	},

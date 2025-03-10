@@ -11,7 +11,7 @@ const { data } = await useAPI<CombinationRecordDetail>('promotion/combination-re
 <template>
 	<div v-if="data">
 		<div v-for="item in data.memberRecords" :key="item.avatar" class="">
-			<app-image :src="item.avatar" class="w-12 h-12 inline-block rounded-full" />
+			<app-image :src="item.avatar" class="w-12 h-12 inline-block rounded-full" :alt="item.spuName"/>
 		</div>
 	</div>
 </template>

@@ -130,7 +130,7 @@ function handleCancel({ id }: AfterSale) {
 								class="commodity-item"
 							>
 								<div class="commodity-item__image">
-									<app-image class="mr-5 h-20 w-20" :src="item.picUrl" />
+									<app-image class="mr-5 h-20 w-20" :src="item.picUrl" :alt="item.spuName"/>
 								</div>
 								<div class="commodity-item__info">
 									<p style="color: #000">

@@ -6,11 +6,13 @@ import AppSwiper from './components/AppSwiper.vue'
 import './index.scss'
 
 defineOptions({name: 'Home'})
-const {shortDomain} = useRuntimeConfig().public
+const {shortDomain,domain} = useRuntimeConfig().public
+const route = useRoute()
 
 const {t} = useI18n()
 useHead({
   title: `${t('home')} ${t('appTitle')}`,
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
   meta: [
     {name: 'keywords', content: `${shortDomain}`},
     {name: 'description', content: `${shortDomain}`}

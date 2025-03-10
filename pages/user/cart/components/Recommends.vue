@@ -33,6 +33,7 @@ function addToCart(r: ProductBrowseHistory) {
 					<app-image
 						class="cart-recommend__image w-full"
 						:src="r.picUrl"
+            :alt="r.spuName"
 					/>
 				</nuxt-link>
 				<div class="cart-recommend__product-info">

@@ -3,6 +3,11 @@ export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	devtools: { enabled: false },
 	ssr: process.env.NODE_ENV === 'production',
+	// build: {
+	// 	analyze: {
+	// 		filename: 'static.html'
+	// 	}
+	// },
 	app: {
 		head: {
 			charset: 'utf-8',
@@ -20,25 +25,48 @@ export default defineNuxtConfig({
 		'@element-plus/nuxt',
 		'dayjs-nuxt',
 		'@nuxtjs/seo',
-		'nuxt-gtag'
+		'nuxt-gtag',
+		'@nuxtjs/tailwindcss'
 	],
+	//排除冗余css样式
+	tailwindcss: {
+		config: {
+			content: [
+				'./components/**/*.vue',
+				'./layouts/**/*.vue',
+				'./pages/**/*.vue'
+			],
+			// 自动启用 PurgeCSS 优化
+			purge: {
+				enabled: process.env.NODE_ENV === 'production'
+			}
+		}
+	},
 	gtag: {
+		// id: 'G-80R453F43Q', // 替换为你的 Google Analytics ID
 		id: 'G-80R453F43Q',
-		enable: true
+		enabled: process.env.NODE_ENV === 'production' ? true : false,// 开发环境时应关闭
 	},
 	seo: {
 		robots: {
 			// 配置 robots.txt
-			allow: '/',
-			disallow: '/admin'
+			// 允许被哪个搜索引擎抓取
+			Allow: '/',
+			// 不允许抓取的页面
+			Disallow: '/admin',
+			// 允许被哪个搜索引擎抓取
+			UserAgent: '*',
+			// 声明站点地图位置（推荐添加）
+			Sitemap: 'https://iswink.com/sitemap.xml'
 		},
 		sitemap: {
+			gzip: true,
+			cacheTime: 3600, // 缓存时间（秒）
 			// 配置 sitemap
 			hostname: 'https://iswink.com',
 			// exclude: ['/admin/**']
 		}
 	},
-	// id: 'G-80R453F43Q', // 替换为你的 Google Analytics ID
 	imports: {
 		presets: [
 			{
@@ -57,7 +85,9 @@ export default defineNuxtConfig({
 		defaultLocale: 'zh',
 	},
 	i18n: {
+		seo: true,// 启用自动 hreflang
 		defaultLocale: 'zh',
+		baseUrl: 'https://www.iswink.com',// 启用自动 hreflang 路由生成绝对路径
 		vueI18n: './locales/i18n.config.ts',
 		detectBrowserLanguage: {
 			useCookie: false,
@@ -162,9 +192,9 @@ export default defineNuxtConfig({
 			{
 				//日语
 				name: '日本語',
-				code: 'jp',
-				iso: 'jp-JP',
-				language: 'jp-JP',
+				code: 'ja',
+				iso: 'ja-JP',
+				language: 'ja-JP',
 				// file: './locales/en.ts',
 			},
 			{
@@ -207,21 +237,34 @@ export default defineNuxtConfig({
 				},
 			},
 		},
+		build:{
+			rollupOptions:{
+				output:{
+					manualChunks:(id)=>{
+						if(id.includes('element-plugin')) {
+							return 'componentUi';
+						} else if(id.includes('axios')) {
+							return 'axios';
+						} else if(id.includes('lodash')) {
+							return 'lodash';
+						}
+					}
+				}
+			}
+		},
 		server: {
 			proxy: {
 				'/api': {
 					// target: 'https://api.iswink.com',
 					// target: 'http://122.190.56.101:6060/shop-server',
-					target: 'http://10.10.10.17:48080',
+					target: 'http://10.10.10.37:48080',
+					// target: 'http://10.10.10.17:48080',
 					changeOrigin: true,
 					rewrite: path => path.replace('api', 'app-api'),
 				},
 			},
 		},
 	},
-	// elementPlus: {
-	// 	namespace: 'mi',
-	// },
 	runtimeConfig: {
 		// public中的键也可以在客户端使用
 		public: {
@@ -241,6 +284,8 @@ export default defineNuxtConfig({
 		// 		changeOrigin: true,
 		// 	},
 		// },
+		// 开启gzip压缩
+		compressPublicAssets: true,
 		routeRules: {
 			'/app-api**': {
 				proxy: 'http://10.10.10.17:48080',

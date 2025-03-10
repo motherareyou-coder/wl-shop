@@ -75,18 +75,18 @@ function handleSend(type: Message['type'], value: Message['value']) {
 		</div>
 		<div v-if="showOrderProduct" class="select-type">
 			<div @click="showSelect(MessageType.Order)">
-				<img src="@/assets/chat/order.png" alt="" class="icon">
+				<img src="@/assets/chat/order.png" alt="orders" class="icon">
 				<p>{{ $t('订单') }}</p>
 			</div>
 			<div @click="showSelect(MessageType.Product)">
-				<img src="@/assets/chat/goods.png" alt="" class="icon">
+				<img src="@/assets/chat/goods.png" alt="product" class="icon">
 				<p>{{ $t('商品') }}</p>
 			</div>
 			<el-upload
 				ref="uploadRef" accept=".jpg,.jpeg,.png,.gif" :show-file-list="false" :limit="1"
 				:http-request="handleImageChange"
 			>
-				<img src="@/assets/chat/image.png" alt="" class="icon">
+				<img src="@/assets/chat/image.png" alt="picture" class="icon">
 				<p>{{ $t('图片') }}</p>
 			</el-upload>
 		</div>

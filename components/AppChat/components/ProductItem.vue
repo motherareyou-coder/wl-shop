@@ -17,7 +17,7 @@ const appStore = useAppStore()
 <template>
 	<div v-if="data" class="order-item">
 		<div class="flex bg-white w-full items-center">
-			<app-image class="shrink-0 cursor-pointer w-28 h-28" :src="data.picUrl" />
+			<app-image class="shrink-0 cursor-pointer w-28 h-28" :src="data.picUrl" :alt="data.name" />
 			<div
 				class="w-full flex flex-col" :class="[
 					appStore.isPC ? '' : 'h-20 pl-2 justify-between h-full p-3',

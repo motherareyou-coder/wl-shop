@@ -91,6 +91,7 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 							style="width: 100%; height: 100%"
 							:src="item"
 							fit="cover"
+              :alt="item.title"
 							class="slide__background"
 						/>
 					</div>
@@ -101,6 +102,7 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 				>
 					<button
 						class="controller__button navigator__button navigator__button--prev with-transition"
+            aria-label="prev"
 						@click="prev"
 					>
 						<i
@@ -115,6 +117,7 @@ function onAutoplayTimeLeft(s: any, time: number, progress: number) {
 				>
 					<button
 						class="controller__button navigator__button navigator__button--next with-transition"
+            aria-label="next"
 						@click="next"
 					>
 						<i

@@ -94,6 +94,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 							<app-image
 								class="product__image-content"
 								:src="sku?.picUrl || info.picUrl"
+                :alt="info.name"
 							/>
 						</div>
 					</section>
@@ -114,9 +115,10 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 							</el-icon>
 						</h2>
 						<div class="information-section__product-info">
-							<div class="information-section__product-sku-info">
-								{{ sku?.properties.map(p => p.valueName).join(', ') }}
-							</div>
+              <!--sku规格-->
+							<!--<div class="information-section__product-sku-info">-->
+							<!--	{{ sku?.properties.map(p => p.valueName).join(', ') }}-->
+							<!--</div>-->
 							<div class="information-section__product-sku-info">
 								{{ info.introduction }}
 							</div>
@@ -214,6 +216,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 											'sku-section-v4__button--disabled': selected[p.id] === v.id && skuDisabled,
 											'sku-section-v4__button--active': selected[p.id] === v.id,
 										}"
+                    :aria-label="v.name"
 									>
 										{{ v.name }}
 									</button>
@@ -248,7 +251,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 								<span> {{ info.name }} * {{ count }} </span>
 								<div class="order-list-section__item-spacer"></div>
 								<ProductPrice :data="price" />
-								<del>
+								<del v-if="sku?.marketPrice != price">
 									<ProductPrice :data="sku?.marketPrice || info.marketPrice" plain />
 								</del>
 							</li>
@@ -261,7 +264,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 					</section>
 					<section class="product__section add-cart-section">
 						<div class="add-cart-section__wrap">
-							<Buttons class="add-cart-section__submit-group" @command="emit" />
+							<Buttons class="add-cart-section__submit-group" @command="emit" aria-label="addCart"/>
 						</div>
 					</section>
 				</article>

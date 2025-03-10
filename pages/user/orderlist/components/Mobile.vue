@@ -63,6 +63,7 @@ watch(statusType, reset)
 									<app-image
 										class="mr-5 w-16 h-16"
 										:src="item.picUrl"
+                    :alt="item.spuName"
 									/>
 								</div>
 								<div class="commodity-item__info">

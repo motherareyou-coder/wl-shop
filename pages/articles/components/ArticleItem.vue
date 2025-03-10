@@ -14,7 +14,7 @@ const data = defineModel<Article>('data')
 		class="h-full"
 	>
 		<div class="article-item">
-			<app-image :src="data.picUrl" />
+			<app-image :src="data.picUrl" :alt="data.title"/>
 			<div class="info">
 				<div>
 					<p class="mb-2 title">

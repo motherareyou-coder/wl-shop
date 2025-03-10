@@ -133,6 +133,7 @@ function goDetail(item) {
 							<app-image
 								:src="item.picUrl"
 								class="mi-image activity-customize__content-background"
+                :alt="item.name"
 							/>
 						</div>
 						<div class="exclusive-offers-footer-bar">

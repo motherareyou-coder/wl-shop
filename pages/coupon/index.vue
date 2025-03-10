@@ -2,15 +2,18 @@
 import type { CouponTemplate } from '~/types'
 import '~/pages/user/coupon/index.scss'
 
-useHead({
-	title: `${$t('Coupon')} ${$t('appTitle')}`,
-})
+
 
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
 const userStore = useUserStore()
+const { shortDomain,domain } = useRuntimeConfig().public
 
+useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  title: `${$t('Coupon')} ${$t('appTitle')}`,
+})
 function getData<CouponTemplate>(params: any) {
 	return $api<CouponTemplate>('promotion/coupon-template/page', {
 		params,
@@ -64,9 +67,9 @@ function useNowCoupon(c: CouponTemplate) {
 		<div
 			class="site-banner site-banner--dark site-banner--right site-banner--full site-banner--links site-banner--links--undefined site-banner--links--style-1"
 		>
-			<img v-if="appStore.isPC" class="site-banner__image" src="@/assets/imgs/daily-picks-banner.webp">
+			<img v-if="appStore.isPC" class="site-banner__image" alt="coupons" src="@/assets/imgs/daily-picks-banner.webp">
 			<img
-				v-else-if="appStore.isMobile" class="site-banner__image"
+				v-else-if="appStore.isMobile" class="site-banner__image" alt="coupons"
 				src="@/assets/imgs/daily-picks-banner--mobile.webp"
 			>
 		</div>
@@ -113,6 +116,7 @@ function useNowCoupon(c: CouponTemplate) {
 					<div class="user-coupon__item--btn">
 						<button
 							class="mi-btn mi-btn--primary mi-btn--normal mi-btn--light user-coupon__btn"
+              :aria-label="coupon.canTake ? $t('Get Now') : $t('Use now')"
 							@click="getCoupon(coupon)"
 						>
 							<span class="mi-btn__text">

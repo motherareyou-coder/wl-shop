@@ -5,11 +5,14 @@ definePageMeta({
 	showBread: true,
 	title: 'AfterSale Detail',
 })
-useHead({
-	title: `${$t('AfterSale Detail')} ${$t('appTitle')}`,
-})
+
 
 const route = useRoute()
+const { shortDomain,domain } = useRuntimeConfig().public
+useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  title: `${$t('AfterSale Detail')} ${$t('appTitle')}`,
+})
 const id = route.params.id
 const { data, refresh } = await useAPI<AfterSale>(
 	'trade/after-sale/get',
@@ -153,7 +156,7 @@ const appStore = useAppStore()
 			<section v-if="data" class="my-2 bg-white p-4">
 				<div class="flex">
 					<nuxt-link class="flex mr-5" :to="$path(`/product/${data.id}`)">
-						<app-image class="h-20 w-20" :src="data.picUrl" />
+						<app-image class="h-20 w-20" :src="data.picUrl" :alt="data.spuName"/>
 					</nuxt-link>
 					<div class="flex flex-col justify-between flex-1">
 						<span style="color: #000">

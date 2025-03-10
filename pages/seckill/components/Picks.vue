@@ -75,7 +75,7 @@ const now = inject('now')
           <div class="mi-energy-label mi-energy-label--light daily-picks-area__item-energy">
             <div class="mi-energy-label__item">
               <nuxt-link class="mi-energy-label__link mi-energy-label__link--image">
-                <img src="@/assets/imgs/E-level.png" class="mi-energy-label__image">
+                <img src="@/assets/imgs/E-level.png" class="mi-energy-label__image" alt="member-level">
               </nuxt-link>
               <nuxt-link class="mi-energy-label__link mi-energy-label__link--info">
                 {{ $t('Product information') }}
@@ -103,7 +103,7 @@ const now = inject('now')
         </article>
         <div class="daily-picks-area__item-gap"></div>
         <aside class="daily-picks-area__item-images">
-          <app-image class="daily-picks-area__item-main" :src="item.picUrl"/>
+          <app-image class="daily-picks-area__item-main" :src="item.picUrl" :alt="item.name"/>
         </aside>
       </div>
     </div>

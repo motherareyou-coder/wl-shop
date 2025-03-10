@@ -27,6 +27,9 @@ pnpm run dev
 ```bash
 # pnpm
 pnpm run build
+    若出现内存不足
+    npm install -g increase-memory-limit
+    increase-memory-limit
 ```
 
 

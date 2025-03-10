@@ -4,7 +4,7 @@
 	"private": true,
 	"packageManager": "pnpm@9.4.0",
 	"scripts": {
-		"build": "nuxt build",
+		"build": "nuxt build --max_old_space_size=16384",
 		"dev": "nuxt dev",
 		"dev:m": "nuxt dev --host 9609",
 		"generate": "nuxt generate",

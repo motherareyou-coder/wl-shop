@@ -5,7 +5,7 @@ import './detail.scss'
 
 const route = useRoute()
 const id = route.params.id
-const {shortDomain} = useRuntimeConfig().public
+const {shortDomain,domain} = useRuntimeConfig().public
 const categoryId = Number(route.query.categoryId || '')
 
 const { gtag } = useGtag()
@@ -33,6 +33,7 @@ useHead({
   // title: `${t('home')} ${t('appTitle')}`,
   // title: ` ${t('appTitle')}`,
   title: `${shortDomain} ${ data.value?.title }`,
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
   meta: [
     {name: 'keywords', content: `${ data.value?.keyWords }`},
     {name: 'description', content: `${ data.value?.introduction }`}

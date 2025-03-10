@@ -12,9 +12,7 @@ import AddressList from './components/AddressList.vue'
 import ProductInfoList from './components/ProductInfoList.vue'
 import './index.scss'
 
-useHead({
-  title: `${$t('Checkout')} ${$t('appTitle')}`,
-})
+
 
 const router = useRouter()
 const route = useRoute()
@@ -24,14 +22,17 @@ const seckillActivityId = route.query.seckillActivityId ? Number(route.query.sec
 const combinationActivityId = route.query.combinationActivityId ? Number(route.query.combinationActivityId) : null
 const combinationHeadId = route.query.combinationHeadId ? Number(route.query.combinationHeadId) : null
 const productList = ref<CartItem[]>([])
-const { shortDomain } = useRuntimeConfig().public
+const { shortDomain,domain } = useRuntimeConfig().public
 const { gtag } = useGtag()
 //确认支付页面埋点
 gtag('event', 'screen_view', {
   app_name: shortDomain,
   screen_name: 'check-out'
 })
-
+useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  title: `${$t('Checkout')} ${$t('appTitle')}`,
+})
 const cantUseCoupon = !!(orderId || bargainRecordId || seckillActivityId || combinationActivityId)
 
 const data = ref({
@@ -528,7 +529,7 @@ const shipOpen = ref(true)
                     <div class="radio__content">
                       <article class="pay-item__right">
                         <div class="pay-item__logo">
-                          <app-image :src="o.image"/>
+                          <app-image :src="o.image" :alt="o.title"/>
                         </div>
                         <div class="pay-item__content">
                           <div
@@ -586,7 +587,7 @@ const shipOpen = ref(true)
                       class="price-summary__item-fee"
                       :data="info.promotions.reduce((t, c) => t - c.discountPrice, 0)"
                   />
-									<button class="price-summary__item-more">
+									<button class="price-summary__item-more" aria-label="price-summary">
 										<el-icon
                         class="cursor-pointer price-summary__item-more-icon"
                         @click="open1 = !open1"
@@ -634,6 +635,7 @@ const shipOpen = ref(true)
               <button
                   class="mi-button--text coupons-info__view"
                   @click="couponVisible = true"
+                  :aria-label="$t('Apply coupons')"
               >
                 <u>
                   {{ $t('Apply coupons') }}

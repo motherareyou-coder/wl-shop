@@ -76,7 +76,7 @@ function getCoupon(c: Coupon) {
 				</li>
 			</div>
 		</div>
-		<button v-if="appStore.isMobile" class="events-info__more">
+		<button v-if="appStore.isMobile" class="events-info__more" aria-label="more">
 			<el-icon><el-icon-arrow-right /></el-icon>
 		</button>
 	</div>

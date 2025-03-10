@@ -142,6 +142,7 @@ watch(statusType, resetData)
 													>
 														<app-image
 															:src="item.picUrl"
+                              :alt="item.spuName"
 														/>
 													</nuxt-link>
 												</div>

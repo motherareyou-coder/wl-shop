@@ -16,7 +16,7 @@ const appStore = useAppStore()
 			>
 				<li v-for="item in bargainHelpList" :key="item.id" class="my-2">
 					<div v-if="appStore.isPC" class="flex items-center">
-						<app-image :src="item.avatar || '/avatar.png'" class="w-12 h-12 rounded-full" />
+						<app-image :src="item.avatar || '/avatar.png'" class="w-12 h-12 rounded-full" :alt="item.nickname"/>
 						<span class="text-sm m-2">{{ item.nickname }}</span>
 						<span class="m-2">{{ $t('已砍') }} </span>
 						<product-price class="m-2" style="color:var(--mi-color-priamry)" :data="item.reducePrice" />
@@ -29,6 +29,7 @@ const appStore = useAppStore()
 							<app-image
 								:src="item.avatar || '/avatar.png'"
 								class="w-12 h-12 rounded-full"
+                :alt="item.nickname"
 							/>
 							<div class="flex flex-col justify-between m-2">
 								<div class="text-sm">

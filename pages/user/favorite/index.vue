@@ -7,7 +7,11 @@ definePageMeta({
 	showBread: true,
 })
 const appStore = useAppStore()
+const route = useRoute()
+const { shortDomain,domain } = useRuntimeConfig().public
+
 useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
 	title: `${$t('Favorites')} ${$t('appTitle')}`,
 })
 </script>

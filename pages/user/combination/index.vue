@@ -7,11 +7,15 @@ definePageMeta({
 	showBread: true,
 	title: '拼团记录',
 })
-useHead({
-	title: `${$t('拼团记录')} ${$t('appTitle')}`,
-})
-const appStore = useAppStore()
 
+const appStore = useAppStore()
+const route = useRoute()
+const { shortDomain,domain } = useRuntimeConfig().public
+
+useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  title: `${$t('拼团记录')} ${$t('appTitle')}`,
+})
 // 0.进行中 1.拼团成功 2.拼团失败）
 const status = ref(0)
 const statusOptions = [
@@ -78,7 +82,7 @@ const now = new Date().getTime()
 								:class="[appStore.isPC ? 'mb-5' : 'm-2']"
 								:style="appStore.isPC ? 'border: 1px solid rgb(224, 224, 224);' : ''"
 							>
-								<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-40 h-40' : 'w-28 h-28']" />
+								<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-40 h-40' : 'w-28 h-28']" :alt="row.spuName"/>
 								<div
 									class="flex flex-col justify-between py-2"
 									:class="appStore.isPC ? ' leading-8' : ' leading-6'"

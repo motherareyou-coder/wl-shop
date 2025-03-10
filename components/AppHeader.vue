@@ -51,7 +51,7 @@ function handleDelete(p: CartItem) {
 	<header class="site-header site-header--sticky">
 		<nav class="site-container site-header__navigation">
 			<div class="navigation__logo">
-				<nuxt-link class="logo__link" :to="$path('/')">
+				<nuxt-link class="logo__link" :to="$path('/')" aria-label="loginLink">
 					<Icon name="icon:shop" size="32px" class="logo__mi" />
 				</nuxt-link>
 			</div>
@@ -96,7 +96,7 @@ function handleDelete(p: CartItem) {
 										<app-image
 											class="cart__item-image"
 											:src="p.spu?.picUrl"
-											alt=""
+											:alt="p.spu?.name"
 										/>
 										<div class="cart__item-info">
 											<span class="cart__item-detail cart__item-name">
@@ -129,6 +129,8 @@ function handleDelete(p: CartItem) {
 								<nuxt-link
 									:to="$path('/user/cart')"
 									class="mi-button mi-btn mi-btn--primary cart-footer__submit cart__jump-cart w-full"
+                  alt="userCart"
+                  aria-label="userCart"
 								>
 									{{ $t('Checkout') }}
 								</nuxt-link>
@@ -172,29 +174,29 @@ function handleDelete(p: CartItem) {
 					<ul class="view-account__list">
 						<template v-if="userStore.id">
 							<li class="view-account__item">
-								<a :href="$path('/user')" class="view-account__link">
+								<a :href="$path('/user')" :aria-label="$t('My account')" class="view-account__link">
 									{{ $t('My account') }}
 								</a>
 							</li>
 							<li class="view-account__item">
-								<a :href="$path('/user/orderlist')" class="view-account__link">
+								<a :href="$path('/user/orderlist')" :aria-label="$t('My orders')" class="view-account__link">
 									{{ $t('My orders') }}
 								</a>
 							</li>
 							<li class="view-account__item">
-								<a class="view-account__link cursor-pointer" @click="logout">
+								<a class="view-account__link cursor-pointer" :aria-label="$t('Sign out')" @click="logout">
 									{{ $t('Sign out') }}
 								</a>
 							</li>
 						</template>
 						<template v-else>
 							<li class="view-account__item">
-								<a class="view-account__link" :href="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`">
+								<a class="view-account__link" :href="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`" :aria-label="$t('Sign in')">
 									{{ $t('Sign in') }}
 								</a>
 							</li>
 							<li class="view-account__item">
-								<a class="view-account__link" :href="`${$path(`/login?type=1`)}&redirect=${encodeURIComponent(route.fullPath)}`">
+								<a class="view-account__link" :href="`${$path(`/login?type=1`)}&redirect=${encodeURIComponent(route.fullPath)}`" :aria-label="$t('Sign up')">
 									{{ $t('Sign up') }}
 								</a>
 							</li>

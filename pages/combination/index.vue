@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import type { CombinationActivity } from '~/types'
 
-useHead({
-	title: `${$t('拼团活动')} ${$t('appTitle')}`,
-})
-const { shortDomain } = useRuntimeConfig().public
+
+const { shortDomain,domain } = useRuntimeConfig().public
+const route = useRoute()
 const { gtag } = useGtag()
 //拼团活动页面埋点
 gtag('event', 'screen_view', {
   app_name: shortDomain,
   screen_name: 'combination-list'
+})
+useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  title: `${$t('拼团活动')} ${$t('appTitle')}`,
 })
 const appStore = useAppStore()
 
@@ -25,9 +28,9 @@ function getData<CombinationActivity>(params: any) {
 		<div
 			class="site-banner site-banner--dark site-banner--right site-banner--full site-banner--links site-banner--links--undefined site-banner--links--style-1"
 		>
-			<img v-if="appStore.isPC" class="site-banner__image" src="@/assets/imgs/daily-picks-banner.webp">
+			<img v-if="appStore.isPC" class="site-banner__image" alt="combination" src="@/assets/imgs/daily-picks-banner.webp">
 			<img
-				v-else-if="appStore.isMobile" class="site-banner__image"
+				v-else-if="appStore.isMobile" class="site-banner__image" alt="combination"
 				src="@/assets/imgs/daily-picks-banner--mobile.webp"
 			>
 		</div>
@@ -38,7 +41,7 @@ function getData<CombinationActivity>(params: any) {
 				<li>
 					<nuxt-link :to="$path(`/product/${row.spuId}?combinationActivityId=${row.id}`)">
 						<div class="combination-item flex bg-white rounded" :class="[appStore.isPC ? '' : 'mx-2']">
-							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" />
+							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" :alt="row.name"/>
 							<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">
 								<div class=" my-1">
 									{{ row.name }}

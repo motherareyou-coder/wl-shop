@@ -54,7 +54,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 			<div class="xm-navbar__title">
 				<span class="xm-text header">{{ info.name }} </span>
 			</div>
-			<Buttons class="xm-navbar-buynow" @command="emit" />
+			<Buttons class="xm-navbar-buynow" @command="emit" aria-label="buyNow"/>
 		</div>
 	</div>
 	<main class="product--mobile">
@@ -62,6 +62,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 			<app-image
 				class="gallery-slider__image"
 				:src="sku?.picUrl || info.picUrl"
+        :alt="info.name"
 			/>
 		</section>
 		<section class="product--mobile__section product-information">
@@ -134,6 +135,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 										'sku-section-v4__button--disabled': selected[p.id] === v.id && skuDisabled,
 										'sku-section-v4__button--active': selected[p.id] === v.id,
 									}"
+                  :aria-label="v.name"
 								>
 									<span>{{ v.name }}</span>
 								</button>
@@ -177,7 +179,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 							}"
 							@click="tab = 0"
 						>
-							<a>{{ $t('Overview') }} </a>
+							<a href="javascript:void(0)">{{ $t('Overview') }} </a>
 						</li>
 						<li
 							class="xm-navbar__nav-item"
@@ -186,7 +188,7 @@ const isAcActivity = inject('isAcActivity') as Ref<boolean>
 							}"
 							@click="tab = 1"
 						>
-							<a>{{ $t('Reviews') }} </a>
+							<a href="javascript:void(0)">{{ $t('Reviews') }} </a>
 						</li>
 						<li
 							v-if="bargainRecord"

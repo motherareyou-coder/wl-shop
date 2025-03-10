@@ -15,6 +15,7 @@ const tab = ref(route.query.type == 1 ? 1 : 0)
 const {t} = useI18n()
 useHead({
   title: `${t('login')} ${t('appTitle')}`,
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
   meta: [{name: 'description', content: 'login'}],
 })
 
@@ -139,7 +140,7 @@ const doSocialLogin = async (type: number) => {
           <div class="mi-layout__header">
             <div class="mi-layout__title">
               <div class="mi-layout__logo-wrap">
-                <nuxt-link class="logo__link" :to="$path('/')">
+                <nuxt-link class="logo__link" :to="$path('/')" aria-label="loginLink">
                   <Icon name="icon:shop" class="mi-layout__logo"/>
                 </nuxt-link>
               </div>
@@ -259,7 +260,7 @@ const doSocialLogin = async (type: number) => {
 													</span>
                         </div>
                       </el-form-item>
-                      <button class="mi-button mi-button--primary w-full" @click.prevent.stop="handleRegister">
+                      <button class="mi-button mi-button--primary w-full" @click.prevent.stop="handleRegister" :aria-label="$t('Next')">
                         {{ $t('Next') }}
                       </button>
                     </div>

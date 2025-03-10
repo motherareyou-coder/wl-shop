@@ -15,15 +15,15 @@ const classList = computed(() => appStore.isPC ? 'product__section product__sect
 	<section v-if="seckillActivity" :class="classList">
 		<ul class="offers-section__list">
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" :alt="$t('每次限购')"></picture>
 				{{ $t('每次限购') }} {{ seckillActivity.singleLimitCount }}
 			</li>
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" :alt="$t('限量')"></picture>
 				{{ $t('限量') }} {{ seckillActivity.stock }}
 			</li>
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" :alt="$t('剩余')"></picture>
 				{{ $t('剩余') }}
 				<el-progress class="inline-block w-2/4 ml-2" :percentage="(100 * (seckillActivity.totalStock / seckillActivity.stock))/seckillActivity.totalStock" :text-inside="true" :stroke-width="16">
 					{{ seckillActivity.stock }}/{{ seckillActivity.totalStock }}
@@ -34,15 +34,15 @@ const classList = computed(() => appStore.isPC ? 'product__section product__sect
 	<section v-if="combinationActivity" :class="classList">
 		<ul class="offers-section__list">
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" :alt="$t('每次限购')"></picture>
 				{{ $t('每次限购') }} {{ combinationActivity.singleLimitCount }}
 			</li>
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" :alt="$t('限量')"></picture>
 				{{ $t('限量') }} {{ combinationActivity.totalLimitCount }}
 			</li>
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" alt="dot"></picture>
 				{{ $t('最少成团人数', { number: combinationActivity.userSize }) }}
 			</li>
 		</ul>
@@ -51,11 +51,11 @@ const classList = computed(() => appStore.isPC ? 'product__section product__sect
 	<section v-if="bargainActivity" :class="classList">
 		<ul class="offers-section__list">
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" :alt="$t('剩余库存')"></picture>
 				{{ $t('剩余库存') }}: {{ bargainActivity.stock }}
 			</li>
 			<li class="offers-section__item">
-				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg"></picture>
+				<picture class="clip-image-v4 offers-section__item-dot"><img src="@/assets/icons/dot.svg" alt="dot"></picture>
 				{{ $t('最多砍价人数', { number: bargainActivity.helpMaxCount }) }}
 			</li>
 		</ul>

@@ -148,6 +148,7 @@ const data = computed(() => props.data)
 								<app-image
 									class="h-20 w-20"
 									:src="item.picUrl"
+                  :alt="item.spuName"
 								/>
 							</nuxt-link>
 							<div class="flex flex-col justify-between flex-1">

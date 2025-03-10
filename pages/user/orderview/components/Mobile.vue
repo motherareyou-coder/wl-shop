@@ -60,7 +60,7 @@ const data = computed(() => props.data)
 			</div>
 			<div v-for="item in data.items" :key="item.id" class="flex my-4">
 				<nuxt-link :to="$path(`/product/${item.spuId}`)" class="flex mr-2">
-					<app-image class="h-20 w-20" :src="item.picUrl" />
+					<app-image class="h-20 w-20" :src="item.picUrl" :alt="item.spuName"/>
 				</nuxt-link>
 				<div class="flex flex-col justify-between flex-1">
 					<span style="color: #000">

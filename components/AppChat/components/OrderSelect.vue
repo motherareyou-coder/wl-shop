@@ -43,7 +43,7 @@ const appStore = useAppStore()
 					<div class="order-item__content">
 						<div v-for="item in order.items" :key="item.id" class="commodity-item">
 							<div class="commodity-item__image">
-								<app-image class="mr-5 w-16 h-16" :src="item.picUrl" />
+								<app-image class="mr-5 w-16 h-16" :src="item.picUrl" :alt="item.spuName"/>
 							</div>
 							<div class="commodity-item__info">
 								<p>

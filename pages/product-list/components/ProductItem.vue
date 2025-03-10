@@ -32,6 +32,7 @@ const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 				class="shrink-0"
 				:class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']"
 				:src="data.picUrl"
+        :alt="data.name"
 				@click="onClick"
 			/>
 			<div class="item__info">

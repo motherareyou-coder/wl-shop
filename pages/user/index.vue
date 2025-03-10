@@ -16,12 +16,16 @@ import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
 import type { PayWallet } from '~/types'
 import './index.scss'
 
-useHead({
-	title: `${$t('user')} ${$t('appTitle')}`,
-})
+
 const appStore = useAppStore()
 const userStore = useUserStore()
 
+const route = useRoute()
+const { shortDomain,domain } = useRuntimeConfig().public
+useHead({
+  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  title: `${$t('user')} ${$t('appTitle')}`,
+})
 const user = computed(() => userStore.user)
 
 const dayjs = useDayjs()
@@ -225,6 +229,7 @@ function logout() {
 							<app-image
 								class="account-avatar"
 								:src="user?.avatar || noLoginUserPic"
+                :alt="user.nickname"
 							/>
 						</section>
 						<div class="info-box">
@@ -405,6 +410,7 @@ function logout() {
 		<button
 			v-if="appStore.isMobile"
 			class="sign-out__item"
+      :aria-label="$t('Sign Out')"
 			@click.prevent="logout"
 		>
 			<i class="micon micon-sign-out sign-out__icon"></i>
@@ -435,6 +441,7 @@ function logout() {
 								<app-image
 									class="responsive-image clip-image clip-image--shadow avatar-img"
 									:src="formState.data.avatar"
+                  :alt="user.nickname"
 								/>
 								<div class="edit-modal-avatar_edit">
 									<i class="micon micon-edit1 upload-avatar__icon"></i>

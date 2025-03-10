@@ -56,7 +56,7 @@ function handleClick(d: ProductSpu) {
 					</div>
 				</div>
 				<div class="store-goods__product">
-					<app-image :src="d.picUrl" />
+					<app-image :src="d.picUrl" :alt="d.name"/>
 				</div>
 			</div>
 		</section>

@@ -77,6 +77,7 @@ function slideTo(i: number) {
 									<app-image
 										class="mi-image item-image"
 										:src="c.picUrl"
+                    :alt="c.name"
 									/>
 								</div>
 								<div class="item-info">
