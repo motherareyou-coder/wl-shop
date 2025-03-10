@@ -45,7 +45,8 @@ export default defineNuxtConfig({
 	gtag: {
 		// id: 'G-80R453F43Q', // 替换为你的 Google Analytics ID
 		id: 'G-80R453F43Q',
-		enabled: process.env.NODE_ENV === 'production' ? true : false,// 开发环境时应关闭
+		// 关键异步参数
+		loadingStrategy: 'async', // 启用模块级异步加载[1](@ref)
 	},
 	seo: {
 		robots: {
@@ -274,7 +275,8 @@ export default defineNuxtConfig({
 			domain: 'https://www.iswink.com',
 			shortDomain: 'iswink',
 			// kefuWsUrl: 'ws://localhost:48080/infra/ws'
-			kefuWsUrl: 'ws://122.190.56.101:6060/infra/ws'
+			// kefuWsUrl: 'ws://122.190.56.101:6060/infra/ws'
+			kefuWsUrl: 'ws://api.iswink/infra/ws'
 		},
 	},
 	nitro: {

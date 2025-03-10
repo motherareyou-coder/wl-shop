@@ -82,7 +82,7 @@ function handleSend({type, value}: Pick<Message, 'type' | 'value'>) {
 
 //接收消息
 function handleReceive(data: string | Message) {
-  console.log('handleReceive', data)
+  // console.log('handleReceive', data)
   if (!data)
     return
   if (data == 'pong') {

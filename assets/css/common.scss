@@ -16,6 +16,7 @@ li {
 	/*字体名称，自己命名*/
 	src: url('../fonts/miSansLatin/MiSansLatinVF.ttf') format('truetype');
 	/* 修改为字体文件实际路径 */
+	font-display: swap; /* 关键参数：启用异步加载 */
 }
 
 p,
