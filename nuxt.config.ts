@@ -26,23 +26,23 @@ export default defineNuxtConfig({
 		'dayjs-nuxt',
 		'@nuxtjs/seo',
 		'nuxt-gtag',
-		'@nuxtjs/tailwindcss',
-		'nuxt-purgecss',
+		// '@nuxtjs/tailwindcss',
+		// 'nuxt-purgecss',
 	],
-	// 排除冗余css样式
-	tailwindcss: {
-		config: {
-			content: [
-				'./components/**/*.vue',
-				'./layouts/**/*.vue',
-				'./pages/**/*.vue',
-			],
-			// 自动启用 PurgeCSS 优化
-			purge: {
-				enabled: process.env.NODE_ENV === 'production',
-			},
-		},
-	},
+	// 排除冗余css样式,生产环境不要用,会去掉样式,导致生产环境样式变形
+	// tailwindcss: {
+	// 	config: {
+	// 		content: [
+	// 			'./components/**/*.vue',
+	// 			'./layouts/**/*.vue',
+	// 			'./pages/**/*.vue',
+	// 		],
+	// 		// 自动启用 PurgeCSS 优化
+	// 		purge: {
+	// 			enabled: process.env.NODE_ENV === 'production',
+	// 		},
+	// 	},
+	// },
 	gtag: {
 		// id: 'G-80R453F43Q', // 替换为你的 Google Analytics ID
 		id: 'G-80R453F43Q',
@@ -279,7 +279,7 @@ export default defineNuxtConfig({
 			shortDomain: 'iswink',
 			// kefuWsUrl: 'ws://localhost:48080/infra/ws'
 			// kefuWsUrl: 'ws://122.190.56.101:6060/infra/ws'
-			kefuWsUrl: 'ws://api.iswink/infra/ws',
+			kefuWsUrl: 'ws://iswink.com/infra/ws',
 		},
 	},
 	nitro: {
