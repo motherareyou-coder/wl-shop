@@ -161,7 +161,7 @@ async function doSocialLogin(type: number) {
 										:model="form"
 										:rules="rules"
 									>
-										<div class="mi-form__content">
+										<div class="mi-form__content" @keyup.enter="handleLogin">
 											<el-form-item>
 												<el-select v-model="usePsw" class="mi-form-field__field">
 													<template #prefix>

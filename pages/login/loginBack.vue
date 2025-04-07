@@ -12,7 +12,7 @@ const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
 
-onMounted(()=>{
+onMounted(async ()=>{
   // 获取路由参数中的token
   const accessToken = route.query.accessToken as string;
   const refreshToken = route.query.refreshToken as string;
@@ -26,6 +26,7 @@ onMounted(()=>{
     // 将token存储到store中
     userStore.needAddCart = true
     userStore.setToken(authToken);
+    await userStore.getInfo();
     // 跳转到登录后的页面
     router.push(redirectUri);
   } else {
