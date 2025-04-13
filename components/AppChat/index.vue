@@ -47,7 +47,7 @@ function handleOpen() {
 }
 
 function handleSend({ type, value }: Pick<Message, 'type' | 'value'>) {
-	console.log('handleSend:', type, value)
+	// console.log('handleSend:', type, value)
 	const obj = {
 		type,
 		value,
@@ -150,7 +150,7 @@ function replaceEmoji(content: string) {
 
 // 发送消息
 async function pushMsg(data: Message) {
-	console.log('pushMsg:', data)
+	// console.log('pushMsg:', data)
 	switch (data.type) {
 		case MessageType.Order:
 			data.value = JSON.stringify((await $api<OrderDetail>(
@@ -173,7 +173,7 @@ async function pushMsg(data: Message) {
 		},
 	})
 	msgList.value.push(data)
-	console.log('加入msgList之后数据为：', msgList)
+	// console.log('加入msgList之后数据为：', msgList)
 }
 
 watch(data, handleReceive, { immediate: true })

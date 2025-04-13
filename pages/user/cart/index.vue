@@ -106,15 +106,14 @@ function checkAllChange(selected: boolean) {
 		wrapLoading(cartStore.updateSelected(body))
 	}
 }
-
 const msg = $t('Please sign in first')
 function handleSubmit() {
 	if (userStore.id) {
-		router.push({ path: $path('/user/checkout'), query: { couponId: coupon.value?.id } })
+    wrapLoading(router.push({ path: $path('/user/checkout'), query: { couponId: coupon.value?.id } }))
 	}
 	else {
 		ElMessage.info(msg)
-		router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`)
+    wrapLoading(router.push(`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`))
 	}
 }
 </script>

@@ -261,8 +261,8 @@ export default defineNuxtConfig({
 				'/api': {
 					// target: 'https://api.iswink.com',
 					// target: 'http://122.190.56.101:6060/shop-server',
-					target: 'http://10.10.10.37:48080',
-					// target: 'http://10.10.10.17:48080',
+					// target: 'http://10.10.10.37:48080',
+					target: 'http://192.168.1.3:48080',
 					changeOrigin: true,
 					rewrite: path => path.replace('api', 'app-api'),
 				},
@@ -279,7 +279,7 @@ export default defineNuxtConfig({
 			shortDomain: 'iswink',
 			// kefuWsUrl: 'ws://localhost:48080/infra/ws'
 			// kefuWsUrl: 'ws://122.190.56.101:6060/infra/ws'
-			kefuWsUrl: 'ws://iswink.com/infra/ws',
+			kefuWsUrl: 'wss://iswink.com/infra/ws',
 		},
 	},
 	nitro: {
