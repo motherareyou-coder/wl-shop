@@ -54,3 +54,6 @@ pnpm run preview
     1. 标题标签（Title Tag）
     2. 描述标签（Meta Description）
     3. 关键词标签（Meta Keywords）
+
+    http://localhost:3000/robots.txt
+    http://localhost:3000/sitemap.xml
