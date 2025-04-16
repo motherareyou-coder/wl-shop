@@ -47,7 +47,7 @@ export default defineNuxtConfig({
     },
     sitemap: {
         gzip: true,
-        cacheTime: 259200, // 缓存时间（秒）
+        cacheTime: 86400, // 缓存时间（秒）
         // 配置 sitemap
         hostname: 'https://iswink.com',
         exclude: [

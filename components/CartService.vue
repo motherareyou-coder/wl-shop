@@ -78,7 +78,7 @@ const tab = ref('1')
 					<!-- whatsApp -->
 					<!-- <a href="https://wa.me/1234567890">WhatsApp</a> -->
 					<!-- <a href="https://wa.me/1234567890">WhatsApp</a> -->
-					<a href="https://t.me/is_wink" target="_blank" aria-label="chatNowTelegram">Telegram</a>
+					<a href="https://t.me/@iswink_support" target="_blank" aria-label="chatNowTelegram">Telegram</a>
 					or <!-- 邮件 -->
 					<a href="mailto:iswink@iswink.com" target="_blank" aria-label="chatNowEmail">Email</a>
 				</div>
