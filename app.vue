@@ -60,7 +60,7 @@ const appStore = useAppStore()
 			</svg>
 			<el-config-provider :locale="{ en, zh }[locale]" namespace="mi">
 				<NuxtLayout>
-					<NuxtPage :keepalive="appStore.isMobile" />
+					<NuxtPage />
 				</NuxtLayout>
 			</el-config-provider>
 		</Body>
