@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
-    ssr: process.env.NODE_ENV === 'production',
+    // ssr: process.env.NODE_ENV === 'production',
+    ssr: true,
     // build: {
     // 	analyze: {
     // 		filename: 'static.html'
@@ -10,9 +11,14 @@ export default defineNuxtConfig({
     // },
     app: {
         head: {
+            title: process.env.NUXT_APP_TITLE,
             charset: 'utf-8',
             viewport:
                 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
+            meta: [
+                { name: 'keywords', content: 'iswink gift surprise' },
+                { name: 'description', content: 'At iswink, every gift carries love and surprises, making every moment a shining memory.' },
+            ]
         },
     },
     modules: [
@@ -296,13 +302,13 @@ export default defineNuxtConfig({
         },
         server: {
             proxy: {
-                '/api': {
+                '/app-api': {
                     // target: 'https://api.iswink.com',
                     // target: 'http://122.190.56.101:6060/shop-server',
                     target: 'http://10.10.10.17:48080',
                     // target: 'http://192.168.1.3:48080',
                     changeOrigin: true,
-                    rewrite: path => path.replace('api', 'app-api'),
+                    // rewrite: path => path.replace('api', 'app-api'),
                 },
             },
         },
@@ -310,7 +316,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // public中的键也可以在客户端使用
         public: {
-            baseURL: process.env.NODE_ENV === 'production' ? '/app-api' : '/api',
+            baseURL: '/app-api',
             tenantId: process.env.NUXT_PUBLIC_TENANT_ID || 1,
             currency: '$',
             domain: 'https://www.iswink.com',
