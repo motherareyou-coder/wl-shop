@@ -41,15 +41,13 @@ export default defineNuxtConfig({
     },
     robots: {
         // 允许被哪个搜索引擎抓取
-        UserAgent: '*',
+        userAgent: '*',
         // 配置 robots.txt
-        // 允许被哪个搜索引擎抓取
-        // 允许被哪个搜索引擎抓取
-        Allow: '/',
+        allow: '/',
         // 不允许抓取的页面
-        Disallow: '/admin',
+        disallow: '/admin',
         // 声明站点地图位置（推荐添加）
-        Sitemap: 'https://iswink.com/sitemap.xml',
+        sitemap: 'https://iswink.com/sitemap.xml',
     },
     sitemap: {
         gzip: true,
@@ -65,7 +63,9 @@ export default defineNuxtConfig({
             console.log('🔔 Sitemap生成器开始执行') // 添加初始日志
             try {
                 const baseURL = process.env.NODE_ENV === 'production'
-                    ? 'https://api.iswink.com'
+                    ?
+                    // 'https://api.iswink.com'
+                    'http://122.190.56.101:6060/shop-server'
                     : 'http://localhost:48080'
                 // 1. 获取数据并解析结构
                 const tenantId = process.env.NUXT_PUBLIC_TENANT_ID; // 使用 process.env 获取 tenantId
@@ -98,9 +98,9 @@ export default defineNuxtConfig({
                 const generateRoutes = (type: string, ids: number[]) =>
                     ids.flatMap(id =>
                         locales.map(locale => ({
-                            url: `/${locale}/${type}/${id}`, // 使用code而非iso
+                            loc: `/${locale}/${type}/${id}`, // 使用code而非iso
                             lastmod: new Date().toISOString(),
-                            changefreq: 'always', // 收录变化的时间，always 一直，daily 每天
+                            changefreq: 'daily', // 确保是有效的类型
                             priority: 1 // 网页的权重  1是100%最高，一般给最重要的页面，不重要的页面0.7-0.9之间
                         }))
                     );
@@ -278,6 +278,13 @@ export default defineNuxtConfig({
         ],
     },
     vite: {
+        optimizeDeps: {
+            include: ['vue', 'vue-router', 'pinia'], // Pre-bundle common dependencies
+        },
+        build: {
+            minify: 'esbuild', // Use esbuild for faster minification
+            target: 'esnext', // Use modern JavaScript
+        },
         css: {
             preprocessorOptions: {
                 scss: {
@@ -285,30 +292,30 @@ export default defineNuxtConfig({
                 },
             },
         },
-        build: {
-            rollupOptions: {
-                output: {
-                    manualChunks: (id) => {
-                        if (id.includes('element-plugin')) {
-                            return 'componentUi'
-                        } else if (id.includes('axios')) {
-                            return 'axios'
-                        } else if (id.includes('lodash')) {
-                            return 'lodash'
-                        }
-                    },
-                },
-            },
-        },
+        // build: {
+        //     rollupOptions: {
+        //         output: {
+        //             manualChunks: (id) => {
+        //                 if (id.includes('element-plugin')) {
+        //                     return 'componentUi'
+        //                 } else if (id.includes('axios')) {
+        //                     return 'axios'
+        //                 } else if (id.includes('lodash')) {
+        //                     return 'lodash'
+        //                 }
+        //             },
+        //         },
+        //     },
+        // },
         server: {
             proxy: {
-                '/app-api': {
+                '/api': {
                     // target: 'https://api.iswink.com',
-                    // target: 'http://122.190.56.101:6060/shop-server',
-                    target: 'http://10.10.10.17:48080',
+                    target: 'http://122.190.56.101:6060/shop-server',
+                    // target: 'http://10.10.10.17:48080',
                     // target: 'http://192.168.1.3:48080',
                     changeOrigin: true,
-                    // rewrite: path => path.replace('api', 'app-api'),
+                    rewrite: path => path.replace('api', 'app-api'),
                 },
             },
         },
@@ -316,8 +323,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // public中的键也可以在客户端使用
         public: {
-            baseURL: '/app-api',
-            tenantId: process.env.NUXT_PUBLIC_TENANT_ID || 1,
+            baseURL: process.env.NODE_ENV === 'production' ? '/app-api' : '/api',
+            tenantId: process.env.NUXT_PUBLIC_TENANT_ID || '1',
             currency: '$',
             domain: 'https://www.iswink.com',
             shortDomain: 'iswink',
@@ -337,7 +344,8 @@ export default defineNuxtConfig({
         compressPublicAssets: true,
         routeRules: {
             '/app-api**': {
-                proxy: 'http://10.10.10.17:48080',
+                proxy: 'http://122.190.56.101:6060/shop-server/',
+                // proxy: 'https://api.iswink.com',
             },
         },
     },
