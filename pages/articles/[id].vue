@@ -23,7 +23,7 @@ $api('promotion/article/add-browse-count', {
 	params: { id },
 })
 
-const { data: recommends } = await useAsyncData<Article>(() =>
+const { data: recommends } = await useAsyncData<Article>(`recommends-${Date.now()}`,() =>
 	$api('promotion/article/mall/page', {
 		params: { pageNo: 1, pageSize: 4, categoryId },
 	}).then(res => res.list),
