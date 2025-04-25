@@ -8,14 +8,15 @@ definePageMeta({
 
 const { data: categories } = await useAPI<ArticleCategory>(
 	'promotion/article-category/mall/page',
+	{ transform: res => res.list },
 )
 
 const { shortDomain } = useRuntimeConfig().public
 const { gtag } = useGtag()
-//文章列表页面埋点
+// 文章列表页面埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'articles-list'
+	app_name: shortDomain,
+	screen_name: 'articles-list',
 })
 
 const categoryId = ref(categories.value?.[0]?.id)

@@ -7,7 +7,7 @@ export function useAPI<T>(
 	const nuxtApp = useNuxtApp()
 	return useFetch(url, {
 		...options,
-		server: !nuxtApp.payload.serverRendered,
+		server: true, // 确保ssr在服务器端获取数据 !nuxtApp.payload.serverRendered,
 		$fetch: nuxtApp.$api,
 	})
 }
