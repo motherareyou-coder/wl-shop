@@ -16,7 +16,7 @@ export default defineNuxtConfig({
             viewport:
                 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
             meta: [
-                { name: 'keywords', content: 'iswink gift surprise' },
+                { name: 'keywords', content: 'iswink Surprise Gift for Love Relationship' },
                 { name: 'description', content: 'At iswink, every gift carries love and surprises, making every moment a shining memory.' },
             ]
         },
@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         // 配置 robots.txt
         allow: '/',
         // 不允许抓取的页面
-        disallow: '/admin',
+        disallow: ['/admin','/components','/user'],
         // 声明站点地图位置（推荐添加）
         sitemap: 'https://iswink.com/sitemap.xml',
     },
@@ -62,11 +62,7 @@ export default defineNuxtConfig({
         urls: async () => {
             console.log('🔔 Sitemap生成器开始执行') // 添加初始日志
             try {
-                const baseURL = process.env.NODE_ENV === 'production'
-                    ?
-                    // 'https://api.iswink.com'
-                    'http://122.190.56.101:6060/shop-server'
-                    : 'http://localhost:48080'
+                const baseURL = process.env.NUXT_BASE_URL
                 // 1. 获取数据并解析结构
                 const tenantId = process.env.NUXT_PUBLIC_TENANT_ID; // 使用 process.env 获取 tenantId
                 const [productsRes, articlesRes] = await Promise.all([
@@ -323,7 +319,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // public中的键也可以在客户端使用
         public: {
-            baseURL: process.env.NODE_ENV === 'production' ? '/app-api' : '/api',
+            baseURL: process.env.NODE_ENV === 'production' ? process.env.NUXT_BASE_URL+'/app-api' : '/api',
             tenantId: process.env.NUXT_PUBLIC_TENANT_ID || '1',
             currency: '$',
             domain: 'https://www.iswink.com',
@@ -344,8 +340,8 @@ export default defineNuxtConfig({
         compressPublicAssets: true,
         routeRules: {
             '/app-api**': {
-                proxy: 'http://122.190.56.101:6060/shop-server/',
-                // proxy: 'https://api.iswink.com',
+                // proxy: 'http://122.190.56.101:6060/shop-server/',
+                proxy: process.env.NUXT_BASE_URL,
             },
         },
     },

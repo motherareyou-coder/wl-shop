@@ -30,7 +30,7 @@ const { data: recommends } = await useAsyncData<Article>(`recommends`, () =>
 useHead({
 	// title: `${t('home')} ${t('appTitle')}`,
 	// title: ` ${t('appTitle')}`,
-	title: `${shortDomain} ${data.value?.title}`,
+	title: `${data.value?.title} ${shortDomain}`,
 	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
 	meta: [
 		{ name: 'keywords', content: `${data.value?.keyWords}` },

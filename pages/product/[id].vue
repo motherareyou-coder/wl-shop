@@ -368,7 +368,7 @@ const head = computed(() => {
 		title = `${t('砍价')} ${name} ${appTitle}`
 	return {
 		title,
-		link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+		link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 		meta: [
 			{ name: 'keywords', content: info.value?.keyword },
 			{ name: 'description', content: info.value?.introduction },
