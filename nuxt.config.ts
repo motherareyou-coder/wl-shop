@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         // 配置 robots.txt
         allow: '/',
         // 不允许抓取的页面
-        disallow: ['/admin','/components','/user'],
+        disallow: ['/admin','/components','/user','/login'],
         // 声明站点地图位置（推荐添加）
         sitemap: 'https://iswink.com/sitemap.xml',
     },
