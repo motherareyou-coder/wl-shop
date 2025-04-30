@@ -20,8 +20,8 @@ const title = computed(() =>
 useSeoMeta({
 	title: title.value,
 	ogTitle: title.value,
-	description: 'This is my Shop site',
-	ogDescription: 'This is my Shop site',
+	// description: 'This is my Shop site',
+	// ogDescription: 'This is my Shop site',
 	//   ogImage: 'https://example.com/image.png',
 	//   twitterCard: 'summary_large_image',
 })

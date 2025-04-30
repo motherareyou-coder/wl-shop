@@ -57,7 +57,8 @@ export default defineNuxtConfig({
         exclude: [
             '/components/**',
             '/admin/**',
-            '/user/**'
+            '/user/**',
+            '/login/**'
         ],
         urls: async () => {
             console.log('🔔 Sitemap生成器开始执行') // 添加初始日志
