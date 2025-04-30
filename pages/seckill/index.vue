@@ -11,7 +11,7 @@ gtag('event', 'screen_view', {
 	screen_name: 'seckill-list',
 })
 useHead({
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('Daily Picks')} ${$t('appTitle')}`,
 })
 const appStore = useAppStore()

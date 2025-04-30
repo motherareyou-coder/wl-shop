@@ -12,7 +12,7 @@ gtag('event', 'screen_view', {
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
   title: `${$t('Bargin Event')} ${$t('appTitle')}`,
 })
 const appStore = useAppStore()

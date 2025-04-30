@@ -1,7 +1,7 @@
 //希腊语
 export default {
     'language': 'Ελληνικά',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Σύνδεση',
     'register': 'Εγγραφή',
     'home': 'Αρχική',

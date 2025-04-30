@@ -11,7 +11,7 @@ const route = useRoute()
 const { shortDomain,domain } = useRuntimeConfig().public
 
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
 	title: `${$t('Favorites')} ${$t('appTitle')}`,
 })
 </script>

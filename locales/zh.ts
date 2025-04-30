@@ -1,6 +1,6 @@
 export default {
 	'language': '简体中文',
-	'appTitle': 'iswink',
+	'appTitle': 'iswink Love gifts',
 	'login': '登录',
 	'register': '注册',
 	'home': '首页',

@@ -24,7 +24,7 @@ const appStore = useAppStore()
 const userStore = useUserStore()
 const cartStore = useCartStore()
 useHead({
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('Cart')} ${$t('appTitle')}`,
 })
 const { loading, wrapLoading } = useLoading(false)

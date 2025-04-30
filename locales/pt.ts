@@ -1,7 +1,7 @@
 //葡萄牙语
 export default {
     'language': 'Portugal',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Entrar',
     'register': 'Registrar',
     'home': 'Início',

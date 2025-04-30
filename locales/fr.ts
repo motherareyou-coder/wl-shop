@@ -1,7 +1,7 @@
 //法语
 export default {
     'language': 'Français',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Connexion',
     'register': 'Inscription',
     'home': 'Accueil',

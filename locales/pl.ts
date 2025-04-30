@@ -1,7 +1,7 @@
 //波兰语
 export default {
     'language': 'Polski',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Zaloguj się',
     'register': 'Zarejestruj się',
     'home': 'Strona główna',

@@ -1,6 +1,6 @@
 export default {
     'language': 'English',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
 
     'login': 'Sign in',
     'register': 'Sign up',

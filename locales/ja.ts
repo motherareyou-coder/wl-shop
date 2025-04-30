@@ -1,7 +1,7 @@
 //日本语
 export default {
     'language': '日本語',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'ログイン',
     'register': '会員登録',
     'home': 'ホーム',

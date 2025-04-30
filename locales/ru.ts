@@ -1,7 +1,7 @@
 //俄语
 export default {
     'language': 'Русский',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Войти',
     'register': 'Зарегистрироваться',
     'home': 'Главная',

@@ -11,7 +11,7 @@ gtag('event', 'screen_view', {
   screen_name: 'combination-list'
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
   title: `${$t('拼团活动')} ${$t('appTitle')}`,
 })
 const appStore = useAppStore()

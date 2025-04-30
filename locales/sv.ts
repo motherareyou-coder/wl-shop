@@ -1,7 +1,7 @@
 //瑞典语
 export default {
     'language': 'Svenska',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Logga in',
     'register': 'Registrera',
     'home': 'Hem',

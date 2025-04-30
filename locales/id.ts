@@ -1,7 +1,7 @@
 //印尼语
 export default {
     'language': 'Bahasa Indonesia',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Masuk',
     'register': 'Daftar',
     'home': 'Beranda',

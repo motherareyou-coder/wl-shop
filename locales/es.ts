@@ -1,7 +1,7 @@
 //西班牙语
 export default {
     'language': 'Español',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Iniciar sesión',
     'register': 'Registrarse',
     'home': 'Inicio',

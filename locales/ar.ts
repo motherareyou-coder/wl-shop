@@ -1,7 +1,7 @@
 //阿拉伯语
 export default {
     'language': 'العربية',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'تسجيل الدخول',
     'register': 'تسجيل',
     'home': 'الرئيسية',

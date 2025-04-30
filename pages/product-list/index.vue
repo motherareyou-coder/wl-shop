@@ -22,7 +22,7 @@ watchEffect(() => {
 })
 
 useHead({
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('Product List')} ${$t('appTitle')}`,
 })
 

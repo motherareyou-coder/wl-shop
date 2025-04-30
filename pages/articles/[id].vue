@@ -28,10 +28,11 @@ const { data: recommends } = await useAsyncData<Article>(`recommends`, () =>
 		params: { pageNo: 1, pageSize: 4, categoryId },
 	}).then(res => res.list))
 useHead({
-	// title: `${t('home')} ${t('appTitle')}`,
-	// title: ` ${t('appTitle')}`,
-	title: `${data.value?.title} ${shortDomain}`,
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	// title: `${t('home')} ${$t('appTitle')}`,
+	// title: ` ${$t('appTitle')}`,
+	// title: `${data.value?.title} ${shortDomain}`,
+	title: `${data.value?.title} ${$t('appTitle')}`,
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	meta: [
 		{ name: 'keywords', content: `${data.value?.keyWords}` },
 		{ name: 'description', content: `${data.value?.introduction}` },

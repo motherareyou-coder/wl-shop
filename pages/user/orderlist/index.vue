@@ -11,7 +11,7 @@ definePageMeta({
 	showBread: true,
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
 	title: `${$t('OrderList')} ${$t('appTitle')}`,
 })
 

@@ -1,7 +1,7 @@
 //意大利语
 export default {
     'language': 'Italiano',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Accedi',
     'register': 'Registrati',
     'home': 'Home',

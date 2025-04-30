@@ -8,7 +8,7 @@ const userStore = useUserStore()
 const { shortDomain, domain } = useRuntimeConfig().public
 
 useHead({
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('Coupon')} ${$t('appTitle')}`,
 })
 function getData<CouponTemplate>(params: any) {

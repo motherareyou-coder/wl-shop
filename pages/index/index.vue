@@ -11,7 +11,7 @@ const route = useRoute()
 const { t } = useI18n()
 useHead({
 	title: `${t('home')} ${t('appTitle')}`,
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	meta: [
 		{ name: 'keywords', content: `${shortDomain}` },
 		{ name: 'description', content: `${shortDomain}` },

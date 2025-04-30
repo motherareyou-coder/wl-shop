@@ -12,7 +12,7 @@ const route = useRoute()
 const { shortDomain, domain } = useRuntimeConfig().public
 
 useHead({
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('拼团记录')} ${$t('appTitle')}`,
 })
 // 0.进行中 1.拼团成功 2.拼团失败）

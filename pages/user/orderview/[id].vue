@@ -14,7 +14,7 @@ definePageMeta({
 	showBread: true,
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
 	title: `${id} ${$t('OrderView')} ${$t('appTitle')}`,
 })
 const { data: info, refresh } = await useAPI<OrderDetail>(

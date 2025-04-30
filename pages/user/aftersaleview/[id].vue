@@ -10,7 +10,7 @@ definePageMeta({
 const route = useRoute()
 const { shortDomain,domain } = useRuntimeConfig().public
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
   title: `${$t('AfterSale Detail')} ${$t('appTitle')}`,
 })
 const id = route.params.id

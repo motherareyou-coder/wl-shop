@@ -21,7 +21,7 @@ const userStore = useUserStore()
 const route = useRoute()
 const { shortDomain, domain } = useRuntimeConfig().public
 useHead({
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('user')} ${$t('appTitle')}`,
 })
 const user = computed(() => userStore.user)

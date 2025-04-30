@@ -1,7 +1,7 @@
 //土耳其语
 export default {
     'language': 'Türkçe',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Giriş Yap',
     'register': 'Kayıt Ol',
     'home': 'Ana Sayfa',

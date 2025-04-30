@@ -1,7 +1,7 @@
 //德语
 export default {
     'language': 'Deutsch',
-    'appTitle': 'iswink',
+    'appTitle': 'iswink Love gifts',
     'login': 'Anmelden',
     'register': 'Registrieren',
     'home': 'Startseite',

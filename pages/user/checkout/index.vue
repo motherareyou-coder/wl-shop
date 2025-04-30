@@ -27,7 +27,7 @@ gtag('event', 'screen_view', {
 	screen_name: 'check-out',
 })
 useHead({
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('Checkout')} ${$t('appTitle')}`,
 })
 const cantUseCoupon = !!(orderId || bargainRecordId || seckillActivityId || combinationActivityId)

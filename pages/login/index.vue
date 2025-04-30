@@ -14,7 +14,7 @@ const tab = ref(route.query.type == 1 ? 1 : 0)
 const { t } = useI18n()
 useHead({
 	title: `${t('login')} ${t('appTitle')}`,
-	link: [{ rel: 'canonical', href: `${domain} ${route.path}` }],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	meta: [{ name: 'description', content: 'login' }],
 })
 
