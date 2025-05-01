@@ -1,6 +1,6 @@
 export default {
 	'language': '简体中文',
-	'appTitle': 'iswink Love gifts',
+	'appTitle': 'Love gifts',
 	'login': '登录',
 	'register': '注册',
 	'home': '首页',
@@ -211,7 +211,7 @@ export default {
 	'unknown state': '未知状态',
 	'Apply reason': '申请原因',
 	'Apply description': '相关描述',
-	"Don't want it anymore": '不想要了',
+	'Don\'t want it anymore': '不想要了',
 	'Dislike': '不喜欢',
 	'Select': '请选择',
 	'Submit': '提交',
