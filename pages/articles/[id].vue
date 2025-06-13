@@ -27,17 +27,32 @@ const { data: recommends } = await useAsyncData<Article>(`recommends`, () =>
 	$api('promotion/article/mall/page', {
 		params: { pageNo: 1, pageSize: 4, categoryId },
 	}).then(res => res.list))
-useHead({
-	// title: `${t('home')} ${$t('appTitle')}`,
-	// title: ` ${$t('appTitle')}`,
-	// title: `${data.value?.title} ${shortDomain}`,
-	title: `${data.value?.title} ${$t('appTitle')}`,
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	meta: [
-		{ name: 'keywords', content: `${data.value?.keyWords}` },
-		{ name: 'description', content: `${data.value?.introduction}` },
-	],
+
+const head = computed(() => {
+  // 关键修改：将路径中的语言前缀替换为 'en'
+  const enPath = route.fullPath.replace(/^\/[a-z]{2}\//, '/en/');
+  const canonicalUrl = `${domain}${enPath}`;
+  return {
+    title: `${data.value?.title} ${$t('appTitle')}`,
+    link: [{ rel: 'canonical', href: canonicalUrl }],
+    meta: [
+      { name: 'keywords', content: `${data.value?.keyWords}` },
+      { name: 'description', content: `${data.value?.introduction}` },
+    ],
+  }
 })
+useHead(head)
+// useHead({
+// 	// title: `${t('home')} ${$t('appTitle')}`,
+// 	// title: ` ${$t('appTitle')}`,
+// 	// title: `${data.value?.title} ${shortDomain}`,
+// 	title: `${data.value?.title} ${$t('appTitle')}`,
+// 	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
+// 	meta: [
+// 		{ name: 'keywords', content: `${data.value?.keyWords}` },
+// 		{ name: 'description', content: `${data.value?.introduction}` },
+// 	],
+// })
 </script>
 
 <template>
