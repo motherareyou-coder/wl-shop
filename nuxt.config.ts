@@ -320,7 +320,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // public中的键也可以在客户端使用
         public: {
-            baseURL: process.env.NODE_ENV === 'production' ? process.env.NUXT_BASE_URL+'/app-api' : '/api',
+            baseURL: process.env.NODE_ENV === 'production' ? process.env.NUXT_BASE_URL+'/app-api' :  'http://localhost:3000/api',
             tenantId: process.env.NUXT_PUBLIC_TENANT_ID || '1',
             currency: '$',
             domain: 'https://www.iswink.com',
@@ -336,6 +336,22 @@ export default defineNuxtConfig({
         // 		target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
         // 		changeOrigin: true,
         // 	},
+        // },
+        //日志
+        // logging: {
+        //     level: 'debug', // 设置日志级别（trace, debug, info, warn, error, fatal）
+        //     handlers: [
+        //         {
+        //             type: 'console', // 输出到控制台
+        //             level: 'debug',
+        //         },
+        //         // 可选：输出到文件
+        //         // {
+        //         //   type: 'file',
+        //         //   level: 'info',
+        //         //   path: './logs/ssr.log' // 日志文件路径
+        //         // }
+        //     ]
         // },
         // 开启gzip压缩
         compressPublicAssets: true,
