@@ -91,7 +91,8 @@ export default defineNuxtConfig({
                 const articleIds = articlesRes?.code === 0 ? articlesRes.data : []
                 console.log('【Sitemap】商品ID:', productIds, '文章ID:', articleIds)
                 // 3. 使用i18n.locales生成多语言路由
-                const locales = ['zh', 'en', 'pt', 'ru', 'el', 'fr', 'es', 'de', 'it', 'pl', 'ar', 'tr', 'ja', 'id', 'sv']
+                // const locales = ['zh', 'en', 'pt', 'ru', 'el', 'fr', 'es', 'de', 'it', 'pl', 'ar', 'tr', 'ja', 'id', 'sv']
+                const locales = ['en']
                 const generateRoutes = (type: string, ids: number[]) =>
                     ids.flatMap(id =>
                         locales.map(locale => ({
@@ -125,13 +126,15 @@ export default defineNuxtConfig({
         preference: 'light',
     },
     dayjs: {
-        locales: ['en', 'zh'],
+        // locales: ['en', 'zh'],
+        locales: ['en'],
         plugins: ['relativeTime', 'utc', 'timezone', 'duration'],
-        defaultLocale: 'zh',
+        // defaultLocale: 'zh',
+        defaultLocale: 'en',
     },
     i18n: {
         seo: true, // 启用自动 hreflang
-        defaultLocale: 'zh',
+        defaultLocale: 'en',
         baseUrl: 'https://www.iswink.com', // 启用自动 hreflang 路由生成绝对路径
         vueI18n: './locales/i18n.config.ts',
         detectBrowserLanguage: {
@@ -139,13 +142,13 @@ export default defineNuxtConfig({
             alwaysRedirect: false,
         },
         locales: [
-            {
-                name: '简体中文',
-                code: 'zh',
-                iso: 'zh-CN',
-                language: 'zh-CN',
-                // file: './locales/zh.ts',
-            },
+            // {
+            //     name: '简体中文',
+            //     code: 'zh',
+            //     iso: 'zh-CN',
+            //     language: 'zh-CN',
+            //     // file: './locales/zh.ts',
+            // },
             {
                 // 英语
                 name: 'English',
@@ -153,111 +156,111 @@ export default defineNuxtConfig({
                 iso: 'en-US',
                 language: 'en-US',
                 // file: './locales/en.ts',
-            },
-            {
-                // 葡萄牙语
-                name: 'Portuguese',
-                code: 'pt',
-                iso: 'pt-PT',
-                language: 'pt-PT',
-                // file: './locales/en.ts',
-            },
-            {
-                // 俄语
-                name: 'Русский',
-                code: 'ru',
-                iso: 'ru-RU',
-                language: 'ru-RU',
-                // file: './locales/en.ts',
-            },
-            {
-                // 希腊语
-                name: 'Ελληνικά',
-                code: 'el',
-                iso: 'el-GR',
-                language: 'el-GR',
-                // file: './locales/en.ts',
-            },
-            {
-                // 法语
-                name: 'Français',
-                code: 'fr',
-                iso: 'fr-FR',
-                language: 'fr-FR',
-                // file: './locales/en.ts',
-            },
-            {
-                // 西班牙语
-                name: 'Español',
-                code: 'es',
-                iso: 'es-ES',
-                language: 'es-ES',
-                // file: './locales/en.ts',
-            },
-            {
-                // 德语
-                name: 'Deutsch',
-                code: 'de',
-                iso: 'de-DE',
-                language: 'de-DE',
-                // file: './locales/en.ts',
-            },
-            {
-                // 意大利语
-                name: 'Italiano',
-                code: 'it',
-                iso: 'it-IT',
-                language: 'it-IT',
-                // file: './locales/en.ts',
-            },
-            {
-                // 波兰语
-                name: 'Polski',
-                code: 'pl',
-                iso: 'pl-PL',
-                language: 'pl-pl',
-                // file: './locales/en.ts',
-            },
-            {
-                // 阿拉伯语
-                name: 'العربية',
-                code: 'ar',
-                iso: 'ar-SA',
-                language: 'ar-SA',
-                // file: './locales/en.ts',
-            },
-            {
-                // 土耳其语
-                name: 'Türkçe',
-                code: 'tr',
-                iso: 'tr-TR',
-                language: 'tr-TR',
-                // file: './locales/en.ts',
-            },
-            {
-                // 日语
-                name: '日本語',
-                code: 'ja',
-                iso: 'ja-JP',
-                language: 'ja-JP',
-                // file: './locales/en.ts',
-            },
-            {
-                // 印尼语
-                name: 'Bahasa Indonesia',
-                code: 'id',
-                iso: 'id-ID',
-                language: 'id-ID',
-                // file: './locales/en.ts',
-            },
-            {
-                // 瑞典语
-                name: 'Svenska',
-                code: 'sv',
-                iso: 'sv-SE',
-                language: 'sv-SE',
-                // file: './locales/en.ts',
-            },
+            }
+            // ,{
+            //     // 葡萄牙语
+            //     name: 'Portuguese',
+            //     code: 'pt',
+            //     iso: 'pt-PT',
+            //     language: 'pt-PT',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 俄语
+            //     name: 'Русский',
+            //     code: 'ru',
+            //     iso: 'ru-RU',
+            //     language: 'ru-RU',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 希腊语
+            //     name: 'Ελληνικά',
+            //     code: 'el',
+            //     iso: 'el-GR',
+            //     language: 'el-GR',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 法语
+            //     name: 'Français',
+            //     code: 'fr',
+            //     iso: 'fr-FR',
+            //     language: 'fr-FR',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 西班牙语
+            //     name: 'Español',
+            //     code: 'es',
+            //     iso: 'es-ES',
+            //     language: 'es-ES',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 德语
+            //     name: 'Deutsch',
+            //     code: 'de',
+            //     iso: 'de-DE',
+            //     language: 'de-DE',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 意大利语
+            //     name: 'Italiano',
+            //     code: 'it',
+            //     iso: 'it-IT',
+            //     language: 'it-IT',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 波兰语
+            //     name: 'Polski',
+            //     code: 'pl',
+            //     iso: 'pl-PL',
+            //     language: 'pl-pl',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 阿拉伯语
+            //     name: 'العربية',
+            //     code: 'ar',
+            //     iso: 'ar-SA',
+            //     language: 'ar-SA',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 土耳其语
+            //     name: 'Türkçe',
+            //     code: 'tr',
+            //     iso: 'tr-TR',
+            //     language: 'tr-TR',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 日语
+            //     name: '日本語',
+            //     code: 'ja',
+            //     iso: 'ja-JP',
+            //     language: 'ja-JP',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 印尼语
+            //     name: 'Bahasa Indonesia',
+            //     code: 'id',
+            //     iso: 'id-ID',
+            //     language: 'id-ID',
+            //     // file: './locales/en.ts',
+            // },
+            // {
+            //     // 瑞典语
+            //     name: 'Svenska',
+            //     code: 'sv',
+            //     iso: 'sv-SE',
+            //     language: 'sv-SE',
+            //     // file: './locales/en.ts',
+            // },
         ],
         strategy: 'prefix',
     },

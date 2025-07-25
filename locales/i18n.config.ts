@@ -16,22 +16,26 @@ import sv from './sv'
 
 export default defineI18nConfig(() => ({
 	legacy: false,
-	locale: 'zh',
+	// locale: 'zh',
+	locale: 'en',
 	messages: {
-		en,
-		zh,
-		pt,
-		ru,
-		el,
-		fr,
-		es,
-		de,
-		it,
-		pl,
-		ar,
-		tr,
-		ja,
-		id,
-		sv,
-	},
+		en
+	}
+	// messages: {
+	// 	en,
+	// 	zh,
+	// 	pt,
+	// 	ru,
+	// 	el,
+	// 	fr,
+	// 	es,
+	// 	de,
+	// 	it,
+	// 	pl,
+	// 	ar,
+	// 	tr,
+	// 	ja,
+	// 	id,
+	// 	sv,
+	// },
 }))

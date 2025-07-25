@@ -2,34 +2,34 @@
 defineOptions({ name: 'LanguageSelect' })
 
 const items = [
-	{ label: '中文', value: 'zh' },
+	// { label: '中文', value: 'zh' },
 	{ label: 'English', value: 'en' },
-    //葡萄牙语
-	{ label: 'Portugal', value: 'pt' },
-    //俄语
-	{ label: 'Русский', value: 'ru' },
-    //希腊语
-	{ label: 'Ελληνικά', value: 'el' },
-    //法语
-	{ label: 'Français', value: 'fr' },
-    //西班牙语
-	{ label: 'Español', value: 'es' },
-    //德语
-	{ label: 'Deutsch', value: 'de' },
-    //意大利语
-	{ label: 'Italiano', value: 'it' },
-    //波兰
-	{ label: 'Polski', value: 'pl' },
-    //阿拉伯语
-	{ label: 'العربية', value: 'ar' },
-    //土耳其语
-	{ label: 'Türkçe', value: 'tr' },
-    //日语
-	{ label: '日本語', value: 'ja' },
-    //印尼语
-	{ label: 'Bahasa Indonesia', value: 'id' },
-    //瑞典语
-	{ label: 'Svenska', value: 'sv' },
+  //   //葡萄牙语
+	// { label: 'Portugal', value: 'pt' },
+  //   //俄语
+	// { label: 'Русский', value: 'ru' },
+  //   //希腊语
+	// { label: 'Ελληνικά', value: 'el' },
+  //   //法语
+	// { label: 'Français', value: 'fr' },
+  //   //西班牙语
+	// { label: 'Español', value: 'es' },
+  //   //德语
+	// { label: 'Deutsch', value: 'de' },
+  //   //意大利语
+	// { label: 'Italiano', value: 'it' },
+  //   //波兰
+	// { label: 'Polski', value: 'pl' },
+  //   //阿拉伯语
+	// { label: 'العربية', value: 'ar' },
+  //   //土耳其语
+	// { label: 'Türkçe', value: 'tr' },
+  //   //日语
+	// { label: '日本語', value: 'ja' },
+  //   //印尼语
+	// { label: 'Bahasa Indonesia', value: 'id' },
+  //   //瑞典语
+	// { label: 'Svenska', value: 'sv' },
 ]
 </script>
 
