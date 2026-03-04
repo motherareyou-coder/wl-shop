@@ -11,16 +11,21 @@ export default defineNuxtConfig({
     // },
     app: {
         head: {
-            title: process.env.NUXT_APP_TITLE,
+            title: process.env.NUXT_APP_TITLE || 'iswink - Surprise Gifts for Love',
             charset: 'utf-8',
             viewport:
                 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
             meta: [
-                {name: 'keywords', content: 'iswink Surprise Gift for Love Relationship'},
+                {
+                    name: 'keywords',
+                    content: 'iswink, surprise gifts, love gifts, relationship gifts, romantic presents, anniversary gifts, birthday gifts, custom gifts'
+                },
                 {
                     name: 'description',
-                    content: 'At iswink, every gift carries love and surprises, making every moment a shining memory.'
+                    content: 'Discover unique surprise gifts at iswink. Perfect for anniversaries, birthdays, and special moments. Free shipping worldwide. Shop now for memorable presents.'
                 },
+                { name: 'author', content: process.env.DOMAIN },
+                { name: 'robots', content: 'index, follow' },
             ]
         },
     },
@@ -64,7 +69,11 @@ export default defineNuxtConfig({
             '/login/**'
         ],
         urls: async () => {
-            console.log('🔔 Sitemap生成器开始执行') // 添加初始日志
+            // 非生产环境直接返回空数组，不执行后续逻辑
+            if (process.env.NODE_ENV !== 'production') {
+                return []
+            }
+            console.log('🔔 Sitemap 生成器开始执行') // 添加初始日志
             try {
                 const baseURL = process.env.NUXT_BASE_URL
                 // 1. 获取数据并解析结构

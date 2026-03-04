@@ -5,25 +5,25 @@ import zh from 'element-plus/es/locale/lang/zh-cn'
 const route = useRoute()
 const { t, locale } = useI18n()
 
+// 使用 i18n 的 SEO 功能，自动生成 hreflang 等标签
 const head = useLocaleHead({
 	addDirAttribute: true,
 	identifierAttribute: 'id',
 	addSeoAttributes: true,
 })
 
+// 页面标题（用于模板显示）
 const title = computed(() =>
 	route.meta.title
 		? `${t(route.meta.title as string)} ${t('appTitle')}`
 		: t('appTitle'),
 )
 
+// 全局默认的 SEO meta 信息
+// 注意：具体的 title 和 description 由各页面自行设置
 useSeoMeta({
-	title: title.value,
-	ogTitle: title.value,
-	// description: 'This is my Shop site',
-	// ogDescription: 'This is my Shop site',
-	//   ogImage: 'https://example.com/image.png',
-	//   twitterCard: 'summary_large_image',
+	// 这些是全局默认值，页面可以覆盖
+	twitterCard: 'summary_large_image',
 })
 
 const appStore = useAppStore()

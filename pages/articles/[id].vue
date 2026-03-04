@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {Article} from '~/types'
 import ArticleItem from './components/ArticleItem.vue'
+import { useArticleSEO } from '~/composables/usePageSEO'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -41,17 +42,8 @@ const { data: recommends } = await useAsyncData<Article>(`recommends-${Date.now(
 //   }
 // })
 // useHead(head)
-useHead({
-  // title: `${t('home')} ${$t('appTitle')}`,
-  // title: ` ${$t('appTitle')}`,
-  // title: `${data.value?.title} ${shortDomain}`,
-  title: `${info.value?.title} ${$t('appTitle')}`,
-  // link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-  meta: [
-    { name: 'keywords', content: `${info.value?.keyWords}` },
-    { name: 'description', content: `${info.value?.introduction}` },
-  ],
-})
+// 使用统一的 SEO composable
+const { title, description, keywords, canonicalUrl } = useArticleSEO(info)
 
 onMounted(() => {
   const { gtag } = useGtag()

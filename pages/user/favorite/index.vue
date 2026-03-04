@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
+import { usePageSEO } from '~/composables/usePageSEO'
 
 definePageMeta({
 	title: 'Favorites',
@@ -10,9 +11,11 @@ const appStore = useAppStore()
 const route = useRoute()
 const { shortDomain,domain } = useRuntimeConfig().public
 
-useHead({
-  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
-	title: `${$t('Favorites')} ${$t('appTitle')}`,
+// 使用统一的 SEO composable
+usePageSEO({
+	title: 'Favorites',
+	description: 'Save and manage your favorite products for later purchase.',
+	keywords: 'favorites, wishlist, saved items',
 })
 </script>
 

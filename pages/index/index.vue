@@ -3,20 +3,19 @@ import AppExclusive from './components/AppExclusive.vue'
 import AppFeature from './components/AppFeature.vue'
 import AppSpecial from './components/AppSpecial.vue'
 import AppSwiper from './components/AppSwiper.vue'
+import { usePageSEO } from '~/composables/usePageSEO'
+
 
 defineOptions({ name: 'Home' })
 const { shortDomain, domain } = useRuntimeConfig().public
 const route = useRoute()
-
 const { t } = useI18n()
-useHead({
-	// title: `${t('home')} ${t('appTitle')}`,
-	title: `${t('appTitle')}`,
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	meta: [
-		{ name: 'keywords', content: `${shortDomain}` },
-		{ name: 'description', content: `${shortDomain}` },
-	],
+
+// 使用统一的 SEO composable
+usePageSEO({
+	title: t('home'),
+	description: 'Shop unique surprise gifts for your loved ones. Customizable presents with free worldwide shipping. Perfect for anniversaries, birthdays, and special occasions.',
+	keywords: 'surprise gifts, love gifts, romantic presents, anniversary gifts, birthday gifts, custom gifts, relationship gifts',
 })
 </script>
 

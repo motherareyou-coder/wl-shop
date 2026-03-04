@@ -4,6 +4,7 @@ import CouponDialog from './components/CouponDialog.vue'
 import QtyInput from './components/QtyInput.vue'
 import Recommends from './components/Recommends.vue'
 import { useCheckOut } from './utils'
+import {usePageSEO} from "~/composables/usePageSEO";
 
 defineOptions({ name: 'Cart' })
 definePageMeta({
@@ -23,9 +24,12 @@ const router = useRouter()
 const appStore = useAppStore()
 const userStore = useUserStore()
 const cartStore = useCartStore()
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('Cart')} ${$t('appTitle')}`,
+
+// 使用统一的 SEO composable
+usePageSEO({
+	title: 'Cart',
+	description: 'Review your cart items and proceed to checkout with secure payment.',
+	keywords: 'shopping cart, online shopping, checkout',
 })
 const { loading, wrapLoading } = useLoading(false)
 provide('loading', loading)

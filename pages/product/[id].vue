@@ -4,6 +4,7 @@ import type { BargainActivity, BargainHelp, CombinationActivityDetail, PayOrderS
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 import { useProperties } from './utils'
+import {useProductSEO} from "~/composables/usePageSEO";
 
 const { t } = useI18n()
 const userStore = useUserStore()
@@ -356,30 +357,8 @@ function handleCommand(type: string, data: any) {
 	}
 }
 
-const head = computed(() => {
-	const name = info.value?.name || ''
-	const appTitle = t('appTitle')
-	let title = `${name} ${appTitle}`
-  // 关键修改：将路径中的语言前缀替换为 'en'
-  const enPath = route.fullPath.replace(/^\/[a-z]{2}\//, '/en/');
-  const canonicalUrl = `${domain}${enPath}`;
-	if (combinationActivityId)
-		title = `${t('拼团')} ${name} ${appTitle}`
-	else if (seckillActivityId)
-		title = `${t('秒杀')} ${name} ${appTitle}`
-	else if (bargainActivityId)
-		title = `${t('砍价')} ${name} ${appTitle}`
-	return {
-		title,
-		// link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-		link: [{ rel: 'canonical', href: canonicalUrl }],
-		meta: [
-			{ name: 'keywords', content: info.value?.keyword },
-			{ name: 'description', content: info.value?.introduction },
-		],
-	}
-})
-useHead(head)
+// 使用统一的 SEO composable
+const { title, description, keywords, canonicalUrl } = useProductSEO(info)
 </script>
 
 <template>

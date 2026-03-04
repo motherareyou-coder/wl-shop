@@ -2,6 +2,7 @@
 import type { Category } from '~/types'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
+import { usePageSEO } from '~/composables/usePageSEO'
 
 defineOptions({ name: 'ProductListCache' })
 const route = useRoute()
@@ -21,9 +22,15 @@ watchEffect(() => {
 	keyword.value = route.query.query
 })
 
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('Product List')} ${$t('appTitle')}`,
+// 使用统一的 SEO composable
+usePageSEO({
+	title: computed(() => keyword.value ? `${keyword.value} Products` : 'Product List'),
+	description: computed(() => 
+		keyword.value 
+			? `Discover ${keyword.value} at iswink. High quality surprise gifts with free shipping worldwide.`
+			: 'Browse our collection of unique surprise gifts for every occasion. Customizable presents with free shipping.'
+	),
+	keywords: 'surprise gifts, online shopping, gift shop',
 })
 
 const appStore = useAppStore()
