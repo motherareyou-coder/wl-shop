@@ -16,8 +16,11 @@ export default defineNuxtConfig({
             viewport:
                 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
             meta: [
-                { name: 'keywords', content: 'iswink Surprise Gift for Love Relationship' },
-                { name: 'description', content: 'At iswink, every gift carries love and surprises, making every moment a shining memory.' },
+                {name: 'keywords', content: 'iswink Surprise Gift for Love Relationship'},
+                {
+                    name: 'description',
+                    content: 'At iswink, every gift carries love and surprises, making every moment a shining memory.'
+                },
             ]
         },
     },
@@ -45,15 +48,15 @@ export default defineNuxtConfig({
         // 配置 robots.txt
         allow: '/',
         // 不允许抓取的页面
-        disallow: ['/admin','/components','/user','/login'],
+        disallow: ['/admin', '/components', '/user', '/login'],
         // 声明站点地图位置（推荐添加）
-        sitemap: 'https://iswink.com/sitemap.xml',
+        sitemap: process.env.DOMAIN_URL + '/sitemap.xml',
     },
     sitemap: {
         gzip: true,
         cacheTime: 86400, // 缓存时间（秒）
         // 配置 sitemap
-        hostname: 'https://iswink.com',
+        hostname: process.env.DOMAIN_URL,
         exclude: [
             '/components/**',
             '/admin/**',
@@ -135,7 +138,7 @@ export default defineNuxtConfig({
     i18n: {
         seo: true, // 启用自动 hreflang
         defaultLocale: 'en',
-        baseUrl: 'https://www.iswink.com', // 启用自动 hreflang 路由生成绝对路径
+        baseUrl: process.env.DOMAIN_URl, // 启用自动 hreflang 路由生成绝对路径
         vueI18n: './locales/i18n.config.ts',
         detectBrowserLanguage: {
             useCookie: false,
@@ -323,14 +326,15 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // public中的键也可以在客户端使用
         public: {
-            baseURL: process.env.NODE_ENV === 'production' ? process.env.NUXT_BASE_URL+'/app-api' :  'http://localhost:3000/api',
+            // baseURL: process.env.NODE_ENV === 'production' ? process.env.NUXT_BASE_URL + '/app-api' : 'http://122.190.56.101:6060/app-api',
+            baseURL: process.env.NUXT_BASE_URL + '/app-api',
             tenantId: process.env.NUXT_PUBLIC_TENANT_ID || '1',
             currency: '$',
-            domain: 'https://www.iswink.com',
-            shortDomain: 'iswink',
+            domain: process.env.DOMAIN_URl,
+            shortDomain: process.env.DOMAIN,
             // kefuWsUrl: 'ws://localhost:48080/infra/ws'
             // kefuWsUrl: 'ws://122.190.56.101:6060/infra/ws'
-            kefuWsUrl: 'wss://iswink.com/infra/ws',
+            kefuWsUrl: process.env.NUXT_PUBLIC_KEFU_WS_URL,
         },
     },
     nitro: {

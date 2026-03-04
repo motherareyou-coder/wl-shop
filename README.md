@@ -16,8 +16,12 @@ pnpm install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# pnpm
+# pnpm 本地
+pnpm run dev:local
+# pnpm 开发
 pnpm run dev
+# 生产环境开发（预览生产配置）
+pnpm run dev:prod
 ```
 
 ## 生产环境构建 Production
@@ -25,6 +29,14 @@ pnpm run dev
 构建生产版本命令 Build the application for production:
 
 ```bash
+# 1. 本地测试生产配置
+pnpm run dev:prod
+
+# 2. 构建生产版本
+pnpm run build:prod
+
+# 3. 预览构建结果
+pnpm run preview
 # pnpm
 pnpm run build
     若出现内存不足
