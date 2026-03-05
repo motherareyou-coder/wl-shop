@@ -4,8 +4,9 @@
 	"private": true,
 	"packageManager": "pnpm@9.4.0",
 	"scripts": {
-		"build": "nuxt build --max_old_space_size=16384",
+		"build": "nuxt build  --dotenv .env.production --max_old_space_size=16384",
 		"dev": "nuxt dev --dotenv .env.development",
+		"dev:fast": "nuxt dev --dotenv .env.development --no-fork",
 		"dev:local": "nuxt dev --dotenv .env.local",
 		"dev:prod": "nuxt dev --dotenv .env.production",
 		"build:local": "nuxt build --dotenv .env.local",
@@ -19,9 +20,9 @@
 	},
 	"dependencies": {
 		"@nuxt/ui": "^2.18.7",
-		"@nuxtjs/google-gtag": "^1.0.4",
 		"@nuxtjs/seo": "^2.1.0",
 		"@pinia/nuxt": "^0.6.1",
+		"@unhead/schema-org": "^2.1.10",
 		"@vueuse/core": "^11.2.0",
 		"@vueuse/nuxt": "^11.2.0",
 		"big.js": "^6.2.2",

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BannerBg from '@/assets/imgs/login-banner.jpg'
+import { usePageSEO } from '~/composables/usePageSEO'
 
 defineOptions({ name: 'Login' })
 definePageMeta({ layout: 'login' })
@@ -12,10 +13,13 @@ const redirect = decodeURIComponent(route.query.redirect || '')
 const tab = ref(route.query.type == 1 ? 1 : 0)
 
 const { t } = useI18n()
-useHead({
-	title: `${t('login')} ${t('appTitle')}`,
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	meta: [{ name: 'description', content: 'login' }],
+
+// 使用统一的 SEO composable
+usePageSEO({
+	title: t('seo.login'),
+	description: t('seo.desc.login'),
+	keywords: 'login, sign in, account',
+	noIndex: true, // 登录页不需要被索引
 })
 
 const userStore = useUserStore()

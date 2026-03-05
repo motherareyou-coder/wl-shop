@@ -1,9 +1,19 @@
 <script setup lang="ts">
 import type { Coupon } from '~/types'
+import { usePageSEO } from '~/composables/usePageSEO'
+
+const { t } = useI18n()
 
 definePageMeta({
-	title: 'Coupons',
+	title: t('Coupons'),
 	showBread: true,
+})
+
+// 优惠券页面，不需要被搜索引擎抓取
+usePageSEO({
+	title: t('seo.myCoupons'),
+	description: t('seo.desc.myCoupons'),
+	noIndex: true, // 用户优惠券不索引
 })
 const route = useRoute()
 const status = ref(0)

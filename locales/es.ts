@@ -344,5 +344,40 @@ export default {
 	'. Unpaid orders (except for COD ones) will be cancelled automatically afterwards.': `. Los pedidos impagados se cancelarán automáticamente`,
 	'最少成团人数': values => `Mínimo ${values.number}  personas para activar`,
 	'最多砍价人数': values => `Máximo ${values.number}  personas para regatear`,
-	'还差x人成团': values => `Faltan ${values.number}  personas para el grupo`,
+	'还差 x 人成团': values => `Faltan ${values.number}  personas para el grupo`,
+
+	// ===== SEO Titles =====
+	'seo.home': 'Inicio',
+	'seo.productList': 'Lista de Productos',
+	'seo.userCenter': 'Centro de Usuario',
+	'seo.deliveryAddress': 'Dirección de Entrega',
+	'seo.memberLevel': 'Nivel de Miembro',
+	'seo.points': 'Puntos',
+	'seo.myCoupons': 'Mis Cupones',
+	'seo.groupBuyRecords': 'Registros de Compra Grupal',
+	'seo.cart': 'Carrito de Compras',
+	'seo.favorites': 'Favoritos',
+	'seo.orderList': 'Historial de Pedidos',
+	'seo.checkout': 'Pago',
+	'seo.login': 'Iniciar Sesión',
+	'seo.articles': 'Artículos',
+
+	// ===== SEO Descriptions - 通用礼品业务 =====
+	'seo.desc.home': 'Descubra regalos sorpresa únicos para sus seres queridos. Regalos personalizables con envío gratuito en todo el mundo. Perfecto para aniversarios, cumpleaños y ocasiones especiales.',
+	'seo.desc.productList': 'Explore nuestra colección de regalos sorpresa únicos para cada ocasión. Productos de alta calidad con envío rápido y excelente servicio al cliente.',
+	'seo.desc.userCenter': 'Administre sus pedidos, favoritos, direcciones y configuración de cuenta. Acceda a los beneficios de su membresía y rastree sus puntos.',
+	'seo.desc.deliveryAddress': 'Administre sus direcciones de entrega para compras convenientes. Agregue, edite o elimine direcciones de envío en cualquier momento.',
+	'seo.desc.memberLevel': 'Vea su nivel de membresía y registros de experiencia. Rastree su progreso y desbloquee beneficios exclusivos.',
+	'seo.desc.points': 'Seguimiento del historial de ganancias y gastos de puntos de lealtad. Canjee puntos por descuentos y recompensas.',
+	'seo.desc.myCoupons': 'Administre sus cupones de descuento y ahorre en sus productos favoritos. Vea cupones disponibles, usados y expirados.',
+	'seo.desc.groupBuyRecords': 'Seguimiento de sus actividades de compra grupal y estado del equipo. Únase a compras grupales para mejores precios.',
+	'seo.desc.cart': 'Revise los artículos de su carrito y proceda al pago con pago seguro. Guarde artículos para comprarlos más tarde.',
+	'seo.desc.favorites': 'Guarde y administre sus productos favoritos para comprarlos más tarde. Reciba notificaciones cuando los productos estén en oferta.',
+	'seo.desc.orderList': 'Vea y rastree su historial de pedidos con actualizaciones de estado detalladas. Verifique información de envío y entrega.',
+	'seo.desc.checkout': 'Complete su compra con opciones de pago seguras que incluyen tarjeta de crédito, PayPal y criptomoneda.',
+	'seo.desc.login': 'Inicie sesión en su cuenta o cree una nueva para acceder a sus pedidos y favoritos.',
+
+	// ===== SEO Descriptions - 私人定制旅游业务（新） =====
+	'seo.desc.travel.custom': 'Itinerarios de viaje personalizados con guías locales profesionales. Tours personalizados adaptados a sus preferencias y presupuesto.',
+	'seo.desc.travel.guide': 'Acompañantes locales experimentados que brindan experiencias de viaje auténticas. Soporte completo durante todo el viaje desde la recogida hasta la devolución.',
 }

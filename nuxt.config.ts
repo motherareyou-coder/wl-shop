@@ -1,7 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
-    devtools: {enabled: true},
+    // Nuxt DevTools - 官方调试工具
+    devtools: {
+        enabled: true, // 启用开发工具
+        timeline: {
+            enabled: true, // 启用时间线，查看 SSR 和请求
+        },
+    },
     // ssr: process.env.NODE_ENV === 'production',
     ssr: true,
     // build: {
@@ -58,6 +64,8 @@ export default defineNuxtConfig({
         sitemap: process.env.DOMAIN_URL + '/sitemap.xml',
     },
     sitemap: {
+        // 开发环境不生成 sitemap，加快启动速度
+        enabled: process.env.NODE_ENV === 'production',
         gzip: true,
         cacheTime: 86400, // 缓存时间（秒）
         // 配置 sitemap
@@ -75,24 +83,24 @@ export default defineNuxtConfig({
             }
             console.log('🔔 Sitemap 生成器开始执行') // 添加初始日志
             try {
-                const baseURL = process.env.NUXT_BASE_URL
+                const apiTargetUrl = process.env.NUXT_API_TARGET_URL
                 // 1. 获取数据并解析结构
                 const tenantId = process.env.NUXT_PUBLIC_TENANT_ID; // 使用 process.env 获取 tenantId
                 const [productsRes, articlesRes] = await Promise.all([
-                    fetch(baseURL + '/app-api/product/spu/get-spu-all-id', {
+                    fetch(apiTargetUrl + '/product/spu/get-spu-all-id', {
                         headers: {
                             'tenant-id': tenantId // 添加 tenantId 到请求头
                         }
                     }).then(res => res.json()).catch(e => {
-                        console.error('【Sitemap】商品ID接口错误:', e.message)
+                        console.error('【Sitemap】商品 ID 接口错误:', e.message)
                         return {code: -1, data: []}
                     }),
-                    fetch(baseURL + '/app-api/promotion/article/get-article-all-id', {
+                    fetch(apiTargetUrl + '/promotion/article/get-article-all-id', {
                         headers: {
                             'tenant-id': tenantId // 添加 tenantId 到请求头
                         }
                     }).then(res => res.json()).catch(e => {
-                        console.error('【Sitemap】文章ID接口错误:', e.message)
+                        console.error('【Sitemap】文章 ID 接口错误:', e.message)
                         return {code: -1, data: []}
                     })
                 ])
@@ -147,7 +155,7 @@ export default defineNuxtConfig({
     i18n: {
         seo: true, // 启用自动 hreflang
         defaultLocale: 'en',
-        baseUrl: process.env.DOMAIN_URl, // 启用自动 hreflang 路由生成绝对路径
+        baseUrl: process.env.DOMAIN_URL, // 启用自动 hreflang 路由生成绝对路径
         vueI18n: './locales/i18n.config.ts',
         detectBrowserLanguage: {
             useCookie: false,
@@ -291,7 +299,15 @@ export default defineNuxtConfig({
     },
     vite: {
         optimizeDeps: {
-            include: ['vue', 'vue-router', 'pinia'], // Pre-bundle common dependencies
+            include: [
+                'vue',
+                'vue-router',
+                'pinia',
+                '@vueuse/core',
+                'lodash-es',
+                'dayjs',
+            ],
+            exclude: ['@nuxt/ui'], // 排除大模块，加快预构建
         },
         build: {
             minify: 'esbuild', // Use esbuild for faster minification
@@ -304,78 +320,80 @@ export default defineNuxtConfig({
                 },
             },
         },
-        // build: {
-        //     rollupOptions: {
-        //         output: {
-        //             manualChunks: (id) => {
-        //                 if (id.includes('element-plugin')) {
-        //                     return 'componentUi'
-        //                 } else if (id.includes('axios')) {
-        //                     return 'axios'
-        //                 } else if (id.includes('lodash')) {
-        //                     return 'lodash'
-        //                 }
-        //             },
-        //         },
-        //     },
-        // },
+        // 开发环境 Vite Proxy 配置（带详细日志）
         server: {
             proxy: {
-                '/api': {
-                    // target: 'https://api.iswink.com',
-                    target: 'http://122.190.56.101:6060/shop-server',
-                    // target: 'http://10.10.10.17:48080',
-                    // target: 'http://192.168.1.3:48080',
+                '/app-api': {
+                    target: process.env.NUXT_API_TARGET_URL,
                     changeOrigin: true,
-                    rewrite: path => path.replace('api', 'app-api'),
+                    configure: (proxy, options) => {
+                        // Vite Proxy 配置回调
+                        proxy.on('proxyReq', (proxyReq, req, res) => {
+                            if (process.env.NODE_ENV === 'development') {
+                                console.log('\n🔄 ====== Vite Proxy 转发请求 ======')
+                                console.log('📍 原始请求:', req.url)
+                                console.log('📍 转发目标:', options.target)
+                                console.log('📍 转发路径:', proxyReq.path)
+                                console.log('📍 请求方法:', req.method)
+                                console.log('====================================\n')
+                            }
+                        })
+                        
+                        proxy.on('proxyRes', (proxyRes, req, res) => {
+                            if (process.env.NODE_ENV === 'development') {
+                                console.log('\n✅ ====== Vite Proxy 收到响应 ======')
+                                console.log('📍 请求路径:', req.url)
+                                console.log('📊 响应状态:', proxyRes.statusCode)
+                                console.log('====================================\n')
+                            }
+                        })
+                        
+                        proxy.on('error', (err, req, res) => {
+                            console.error('\n❌ ====== Vite Proxy 错误 ======')
+                            console.error('📍 请求路径:', req.url)
+                            console.error('❌ 错误信息:', err.message)
+                            console.error('================================\n')
+                        })
+                    },
                 },
             },
         },
     },
     runtimeConfig: {
-        // public中的键也可以在客户端使用
+        // public 中的键也可以在客户端使用
         public: {
-            // baseURL: process.env.NODE_ENV === 'production' ? process.env.NUXT_BASE_URL + '/app-api' : 'http://122.190.56.101:6060/app-api',
-            baseURL: process.env.NUXT_BASE_URL + '/app-api',
+            // API 请求基础路径 - 统一使用相对路径，走 Nitro Proxy
+            // 开发和生产环境都通过 Nitro Proxy 转发到后端
+            apiBaseProxyPath: process.env.NUXT_API_PROXY_PATH,
             tenantId: process.env.NUXT_PUBLIC_TENANT_ID || '1',
             currency: '$',
-            domain: process.env.DOMAIN_URl,
+            domain: process.env.DOMAIN_URL,
             shortDomain: process.env.DOMAIN,
-            // kefuWsUrl: 'ws://localhost:48080/infra/ws'
-            // kefuWsUrl: 'ws://122.190.56.101:6060/infra/ws'
             kefuWsUrl: process.env.NUXT_PUBLIC_KEFU_WS_URL,
         },
     },
     nitro: {
-        // devProxy: {
-        // 	'/app-api': {
-        // 		target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
-        // 		changeOrigin: true,
-        // 	},
-        // },
-        //日志
-        // logging: {
-        //     level: 'debug', // 设置日志级别（trace, debug, info, warn, error, fatal）
-        //     handlers: [
-        //         {
-        //             type: 'console', // 输出到控制台
-        //             level: 'debug',
-        //         },
-        //         // 可选：输出到文件
-        //         // {
-        //         //   type: 'file',
-        //         //   level: 'info',
-        //         //   path: './logs/ssr.log' // 日志文件路径
-        //         // }
-        //     ]
-        // },
-        // 开启gzip压缩
+        // Nitro 日志配置 - 开发环境启用详细日志
+        logging: {
+            level: 'debug', // 设置日志级别（trace, debug, info, warn, error, fatal）
+            handlers: [
+                {
+                    type: 'console', // 输出到控制台
+                    level: 'debug',
+                },
+            ],
+        },
+        // 开启 gzip 压缩
         compressPublicAssets: true,
+        // 生产环境 API 代理 - SSR 请求转发
         routeRules: {
-            '/app-api**': {
-                // proxy: 'http://122.190.56.101:6060/shop-server/',
-                proxy: process.env.NUXT_BASE_URL,
+            '/app-api/**': {
+                proxy: process.env.NUXT_API_TARGET_URL,
             },
+        },
+        // 添加 Nitro 代理日志中间件
+        experimental: {
+            asyncContext: true,
         },
     },
 })

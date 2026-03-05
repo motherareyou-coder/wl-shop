@@ -3,8 +3,12 @@ import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 import { usePageSEO } from '~/composables/usePageSEO'
 
+defineOptions({ name: 'Favorite' })
+
+const { t } = useI18n()
+
 definePageMeta({
-	title: 'Favorites',
+	title: t('Favorites'),
 	showBread: true,
 })
 const appStore = useAppStore()
@@ -13,9 +17,10 @@ const { shortDomain,domain } = useRuntimeConfig().public
 
 // 使用统一的 SEO composable
 usePageSEO({
-	title: 'Favorites',
-	description: 'Save and manage your favorite products for later purchase.',
+	title: t('seo.favorites'),
+	description: t('seo.desc.favorites'),
 	keywords: 'favorites, wishlist, saved items',
+	noIndex: true, // 收藏夹页面不索引
 })
 </script>
 

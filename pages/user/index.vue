@@ -20,6 +20,15 @@ const userStore = useUserStore()
 
 const route = useRoute()
 const { shortDomain, domain } = useRuntimeConfig().public
+const { t } = useI18n()
+
+// 用户中心首页，不允许搜索引擎抓取
+usePageSEO({
+	title: t('seo.userCenter'),
+	description: t('seo.desc.userCenter'),
+	noIndex: true, // 用户中心页面不索引
+})
+
 useHead({
 	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${$t('user')} ${$t('appTitle')}`,

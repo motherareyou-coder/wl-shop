@@ -4,7 +4,7 @@ import CouponDialog from './components/CouponDialog.vue'
 import QtyInput from './components/QtyInput.vue'
 import Recommends from './components/Recommends.vue'
 import { useCheckOut } from './utils'
-import {usePageSEO} from "~/composables/usePageSEO";
+import { usePageSEO } from '~/composables/usePageSEO'
 
 defineOptions({ name: 'Cart' })
 definePageMeta({
@@ -12,6 +12,7 @@ definePageMeta({
 })
 
 const { shortDomain, domain } = useRuntimeConfig().public
+const { t } = useI18n()
 
 const { gtag } = useGtag()
 // 购物车页面埋点
@@ -27,9 +28,10 @@ const cartStore = useCartStore()
 
 // 使用统一的 SEO composable
 usePageSEO({
-	title: 'Cart',
-	description: 'Review your cart items and proceed to checkout with secure payment.',
+	title: t('seo.cart'),
+	description: t('seo.desc.cart'),
 	keywords: 'shopping cart, online shopping, checkout',
+	noIndex: true, // 购物车页面不索引
 })
 const { loading, wrapLoading } = useLoading(false)
 provide('loading', loading)
@@ -62,7 +64,6 @@ getInfo()
 
 const open1 = ref(false)
 
-const { t } = useI18n()
 function delMsgBox() {
 	return ElMessageBox.confirm(
 		t('Are you sure to remove this product from shopping cart?'),

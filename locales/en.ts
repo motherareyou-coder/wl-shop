@@ -98,4 +98,39 @@ export default {
 	'选择商品': 'Send Product',
 	'在线客服': 'Online customer service',
 	'连接客服失败': 'Failed to connect to the online customer service',
+
+	// ===== SEO Titles =====
+	'seo.home': 'Home',
+	'seo.productList': 'Product List',
+	'seo.userCenter': 'User Center',
+	'seo.deliveryAddress': 'Delivery Address',
+	'seo.memberLevel': 'Member Level',
+	'seo.points': 'Points',
+	'seo.myCoupons': 'My Coupons',
+	'seo.groupBuyRecords': 'Group Buy Records',
+	'seo.cart': 'Shopping Cart',
+	'seo.favorites': 'Favorites',
+	'seo.orderList': 'Order History',
+	'seo.checkout': 'Checkout',
+	'seo.login': 'Sign In',
+	'seo.articles': 'Articles',
+
+	// ===== SEO Descriptions - 通用礼品业务 =====
+	'seo.desc.home': 'Discover unique surprise gifts for your loved ones. Customizable presents with free worldwide shipping. Perfect for anniversaries, birthdays, and special occasions.',
+	'seo.desc.productList': 'Browse our collection of unique surprise gifts for every occasion. High quality products with fast shipping and excellent customer service.',
+	'seo.desc.userCenter': 'Manage your orders, favorites, addresses and account settings. Access your membership benefits and track your points.',
+	'seo.desc.deliveryAddress': 'Manage your delivery addresses for convenient shopping. Add, edit or remove shipping addresses anytime.',
+	'seo.desc.memberLevel': 'View your membership level and experience records. Track your progress and unlock exclusive benefits.',
+	'seo.desc.points': 'Track your loyalty points earning and spending history. Redeem points for discounts and rewards.',
+	'seo.desc.myCoupons': 'Manage your discount coupons and save on your favorite products. View available, used and expired coupons.',
+	'seo.desc.groupBuyRecords': 'Track your group buying activities and team status. Join group buys for better prices.',
+	'seo.desc.cart': 'Review your cart items and proceed to checkout with secure payment. Save items for later purchase.',
+	'seo.desc.favorites': 'Save and manage your favorite products for later purchase. Get notified when items go on sale.',
+	'seo.desc.orderList': 'View and track your order history with detailed status updates. Check shipping and delivery information.',
+	'seo.desc.checkout': 'Complete your purchase with secure payment options including credit card, PayPal and cryptocurrency.',
+	'seo.desc.login': 'Sign in to your account or create a new one to access your orders and favorites.',
+
+	// ===== SEO Descriptions - 私人定制旅游业务（新） =====
+	'seo.desc.travel.custom': 'Customized travel itineraries with professional local guides. Personalized tours tailored to your preferences and budget.',
+	'seo.desc.travel.guide': 'Experienced local companions providing authentic travel experiences. Full journey support from pickup to drop-off.',
 }

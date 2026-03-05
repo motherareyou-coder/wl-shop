@@ -10,10 +10,13 @@ definePageMeta({
 const appStore = useAppStore()
 const route = useRoute()
 const { shortDomain, domain } = useRuntimeConfig().public
+const { t } = useI18n()
 
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('拼团记录')} ${$t('appTitle')}`,
+// 拼团记录页面，不需要被搜索引擎抓取
+usePageSEO({
+	title: t('seo.groupBuyRecords'),
+	description: t('seo.desc.groupBuyRecords'),
+	noIndex: true, // 用户活动记录不索引
 })
 // 0.进行中 1.拼团成功 2.拼团失败）
 const status = ref(0)

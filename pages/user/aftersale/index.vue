@@ -11,7 +11,7 @@ definePageMeta({
 	title: 'AfterSales',
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${domain} ${route.path}`}],
+  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
 	title: `${$t('AfterSales')} ${$t('appTitle')}`,
 })
 

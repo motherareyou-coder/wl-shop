@@ -10,6 +10,7 @@ import { useCheckOut } from '../cart/utils'
 import Address from './components/Address.vue'
 import AddressList from './components/AddressList.vue'
 import ProductInfoList from './components/ProductInfoList.vue'
+import { usePageSEO } from '~/composables/usePageSEO'
 
 const router = useRouter()
 const route = useRoute()
@@ -21,14 +22,19 @@ const combinationHeadId = route.query.combinationHeadId ? Number(route.query.com
 const productList = ref<CartItem[]>([])
 const { shortDomain, domain } = useRuntimeConfig().public
 const { gtag } = useGtag()
+const { t } = useI18n()
 // 确认支付页面埋点
 gtag('event', 'screen_view', {
 	app_name: shortDomain,
 	screen_name: 'check-out',
 })
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('Checkout')} ${$t('appTitle')}`,
+
+// 使用统一的 SEO composable
+usePageSEO({
+	title: t('seo.checkout'),
+	description: t('seo.desc.checkout'),
+	keywords: 'checkout, secure payment, online payment',
+  noIndex: true, // 不需要被索引
 })
 const cantUseCoupon = !!(orderId || bargainRecordId || seckillActivityId || combinationActivityId)
 

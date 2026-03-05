@@ -277,5 +277,40 @@ export default {
 	'. Unpaid orders (except for COD ones) will be cancelled automatically afterwards.': '.未付款的订单（货到付款除外）将在之后自动取消。',
 	'最少成团人数': ({ values }) => `至少${values.number}人成团，在规定时间内达到指定人数，即可享受优惠价购买`,
 	'最多砍价人数': ({ values }) => `至多${values.number}人砍价，在规定时间内达到指定砍价人数，即可享受优惠价购买`,
-	'还差x人成团': ({ values }) => `还差${values.number}人成团`,
+	'还差 x 人成团': ({ values }) => `还差${values.number}人成团`,
+
+	// ===== SEO Titles =====
+	'seo.home': '首页',
+	'seo.productList': '产品列表',
+	'seo.userCenter': '用户中心',
+	'seo.deliveryAddress': '收货地址',
+	'seo.memberLevel': '会员等级',
+	'seo.points': '积分',
+	'seo.myCoupons': '我的优惠券',
+	'seo.groupBuyRecords': '拼团记录',
+	'seo.cart': '购物车',
+	'seo.favorites': '收藏夹',
+	'seo.orderList': '订单列表',
+	'seo.checkout': '结算页',
+	'seo.login': '登录',
+	'seo.articles': '文章',
+
+	// ===== SEO Descriptions - 通用礼品业务 =====
+	'seo.desc.home': '为您爱的人发现独特的惊喜礼物。可定制的礼物，全球免费配送。适合纪念日、生日和特殊场合。',
+	'seo.desc.productList': '浏览我们为每个场合准备的独特惊喜礼物系列。高品质产品，快速配送和优质客户服务。',
+	'seo.desc.userCenter': '管理您的订单、收藏、地址和账户设置。访问您的会员福利并跟踪积分。',
+	'seo.desc.deliveryAddress': '管理您的收货地址，方便购物。随时添加、编辑或删除送货地址。',
+	'seo.desc.memberLevel': '查看您的会员等级和成长值记录。跟踪进度并解锁专属福利。',
+	'seo.desc.points': '跟踪您的积分收支明细。兑换积分获取折扣和奖励。',
+	'seo.desc.myCoupons': '管理您的优惠券，购买心仪商品更优惠。查看可用、已使用和已过期的优惠券。',
+	'seo.desc.groupBuyRecords': '查看拼团活动和成团状态。参与拼团获取更优价格。',
+	'seo.desc.cart': '查看购物车商品并安全结算。保存商品以便稍后购买。',
+	'seo.desc.favorites': '收藏和管理喜欢的商品。商品促销时收到通知。',
+	'seo.desc.orderList': '查看和跟踪订单历史与详细状态。检查物流和配送信息。',
+	'seo.desc.checkout': '使用信用卡、PayPal 或加密货币安全完成购买。多种支付方式可选。',
+	'seo.desc.login': '登录到您的账户或创建新账户以访问订单和收藏。',
+
+	// ===== SEO Descriptions - 私人定制旅游业务（新） =====
+	'seo.desc.travel.custom': '专业当地导游提供个性化定制旅行行程。根据您的偏好和预算量身定制的旅行路线。',
+	'seo.desc.travel.guide': '经验丰富的当地伴侣提供地道的旅行体验。从接机到送机的全程陪伴支持。',
 }
