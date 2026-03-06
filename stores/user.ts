@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import type { AuthToken, UserInfo } from '~/types'
+import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('UserStore', {
 	state: () => {
@@ -22,7 +22,7 @@ export const useUserStore = defineStore('UserStore', {
 			const nuxtApp = useNuxtApp()
 			return (this.accessToken
 				? nuxtApp
-					.$api<UserInfo>('member/user/get')
+						.$api<UserInfo>('member/user/get')
 				: Promise.reject(new Error('未登录')))
 				.then((res: UserInfo) => {
 					this.info = res

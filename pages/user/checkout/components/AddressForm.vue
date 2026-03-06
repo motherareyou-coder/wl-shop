@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { Address } from '~/types'
 import { isString } from 'lodash-es'
-import type { Address, City, Country, State } from '~/types'
 
 const { t } = useI18n()
 const data = defineModel<Address>({ default: () => ({}) })
@@ -25,31 +25,31 @@ function refreshStates() {
 	return !data.value.countryId
 		? Promise.resolve([])
 		: $api('system/area/getAreaStateByCountryId', {
-			params: { countryId: data.value.countryId },
-		}).then((res) => {
-			if (!Array.isArray(res)) {
-				res = [res]
-			}
-			return res?.map(d => ({
-				label: d.name,
-				value: d.id,
-				leaf: d.leaf, // TODO: 需要后端返回是否叶子节点
-			})) || []
-		})
+				params: { countryId: data.value.countryId },
+			}).then((res) => {
+				if (!Array.isArray(res)) {
+					res = [res]
+				}
+				return res?.map(d => ({
+					label: d.name,
+					value: d.id,
+					leaf: d.leaf, // TODO: 需要后端返回是否叶子节点
+				})) || []
+			})
 }
 function refreshCities(stateId: number) {
 	return !stateId
 		? Promise.resolve([])
 		: $api('system/area/getAreaCityByStateId', { params: { stateId } }).then((res) => {
-			if (!Array.isArray(res)) {
-				res = [res]
-			}
-			return res?.map(d => ({
-				label: d.name,
-				value: d.id,
-				leaf: true,
-			})) || []
-		})
+				if (!Array.isArray(res)) {
+					res = [res]
+				}
+				return res?.map(d => ({
+					label: d.name,
+					value: d.id,
+					leaf: true,
+				})) || []
+			})
 }
 
 const rules = {

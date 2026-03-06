@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SkuSelect from '~/pages/product-list/components/SkuSelect.vue'
 import type { Activity, Product } from '~/types'
+import SkuSelect from '~/pages/product-list/components/SkuSelect.vue'
 
 const data = defineModel<Product>('data', { default: () => ({}) })
 
@@ -32,20 +32,20 @@ const first5 = computed(() => activities.value?.findIndex(a => a.type === 5))
 				class="shrink-0"
 				:class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']"
 				:src="data.picUrl"
-        :alt="data.name"
+				:alt="data.name"
 				@click="onClick"
 			/>
 			<div class="item__info">
 				<div v-if="appStore.isPC || activities?.length" class="item__info-section">
 					<div class="mi-marketing-label__tags item__marketing-tags">
 						<ul class="tag__list">
-              <!--参与活动-->
-							<!--<template v-for="(a, i) in activities" :key="a.type">-->
-							<!--	<template v-if="a.type === 5">-->
-							<!--		<ActivityTag v-if="i === first5" class="tag__item" :name="a.name" />-->
-							<!--	</template>-->
-							<!--	<ActivityTag v-else class="tag__item" :type="a.type" />-->
-							<!--</template>-->
+							<!-- 参与活动 -->
+							<!-- <template v-for="(a, i) in activities" :key="a.type"> -->
+							<!--	<template v-if="a.type === 5"> -->
+							<!--		<ActivityTag v-if="i === first5" class="tag__item" :name="a.name" /> -->
+							<!--	</template> -->
+							<!--	<ActivityTag v-else class="tag__item" :type="a.type" /> -->
+							<!-- </template> -->
 							<el-tag	v-if="data.marketPrice != data.price" class="tag__item">
 								{{ Math.ceil(100 * (data.marketPrice - data.price) / data.marketPrice) }}% off
 							</el-tag>

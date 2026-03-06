@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import type { BargainActivity, BargainHelp, CombinationActivityDetail, ProductDetail, SeckillActivity, SKU } from '~/types'
+// 结构化数据导入（使用 @unhead/schema-org）
+import { defineBreadcrumb, defineOrganization, defineProduct } from '@unhead/schema-org'
 import { useAppStore } from '@/stores/app'
-import type { BargainActivity, BargainHelp, CombinationActivityDetail, PayOrderSubmit, ProductDetail, SeckillActivity, SKU } from '~/types'
+import { useProductSEO } from '~/composables/usePageSEO'
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
-import { useProperties } from './utils'
-import { useProductSEO } from '~/composables/usePageSEO'
 
-// 结构化数据导入（使用 @unhead/schema-org）
-import { defineProduct, defineOrganization, defineBreadcrumb } from '@unhead/schema-org'
+import { useProperties } from './utils'
 
 const { t } = useI18n()
 const userStore = useUserStore()
@@ -365,76 +365,76 @@ const { title, description, keywords, canonicalUrl } = useProductSEO(info)
 
 // 添加结构化数据（Schema.org JSON-LD）
 useSchemaOrg([
-  // 组织信息
-  defineOrganization({
-    name: 'iswink',
-    url: domain,
-    logo: `${domain}/logo.png`,
-    sameAs: [
-      'https://www.facebook.com/iswink',
-      'https://www.instagram.com/iswink',
-      'https://twitter.com/iswink'
-    ]
-  }),
-  // 产品详情
-  defineProduct({
-    name: () => info.value?.name || '',
-    image: () => {
-      const images = info.value?.sliderPicUrls
-      return images?.length ? [`${domain}${images[0]}`] : [`${domain}${info.value?.picUrl}`]
-    },
-    description: () => info.value?.introduction || '',
-    brand: () => ({
-      name: 'iswink'
-    }),
-    sku: () => curSku.value?.id?.toString() || '',
-    offers: () => ({
-      type: 'Offer',
-      price: (curSku.value?.price || 0) / 100,
-      priceCurrency: 'USD',
-      availability: info.value?.stock && info.value.stock > 0 
-        ? 'https://schema.org/InStock' 
-        : 'https://schema.org/OutOfStock',
-      seller: {
-        type: 'Organization',
-        name: 'iswink'
-      }
-    }),
-    // 如果有关联的活动，添加特殊标记
-    additionalProperty: () => {
-      const props = []
-      if (seckillActivityId) {
-        props.push({ name: 'Flash Sale', value: 'true' })
-      }
-      if (combinationActivityId) {
-        props.push({ name: 'Group Buy', value: 'true' })
-      }
-      if (bargainActivityId) {
-        props.push({ name: 'Bargain', value: 'true' })
-      }
-      return props
-    }
-  }),
-  // 面包屑导航（如果后续添加）
-  defineBreadcrumb({
-    itemListElement: [
-      {
-        position: 1,
-        name: 'Home',
-        item: `${domain}/en`
-      },
-      {
-        position: 2,
-        name: 'Products',
-        item: `${domain}/en/product-list`
-      },
-      {
-        position: 3,
-        name: () => info.value?.name || 'Product Detail',
-        item: () => canonicalUrl.value
-      }
-    ]
-  })
+	// 组织信息
+	defineOrganization({
+		name: 'iswink',
+		url: domain,
+		logo: `${domain}/logo.png`,
+		sameAs: [
+			'https://www.facebook.com/iswink',
+			'https://www.instagram.com/iswink',
+			'https://twitter.com/iswink',
+		],
+	}),
+	// 产品详情
+	defineProduct({
+		name: () => info.value?.name || '',
+		image: () => {
+			const images = info.value?.sliderPicUrls
+			return images?.length ? [`${domain}${images[0]}`] : [`${domain}${info.value?.picUrl}`]
+		},
+		description: () => info.value?.introduction || '',
+		brand: () => ({
+			name: 'iswink',
+		}),
+		sku: () => curSku.value?.id?.toString() || '',
+		offers: () => ({
+			type: 'Offer',
+			price: (curSku.value?.price || 0) / 100,
+			priceCurrency: 'USD',
+			availability: info.value?.stock && info.value.stock > 0
+				? 'https://schema.org/InStock'
+				: 'https://schema.org/OutOfStock',
+			seller: {
+				type: 'Organization',
+				name: 'iswink',
+			},
+		}),
+		// 如果有关联的活动，添加特殊标记
+		additionalProperty: () => {
+			const props = []
+			if (seckillActivityId) {
+				props.push({ name: 'Flash Sale', value: 'true' })
+			}
+			if (combinationActivityId) {
+				props.push({ name: 'Group Buy', value: 'true' })
+			}
+			if (bargainActivityId) {
+				props.push({ name: 'Bargain', value: 'true' })
+			}
+			return props
+		},
+	}),
+	// 面包屑导航（如果后续添加）
+	defineBreadcrumb({
+		itemListElement: [
+			{
+				position: 1,
+				name: 'Home',
+				item: `${domain}/en`,
+			},
+			{
+				position: 2,
+				name: 'Products',
+				item: `${domain}/en/product-list`,
+			},
+			{
+				position: 3,
+				name: () => info.value?.name || 'Product Detail',
+				item: () => canonicalUrl.value,
+			},
+		],
+	}),
 ])
 </script>
 

@@ -1,16 +1,16 @@
 <script setup lang="tsx">
+import type { CartItem, Coupon, PayOrderSubmit } from '~/types'
+import { pick } from 'lodash-es'
 import cardsPic from '@/assets/imgs/cards.png'
 import paypalPic from '@/assets/imgs/paypal.png'
 import usdtPic from '@/assets/imgs/usdt.png'
 import { useAppStore } from '@/stores/app'
-import { pick } from 'lodash-es'
-import type { CartItem, Coupon, OrderSettlement, PayOrderSubmit } from '~/types'
+import { usePageSEO } from '~/composables/usePageSEO'
 import CouponDialog from '../cart/components/CouponDialog.vue'
 import { useCheckOut } from '../cart/utils'
 import Address from './components/Address.vue'
 import AddressList from './components/AddressList.vue'
 import ProductInfoList from './components/ProductInfoList.vue'
-import { usePageSEO } from '~/composables/usePageSEO'
 
 const router = useRouter()
 const route = useRoute()
@@ -31,10 +31,10 @@ gtag('event', 'screen_view', {
 
 // 使用统一的 SEO composable
 usePageSEO({
-	title: t('seo.checkout'),
-	description: t('seo.desc.checkout'),
+	title: `${$t('seo.checkout')}`,
+	description: `${$t('seo.desc.checkout')}`,
 	keywords: 'checkout, secure payment, online payment',
-  noIndex: true, // 不需要被索引
+	noIndex: true, // 不需要被索引
 })
 const cantUseCoupon = !!(orderId || bargainRecordId || seckillActivityId || combinationActivityId)
 

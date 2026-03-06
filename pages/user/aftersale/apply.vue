@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UploadFile } from 'element-plus'
-import { isArray } from 'lodash-es'
 import type { OrderDetail, OrderItem, TradeConfig } from '~/types'
+import { isArray } from 'lodash-es'
 
 const route = useRoute()
 const router = useRouter()
@@ -102,7 +102,7 @@ const appStore = useAppStore()
 						:to="$path(`/product/${item.spuId}`)"
 						class="flex mr-5"
 					>
-						<app-image class="h-20 w-20" :src="item.picUrl" :alt="item.spuName"/>
+						<app-image class="h-20 w-20" :src="item.picUrl" :alt="item.spuName" />
 					</nuxt-link>
 					<div class="flex flex-col justify-between flex-1">
 						<span style="color: #000">{{ item.spuName }} </span>

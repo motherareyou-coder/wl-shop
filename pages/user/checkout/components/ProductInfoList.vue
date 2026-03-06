@@ -29,7 +29,7 @@ const appStore = useAppStore()
 				:key="item.id"
 				class="product-info__thumb-item"
 			>
-				<app-image :src="item.picUrl || item.sku?.picUrl || item.spu?.picUrl" :alt="item.spu?.name || item.spuName || item.name"/>
+				<app-image :src="item.picUrl || item.sku?.picUrl || item.spu?.picUrl" :alt="item.spu?.name || item.spuName || item.name" />
 			</li>
 		</ul>
 		<ul v-else class="product-info__list">
@@ -39,7 +39,7 @@ const appStore = useAppStore()
 				class="product-info__item"
 			>
 				<div class="product-info__content">
-					<app-image :src="item.picUrl || item.sku?.picUrl || item.spu?.picUrl" :alt="item.spu?.name || item.spuName || item.name"/>
+					<app-image :src="item.picUrl || item.sku?.picUrl || item.spu?.picUrl" :alt="item.spu?.name || item.spuName || item.name" />
 					<div class="product-other">
 						<ul class="product-params">
 							<li class="product-params__name">
@@ -113,7 +113,7 @@ const appStore = useAppStore()
 					class="product-info__item"
 				>
 					<div class="product-info__content">
-						<app-image :src="item.picUrl || item.sku?.picUrl || item.spu?.picUrl" :alt="item.spu?.name || item.spuName || item.name"/>
+						<app-image :src="item.picUrl || item.sku?.picUrl || item.spu?.picUrl" :alt="item.spu?.name || item.spuName || item.name" />
 						<div class="product-other">
 							<ul class="product-params">
 								<li class="product-params__name">

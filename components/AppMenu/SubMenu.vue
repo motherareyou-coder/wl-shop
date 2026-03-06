@@ -51,7 +51,7 @@ const onmouseleave = () => emit('mouseleave')
 					>
 						<app-image
 							:src="item.picUrl"
-              :alt="item.name"
+							:alt="item.name"
 							class="header-product-item__image"
 						/>
 						<div class="header-product-item__info">

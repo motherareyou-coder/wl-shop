@@ -43,16 +43,12 @@ pnpm run build
     increase-memory-limit
 ```
 
-
-
 本地预览构建 Locally preview production build:
 
 ```bash
 # pnpm
 pnpm run preview
 ```
-
-
 
 ### nuxt 配置seo信息
     useHead({

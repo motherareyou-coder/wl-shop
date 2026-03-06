@@ -28,13 +28,13 @@ const appStore = useAppStore()
 			@click.prevent="emit('normal')"
 		>
 			<span v-if="appStore.isPC" class="whitespace-nowrap">
-				<!--{{ $t('原价购买') }} <product-price :data="info.marketPrice" plain unit="" />-->
+				<!-- {{ $t('原价购买') }} <product-price :data="info.marketPrice" plain unit="" /> -->
 				{{ $t('原价购买') }}
-        <!--<product-price :data="info.price" plain unit="" />-->
+				<!-- <product-price :data="info.price" plain unit="" /> -->
 			</span>
 			<span v-if="appStore.isMobile" class="whitespace-nowrap">
-				<!--<product-price :data="info.marketPrice" plain unit="" />-->
-				<!--<product-price :data="info.price" plain unit="" />-->
+				<!-- <product-price :data="info.marketPrice" plain unit="" /> -->
+				<!-- <product-price :data="info.price" plain unit="" /> -->
 				<br>
 				{{ $t('原价购买') }}
 			</span>
@@ -57,10 +57,10 @@ const appStore = useAppStore()
 		>
 			<span v-if="appStore.isPC" class="whitespace-nowrap">
 				{{ $t('立即购买') }}
-        <!--<product-price :data="curSku?.seckillPrice" plain unit="" />-->
+				<!-- <product-price :data="curSku?.seckillPrice" plain unit="" /> -->
 			</span>
 			<span v-if="appStore.isMobile" class="whitespace-nowrap">
-				<!--<product-price :data="curSku?.seckillPrice" plain unit="" />-->
+				<!-- <product-price :data="curSku?.seckillPrice" plain unit="" /> -->
 				<br v-if="curSku?.seckillPrice">
 				{{ $t('立即购买') }}
 			</span>

@@ -16,8 +16,8 @@ const { t } = useI18n()
 
 // 使用统一的 SEO composable
 usePageSEO({
-	title: t('seo.login'),
-	description: t('seo.desc.login'),
+	title: `${$t('seo.login')}`,
+	description: `${$t('seo.desc.login')}`,
 	keywords: 'login, sign in, account',
 	noIndex: true, // 登录页不需要被索引
 })

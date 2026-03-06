@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import type { CombinationActivity } from '~/types'
 
-
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 const route = useRoute()
 const { gtag } = useGtag()
-//拼团活动页面埋点
+// 拼团活动页面埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'combination-list'
+	app_name: shortDomain,
+	screen_name: 'combination-list',
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
-  title: `${$t('拼团活动')} ${$t('appTitle')}`,
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
+	title: `${$t('拼团活动')} ${$t('appTitle')}`,
 })
 const appStore = useAppStore()
 
@@ -41,7 +40,7 @@ function getData<CombinationActivity>(params: any) {
 				<li>
 					<nuxt-link :to="$path(`/product/${row.spuId}?combinationActivityId=${row.id}`)">
 						<div class="combination-item flex bg-white rounded" :class="[appStore.isPC ? '' : 'mx-2']">
-							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" :alt="row.name"/>
+							<app-image :src="row.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" :alt="row.name" />
 							<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">
 								<div class=" my-1">
 									{{ row.name }}

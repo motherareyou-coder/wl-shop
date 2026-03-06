@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { getStatusText, statusClass } from '~/pages/user/orderlist/utils'
 import type { OrderDetail } from '~/types'
+import { getStatusText, statusClass } from '~/pages/user/orderlist/utils'
 
 const emit = defineEmits(['send'])
 const { data, load, loading } = useInfiteLoad<OrderDetail>(p =>

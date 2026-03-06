@@ -19,7 +19,7 @@ const appStore = useAppStore()
 				class="shrink-0 cursor-pointer"
 				:class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']"
 				:src="data.picUrl"
-        :alt="data.spuName"
+				:alt="data.spuName"
 				@click="onClick"
 			/>
 			<div
@@ -47,7 +47,7 @@ const appStore = useAppStore()
 				</div>
 				<div class="flex justify-between">
 					<product-price class="font-medium" :data="data.price" />
-					<button @click.stop="emit('cancel')" aria-label="cancel">
+					<button aria-label="cancel" @click.stop="emit('cancel')">
 						<el-icon class="ml-2" style="color: #ff6900">
 							<el-icon-star />
 						</el-icon>

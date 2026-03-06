@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { chunk } from 'lodash-es'
 import type { ProductSpu } from '~/types'
+import { chunk } from 'lodash-es'
 
 const { data: specialList } = await useAPI<ProductSpu[]>('product/spu/get-main-show-spu', { params: { count: 6 } })
 

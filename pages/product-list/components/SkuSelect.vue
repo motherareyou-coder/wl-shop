@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { uniqBy } from 'lodash-es'
 import type { ProductBrowseHistory, ProductDetail, SKU } from '~/types'
+import { uniqBy } from 'lodash-es'
 
 const props = defineProps({
 	data: { type: Object, required: true },

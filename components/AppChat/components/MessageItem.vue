@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { OrderDetail, ProductDetail } from '~/types'
+import { emojiList } from '../utils/emoji'
 import OrderItem from './OrderItem.vue'
 import ProductItem from './ProductItem.vue'
-import { emojiList } from '../utils/emoji'
 
 const props = defineProps({
 	currentUser: { type: String },
@@ -51,5 +51,3 @@ export interface Message {
 		<app-image :src="data.senderAvatar" class="mx-2 w-12 h-12" style="border-radius: 50%" />
 	</div>
 </template>
-
-

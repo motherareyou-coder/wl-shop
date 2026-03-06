@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import type { Country } from '~/types'
+import { defineStore } from 'pinia'
 
 interface Options {
 	label: any

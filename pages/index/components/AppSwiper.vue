@@ -4,8 +4,8 @@
   * @Description: 轮播图组件
 -->
 <script setup lang="ts">
-import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
-import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
+import type { Swiper as SwiperClass } from 'swiper/types'
+import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 
 import 'swiper/css'

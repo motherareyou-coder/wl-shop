@@ -1,6 +1,6 @@
 <script setup lang="tsx">
-import { pick } from 'lodash-es'
 import type { Address } from '~/types'
+import { pick } from 'lodash-es'
 import AddressForm from './AddressForm.vue'
 
 const props = defineProps({

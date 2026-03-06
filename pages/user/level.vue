@@ -2,17 +2,10 @@
 import type { ExperienceRecord, MemberLevel } from '~/types'
 import { usePageSEO } from '~/composables/usePageSEO'
 
-const { t } = useI18n()
-
-definePageMeta({
-	title: t('Level'),
-	showBread: true,
-})
-
 // 用户中心页面，不允许搜索引擎抓取
 usePageSEO({
-	title: t('seo.memberLevel'),
-	description: t('seo.desc.memberLevel'),
+	title: `${$t('seo.memberLevel')}`,
+	description: `${$t('seo.desc.memberLevel')}`,
 	noIndex: true, // 用户中心页面不索引
 })
 const appStore = useAppStore()

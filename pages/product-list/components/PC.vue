@@ -10,19 +10,19 @@ const { data, pagination, resetData } = useTablePagination<Product>(
 	(p = {}) =>
 		props.scopeValues?.length
 			? $api<Product[]>('product/spu/list-by-ids', {
-				params: {
-					...props.params,
-					ids: props.scopeValues,
-				},
-			}).then((res) => {
-				return {
-					list: res,
-					total: res.length,
-				}
-			})
+					params: {
+						...props.params,
+						ids: props.scopeValues,
+					},
+				}).then((res) => {
+					return {
+						list: res,
+						total: res.length,
+					}
+				})
 			: $api('product/spu/page', {
-				params: { ...p, ...props.params },
-			}),
+					params: { ...p, ...props.params },
+				}),
 )
 watch(() => props.params, resetData)
 watch(() => props.scopeValues, resetData)

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { isObject } from 'lodash-es'
 import type { ProductDetail } from '~/types'
+import { isObject } from 'lodash-es'
 
 const data = defineModel<ProductDetail>({ required: true })
 
 if (!isObject(data.value)) {
-  let productId = JSON.parse(data.value)?.id
+	const productId = JSON.parse(data.value)?.id
 	data.value = (await $api<ProductDetail>(
 		'product/spu/get-detail',
 		{ params: { id: productId } },

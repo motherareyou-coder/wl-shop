@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import type { OrderDetail } from '~/types'
 import { isObject } from 'lodash-es'
 import { getStatusText } from '~/pages/user/orderlist/utils'
-import type { OrderDetail } from '~/types'
 
 const data = defineModel<OrderDetail>({ required: true })
 
 if (!isObject(data.value)) {
-  let orderId = JSON.parse(data.value)?.id
+	const orderId = JSON.parse(data.value)?.id
 	data.value = await $api<OrderDetail>(
 		'trade/order/get-detail',
 		{ params: { id: orderId } },
@@ -31,7 +31,7 @@ if (!isObject(data.value)) {
 		<div class="order-item__content">
 			<div v-for="item in data.items" :key="item.id" class="commodity-item">
 				<div class="commodity-item__image">
-					<app-image class="mr-5 w-16 h-16" :src="item.picUrl" :alt="item.spuName"/>
+					<app-image class="mr-5 w-16 h-16" :src="item.picUrl" :alt="item.spuName" />
 				</div>
 				<div class="commodity-item__info">
 					<p>

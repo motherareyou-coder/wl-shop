@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import type { Message } from '~/components/AppChat/components/MessageItem.vue'
+import { defineStore } from 'pinia'
 
 export const useChatStore = defineStore('ChatStore', {
 	state: () => {

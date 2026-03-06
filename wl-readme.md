@@ -9,7 +9,7 @@
     1. 直接在根目录下面执行命令
        cd /iswink-web/
        pm2 start ecosystem.config.cjs
-    
+
    2. 设置pm2开机自启
       1.检查 PM2 进程
       pm2 status

@@ -4,7 +4,7 @@ import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 
 const route = useRoute()
-const { shortDomain,domain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
 const router = useRouter()
 const id = route.params.id
 const payOrderId = route.query.payOrderId
@@ -14,7 +14,7 @@ definePageMeta({
 	showBread: true,
 })
 useHead({
-  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
+	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
 	title: `${id} ${$t('OrderView')} ${$t('appTitle')}`,
 })
 const { data: info, refresh } = await useAPI<OrderDetail>(

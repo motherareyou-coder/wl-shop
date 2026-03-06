@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
-import { Swiper, SwiperSlide } from 'swiper/vue'
+import type { Swiper as SwiperClass } from 'swiper/types'
 import type { Category } from '~/types'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
 import 'swiper/css'
 import 'swiper/css/navigation'

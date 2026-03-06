@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ProductItem from '~/pages/product-list/components/ProductItem.vue'
 import type { ProductBrowseHistory } from '~/types'
 
 const emit = defineEmits(['send'])
@@ -30,7 +29,7 @@ const appStore = useAppStore()
 						<app-image
 							class="shrink-0 cursor-pointer w-28 h-28"
 							:src="item.picUrl"
-              :alt="item.spuName"
+							:alt="item.spuName"
 						/>
 						<div
 							class="w-full flex flex-col"

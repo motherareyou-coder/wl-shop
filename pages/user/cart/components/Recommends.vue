@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SkuSelect from '~/pages/product-list/components/SkuSelect.vue'
 import type { ProductBrowseHistory } from '~/types'
+import SkuSelect from '~/pages/product-list/components/SkuSelect.vue'
 
 const { data: recommends } = await useAsyncData<ProductBrowseHistory[]>(() =>
 	$api('product/browse-history/page', {

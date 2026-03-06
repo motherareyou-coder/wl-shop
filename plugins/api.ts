@@ -32,7 +32,7 @@ export default defineNuxtPlugin(() => {
 			// 记录请求开始时间
 			const requestId = `${request}_${Date.now()}`
 			startTimeMap.set(requestId, Date.now())
-			
+
 			// 开发环境详细日志
 			if (process.dev) {
 				console.log('\n📡 ====== 发起 API 请求 ======')
@@ -46,7 +46,7 @@ export default defineNuxtPlugin(() => {
 				console.log('   - Authorization:', options.headers?.get('Authorization') ? '***' : '无')
 				console.log('=============================\n')
 			}
-			
+
 			options.params = options.params || {}
 			Object.entries(options.params).forEach(([k, v]) => {
 				if (v === '' || v === null || v === undefined)
@@ -60,7 +60,7 @@ export default defineNuxtPlugin(() => {
 			if (token) {
 				options.headers.set('Authorization', `${token}`)
 			}
-			
+
 			// 将 requestId 传递到 onResponse
 			;(options as any).requestId = requestId
 		},
@@ -70,30 +70,32 @@ export default defineNuxtPlugin(() => {
 			const startTime = startTimeMap.get(requestId)
 			const duration = startTime ? Date.now() - startTime : 0
 			startTimeMap.delete(requestId)
-			
+
 			// 开发环境响应日志
 			if (process.dev) {
 				const status = response.status
 				const statusText = response.statusText
-				
+
 				console.log('\n✅ ====== API 响应 ======')
 				console.log('📍 请求 URL:', url)
 				console.log('📊 状态码:', status, statusText)
 				console.log('⏱️  响应时间:', `${duration}ms`)
-				
+
 				const { code, data, msg } = response._data
 				if (code === 0) {
 					console.log('✅ 业务状态：成功')
 					console.log('📦 数据大小:', JSON.stringify(data).length, 'bytes')
-				} else if (code === 401) {
+				}
+				else if (code === 401) {
 					console.log('⚠️  业务状态：401 未授权')
-				} else {
+				}
+				else {
 					console.log('❌ 业务状态：失败')
 					console.log('❌ 错误信息:', msg)
 				}
 				console.log('========================\n')
 			}
-			
+
 			const { code, data, msg } = response._data
 			if (code === 0) {
 				response._data = data
@@ -122,7 +124,7 @@ export default defineNuxtPlugin(() => {
 				console.error('❌ 错误信息:', response._data?.data?.msg || response.statusText)
 				console.error('==============================\n')
 			}
-			
+
 			ElMessage.info(response._data?.data?.msg || response.statusText, nuxtApp.vueApp._context)
 		},
 	})

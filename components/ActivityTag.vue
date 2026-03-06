@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Activity } from '~/types'
-
 defineOptions({
 	name: 'ActivityTag',
 })

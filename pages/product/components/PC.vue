@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Big from 'big.js'
 import type { BargainActivity, CombinationActivityDetail, ProductDetail, SeckillActivity, SKU } from '~/types'
+import Big from 'big.js'
 import Activities from './Activities.vue'
 import ActivityTips from './ActivityTips.vue'
 import BargainHelpList from './BargainHelpList.vue'

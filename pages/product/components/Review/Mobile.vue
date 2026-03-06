@@ -14,7 +14,7 @@ const props = defineProps({
 					<img
 						class="user_review--review_info--user_avatar"
 						:src="r.userAvatar"
-            :alt="r.userNickname"
+						:alt="r.userNickname"
 					>
 					<div class="user_review--review_info--user_msg">
 						<p class="user_review--review_info--user_nickname">
@@ -37,7 +37,7 @@ const props = defineProps({
 			</div>
 			<ul class="user_review--comment_media">
 				<li v-for="(img) in r.picUrls" :key="img" class="user_review--comment_media--item">
-					<app-image :src="img" alt="review"/>
+					<app-image :src="img" alt="review" />
 				</li>
 			</ul>
 			<div class="user_review--operation">

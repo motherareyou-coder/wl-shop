@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PayWallet, PayWalletTransaction, PointRecord } from '~/types'
+import type { PayWallet } from '~/types'
 
 const { data } = await useAPI<PayWallet>('pay/wallet/get')
 

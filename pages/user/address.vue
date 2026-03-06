@@ -1,18 +1,18 @@
 <script setup>
-import AddressList from './checkout/components/AddressList.vue'
 import { usePageSEO } from '~/composables/usePageSEO'
 
-const { t } = useI18n()
+import AddressList from './checkout/components/AddressList.vue'
 
-definePageMeta({
-	title: t('Delivery address'),
-	showBread: true,
-})
+// definePageMeta({
+// 	title: ${$t('Cart')}$t('Delivery address'),
+// 	showBread: true,
+// 	noIndex: true,
+// })
 
 // 隐私页面，不允许搜索引擎抓取
 usePageSEO({
-	title: t('seo.deliveryAddress'),
-	description: t('seo.desc.deliveryAddress'),
+	title: `${$t('seo.deliveryAddress')}`,
+	description: `${$t('seo.desc.deliveryAddress')}`,
 	noIndex: true, // 隐私页面不索引
 })
 </script>

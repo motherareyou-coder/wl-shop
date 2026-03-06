@@ -1,5 +1,5 @@
-import { isArray, isString, uniqBy } from 'lodash-es'
 import type { ProductDetail } from '~/types'
+import { isArray, isString, uniqBy } from 'lodash-es'
 
 export function useProperties(info: Ref<ProductDetail | null>) {
 	watch(

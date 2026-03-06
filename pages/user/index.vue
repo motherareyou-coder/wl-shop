@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import type { PayWallet } from '~/types'
 import noLoginUserPic from '@/assets/imgs/nologin-user.png'
 import returnsPic from '@/assets/imgs/Returns.png'
 import reviewsPic from '@/assets/imgs/Reviews.png'
 import shippingPic from '@/assets/imgs/Shipping.png'
 import unpaidPic from '@/assets/imgs/Unpaid.png'
+import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
+import BgImg from '@/assets/imgs/user-center-bg.jpg'
 import addressIcon from '@/assets/imgs/user/address.png'
 import couponIcon from '@/assets/imgs/user/coupon.png'
 import favoritesIcon from '@/assets/imgs/user/Favorites.png'
@@ -11,28 +14,24 @@ import groupOrderIcon from '@/assets/imgs/user/groupOrder.png'
 import levelIcon from '@/assets/imgs/user/level.png'
 import myOrdersIcon from '@/assets/imgs/user/myOrders.png'
 import signIcon from '@/assets/imgs/user/sign.png'
-import BgImg from '@/assets/imgs/user-center-bg.jpg'
-import BgImgMobile from '@/assets/imgs/user-center-bg--mobile.png'
-import type { PayWallet } from '~/types'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
 
 const route = useRoute()
 const { shortDomain, domain } = useRuntimeConfig().public
-const { t } = useI18n()
 
 // 用户中心首页，不允许搜索引擎抓取
 usePageSEO({
-	title: t('seo.userCenter'),
-	description: t('seo.desc.userCenter'),
+	title: `${$t('seo.userCenter')}`,
+	description: `${$t('seo.desc.userCenter')}`,
 	noIndex: true, // 用户中心页面不索引
 })
 
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('user')} ${$t('appTitle')}`,
-})
+// useHead({
+// 	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
+// 	title: `${$t('user')} ${$t('appTitle')}`,
+// })
 const user = computed(() => userStore.user)
 
 const dayjs = useDayjs()

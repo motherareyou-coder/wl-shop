@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { OrderDetail, ProductDetail } from '~/types'
 import dayjs from 'dayjs'
 import { isString } from 'lodash-es'
-import type { OrderDetail, ProductDetail } from '~/types'
 import MessageInput from './components/MessageInput.vue'
 import MessageItem, { type Message, MessageType } from './components/MessageItem.vue'
 import { emojiList } from './utils/emoji'

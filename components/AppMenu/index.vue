@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useTimeoutFn } from '@vueuse/core'
 import type { Category } from '~/types'
+import { useTimeoutFn } from '@vueuse/core'
 import SubMenu from './SubMenu.vue'
 
 defineOptions({ name: 'AppMenu' })

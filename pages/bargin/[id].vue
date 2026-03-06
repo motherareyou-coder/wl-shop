@@ -6,10 +6,10 @@ const route = useRoute()
 
 const { shortDomain } = useRuntimeConfig().public
 const { gtag } = useGtag()
-//砍价详情页面埋点
+// 砍价详情页面埋点
 gtag('event', 'screen_view', {
-  app_name: shortDomain,
-  screen_name: 'bargin-detail'
+	app_name: shortDomain,
+	screen_name: 'bargin-detail',
 })
 
 const activityId = Number(route.params.id)
@@ -141,25 +141,26 @@ function handlePay(orderId: string | number, payOrderId: string | number) {
 }
 
 function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
-  // 获取屏幕宽度和高度
-  var screenWidth = window.screen.width;
-  var screenHeight = window.screen.height;
+	// 获取屏幕宽度和高度
+	const screenWidth = window.screen.width
+	const screenHeight = window.screen.height
 
-  var width= 800
-  var height = 650
-  // 计算新窗口的左边距和上边距，以便居中显示
-  var left = (screenWidth - width) / 2;
-  var top = (screenHeight - height) / 2;
-  var newWindow
-  if (displayMode === 'iframe') {
-    newWindow = window.open(displayContent, '_blank', `width=${width},height=${height},top=${top},left=${left}`)
-  } else if (displayMode === 'url') {
-    newWindow = window.open(displayContent, '_blank', `width=${width},height=${height},top=${top},left=${left}`)
-  }
-  // 确保新窗口获得焦点（可选）
-  if (newWindow) {
-    newWindow.focus();
-  }
+	const width = 800
+	const height = 650
+	// 计算新窗口的左边距和上边距，以便居中显示
+	const left = (screenWidth - width) / 2
+	const top = (screenHeight - height) / 2
+	let newWindow
+	if (displayMode === 'iframe') {
+		newWindow = window.open(displayContent, '_blank', `width=${width},height=${height},top=${top},left=${left}`)
+	}
+	else if (displayMode === 'url') {
+		newWindow = window.open(displayContent, '_blank', `width=${width},height=${height},top=${top},left=${left}`)
+	}
+	// 确保新窗口获得焦点（可选）
+	if (newWindow) {
+		newWindow.focus()
+	}
 }
 </script>
 
@@ -167,7 +168,7 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 	<div class="site-container-1400 w-full mx-auto">
 		<section class="my-5" :class="[appStore.isPC ? 'py-5' : 'px-2']">
 			<div v-if="data" class="bargin-item flex bg-white rounded">
-				<app-image :src="data.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" :alt="data.name"/>
+				<app-image :src="data.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" :alt="data.name" />
 				<div class="flex flex-col justify-around flex-1 pl-0" :class="[appStore.isPC ? 'p-5' : 'p-2']">
 					<div class="my-1">
 						{{ data.name }}
@@ -265,7 +266,7 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 					<li v-for="item in helpList" :key="item.id" class="my-2">
 						<div class="flex items-center justify-between">
 							<div class="flex items-center">
-								<app-image :src="item.avatar" class="'w-12 h-12 rounded-full" :alt="item.nickname"/>
+								<app-image :src="item.avatar" class="'w-12 h-12 rounded-full" :alt="item.nickname" />
 								<div class="flex flex-col justify-between m-2">
 									<div class="text-sm">
 										{{ item.nickname }}
@@ -291,7 +292,7 @@ function payDisplay({ status, displayMode, displayContent }: PayOrderSubmit) {
 			</h2>
 			<div class="bg-white" :class="[appStore.isPC ? '' : 'mx-2']">
 				<div v-if="productInfo" class="flex items-center">
-					<app-image :src="productInfo.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" :alt="productInfo.name"/>
+					<app-image :src="productInfo.picUrl" :class="[appStore.isPC ? 'w-60 h-60' : 'w-28 h-28']" :alt="productInfo.name" />
 					<div class="flex flex-col justify-between">
 						<div class="my-2">
 							{{ productInfo.name }}
