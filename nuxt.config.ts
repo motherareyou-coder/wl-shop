@@ -1,3 +1,7 @@
+console.log('🔍 环境变量检查:')
+console.log('NUXT_API_TARGET_URL:', process.env.NUXT_API_TARGET_URL)
+console.log('DOMAIN_URL:', process.env.DOMAIN_URL)
+console.log('NODE_ENV:', process.env.NODE_ENV)
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
@@ -9,7 +13,7 @@ export default defineNuxtConfig({
         },
     },
     // ssr: process.env.NODE_ENV === 'production',
-    ssr: true,
+    ssr: false,
     // build: {
     // 	analyze: {
     // 		filename: 'static.html'
@@ -77,10 +81,6 @@ export default defineNuxtConfig({
             '/login/**'
         ],
         urls: async () => {
-            // 非生产环境直接返回空数组，不执行后续逻辑
-            if (process.env.NODE_ENV !== 'production') {
-                return []
-            }
             console.log('🔔 Sitemap 生成器开始执行') // 添加初始日志
             try {
                 const apiTargetUrl = process.env.NUXT_API_TARGET_URL
@@ -322,40 +322,21 @@ export default defineNuxtConfig({
         },
         // 开发环境 Vite Proxy 配置（带详细日志）
         server: {
+            // proxy: {
+            //     '/api': {
+            //         // target: 'https://api.iswink.com',
+            //         target: 'http://122.190.56.101:6060/shop-server',
+            //         // target: 'http://10.10.10.17:48080',
+            //         // target: 'http://192.168.1.3:48080',
+            //         changeOrigin: true,
+            //         rewrite: path => path.replace('api', 'app-api'),
+            //     },
+            // },
             proxy: {
                 '/app-api': {
                     target: process.env.NUXT_API_TARGET_URL,
                     changeOrigin: true,
-                    configure: (proxy, options) => {
-                        // Vite Proxy 配置回调
-                        proxy.on('proxyReq', (proxyReq, req, res) => {
-                            if (process.env.NODE_ENV === 'development') {
-                                console.log('\n🔄 ====== Vite Proxy 转发请求 ======')
-                                console.log('📍 原始请求:', req.url)
-                                console.log('📍 转发目标:', options.target)
-                                console.log('📍 转发路径:', proxyReq.path)
-                                console.log('📍 请求方法:', req.method)
-                                console.log('====================================\n')
-                            }
-                        })
-                        
-                        proxy.on('proxyRes', (proxyRes, req, res) => {
-                            if (process.env.NODE_ENV === 'development') {
-                                console.log('\n✅ ====== Vite Proxy 收到响应 ======')
-                                console.log('📍 请求路径:', req.url)
-                                console.log('📊 响应状态:', proxyRes.statusCode)
-                                console.log('====================================\n')
-                            }
-                        })
-                        
-                        proxy.on('error', (err, req, res) => {
-                            console.error('\n❌ ====== Vite Proxy 错误 ======')
-                            console.error('📍 请求路径:', req.url)
-                            console.error('❌ 错误信息:', err.message)
-                            console.error('================================\n')
-                        })
-                    },
-                },
+                }
             },
         },
     },
@@ -373,16 +354,6 @@ export default defineNuxtConfig({
         },
     },
     nitro: {
-        // Nitro 日志配置 - 开发环境启用详细日志
-        logging: {
-            level: 'debug', // 设置日志级别（trace, debug, info, warn, error, fatal）
-            handlers: [
-                {
-                    type: 'console', // 输出到控制台
-                    level: 'debug',
-                },
-            ],
-        },
         // 开启 gzip 压缩
         compressPublicAssets: true,
         // 生产环境 API 代理 - SSR 请求转发
@@ -390,10 +361,6 @@ export default defineNuxtConfig({
             '/app-api/**': {
                 proxy: process.env.NUXT_API_TARGET_URL,
             },
-        },
-        // 添加 Nitro 代理日志中间件
-        experimental: {
-            asyncContext: true,
-        },
+        }
     },
 })
