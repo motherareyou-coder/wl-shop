@@ -2,7 +2,7 @@ import { TerminalEnum } from '~/types'
 
 export default defineNuxtPlugin(() => {
 	// const { session } = useUserSession()
-	const { baseURL, tenantId } = useRuntimeConfig().public
+	const { apiBaseProxyPath, tenantId } = useRuntimeConfig().public
 	const userStore = useUserStore()
 	const nuxtApp = useNuxtApp()
 	const appStore = useAppStore()
@@ -16,7 +16,7 @@ export default defineNuxtPlugin(() => {
 	}
 
 	const api = $fetch.create({
-		baseURL,
+		baseURL: apiBaseProxyPath,
 		onRequest({ request, options, error }) {
 			options.params = options.params || {}
 			Object.entries(options.params).forEach(([k, v]) => {

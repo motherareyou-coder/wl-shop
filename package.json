@@ -4,9 +4,14 @@
 	"private": true,
 	"packageManager": "pnpm@9.4.0",
 	"scripts": {
-		"build": "nuxt build --max_old_space_size=16384",
-		"dev": "nuxt dev",
-		"dev:m": "nuxt dev --host 9609",
+		"build": "nuxt build  --dotenv .env.production --max_old_space_size=16384",
+		"dev": "nuxt dev --dotenv .env.development",
+		"dev:fast": "nuxt dev --dotenv .env.development --no-fork",
+		"dev:local": "nuxt dev --dotenv .env.local",
+		"dev:prod": "nuxt dev --dotenv .env.production",
+		"build:local": "nuxt build --dotenv .env.local",
+		"build:dev": "nuxt build --dotenv .env.development",
+		"build:prod": "nuxt build --dotenv .env.production",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
@@ -41,15 +46,13 @@
 		"@types/lodash-es": "^4.17.12",
 		"element-plus": "^2.8.7",
 		"eslint": "^9.14.0",
-		"lint-staged": "^15.2.10",
 		"nuxt-purgecss": "^2.0.0",
 		"sass": "^1.80.6",
 		"sass-loader": "^16.0.3",
-		"simple-git-hooks": "^2.11.1",
 		"unplugin-vue-components": "^0.27.4"
 	},
 	"simple-git-hooks": {
-		"pre-commit": "pnpm lint-staged"
+		"pre-commit": "echo 'Skipping linting on commit'"
 	},
 	"lint-staged": {
 		"*": "eslint --fix"

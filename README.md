@@ -16,8 +16,14 @@ pnpm install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# pnpm
+# pnpm 本地 .env.local 本地环境
+pnpm run dev:local
+# pnpm 开发 .env.development 开发环境（默认）
 pnpm run dev
+# 生产环境开发（预览生产配置） .env.production 生产环境调试
+pnpm run dev:prod
+# 开发环境（快速启动) .env.development
+pnpm run dev:fast
 ```
 
 ## 生产环境构建 Production
@@ -25,14 +31,17 @@ pnpm run dev
 构建生产版本命令 Build the application for production:
 
 ```bash
-# pnpm
+# 2. 构建生产版本 .env.production 生产环境构建
+pnpm run build:prod
+
+# 3. 预览构建结果
+pnpm run preview
+# pnpm  .env 构建（默认）
 pnpm run build
     若出现内存不足
     npm install -g increase-memory-limit
     increase-memory-limit
 ```
-
-
 
 本地预览构建 Locally preview production build:
 
@@ -40,8 +49,6 @@ pnpm run build
 # pnpm
 pnpm run preview
 ```
-
-
 
 ### nuxt 配置seo信息
     useHead({
