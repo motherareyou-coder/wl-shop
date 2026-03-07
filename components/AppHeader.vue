@@ -10,9 +10,14 @@ const searchShow = ref(false)
 
 userStore.getInfo()
 
-const { data: categories } = await useAPI<Category[]>(
-	'product/category/list/top',
-	{ params: { num: 5 } },
+// 使用异步数据加载，避免阻塞渲染
+const { data: categories, pending } = await useAsyncData<Category[]>(
+	'header-categories',
+	() => $api<Category[]>('product/category/list/top', { params: { num: 5 } }),
+	{
+		server: true,
+		lazy: true,
+	}
 )
 
 const cartStore = useCartStore()
@@ -54,7 +59,11 @@ function handleDelete(p: CartItem) {
 					<Icon name="icon:shop" size="32px" class="logo__mi" />
 				</nuxt-link>
 			</div>
-			<AppMenu class="navigation__group-wrapper" :data="categories" />
+			<!-- 分类数据加载中显示骨架屏 -->
+			<div v-if="pending" class="navigation__group-wrapper skeleton-menu">
+				<div class="skeleton-menu-item" v-for="i in 5" :key="i" />
+			</div>
+			<AppMenu v-else class="navigation__group-wrapper" :data="categories" />
 			<div class="navigation__separator"></div>
 			<ul class="navigation__group navigation__shortcut">
 				<li v-if="appStore.isPC" class="navigation__item shortcut__item">
@@ -202,40 +211,40 @@ function handleDelete(p: CartItem) {
 						</template>
 					</ul>
 				</el-popover>
-				<li
-					v-if="showMobileMenu"
-					class="navigation__item shortcut__item shortcut__item-menu"
-				>
-					<div class="navigation__link">
-						<div class="shortcut__item--wrapper">
-							<i
-								class="micon micon-menu shortcut__icon"
-								@click="sideShow = true"
-							></i>
-						</div>
-					</div>
-				</li>
 			</ul>
 		</nav>
-		<AppSearch v-model="searchShow" />
 	</header>
+	<AppSearch v-model="searchShow" />
 </template>
 
 <style lang="scss">
 @import url('./AppHeader.scss');
-.site-header--sticky {
-	.mi-badge__content.is-fixed {
-		padding: 2PX 4PX !important;
-		line-height: 1;
+</style>
+
+<style lang="scss" scoped>
+.skeleton-menu {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	flex: 1;
+	justify-content: center;
+}
+
+.skeleton-menu-item {
+	width: 60px;
+	height: 20px;
+	background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+	background-size: 200% 100%;
+	animation: loading 1.5s infinite;
+	border-radius: 4px;
+}
+
+@keyframes loading {
+	0% {
+		background-position: 200% 0;
 	}
-	.shortcut__item--wrapper  {
-		.mi-badge__content:not(.is-dot) {
-			border:none;
-			height: 16px;
-			border-bottom-left-radius: 0;
-			right: calc(var(--mi-badge-size) / 2 - 7px);
-			top: -2px;
-		}
+	100% {
+		background-position: -200% 0;
 	}
 }
 </style>

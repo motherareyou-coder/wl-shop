@@ -14,11 +14,6 @@ import 'swiper/css/pagination'
 
 defineOptions({ name: 'AppSwiper' })
 
-const { data } = await useAPI<Banner[]>(
-	'promotion/banner/list',
-	{ params: { position: 1 } },
-)
-
 interface Banner {
 	id: string
 	title: string
@@ -26,6 +21,16 @@ interface Banner {
 	picUrl: string
 	h5PicUrl: string
 }
+
+// 使用异步数据加载，避免阻塞渲染
+const { data, pending } = await useAsyncData<Banner[]>(
+	'banner-list',
+	() => $api<Banner[]>('promotion/banner/list', { params: { position: 1 } }),
+	{
+		server: true,
+		lazy: true,
+	}
+)
 
 let swiper: SwiperClass | null = null
 const realIndex = ref(0)
@@ -87,7 +92,12 @@ const appStore = useAppStore()
 
 <template>
 	<div class="carousel-banner carousel-banner--light">
-		<div class="carousel-banner__swiper">
+		<!-- 加载状态 -->
+		<div v-if="pending" class="carousel-banner__skeleton">
+			<div class="skeleton-banner" />
+		</div>
+		
+		<div v-else class="carousel-banner__swiper">
 			<Swiper
 				class="swiper-container"
 				:style="{ '--indicator-progress-width': `${indicatorWidth}px` }"
@@ -111,29 +121,26 @@ const appStore = useAppStore()
 					@click.prevent="onClick(item)"
 				>
 					<div class="carousel-banner__slide">
-						<app-image
+						<NuxtImg
 							v-if="appStore.isPC"
 							style="width: 100%; height: 100%"
-							:src=" item.picUrl "
+							:src="item.picUrl"
 							:alt="item.title"
 							fit="cover"
 							class="slide__background"
+							loading="eager"
+							preset="banner"
 						/>
-						<app-image
+						<NuxtImg
 							v-if="appStore.isMobile"
 							style="width: 100%; height: 100%"
 							:src="item.h5PicUrl"
 							:alt="item.title"
 							fit="cover"
 							class="slide__background"
+							loading="eager"
+							preset="banner"
 						/>
-						<!-- <div
-							class="slide__content slide__content--vertical-center slide__content--mobile-top"
-						>
-							<div class="slide__info">
-								{{ i }}
-							</div>
-						</div> -->
 					</div>
 				</SwiperSlide>
 				<div
@@ -205,4 +212,34 @@ const appStore = useAppStore()
 
 <style lang="scss">
 @import url('./AppSwiper.scss');
+</style>
+
+<style lang="scss" scoped>
+.carousel-banner {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.carousel-banner__skeleton {
+	width: 100%;
+	height: var(--banner-height, 400px);
+	background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+	background-size: 200% 100%;
+	animation: loading 1.5s infinite;
+}
+
+.skeleton-banner {
+	width: 100%;
+	height: 100%;
+}
+
+@keyframes loading {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
 </style>

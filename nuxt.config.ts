@@ -45,6 +45,7 @@ export default defineNuxtConfig({
 		'dayjs-nuxt',
 		'@nuxtjs/seo',
 		'nuxt-gtag',
+		'@nuxt/image',
 	],
 	gtag: {
 		// id: 'G-80R453F43Q', // 替换为你的 Google Analytics ID
@@ -140,6 +141,31 @@ export default defineNuxtConfig({
 	// @nuxt/ui
 	colorMode: {
 		preference: 'light',
+	},
+	image: {
+		domains: ['www.iswink.com', 'api.iswink.com'],
+		presets: {
+			avatar: {
+				width: 50,
+				height: 50,
+				format: 'webp',
+			},
+			thumbnail: {
+				width: 200,
+				height: 200,
+				format: 'webp',
+			},
+			product: {
+				width: 400,
+				height: 400,
+				format: 'webp',
+			},
+			banner: {
+				width: 1200,
+				height: 400,
+				format: 'webp',
+			},
+		},
 	},
 	dayjs: {
 		// locales: ['en', 'zh'],
@@ -300,6 +326,23 @@ export default defineNuxtConfig({
 		build: {
 			minify: 'esbuild', // Use esbuild for faster minification
 			target: 'esnext', // Use modern JavaScript
+			rollupOptions: {
+				output: {
+					manualChunks: (id) => {
+						if (id.includes('node_modules')) {
+							if (id.includes('element-plus')) {
+								return 'element-plus'
+							} else if (id.includes('swiper')) {
+								return 'swiper'
+							} else if (id.includes('lodash')) {
+								return 'lodash'
+							} else if (id.includes('dayjs')) {
+								return 'dayjs'
+							}
+						}
+					},
+				},
+			},
 		},
 		css: {
 			preprocessorOptions: {
@@ -351,33 +394,24 @@ export default defineNuxtConfig({
 		},
 	},
 	nitro: {
-		// devProxy: {
-		// 	'/app-api': {
-		// 		target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
-		// 		changeOrigin: true,
-		// 	},
-		// },
-		// 日志
-		// logging: {
-		//     level: 'debug', // 设置日志级别（trace, debug, info, warn, error, fatal）
-		//     handlers: [
-		//         {
-		//             type: 'console', // 输出到控制台
-		//             level: 'debug',
-		//         },
-		//         // 可选：输出到文件
-		//         // {
-		//         //   type: 'file',
-		//         //   level: 'info',
-		//         //   path: './logs/ssr.log' // 日志文件路径
-		//         // }
-		//     ]
-		// },
 		// 开启gzip压缩
 		compressPublicAssets: true,
+		// 配置缓存策略
 		routeRules: {
 			'/app-api/**': {
 				proxy: process.env.NUXT_API_TARGET_URL,
+			},
+			// 静态资源缓存
+			'/**/*.{js,css,svg,png,jpg,jpeg,webp}': {
+				headers: {
+					'Cache-Control': 'max-age=31536000, immutable',
+				},
+			},
+			// API缓存
+			'/api/**': {
+				headers: {
+					'Cache-Control': 'max-age=60, stale-while-revalidate=300',
+				},
 			},
 		},
 	},

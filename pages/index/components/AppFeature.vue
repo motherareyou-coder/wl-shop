@@ -9,9 +9,14 @@ import 'swiper/css/pagination'
 
 defineOptions({ name: 'AppFeature' })
 
-const { data: categories } = await useAPI<Category[]>(
-	'product/category/list/featured/top',
-	{ params: { num: 5 } },
+// 使用异步数据加载，避免阻塞渲染
+const { data: categories, pending } = await useAsyncData<Category[]>(
+	'featured-categories',
+	() => $api<Category[]>('product/category/list/featured/top', { params: { num: 5 } }),
+	{
+		server: true,
+		lazy: true,
+	}
 )
 
 let swiper: SwiperClass | null = null
@@ -32,7 +37,21 @@ function slideTo(i: number) {
 		<div class="feature-tab-title">
 			{{ $t('Featured Products') }}
 		</div>
-		<div class="feature-tab__container">
+		
+		<!-- 加载状态 -->
+		<div v-if="pending" class="feature-skeleton">
+			<div class="skeleton-tabs">
+				<div v-for="i in 5" :key="i" class="skeleton-tab" />
+			</div>
+			<div class="skeleton-content">
+				<div class="skeleton-main" />
+				<div class="skeleton-items">
+					<div v-for="i in 4" :key="i" class="skeleton-item" />
+				</div>
+			</div>
+		</div>
+		
+		<div v-else class="feature-tab__container">
 			<div class="feature-tab__header">
 				<div class="tab-header__wrapper">
 					<div
@@ -73,10 +92,12 @@ function slideTo(i: number) {
 								]"
 							>
 								<div class="image-block">
-									<app-image
+									<NuxtImg
 										class="mi-image item-image"
 										:src="c.picUrl"
 										:alt="c.name"
+										loading="lazy"
+										:preset="i === 0 ? 'product' : 'thumbnail'"
 									/>
 								</div>
 								<div class="item-info">
@@ -107,4 +128,64 @@ function slideTo(i: number) {
 
 <style lang="scss">
 @import url('./AppFeature.scss');
+</style>
+
+<style lang="scss" scoped>
+.feature-skeleton {
+	padding: 20px;
+	
+	.skeleton-tabs {
+		display: flex;
+		gap: 16px;
+		margin-bottom: 24px;
+		overflow-x: auto;
+	}
+	
+	.skeleton-tab {
+		height: 40px;
+		width: 100px;
+		background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+		background-size: 200% 100%;
+		animation: loading 1.5s infinite;
+		border-radius: 4px;
+		flex-shrink: 0;
+	}
+	
+	.skeleton-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+	}
+	
+	.skeleton-main {
+		height: 400px;
+		background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+		background-size: 200% 100%;
+		animation: loading 1.5s infinite;
+		border-radius: 8px;
+	}
+	
+	.skeleton-items {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+	}
+	
+	.skeleton-item {
+		height: 190px;
+		background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+		background-size: 200% 100%;
+		animation: loading 1.5s infinite;
+		border-radius: 8px;
+	}
+}
+
+@keyframes loading {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
 </style>
