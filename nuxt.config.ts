@@ -6,8 +6,9 @@ console.log('NODE_ENV:', process.env.NODE_ENV)
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	devtools: { enabled: true },
-	// ssr: process.env.NODE_ENV === 'production',
-	ssr: true,
+	ssr: process.env.NODE_ENV === 'production',
+	// 开发环境检查seo时开启
+	// ssr: true,
 	// build: {
 	// 	analyze: {
 	// 		filename: 'static.html'
