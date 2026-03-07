@@ -413,19 +413,13 @@ export default defineNuxtConfig({
 		compressPublicAssets: true,
 		// 配置缓存策略
 		routeRules: {
-			'/app-api/**': {
+			'/app-api**': {
 				proxy: process.env.NUXT_API_TARGET_URL,
 			},
 			// 静态资源缓存
 			'/**/*.{js,css,svg,png,jpg,jpeg,webp}': {
 				headers: {
 					'Cache-Control': 'max-age=31536000, immutable',
-				},
-			},
-			// API缓存
-			'/api/**': {
-				headers: {
-					'Cache-Control': 'max-age=60, stale-while-revalidate=300',
 				},
 			},
 		},

@@ -4,8 +4,8 @@
   * @Description: 轮播图组件
 -->
 <script setup lang="ts">
-import type { Swiper as SwiperClass, SwiperOptions } from 'swiper/types'
-import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
+import type { Swiper as SwiperClass } from 'swiper/types'
+import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 
 import 'swiper/css'
@@ -29,7 +29,7 @@ const { data, pending } = await useAPI<Banner[]>(
 		params: { position: 1 },
 		lazy: false,
 		dedupe: 'defer',
-	}
+	},
 )
 
 let swiper: SwiperClass | null = null
@@ -94,9 +94,9 @@ const appStore = useAppStore()
 	<div class="carousel-banner carousel-banner--light">
 		<!-- 加载状态 -->
 		<div v-if="pending" class="carousel-banner__skeleton">
-			<div class="skeleton-banner" />
+			<div class="skeleton-banner"></div>
 		</div>
-		
+
 		<div v-else class="carousel-banner__swiper">
 			<Swiper
 				class="swiper-container"
