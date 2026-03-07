@@ -7,15 +7,6 @@ export default defineNuxtPlugin(() => {
 	const nuxtApp = useNuxtApp()
 	const appStore = useAppStore()
 
-	// 开发环境日志 - 显示代理配置
-	if (process.dev) {
-		console.log('\n🔧 ====== API 代理配置 ======')
-		console.log('📍 代理路径 (apiBaseProxyPath):', apiBaseProxyPath)
-		console.log('🎯 目标地址 (NUXT_API_TARGET_URL):', process.env.NUXT_API_TARGET_URL)
-		console.log('🌐 当前环境:', process.env.NODE_ENV)
-		console.log('===========================\n')
-	}
-
 	function getTerminal() {
 		if (appStore.isPC)
 			return TerminalEnum.PC
@@ -24,29 +15,9 @@ export default defineNuxtPlugin(() => {
 		return ''
 	}
 
-	const startTimeMap = new Map<string, number>()
-
 	const api = $fetch.create({
-		apiBaseProxyPath,
+		baseURL: apiBaseProxyPath,
 		onRequest({ request, options, error }) {
-			// 记录请求开始时间
-			const requestId = `${request}_${Date.now()}`
-			startTimeMap.set(requestId, Date.now())
-
-			// 开发环境详细日志
-			if (process.dev) {
-				console.log('\n📡 ====== 发起 API 请求 ======')
-				console.log('📍 请求 URL:', request)
-				console.log('📍 请求方法:', options.method || 'GET')
-				console.log('📍 完整路径:', `${apiBaseProxyPath}${request}`)
-				console.log('📍 请求参数:', options.params || {})
-				console.log('📍 请求头:')
-				console.log('   - tenant-id:', tenantId)
-				console.log('   - terminal:', getTerminal())
-				console.log('   - Authorization:', options.headers?.get('Authorization') ? '***' : '无')
-				console.log('=============================\n')
-			}
-
 			options.params = options.params || {}
 			Object.entries(options.params).forEach(([k, v]) => {
 				if (v === '' || v === null || v === undefined)
@@ -60,42 +31,8 @@ export default defineNuxtPlugin(() => {
 			if (token) {
 				options.headers.set('Authorization', `${token}`)
 			}
-
-			// 将 requestId 传递到 onResponse
-			;(options as any).requestId = requestId
 		},
 		onResponse({ request: url, options, response }) {
-			// 计算响应时间
-			const requestId = (options as any).requestId
-			const startTime = startTimeMap.get(requestId)
-			const duration = startTime ? Date.now() - startTime : 0
-			startTimeMap.delete(requestId)
-
-			// 开发环境响应日志
-			if (process.dev) {
-				const status = response.status
-				const statusText = response.statusText
-
-				console.log('\n✅ ====== API 响应 ======')
-				console.log('📍 请求 URL:', url)
-				console.log('📊 状态码:', status, statusText)
-				console.log('⏱️  响应时间:', `${duration}ms`)
-
-				const { code, data, msg } = response._data
-				if (code === 0) {
-					console.log('✅ 业务状态：成功')
-					console.log('📦 数据大小:', JSON.stringify(data).length, 'bytes')
-				}
-				else if (code === 401) {
-					console.log('⚠️  业务状态：401 未授权')
-				}
-				else {
-					console.log('❌ 业务状态：失败')
-					console.log('❌ 错误信息:', msg)
-				}
-				console.log('========================\n')
-			}
-
 			const { code, data, msg } = response._data
 			if (code === 0) {
 				response._data = data
@@ -110,21 +47,12 @@ export default defineNuxtPlugin(() => {
 				return p
 			}
 			else {
-				// 传_context 才能保证这里 zindex 和客户端的保持一致
+				// 传_context才能保证这里zindex和客户端的保持一致
 				ElMessage.info(msg, nuxtApp.vueApp._context)
 				return Promise.reject(response._data)
 			}
 		},
 		onResponseError({ response }) {
-			// 开发环境错误日志
-			if (process.dev) {
-				console.error('\n❌ ====== API 请求错误 ======')
-				console.error('📍 请求 URL:', response.url)
-				console.error('📊 状态码:', response.status)
-				console.error('❌ 错误信息:', response._data?.data?.msg || response.statusText)
-				console.error('==============================\n')
-			}
-
 			ElMessage.info(response._data?.data?.msg || response.statusText, nuxtApp.vueApp._context)
 		},
 	})
@@ -191,7 +119,7 @@ export default defineNuxtPlugin(() => {
 			// 添加到队列，等待刷新获取到新的令牌
 			return new Promise((resolve) => {
 				requestList.push(() => {
-					config.headers.set('Authorization', `${userStore.accessToken}`) // 让每个请求携带自定义 token 请根据实际情况自行修改
+					config.headers.set('Authorization', `${userStore.accessToken}`) // 让每个请求携带自定义token 请根据实际情况自行修改
 					resolve(api(url, config))
 				})
 			})

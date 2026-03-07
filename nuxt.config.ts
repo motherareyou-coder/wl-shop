@@ -1,20 +1,13 @@
-import process from 'node:process'
-
+// https://nuxt.com/docs/api/configuration/nuxt-config
 console.log('🔍 环境变量检查:')
 console.log('NUXT_API_TARGET_URL:', process.env.NUXT_API_TARGET_URL)
 console.log('DOMAIN_URL:', process.env.DOMAIN_URL)
 console.log('NODE_ENV:', process.env.NODE_ENV)
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
-	// Nuxt DevTools - 官方调试工具
-	devtools: {
-		enabled: true, // 启用开发工具
-		timeline: {
-			enabled: true, // 启用时间线，查看 SSR 和请求
-		},
-	},
-	ssr: process.env.NODE_ENV === 'production',
+	devtools: { enabled: true },
+	// ssr: process.env.NODE_ENV === 'production',
+	ssr: true,
 	// build: {
 	// 	analyze: {
 	// 		filename: 'static.html'
@@ -25,7 +18,7 @@ export default defineNuxtConfig({
 			title: process.env.NUXT_APP_TITLE || 'iswink - Surprise Gifts for Love',
 			charset: 'utf-8',
 			viewport:
-                'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
+				'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
 			meta: [
 				{
 					name: 'keywords',
@@ -66,7 +59,7 @@ export default defineNuxtConfig({
 		// 不允许抓取的页面
 		disallow: ['/admin', '/components', '/user', '/login'],
 		// 声明站点地图位置（推荐添加）
-		sitemap: `${process.env.DOMAIN_URL}/sitemap.xml`,
+		sitemap: process.env.DOMAIN_URL + '/sitemap.xml',
 	},
 	sitemap: {
 		// 开发环境不生成 sitemap，加快启动速度
@@ -82,7 +75,7 @@ export default defineNuxtConfig({
 			'/login/**',
 		],
 		urls: async () => {
-			console.log('🔔 Sitemap 生成器开始执行') // 添加初始日志
+			console.log('🔔 Sitemap生成器开始执行') // 添加初始日志
 			try {
 				const apiTargetUrl = process.env.NUXT_API_TARGET_URL
 				// 1. 获取数据并解析结构
@@ -157,7 +150,7 @@ export default defineNuxtConfig({
 	i18n: {
 		seo: true, // 启用自动 hreflang
 		defaultLocale: 'en',
-		baseUrl: process.env.DOMAIN_URL, // 启用自动 hreflang 路由生成绝对路径
+		baseUrl: process.env.DOMAIN_URl, // 启用自动 hreflang 路由生成绝对路径
 		vueI18n: './locales/i18n.config.ts',
 		detectBrowserLanguage: {
 			useCookie: false,
@@ -301,15 +294,7 @@ export default defineNuxtConfig({
 	},
 	vite: {
 		optimizeDeps: {
-			include: [
-				'vue',
-				'vue-router',
-				'pinia',
-				'@vueuse/core',
-				'lodash-es',
-				'dayjs',
-			],
-			exclude: ['@nuxt/ui'], // 排除大模块，加快预构建
+			include: ['vue', 'vue-router', 'pinia'], // Pre-bundle common dependencies
 		},
 		build: {
 			minify: 'esbuild', // Use esbuild for faster minification
@@ -322,22 +307,29 @@ export default defineNuxtConfig({
 				},
 			},
 		},
-		// 开发环境 Vite Proxy 配置（带详细日志）
+		// build: {
+		//     rollupOptions: {
+		//         output: {
+		//             manualChunks: (id) => {
+		//                 if (id.includes('element-plugin')) {
+		//                     return 'componentUi'
+		//                 } else if (id.includes('axios')) {
+		//                     return 'axios'
+		//                 } else if (id.includes('lodash')) {
+		//                     return 'lodash'
+		//                 }
+		//             },
+		//         },
+		//     },
+		// },
 		server: {
-			// proxy: {
-			//     '/api': {
-			//         // target: 'https://api.iswink.com',
-			//         target: 'http://122.190.56.101:6060/shop-server',
-			//         // target: 'http://10.10.10.17:48080',
-			//         // target: 'http://192.168.1.3:48080',
-			//         changeOrigin: true,
-			//         rewrite: path => path.replace('api', 'app-api'),
-			//     },
-			// },
-			// 开发环境走这里,请求加上/api,代理替换为 app-api,就不用走nitro 服务器ssr了
 			proxy: {
 				'/api': {
+					// target: 'https://api.iswink.com',
+					// target: 'http://122.190.56.101:6060/shop-server',
 					target: process.env.NUXT_API_TARGET_URL,
+					// target: 'http://10.10.10.17:48080',
+					// target: 'http://192.168.1.3:48080',
 					changeOrigin: true,
 					rewrite: path => path.replace('api', 'app-api'),
 				},
@@ -345,7 +337,7 @@ export default defineNuxtConfig({
 		},
 	},
 	runtimeConfig: {
-		// public 中的键也可以在客户端使用
+		// public中的键也可以在客户端使用
 		public: {
 			// API 请求基础路径 - 统一使用相对路径，走 Nitro Proxy
 			// 非生产环境走 vite.server.proxy 将 /api 请求代理到后端服务器
@@ -358,9 +350,30 @@ export default defineNuxtConfig({
 		},
 	},
 	nitro: {
-		// 开启 gzip 压缩
+		// devProxy: {
+		// 	'/app-api': {
+		// 		target: 'http://127.0.0.1:4523/m1/5098940-4761458-default',
+		// 		changeOrigin: true,
+		// 	},
+		// },
+		// 日志
+		// logging: {
+		//     level: 'debug', // 设置日志级别（trace, debug, info, warn, error, fatal）
+		//     handlers: [
+		//         {
+		//             type: 'console', // 输出到控制台
+		//             level: 'debug',
+		//         },
+		//         // 可选：输出到文件
+		//         // {
+		//         //   type: 'file',
+		//         //   level: 'info',
+		//         //   path: './logs/ssr.log' // 日志文件路径
+		//         // }
+		//     ]
+		// },
+		// 开启gzip压缩
 		compressPublicAssets: true,
-		// 生产环境 API 代理 - SSR 请求转发
 		routeRules: {
 			'/app-api/**': {
 				proxy: process.env.NUXT_API_TARGET_URL,
