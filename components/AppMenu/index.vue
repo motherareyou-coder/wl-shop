@@ -11,9 +11,13 @@ const data = toRef(props, 'data')
 
 const height = ref('0')
 const hoverd = ref()
+const isHoveringMenu = ref(false)
+const isHoveringSubmenu = ref(false)
 function hide() {
-	hoverd.value = null
-	height.value = '0'
+	if (!isHoveringMenu.value && !isHoveringSubmenu.value) {
+		hoverd.value = null
+		height.value = '0'
+	}
 }
 const { start, stop } = useTimeoutFn(hide, 100)
 const wrapRef = ref()
@@ -24,6 +28,26 @@ function setHoverd(item: any, i: string | number) {
 		return
 	const c = wrapRef.value.querySelector('.submenu__product-group')
 	height.value = `${c.offsetHeight + 26 + 20}px`
+}
+
+function onMenuEnter() {
+	isHoveringMenu.value = true
+	stop()
+}
+
+function onMenuLeave() {
+	isHoveringMenu.value = false
+	start()
+}
+
+function onSubmenuEnter() {
+	isHoveringSubmenu.value = true
+	stop()
+}
+
+function onSubmenuLeave() {
+	isHoveringSubmenu.value = false
+	start()
 }
 
 const appStore = useAppStore()
@@ -39,8 +63,8 @@ watch(() => route.fullPath, hide)
 	<div>
 		<ul
 			class="navigation__group navigation__menu"
-			@mouseleave="start"
-			@mouseenter="stop"
+			@mouseleave="onMenuLeave"
+			@mouseenter="onMenuEnter"
 		>
 			<li
 				v-for="(item, i) in data"
@@ -66,14 +90,14 @@ watch(() => route.fullPath, hide)
 			class="navigation-submenu"
 			:class="{ 'navigation-submenu--open': !!hoverd }"
 			:style="{ height }"
+			@mouseenter="onSubmenuEnter"
+			@mouseleave="onSubmenuLeave"
 		>
 			<SubMenu
 				v-for="item in data"
 				:key="item.id"
 				:data="item.childCategory"
 				:show="item === hoverd"
-				@mouseenter="stop"
-				@mouseleave="start"
 			/>
 		</div>
 		<div
