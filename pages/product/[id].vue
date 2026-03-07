@@ -356,30 +356,30 @@ function handleCommand(type: string, data: any) {
 	}
 }
 
-const head = computed(() => {
-	const name = info.value?.name || ''
-	const appTitle = t('appTitle')
-	let title = `${name} ${appTitle}`
-  // 关键修改：将路径中的语言前缀替换为 'en'
-  const enPath = route.fullPath.replace(/^\/[a-z]{2}\//, '/en/');
-  const canonicalUrl = `${domain}${enPath}`;
-	if (combinationActivityId)
-		title = `${t('拼团')} ${name} ${appTitle}`
-	else if (seckillActivityId)
-		title = `${t('秒杀')} ${name} ${appTitle}`
-	else if (bargainActivityId)
-		title = `${t('砍价')} ${name} ${appTitle}`
+// SEO 优化 - 使用统一的 useSEO
+const productData = computed(() => {
+	if (!info.value) return null
 	return {
-		title,
-		// link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-		link: [{ rel: 'canonical', href: canonicalUrl }],
-		meta: [
-			{ name: 'keywords', content: info.value?.keyword },
-			{ name: 'description', content: info.value?.introduction },
-		],
+		...info.value,
+		categoryName: info.value.categoryName || '',
 	}
 })
-useHead(head)
+
+useSEO({
+	routeKey: 'productDetail',
+	product: productData.value || undefined,
+	type: 'product',
+	price: curSku.value?.price,
+	currency: currency,
+	availability: curSku.value?.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+	brand: info.value?.brandName,
+	image: info.value?.picUrl,
+	breadcrumbs: [
+		{ name: 'Home', url: domain },
+		{ name: info.value?.categoryName || 'Products', url: `${domain}/product-list` },
+		{ name: info.value?.name || 'Product Detail', url: `${domain}${route.path}` },
+	],
+})
 </script>
 
 <template>

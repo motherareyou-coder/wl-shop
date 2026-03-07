@@ -6,9 +6,9 @@ console.log('NODE_ENV:', process.env.NODE_ENV)
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	devtools: { enabled: true },
-	ssr: process.env.NODE_ENV === 'production',
+	// ssr: process.env.NODE_ENV === 'production',
 	// 开发环境检查seo时开启
-	// ssr: true,
+	ssr: process.env.ENABLE_SSR,
 	// build: {
 	// 	analyze: {
 	// 		filename: 'static.html'
@@ -23,13 +23,13 @@ export default defineNuxtConfig({
 			meta: [
 				{
 					name: 'keywords',
-					content: 'iswink, surprise gifts, love gifts, relationship gifts, romantic presents, anniversary gifts, birthday gifts, custom gifts',
+					content: process.env.NUXT_DEFAULT_KEYWORDS || 'iswink, surprise gifts, love gifts, relationship gifts, romantic presents, anniversary gifts, birthday gifts, custom gifts',
 				},
 				{
 					name: 'description',
-					content: 'Discover unique surprise gifts at iswink. Perfect for anniversaries, birthdays, and special moments. Free shipping worldwide. Shop now for memorable presents.',
+					content: process.env.NUXT_DEFAULT_DESCRIPTION || 'Discover unique surprise gifts at iswink. Perfect for anniversaries, birthdays, and special moments. Free shipping worldwide. Shop now for memorable presents.',
 				},
-				{ name: 'author', content: process.env.DOMAIN },
+				{ name: 'author', content: process.env.NUXT_SITE_NAME || 'iswink' },
 				{ name: 'robots', content: 'index, follow' },
 			],
 		},
@@ -61,7 +61,7 @@ export default defineNuxtConfig({
 		// 不允许抓取的页面
 		disallow: ['/admin', '/components', '/user', '/login'],
 		// 声明站点地图位置（推荐添加）
-		sitemap: process.env.DOMAIN_URL + '/sitemap.xml',
+		sitemap: `${process.env.DOMAIN_URL}/sitemap.xml`,
 	},
 	sitemap: {
 		// 开发环境不生成 sitemap，加快启动速度
@@ -332,11 +332,14 @@ export default defineNuxtConfig({
 						if (id.includes('node_modules')) {
 							if (id.includes('element-plus')) {
 								return 'element-plus'
-							} else if (id.includes('swiper')) {
+							}
+							else if (id.includes('swiper')) {
 								return 'swiper'
-							} else if (id.includes('lodash')) {
+							}
+							else if (id.includes('lodash')) {
 								return 'lodash'
-							} else if (id.includes('dayjs')) {
+							}
+							else if (id.includes('dayjs')) {
 								return 'dayjs'
 							}
 						}
@@ -384,13 +387,25 @@ export default defineNuxtConfig({
 		// public中的键也可以在客户端使用
 		public: {
 			// API 请求基础路径 - 统一使用相对路径，走 Nitro Proxy
-			// 非生产环境走 vite.server.proxy 将 /api 请求代理到后端服务器
-			apiBaseProxyPath: process.env.NODE_ENV === 'production' ? process.env.NUXT_API_PROXY_PATH : '/api',
+			// SSR模式下走 /app-api (nitro.routeRules代理)，非SSR模式走 /api (vite.server.proxy代理)
+			apiBaseProxyPath: process.env.ENABLE_SSR === 'true' ? (process.env.NUXT_API_PROXY_PATH || '/app-api') : '/api',
 			tenantId: process.env.NUXT_PUBLIC_TENANT_ID || '1',
 			currency: '$',
-			domain: process.env.DOMAIN_URL,
-			shortDomain: process.env.DOMAIN,
-			kefuWsUrl: process.env.NUXT_PUBLIC_KEFU_WS_URL,
+			domain: process.env.DOMAIN_URL || '',
+			shortDomain: process.env.DOMAIN || '',
+			kefuWsUrl: process.env.NUXT_PUBLIC_KEFU_WS_URL || '',
+			// SEO配置
+			siteName: process.env.NUXT_SITE_NAME || '',
+			siteSlogan: process.env.NUXT_SITE_SLOGAN || '',
+			defaultTitle: process.env.NUXT_APP_TITLE_SUFFIX || '',
+			defaultDescription: process.env.NUXT_DEFAULT_DESCRIPTION || '',
+			defaultKeywords: process.env.NUXT_DEFAULT_KEYWORDS?.split(',') || [],
+			defaultOgImage: process.env.NUXT_DEFAULT_OG_IMAGE || '',
+			siteLogo: process.env.NUXT_SITE_LOGO || '',
+			organizationName: process.env.NUXT_ORGANIZATION_NAME || '',
+			organizationUrl: process.env.NUXT_ORGANIZATION_URL || '',
+			facebookAppId: process.env.NUXT_FACEBOOK_APP_ID || '',
+			twitterHandle: process.env.NUXT_TWITTER_HANDLE || '',
 		},
 	},
 	nitro: {

@@ -5,12 +5,12 @@ import type { ProductSpu } from '~/types'
 const { t } = useI18n()
 
 // 使用异步数据加载，避免阻塞渲染
-const { data: specialList, pending } = await useAsyncData<ProductSpu[]>(
-	'special-products',
-	() => $api<ProductSpu[]>('product/spu/get-main-show-spu', { params: { count: 6 } }),
+const { data: specialList, pending } = await useAPI<ProductSpu[]>(
+	'product/spu/get-main-show-spu',
 	{
-		server: true,
-		lazy: true,
+		params: { count: 6 },
+		lazy: false,
+		dedupe: 'defer',
 	}
 )
 

@@ -11,12 +11,22 @@ const { data: categories } = await useAPI<ArticleCategory>(
 	{ transform: res => res.list },
 )
 
-const { shortDomain } = useRuntimeConfig().public
+const { shortDomain, domain } = useRuntimeConfig().public
+const route = useRoute()
 const { gtag } = useGtag()
 // 文章列表页面埋点
 gtag('event', 'screen_view', {
 	app_name: shortDomain,
 	screen_name: 'articles-list',
+})
+
+// SEO 优化
+useSEO({
+	routeKey: 'articleList',
+	breadcrumbs: [
+		{ name: 'Home', url: domain },
+		{ name: 'Discover', url: `${domain}${route.path}` },
+	],
 })
 
 const categoryId = ref(categories.value?.[0]?.id)

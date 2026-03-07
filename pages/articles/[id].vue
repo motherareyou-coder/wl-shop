@@ -41,16 +41,19 @@ const { data: recommends } = await useAsyncData<Article>(`recommends-${Date.now(
 //   }
 // })
 // useHead(head)
-useHead({
-  // title: `${t('home')} ${$t('appTitle')}`,
-  // title: ` ${$t('appTitle')}`,
-  // title: `${data.value?.title} ${shortDomain}`,
-  title: `${info.value?.title} ${$t('appTitle')}`,
-  // link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-  meta: [
-    { name: 'keywords', content: `${info.value?.keyWords}` },
-    { name: 'description', content: `${info.value?.introduction}` },
-  ],
+// SEO 优化 - 使用统一的 useSEO
+useSEO({
+	routeKey: 'articleDetail',
+	title: info.value?.title,
+	description: info.value?.introduction,
+	keywords: info.value?.keyWords?.split(',') || [],
+	image: info.value?.picUrl,
+	type: 'article',
+	breadcrumbs: [
+		{ name: 'Home', url: domain },
+		{ name: 'Discover', url: `${domain}/articles` },
+		{ name: info.value?.title || 'Article', url: `${domain}${route.path}` },
+	],
 })
 
 onMounted(() => {

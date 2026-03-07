@@ -10,9 +10,13 @@ gtag('event', 'screen_view', {
   app_name: shortDomain,
   screen_name: 'combination-list'
 })
-useHead({
-  link: [{ rel: 'canonical', href: `${domain}${route.path}`}],
-  title: `${$t('拼团活动')} ${$t('appTitle')}`,
+// SEO 优化
+useSEO({
+	routeKey: 'combination',
+	breadcrumbs: [
+		{ name: 'Home', url: domain },
+		{ name: 'Group Buying', url: `${domain}${route.path}` },
+	],
 })
 const appStore = useAppStore()
 

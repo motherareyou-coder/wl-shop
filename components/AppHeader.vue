@@ -11,12 +11,12 @@ const searchShow = ref(false)
 userStore.getInfo()
 
 // 使用异步数据加载，避免阻塞渲染
-const { data: categories, pending } = await useAsyncData<Category[]>(
-	'header-categories',
-	() => $api<Category[]>('product/category/list/top', { params: { num: 5 } }),
+const { data: categories, pending } = await useAPI<Category[]>(
+	'product/category/list/top',
 	{
-		server: true,
-		lazy: true,
+		params: { num: 5 },
+		lazy: false,
+		dedupe: 'defer',
 	}
 )
 

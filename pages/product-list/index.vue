@@ -21,9 +21,15 @@ watchEffect(() => {
 	keyword.value = route.query.query
 })
 
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('Product List')} ${$t('appTitle')}`,
+// SEO 优化
+useSEO({
+	routeKey: 'productList',
+	categoryData: curCat.value || undefined,
+	searchQuery: keyword.value || undefined,
+	breadcrumbs: [
+		{ name: 'Home', url: domain },
+		{ name: curCat.value?.name || 'Product List', url: `${domain}${route.path}` },
+	],
 })
 
 const appStore = useAppStore()

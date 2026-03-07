@@ -10,12 +10,12 @@ import 'swiper/css/pagination'
 defineOptions({ name: 'AppFeature' })
 
 // 使用异步数据加载，避免阻塞渲染
-const { data: categories, pending } = await useAsyncData<Category[]>(
-	'featured-categories',
-	() => $api<Category[]>('product/category/list/featured/top', { params: { num: 5 } }),
+const { data: categories, pending } = await useAPI<Category[]>(
+	'product/category/list/featured/top',
 	{
-		server: true,
-		lazy: true,
+		params: { num: 5 },
+		lazy: false,
+		dedupe: 'defer',
 	}
 )
 

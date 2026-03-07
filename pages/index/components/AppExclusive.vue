@@ -18,10 +18,11 @@ const {t} = useI18n()
 const appStore = useAppStore()
 
 // 使用异步数据加载，避免阻塞渲染
-const { data, pending, error } = await useAsyncData(
+const { data, pending, error, refresh: refreshData } = await useAsyncData(
 	'exclusive-offers',
 	async () => {
 		try {
+			const { $api } = useNuxtApp()
 			const list = await Promise.all([
 				$api<{ config: SeckillConfig, activities: [SeckillActivity] }>('promotion/seckill-activity/get-now')
 					.then(res => {
@@ -85,7 +86,8 @@ const { data, pending, error } = await useAsyncData(
 	},
 	{
 		server: true,
-		lazy: true,
+		lazy: false,
+		default: () => [],
 	}
 )
 
@@ -97,7 +99,7 @@ const finalData = computed(() => {
 
 // 刷新数据
 const refresh = () => {
-	refreshNuxtData('exclusive-offers')
+	refreshData()
 }
 
 let swiper: SwiperClass | null = null

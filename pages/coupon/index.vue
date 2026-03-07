@@ -7,9 +7,13 @@ const appStore = useAppStore()
 const userStore = useUserStore()
 const { shortDomain, domain } = useRuntimeConfig().public
 
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('Coupon')} ${$t('appTitle')}`,
+// SEO 优化
+useSEO({
+	routeKey: 'coupon',
+	breadcrumbs: [
+		{ name: 'Home', url: domain },
+		{ name: 'Coupons', url: `${domain}${route.path}` },
+	],
 })
 function getData<CouponTemplate>(params: any) {
 	return $api<CouponTemplate>('promotion/coupon-template/page', {

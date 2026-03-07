@@ -10,9 +10,13 @@ gtag('event', 'screen_view', {
 	app_name: shortDomain,
 	screen_name: 'seckill-list',
 })
-useHead({
-	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('Daily Picks')} ${$t('appTitle')}`,
+// SEO 优化
+useSEO({
+	routeKey: 'seckill',
+	breadcrumbs: [
+		{ name: 'Home', url: domain },
+		{ name: 'Daily Picks', url: `${domain}${route.path}` },
+	],
 })
 const appStore = useAppStore()
 

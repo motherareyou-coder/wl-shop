@@ -23,12 +23,12 @@ interface Banner {
 }
 
 // 使用异步数据加载，避免阻塞渲染
-const { data, pending } = await useAsyncData<Banner[]>(
-	'banner-list',
-	() => $api<Banner[]>('promotion/banner/list', { params: { position: 1 } }),
+const { data, pending } = await useAPI<Banner[]>(
+	'promotion/banner/list',
 	{
-		server: true,
-		lazy: true,
+		params: { position: 1 },
+		lazy: false,
+		dedupe: 'defer',
 	}
 )
 
