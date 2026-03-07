@@ -18,7 +18,7 @@ export default defineNuxtConfig({
 			title: process.env.NUXT_APP_TITLE || 'iswink - Surprise Gifts for Love',
 			charset: 'utf-8',
 			viewport:
-				'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
+                'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no',
 			meta: [
 				{
 					name: 'keywords',
@@ -59,7 +59,7 @@ export default defineNuxtConfig({
 		// 不允许抓取的页面
 		disallow: ['/admin', '/components', '/user', '/login'],
 		// 声明站点地图位置（推荐添加）
-		sitemap: process.env.DOMAIN_URL + '/sitemap.xml',
+		sitemap: `${process.env.DOMAIN_URL}/sitemap.xml`,
 	},
 	sitemap: {
 		// 开发环境不生成 sitemap，加快启动速度
