@@ -414,7 +414,7 @@ export default defineNuxtConfig({
 		// 配置缓存策略
 		routeRules: {
 			'/app-api/**': {
-				proxy: `${process.env.NUXT_API_TARGET_URL}${process.env.NUXT_API_PROXY_PATH}`,
+				proxy: process.env.NUXT_API_TARGET_URL,
 			},
 			// 静态资源缓存
 			'/**/*.{js,css,svg,png,jpg,jpeg,webp}': {
