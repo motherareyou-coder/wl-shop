@@ -413,8 +413,8 @@ export default defineNuxtConfig({
 		compressPublicAssets: true,
 		// 配置缓存策略
 		routeRules: {
-			'/app-api**': {
-				proxy: process.env.NUXT_API_TARGET_URL,
+			'/app-api/**': {
+				proxy: `${process.env.NUXT_API_TARGET_URL}${process.env.NUXT_API_PROXY_PATH}`,
 			},
 			// 静态资源缓存
 			'/**/*.{js,css,svg,png,jpg,jpeg,webp}': {
