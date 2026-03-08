@@ -5,10 +5,10 @@ console.log('DOMAIN_URL:', process.env.DOMAIN_URL)
 console.log('NODE_ENV:', process.env.NODE_ENV)
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
-	devtools: { enabled: true },
+	devtools: { enabled: process.env.DEBUG === 'true' },
 	// ssr: process.env.NODE_ENV === 'production',
 	// 开发环境检查seo时开启
-	ssr: process.env.ENABLE_SSR,
+	ssr: process.env.ENABLE_SSR === 'true',
 	// build: {
 	// 	analyze: {
 	// 		filename: 'static.html'
