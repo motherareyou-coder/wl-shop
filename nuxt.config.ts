@@ -177,7 +177,7 @@ export default defineNuxtConfig({
 	i18n: {
 		seo: true, // 启用自动 hreflang
 		defaultLocale: 'en',
-		baseUrl: process.env.DOMAIN_URl, // 启用自动 hreflang 路由生成绝对路径
+		baseUrl: process.env.DOMAIN_URL, // 启用自动 hreflang 路由生成绝对路径
 		vueI18n: './locales/i18n.config.ts',
 		detectBrowserLanguage: {
 			useCookie: false,
