@@ -1,0 +1,751 @@
+/* ============ 情感陪伴服务（左聊天轮播 + 右文案+服务卡+CTA）============
+   白底金色风格（与第3块需求定制一致） */
+.tour-companion {
+	/* 整块白色背景，包住左右内容 */
+	&__custom {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--large-gap);
+		align-items: stretch;
+		background: var(--background-white);
+		border-radius: 16px;
+		padding: var(--large-gap);
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+	}
+
+	/* ===== 左侧：聊天咨询窗口 ===== */
+	&__chat {
+		display: flex;
+		flex-direction: column;
+		background: var(--background-light-grey);
+		border-radius: 16px;
+		overflow: hidden;
+		min-height: 380px;
+	}
+
+	&__chat-head {
+		padding: var(--small-gap) var(--mid-gap);
+		background: linear-gradient(135deg, #1C1917, #292524);
+	}
+
+	&__chat-agent {
+		display: flex;
+		align-items: center;
+		gap: var(--small-gap);
+	}
+
+	&__chat-avatar {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-80));
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		flex-shrink: 0;
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	&__chat-name {
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		color: #fff;
+	}
+
+	&__chat-status {
+		font-size: var(--small-font-size);
+		color: rgba(255, 255, 255, 0.6);
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin-top: 2px;
+	}
+
+	&__chat-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: #4ade80;
+		display: inline-block;
+	}
+
+	/* 对话气泡区 */
+	&__chat-body {
+		flex: 1;
+		padding: var(--mid-gap) var(--mid-gap);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: var(--small-gap);
+		overflow: hidden;
+	}
+
+	&__chat-scenario {
+		display: flex;
+		flex-direction: column;
+		gap: var(--small-gap);
+	}
+
+	/* 消息行：头像 + 气泡（模拟两人聊天） */
+	&__msg {
+		display: flex;
+		align-items: flex-end;
+		gap: var(--mini-gap);
+		animation: bubble-in 0.4s ease;
+	}
+
+	&__msg--user {
+		flex-direction: row-reverse;
+		align-self: flex-end;
+	}
+
+	&__msg--agent {
+		align-self: flex-start;
+	}
+
+	&__msg-avatar {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 13px;
+		font-weight: 700;
+		color: #fff;
+		flex-shrink: 0;
+	}
+
+	&__msg-avatar--user {
+		background: linear-gradient(135deg, #57534e, #292524);
+	}
+
+	&__msg-avatar--agent {
+		background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-80));
+	}
+
+	&__bubble {
+		max-width: 80%;
+		padding: var(--small-gap) var(--mid-gap);
+		border-radius: 14px;
+		font-size: var(--small-font-size);
+		line-height: 1.5;
+	}
+
+	&__bubble--user {
+		background: var(--brand-orange-10);
+		color: var(--text-base);
+		border-bottom-right-radius: 4px;
+	}
+
+	&__bubble--agent {
+		background: var(--background-white);
+		color: var(--text-base);
+		border: 1px solid var(--border-light, #ece5d3);
+		border-bottom-left-radius: 4px;
+	}
+
+	/* 场景指示器（底部标签） */
+	&__chat-dots {
+		display: flex;
+		gap: var(--mini-gap);
+		padding: var(--small-gap) var(--mid-gap);
+		border-top: 1px solid #ece5d3;
+		flex-wrap: wrap;
+	}
+
+	&__chat-dot-btn {
+		padding: 4px 12px;
+		border-radius: 999px;
+		border: 1px solid #d6d0c0;
+		background: var(--background-white);
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		cursor: pointer;
+		transition: all 0.2s;
+
+		&--active {
+			background: var(--brand-orange);
+			color: #fff;
+			border-color: var(--brand-orange);
+		}
+
+		&:hover:not(&--active) {
+			border-color: var(--brand-orange-80);
+			color: var(--brand-orange);
+		}
+	}
+
+	/* ===== 右侧：文案 + 服务卡 + CTA ===== */
+	&__intro {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__title {
+		font-size: var(--large-font-size);
+		font-weight: 700;
+		margin: 0 0 var(--mid-gap);
+		color: var(--text-base);
+		line-height: 1.3;
+	}
+
+	&__desc {
+		font-size: var(--default-font-size);
+		line-height: 1.7;
+		margin: 0 0 var(--mid-gap);
+		color: var(--text-secondary);
+	}
+
+	&__points {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 var(--mid-gap);
+
+		li {
+			position: relative;
+			padding-left: var(--mid-gap);
+			margin-bottom: var(--small-gap);
+			font-size: var(--default-font-size);
+			color: var(--text-base);
+
+			&::before {
+				content: '✓';
+				position: absolute;
+				left: 0;
+				color: var(--brand-orange);
+				font-weight: 700;
+			}
+		}
+	}
+
+	/* 4 服务类型卡（2×2，与第3块样式一致） */
+	&__types {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--small-gap);
+		margin-bottom: var(--mid-gap);
+	}
+
+	&__type-card {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--small-gap);
+		padding: var(--small-gap) var(--mid-gap);
+		background: var(--background-light-grey);
+		border-radius: 10px;
+		transition: all 0.25s;
+		cursor: pointer;
+
+		&:hover {
+			background: var(--brand-orange-10);
+			transform: translateY(-2px);
+		}
+	}
+
+	&__type-icon {
+		/* 用 font-size 控制 1em 单位，使 SSR 占位和 hydrate 后尺寸一致，避免跳变 */
+		width: 32px !important;
+		height: 32px !important;
+		font-size: 32px;
+		color: var(--brand-orange);
+		flex-shrink: 0;
+	}
+
+	&__type-text {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__type-title {
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		margin: 0 0 var(--mini-gap);
+		color: var(--text-base);
+	}
+
+	&__type-desc {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		margin: 0;
+		line-height: 1.4;
+	}
+
+	/* 预约 CTA 按钮（金底白字胶囊） */
+	&__cta {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--mid-gap) var(--large-gap);
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		border-radius: 999px;
+		cursor: pointer;
+		transition: all 0.25s;
+		min-height: 48px;
+		align-self: flex-start;
+		background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-80)) !important;
+		border: none !important;
+		color: var(--text-reverse) !important;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px var(--shadow-primary-a30);
+		}
+	}
+}
+
+/* 气泡逐条入场动画（TransitionGroup） */
+.bubble-enter-active {
+	transition: all 0.4s ease;
+}
+
+.bubble-enter-from {
+	opacity: 0;
+	transform: translateY(12px) scale(0.95);
+}
+
+.bubble-enter-to {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+/* "正在输入"三点动画指示器 */
+.tour-companion__typing {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: var(--small-gap) var(--mid-gap);
+	background: var(--background-white);
+	border: 1px solid #ece5d3;
+	border-radius: 14px;
+	border-bottom-left-radius: 4px;
+}
+
+.tour-companion__typing-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--brand-orange-70);
+	opacity: 0.5;
+	animation: typing-bounce 1.2s infinite ease-in-out;
+}
+
+.tour-companion__typing-dot:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.tour-companion__typing-dot:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+@keyframes typing-bounce {
+	0%, 60%, 100% {
+		opacity: 0.4;
+		transform: translateY(0);
+	}
+	30% {
+		opacity: 1;
+		transform: translateY(-4px);
+	}
+}
+
+/* ===== 下：服务人员展示（4 列网格）===== */
+.tour-companion {
+	&__staff {
+		margin-top: var(--large-gap);
+	}
+
+	&__staff-title {
+		font-size: var(--mid-font-size);
+		font-weight: 700;
+		color: var(--text-base);
+		margin: 0 0 var(--mid-gap);
+		display: flex;
+		align-items: center;
+		gap: var(--small-gap);
+
+		em {
+			font-style: normal;
+			color: var(--brand-orange);
+		}
+	}
+
+	&__staff-subtitle {
+		font-size: var(--small-font-size);
+		font-weight: 400;
+		color: var(--text-secondary);
+	}
+
+	&__staff-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--mid-gap);
+	}
+
+	&__staff-card {
+		background: var(--background-white);
+		border-radius: 12px;
+		border: 1px solid #f0ebe0;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+		transition: transform 0.3s, box-shadow 0.3s;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+
+		&:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	/* 图片占位区域（后续接入真实照片） */
+	&__staff-photo {
+		height: 240px;
+		position: relative;
+		background: linear-gradient(135deg, #1C1917, #292524);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__staff-photo::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at 50% 35%, rgba(161, 98, 7, 0.28), transparent 65%);
+	}
+
+	&__staff-photo-icon {
+		width: 80px;
+		height: 80px;
+		color: rgba(212, 164, 55, 0.5);
+		position: relative;
+		z-index: 1;
+	}
+
+	/* 评分角标（图片右上角） */
+	&__staff-rating-badge {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		padding: 3px 10px;
+		border-radius: 999px;
+		background: rgba(0, 0, 0, 0.5);
+		color: var(--brand-orange-70);
+		font-size: 12px;
+		font-weight: 600;
+		z-index: 1;
+	}
+
+	&__staff-body {
+		padding: var(--mid-gap);
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	&__staff-name {
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		color: var(--text-base);
+		margin: 0 0 var(--mini-gap);
+	}
+
+	&__staff-role {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		margin-bottom: var(--small-gap);
+	}
+
+	&__staff-stats {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin-bottom: var(--small-gap);
+	}
+
+	&__staff-stars {
+		color: var(--brand-orange-80);
+		font-size: 12px;
+		letter-spacing: 1px;
+	}
+
+	&__staff-rating-num {
+		font-size: var(--small-font-size);
+		font-weight: 600;
+		color: var(--brand-orange);
+		margin-left: 2px;
+	}
+
+	&__staff-orders {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+	}
+
+	/* 技能标签 */
+	&__staff-skills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: var(--small-gap);
+	}
+
+	&__staff-skill {
+		display: inline-block;
+		padding: 3px 10px;
+		background: var(--brand-orange-10);
+		color: var(--brand-orange);
+		border-radius: 999px;
+		font-size: 11.5px;
+		font-weight: 500;
+	}
+
+	/* 个人简介 */
+	&__staff-bio {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		line-height: 1.6;
+		margin: 0;
+		flex: 1;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+}
+
+/* ===== 灵活订购（独立 section，左业务选项 + 右联动流程步骤）===== */
+.tour-companion {
+	&__packages {
+		/* section 透明背景（和自定义行程/陪侍服务一致），白色块在 inner 上 */
+	}
+
+	&__packages-inner {
+		/* site-container 已限宽居中，这里用白色背景块包裹（和 __custom 一致） */
+		width: 100%;
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		background: var(--background-white);
+		border-radius: 16px;
+		padding: var(--large-gap);
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+		box-sizing: border-box;
+	}
+
+	&__packages-head {
+		margin-bottom: var(--mid-gap);
+	}
+
+	&__packages-title {
+		font-size: var(--mid-font-size);
+		font-weight: 700;
+		color: var(--text-base);
+		margin: 0 0 var(--mini-gap);
+
+		em {
+			font-style: normal;
+			color: var(--brand-orange);
+		}
+	}
+
+	&__packages-desc {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		margin: 0;
+		line-height: 1.6;
+	}
+
+	&__packages-body {
+		display: grid;
+		grid-template-columns: 1fr 1.2fr;
+		gap: var(--large-gap);
+		align-items: start;
+	}
+
+	/* 左侧：业务选项卡 */
+	&__pkg-options {
+		display: flex;
+		flex-direction: column;
+		gap: var(--small-gap);
+	}
+
+	&__pkg-option {
+		display: block;
+		text-align: left;
+		padding: var(--mid-gap);
+		border-radius: 10px;
+		border: 1px solid #ece5d3;
+		background: var(--background-white);
+		cursor: pointer;
+		transition: all 0.25s;
+		font-family: inherit;
+
+		&:hover {
+			border-color: var(--brand-orange-80);
+			background: var(--brand-orange-10);
+		}
+
+		&--active {
+			border-color: var(--brand-orange);
+			background: var(--brand-orange-10);
+			border-left: 3px solid var(--brand-orange);
+		}
+	}
+
+	&__pkg-name {
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		color: var(--text-base);
+		margin-bottom: var(--mini-gap);
+	}
+
+	&__pkg-desc {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		line-height: 1.5;
+		margin-bottom: var(--small-gap);
+	}
+
+	/* 右侧流程底部的「立即定制」按钮 */
+	&__pkg-cta {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		margin-top: var(--mid-gap);
+		padding: var(--mid-gap);
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		border-radius: 999px;
+		cursor: pointer;
+		transition: all 0.25s;
+		font-family: inherit;
+		background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-80));
+		color: var(--text-reverse);
+		border: none;
+		min-height: 44px;
+	}
+
+	&__pkg-cta:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 18px var(--shadow-primary-a30);
+	}
+
+	/* 右侧：服务流程步骤（时间线） */
+	&__pkg-steps {
+		background: var(--background-light-grey);
+		border-radius: 12px;
+		padding: var(--large-gap);
+	}
+
+	&__step-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--mid-gap);
+	}
+
+	&__step {
+		display: flex;
+		gap: var(--mid-gap);
+		align-items: flex-start;
+	}
+
+	&__step-num {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-80));
+		color: #fff;
+		font-size: var(--small-font-size);
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	&__step-content {
+		flex: 1;
+		padding-top: 4px;
+	}
+
+	&__step-title {
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		color: var(--text-base);
+		margin: 0 0 var(--mini-gap);
+	}
+
+	&__step-desc {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		line-height: 1.5;
+		margin: 0;
+	}
+}
+
+/* 灵活订购切换淡入淡出 */
+.pkg-fade-enter-active,
+.pkg-fade-leave-active {
+	transition: opacity 0.3s ease;
+}
+
+.pkg-fade-enter-from,
+.pkg-fade-leave-to {
+	opacity: 0;
+}
+
+/* ===== 响应式 ===== */
+@media screen and (max-width: 1024px) {
+	.tour-companion {
+		&__custom {
+			grid-template-columns: 1fr;
+		}
+
+		&__chat {
+			min-height: 320px;
+		}
+
+		&__staff-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		&__packages-body {
+			grid-template-columns: 1fr;
+			gap: var(--mid-gap);
+		}
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.tour-companion {
+		&__types {
+			grid-template-columns: 1fr;
+		}
+
+		&__staff-grid {
+			grid-template-columns: 1fr;
+		}
+
+		&__staff-photo {
+			height: 200px;
+		}
+
+		&__chat {
+			min-height: 280px;
+		}
+
+		&__bubble {
+			max-width: 90%;
+		}
+	}
+}

@@ -1,0 +1,81 @@
+.tour-shop {
+	&__header {
+		text-align: center;
+		margin-bottom: var(--mid-gap);
+	}
+
+	&__title {
+		font-size: var(--mid-font-size);
+		font-weight: 600;
+		margin: 0 0 var(--mini-gap);
+		color: var(--text-secondary);
+	}
+
+	&__subtitle {
+		font-size: var(--small-font-size);
+		color: var(--text-secondary);
+		margin: 0;
+		opacity: 0.8;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--mid-gap);
+	}
+
+	&__card {
+		display: flex;
+		align-items: center;
+		gap: var(--small-gap);
+		padding: var(--mid-gap);
+		background: var(--background-white);
+		border-radius: 12px;
+		border: 1px solid var(--border-light);
+		transition: all 0.3s;
+
+		&:hover {
+			border-color: var(--brand-orange);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 16px var(--shadow-black-a8);
+
+			.tour-shop__arrow {
+				transform: translateX(4px);
+				color: var(--brand-orange);
+			}
+		}
+	}
+
+	&__icon {
+		width: 28px;
+		height: 28px;
+		color: var(--brand-orange);
+		flex-shrink: 0;
+	}
+
+	&__label {
+		font-size: var(--default-font-size);
+		font-weight: 500;
+		color: var(--text-base);
+		flex: 1;
+	}
+
+	&__arrow {
+		color: var(--text-secondary);
+		font-size: var(--default-font-size);
+		transition: all 0.3s;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.tour-shop {
+		&__grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: var(--small-gap);
+		}
+
+		&__card {
+			padding: var(--small-gap);
+		}
+	}
+}

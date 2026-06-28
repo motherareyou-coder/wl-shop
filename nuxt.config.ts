@@ -32,6 +32,14 @@ export default defineNuxtConfig({
 				{ name: 'author', content: process.env.NUXT_SITE_NAME || 'iswink' },
 				{ name: 'robots', content: 'index, follow' },
 			],
+			// Critical CSS：内联 Header 关键布局规则，避免刷新时菜单从"小"变"大"的跳变
+			// 注意：只覆盖首屏就可见的导航布局（flex/margin/padding/font-size），
+			// 不做全局 reset、不加 !important，避免造成换行
+			style: [
+				{
+					innerHTML: `body{font-family:"MiSans Latin",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}.site-header .site-header__navigation{align-items:center;box-sizing:border-box;display:flex;height:var(--header-height,56px);justify-content:space-between;margin:0 auto}.site-header .site-header__navigation .navigation__group{display:flex;align-items:center;height:100%;list-style:none;margin:0;padding:0}.site-header .site-header__navigation .navigation__item{display:flex;align-items:center;height:100%;list-style:none}.site-header .site-header__navigation .navigation__item .navigation__link{display:flex;align-items:center;font-size:16px;height:100%;padding:0 8px;white-space:nowrap}@media screen and (min-width:1025px) and (max-width:1440px){.site-header .site-header__navigation .navigation__item{margin:0 8px}}@media screen and (min-width:1441px){.site-header .site-header__navigation .navigation__item{margin:0 16px}}`,
+				},
+			],
 		},
 	},
 	modules: [

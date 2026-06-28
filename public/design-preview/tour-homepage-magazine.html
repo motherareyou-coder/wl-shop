@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iswink 旅游首页 - 旅行杂志版（A版对比）</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ A版：高端旅行杂志风（衬线优雅 + 大留白叙事）============ */
+:root {
+  --ink: #1C1917;
+  --ink-soft: #44403C;
+  --gold: #A16207;
+  --gold-light: #CA8A04;
+  --paper: #FAFAF9;
+  --paper-warm: #F5F2EC;
+  --line: #D6D3D1;
+  --serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+  --transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.serif { font-family: var(--serif); }
+.tag {
+  font-size: 12px; letter-spacing: 3px; text-transform: uppercase; font-weight: 500;
+  color: var(--gold); display: inline-block; margin-bottom: 16px;
+}
+
+.preview-banner { background: var(--ink); color: var(--gold-light); text-align: center; padding: 10px; font-size: 12px; letter-spacing: 1px; font-weight: 500; }
+
+/* ============ 导航 ============ */
+.nav { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid var(--line); }
+.nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 22px 48px; max-width: 1280px; margin: 0 auto; }
+.nav__logo { font-family: var(--serif); font-size: 26px; font-weight: 600; letter-spacing: -0.5px; font-style: italic; }
+.nav__logo b { color: var(--gold); font-style: normal; }
+.nav__links { display: flex; gap: 40px; list-style: none; }
+.nav__links a { font-size: 14px; color: var(--ink-soft); letter-spacing: 0.5px; transition: var(--transition); position: relative; }
+.nav__links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: var(--transition); }
+.nav__links a:hover { color: var(--ink); }
+.nav__links a:hover::after { width: 100%; }
+.nav__cta { padding: 11px 28px; border: 1px solid var(--ink); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; transition: var(--transition); }
+.nav__cta:hover { background: var(--ink); color: var(--paper); }
+
+/* ============ ① Banner（杂志大标题）============ */
+.hero { padding: 120px 0 100px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: '"'; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-family: var(--serif); font-size: 320px; color: var(--paper-warm); line-height: 1; z-index: 0; }
+.hero__inner { position: relative; z-index: 1; }
+.hero__eyebrow { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+.hero__title { font-family: var(--serif); font-size: 84px; font-weight: 400; line-height: 1.05; letter-spacing: -2px; margin-bottom: 32px; }
+.hero__title em { font-style: italic; color: var(--gold); }
+.hero__title-cn { display: block; font-family: 'Noto Serif SC', serif; font-size: 28px; font-weight: 400; color: var(--ink-soft); margin-top: 16px; letter-spacing: 4px; }
+.hero__sub { font-size: 18px; color: var(--ink-soft); max-width: 620px; margin: 0 auto 44px; line-height: 1.8; }
+.hero__ctas { display: flex; gap: 20px; justify-content: center; }
+.btn-line { padding: 16px 40px; border: 1px solid var(--ink); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; transition: var(--transition); }
+.btn-line:hover { background: var(--ink); color: var(--paper); }
+.btn-solid { padding: 16px 40px; background: var(--gold); color: #fff; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; transition: var(--transition); }
+.btn-solid:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+/* ============ 分隔线（杂志感）============ */
+.divider { text-align: center; padding: 48px 0; }
+.divider span { display: inline-block; width: 1px; height: 40px; background: var(--line); }
+.divider::before, .divider::after { content: '—'; color: var(--line); margin: 0 20px; }
+
+/* ============ ② 核心优势（杂志三栏专栏）============ */
+.section { padding: 100px 0; }
+.section__head { text-align: center; margin-bottom: 72px; }
+.section__head h2 { font-family: var(--serif); font-size: 48px; font-weight: 400; letter-spacing: -1px; line-height: 1.2; }
+.section__head p { font-size: 17px; color: var(--ink-soft); margin-top: 16px; max-width: 580px; margin-left: auto; margin-right: auto; }
+
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.col { padding: 0 36px; border-right: 1px solid var(--line); }
+.col:last-child { border-right: none; }
+.col__num { font-family: var(--serif); font-style: italic; font-size: 56px; color: var(--paper-warm); line-height: 1; margin-bottom: -20px; position: relative; z-index: 0; }
+.col__num b { color: var(--gold); font-style: normal; position: relative; z-index: 1; }
+.col h3 { font-family: var(--serif); font-size: 26px; font-weight: 500; margin-bottom: 16px; margin-top: 12px; }
+.col p { font-size: 15px; color: var(--ink-soft); line-height: 1.8; }
+
+/* ============ ③ 业务A（杂志图文跨页）============ */
+.feature-dark { background: var(--ink); color: var(--paper); padding: 120px 0; }
+.feature-dark .section__head h2 { color: var(--paper); }
+.feature-dark .section__head p { color: rgba(255,255,255,0.6); }
+.feature-dark .tag { color: var(--gold-light); }
+.spread { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.spread__img { aspect-ratio: 4/5; background: linear-gradient(135deg, #292524, #1C1917); position: relative; overflow: hidden; }
+.spread__img::after { content: 'PHOTO'; position: absolute; bottom: 24px; right: 24px; font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,0.4); }
+.spread__quote { font-family: var(--serif); font-style: italic; font-size: 32px; line-height: 1.4; margin-bottom: 32px; }
+.spread__list { list-style: none; margin-bottom: 40px; }
+.spread__list li { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 15px; color: rgba(255,255,255,0.85); display: flex; justify-content: space-between; align-items: center; }
+.spread__list li b { color: var(--gold-light); font-weight: 500; }
+
+/* ============ ④ 业务B（卡片）============ */
+.cards-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.card-4 { text-align: center; transition: var(--transition); }
+.card-4__img { width: 88px; height: 88px; margin: 0 auto 24px; border-radius: 50%; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 32px; color: var(--gold); transition: var(--transition); }
+.card-4:hover .card-4__img { background: var(--gold); color: #fff; }
+.card-4 h3 { font-family: var(--serif); font-size: 22px; font-weight: 500; margin-bottom: 10px; }
+.card-4 p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
+
+/* ============ ⑤ 特色玩法（大图卡片）============ */
+.tours { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.tour { overflow: hidden; transition: var(--transition); }
+.tour:hover { transform: translateY(-8px); }
+.tour__img { aspect-ratio: 3/4; background: linear-gradient(180deg, #44403C, #1C1917); position: relative; margin-bottom: 24px; }
+.tour__img::after { content: attr(data-icon); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 64px; opacity: 0.25; }
+.tour__day { position: absolute; top: 20px; left: 20px; font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--gold-light); }
+.tour__day small { font-family: var(--sans); font-style: normal; font-size: 12px; display: block; letter-spacing: 2px; opacity: 0.7; }
+.tour h3 { font-family: var(--serif); font-size: 28px; font-weight: 500; margin-bottom: 8px; }
+.tour__sub { font-size: 15px; color: var(--ink-soft); margin-bottom: 16px; }
+.tour__more { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+
+/* ============ ⑥ 流程（编号列表）============ */
+.steps-bg { background: var(--paper-warm); }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; }
+.step__line { width: 48px; height: 1px; background: var(--gold); margin-bottom: 20px; }
+.step__no { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--gold); margin-bottom: 12px; }
+.step h3 { font-family: var(--serif); font-size: 22px; font-weight: 500; margin-bottom: 12px; }
+.step p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
+
+/* ============ ⑦ 信任 ============ */
+.trust-2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.trust-2__item { text-align: center; padding: 36px 16px; border: 1px solid var(--line); transition: var(--transition); }
+.trust-2__item:hover { border-color: var(--gold); }
+.trust-2__no { font-family: var(--serif); font-style: italic; font-size: 32px; color: var(--gold); margin-bottom: 8px; }
+.trust-2__item h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.trust-2__item p { font-size: 13px; color: var(--ink-soft); }
+
+/* ============ ⑧ 指南（杂志小图列表）============ */
+.guides-2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.guide-2__img { aspect-ratio: 4/3; background: linear-gradient(135deg, #44403C, #1C1917); margin-bottom: 16px; display: flex; align-items: center; justify-content: center; font-size: 40px; opacity: 0.3; }
+.guide-2 h3 { font-family: var(--serif); font-size: 18px; font-weight: 500; margin-bottom: 6px; line-height: 1.4; }
+.guide-2 p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+/* ============ ⑨ FAQ ============ */
+.faq-bg { background: var(--paper-warm); }
+.faqs { max-width: 760px; margin: 0 auto; }
+.faq-2 { border-bottom: 1px solid var(--line); }
+.faq-2 summary { padding: 28px 0; font-family: var(--serif); font-size: 22px; font-weight: 500; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); }
+.faq-2 summary::-webkit-details-marker { display: none; }
+.faq-2 summary:hover { color: var(--gold); }
+.faq-2 summary::after { content: '+'; font-family: var(--sans); font-size: 24px; color: var(--gold); }
+.faq-2[open] summary::after { content: '−'; }
+.faq-2__a { padding: 0 0 28px; font-size: 16px; color: var(--ink-soft); line-height: 1.8; max-width: 90%; }
+
+/* ============ ⑩ CTA ============ */
+.cta-end { background: var(--ink); color: var(--paper); padding: 120px 0; text-align: center; }
+.cta-end__title { font-family: var(--serif); font-size: 56px; font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
+.cta-end__title em { font-style: italic; color: var(--gold-light); }
+.cta-end__sub { font-size: 18px; opacity: 0.7; margin-bottom: 44px; max-width: 540px; margin-left: auto; margin-right: auto; }
+
+/* ============ ⑪ 商城 ============ */
+.shop-2 { padding: 64px 0; background: var(--paper-warm); text-align: center; }
+.shop-2 h2 { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--ink-soft); margin-bottom: 24px; }
+.shop-2__row { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.shop-2__row a { font-size: 14px; color: var(--ink-soft); letter-spacing: 1px; transition: var(--transition); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.shop-2__row a:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ============ 页脚 ============ */
+.foot { background: var(--ink); color: rgba(255,255,255,0.5); padding: 48px 0; text-align: center; font-size: 13px; letter-spacing: 0.5px; }
+.foot a { color: var(--gold-light); }
+
+/* ============ 悬浮 ============ */
+.float { position: fixed; right: 32px; bottom: 32px; z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+.float button { padding: 14px 24px; font-size: 13px; letter-spacing: 1px; transition: var(--transition); }
+.float__chat { background: var(--paper); border: 1px solid var(--line); color: var(--ink); }
+.float__cta { background: var(--gold); color: #fff; }
+.float button:hover { transform: translateY(-2px); }
+
+@media (max-width: 1024px) {
+  .cols-3, .cards-4, .tours, .trust-2, .guides-2, .steps { grid-template-columns: repeat(2, 1fr); }
+  .spread { grid-template-columns: 1fr; gap: 40px; }
+  .hero__title { font-size: 56px; }
+  .col { border-right: none; border-bottom: 1px solid var(--line); padding-bottom: 32px; }
+}
+@media (max-width: 720px) {
+  .wrap { padding: 0 24px; }
+  .section { padding: 64px 0; }
+  .cols-3, .cards-4, .tours, .trust-2, .guides-2, .steps, .shop-2__row { grid-template-columns: 1fr; }
+  .hero { padding: 64px 0; }
+  .hero__title { font-size: 38px; }
+  .hero__title-cn { font-size: 20px; }
+  .section__head h2 { font-size: 32px; }
+  .nav__links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-banner">📖 A版 · 旅行杂志风（衬线优雅 + 大留白叙事）· 与 Liquid Glass 黑金版对比</div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <div class="nav__logo">iswink<b>.</b> Travel</div>
+    <ul class="nav__links">
+      <li><a href="#">行程定制</a></li>
+      <li><a href="#">情感陪伴</a></li>
+      <li><a href="#">目的地指南</a></li>
+      <li><a href="#">常见问题</a></li>
+    </ul>
+    <button class="nav__cta">免费咨询</button>
+  </div>
+</nav>
+
+<!-- ① Banner -->
+<section class="hero">
+  <div class="hero__inner wrap">
+    <div class="hero__eyebrow">CHINA · PRIVATE · CUSTOM · TRAVEL</div>
+    <h1 class="hero__title serif">A Journey,<br><em>Crafted</em> for You
+      <span class="hero__title-cn">为您而生的 · 私人定制之旅</span>
+    </h1>
+    <p class="hero__sub">从行程规划到落地接待，我们连接中国最优质的本地旅行社，让每一次出行都成为一篇值得反复阅读的故事。</p>
+    <div class="hero__ctas">
+      <button class="btn-solid">免费定制行程</button>
+      <button class="btn-line">预约情感陪伴</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span></span></div>
+
+<!-- ② 核心优势 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">WHY ISWINK</div>
+      <h2 class="serif">值得托付的旅行伙伴</h2>
+      <p>十年专注，只为每一次出行都值得回味</p>
+    </div>
+    <div class="cols-3">
+      <div class="col">
+        <div class="col__num"><b>01</b></div>
+        <h3 class="serif">五百余家<br>本地旅行社</h3>
+        <p>直连中国两百多座城市的优质本地资源，剔除中间环节，让价格回归透明，让体验直达本真。</p>
+      </div>
+      <div class="col">
+        <div class="col__num"><b>02</b></div>
+        <h3 class="serif">八年资深<br>定制师团队</h3>
+        <p>平均八年从业经验的行程规划师，一对一倾听您的期待，量身设计只属于您的专属路线。</p>
+      </div>
+      <div class="col">
+        <div class="col__num"><b>03</b></div>
+        <h3 class="serif">全程管家<br>贴心守护</h3>
+        <p>从行前规划到落地接待，二十四小时中文管家全程跟进，让远方不再陌生，让旅途始终安心。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 业务A -->
+<section class="feature-dark">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">PRIVATE CUSTOM</div>
+      <h2 class="serif">私人行程定制</h2>
+      <p>专属规划师一对一服务，打造独一无二的中国之旅</p>
+    </div>
+    <div class="spread">
+      <div class="spread__img"></div>
+      <div>
+        <p class="spread__quote serif">"真正的奢华，是让每一个细节都恰到好处。"</p>
+        <ul class="spread__list">
+          <li><span>免费咨询，不收取规划费用</span><b>FREE</b></li>
+          <li><span>本地直连，比市面价格低 20-30%</span><b>SAVE</b></li>
+          <li><span>7×24 小时中文管家全程跟进</span><b>24H</b></li>
+          <li><span>行前无忧退改，保障您的权益</span><b>SAFE</b></li>
+        </ul>
+        <button class="btn-solid">免费定制行程</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 业务B -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">COMPANION</div>
+      <h2 class="serif">情感陪伴服务</h2>
+      <p>专业团队，让每段旅程都充满温度</p>
+    </div>
+    <div class="cards-4">
+      <div class="card-4"><div class="card-4__img serif">❤</div><h3 class="serif">浪漫时刻</h3><p>纪念日、求婚、蜜月的专属陪伴策划</p></div>
+      <div class="card-4"><div class="card-4__img serif">★</div><h3 class="serif">商务陪同</h3><p>高端商务活动的专业陪同服务</p></div>
+      <div class="card-4"><div class="card-4__img serif">◆</div><h3 class="serif">文化导览</h3><p>深度本地文化体验的私人向导</p></div>
+      <div class="card-4"><div class="card-4__img serif">✦</div><h3 class="serif">特色体验</h3><p>为特殊时刻定制的个性化服务</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 特色玩法 -->
+<section class="section steps-bg">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">SIGNATURE TOURS</div>
+      <h2 class="serif">特色玩法套餐</h2>
+      <p>精选热门路线，可直接定制或作为灵感参考</p>
+    </div>
+    <div class="tours">
+      <div class="tour">
+        <div class="tour__img" data-icon="🐪"><span class="tour__day serif">12<small>DAYS</small></span></div>
+        <h3 class="serif">丝绸之路文化之旅</h3>
+        <p class="tour__sub">西安至敦煌，穿越千年丝路文明</p>
+        <span class="tour__more">定制此路线</span>
+      </div>
+      <div class="tour">
+        <div class="tour__img" data-icon="🏔"><span class="tour__day serif">8<small>DAYS</small></span></div>
+        <h3 class="serif">云南秘境探索</h3>
+        <p class="tour__sub">昆明大理丽江，感受少数民族风情</p>
+        <span class="tour__more">定制此路线</span>
+      </div>
+      <div class="tour">
+        <div class="tour__img" data-icon="⛰"><span class="tour__day serif">10<small>DAYS</small></span></div>
+        <h3 class="serif">西藏心灵朝圣</h3>
+        <p class="tour__sub">拉萨林芝，高原圣境的心灵洗礼</p>
+        <span class="tour__more">定制此路线</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 流程 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">HOW IT WORKS</div>
+      <h2 class="serif">四步，开启旅程</h2>
+      <p>从需求到出发，全程从容</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step__line"></div><div class="step__no serif">No. 01</div><h3 class="serif">提交需求</h3><p>在线填写旅行偏好、人数、预算等信息</p></div>
+      <div class="step"><div class="step__line"></div><div class="step__no serif">No. 02</div><h3 class="serif">匹配方案</h3><p>资深规划师二十四小时内联系您</p></div>
+      <div class="step"><div class="step__line"></div><div class="step__no serif">No. 03</div><h3 class="serif">确认行程</h3><p>沟通调整至满意，确认细节并预订</p></div>
+      <div class="step"><div class="step__line"></div><div class="step__no serif">No. 04</div><h3 class="serif">落地服务</h3><p>管家全程跟进，无忧出行</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 信任 -->
+<section class="section steps-bg">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">TRUST</div>
+      <h2 class="serif">安心出行保障</h2>
+      <p>多重保障，让远方始终可托付</p>
+    </div>
+    <div class="trust-2">
+      <div class="trust-2__item"><div class="trust-2__no serif">i</div><h3>正规资质</h3><p>持牌旅行社经营许可</p></div>
+      <div class="trust-2__item"><div class="trust-2__no serif">ii</div><h3>安全保障</h3><p>资金第三方托管</p></div>
+      <div class="trust-2__item"><div class="trust-2__no serif">iii</div><h3>全天支持</h3><p>7×24 中文管家</p></div>
+      <div class="trust-2__item"><div class="trust-2__no serif">iv</div><h3>灵活退改</h3><p>行前无忧退改政策</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ 指南 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">GUIDES</div>
+      <h2 class="serif">中国旅行指南</h2>
+      <p>深度目的地攻略，让旅行更有底气</p>
+    </div>
+    <div class="guides-2">
+      <div class="guide-2"><div class="guide-2__img">🏯</div><h3>北京故宫深度游览指南</h3><p>紫禁城六百年，一文读懂游览精华</p></div>
+      <div class="guide-2"><div class="guide-2__img">🏔</div><h3>云南大理丽江自由行攻略</h3><p>风花雪月，少数民族风情全体验</p></div>
+      <div class="guide-2"><div class="guide-2__img">⛰</div><h3>西藏高原旅行注意事项</h3><p>高反预防与最佳旅行季节详解</p></div>
+      <div class="guide-2"><div class="guide-2__img">🐪</div><h3>丝绸之路历史文化全解</h3><p>从西安到敦煌，重走千年丝路</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ FAQ -->
+<section class="section faq-bg">
+  <div class="wrap">
+    <div class="section__head">
+      <div class="tag">FAQ</div>
+      <h2 class="serif">常见问题</h2>
+      <p>关于私人定制旅行的常见疑问解答</p>
+    </div>
+    <div class="faqs">
+      <details class="faq-2" open><summary>私人定制旅行怎么收费？</summary><div class="faq-2__a">iswink 提供免费的行程规划咨询服务，仅在您确认行程后收取实际的服务费用。由于直连本地旅行社，我们的价格通常比市面低 20-30%，且全程透明无隐藏费用。</div></details>
+      <details class="faq-2"><summary>定制行程一般需要多久？</summary><div class="faq-2__a">提交需求后，规划师会在二十四小时内联系您。一般两到三天内即可完成初版方案，通常三到七天可敲定最终行程。</div></details>
+      <details class="faq-2"><summary>情感陪伴服务包含什么？</summary><div class="faq-2__a">涵盖浪漫时刻策划、商务活动陪同、文化导览、特色体验等。所有服务人员经过严格筛选培训，注重隐私与品质。</div></details>
+      <details class="faq-2"><summary>如何保证旅行安全？</summary><div class="faq-2__a">资金第三方托管、7×24 小时中文管家支持、持牌正规资质、灵活退改政策。出行期间任何问题都可即时联系管家处理。</div></details>
+      <details class="faq-2"><summary>支持哪些目的地？</summary><div class="faq-2__a">覆盖中国两百多座城市，重点包括北京、云南、西藏、丝绸之路沿线、江浙沪、川渝等，欢迎咨询特定目的地。</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ⑩ CTA -->
+<section class="cta-end">
+  <div class="wrap">
+    <h2 class="cta-end__title serif">让旅程，成为<em> 故事</em></h2>
+    <p class="cta-end__sub">立即填写需求，资深规划师二十四小时内为您定制专属行程方案</p>
+    <button class="btn-solid">免费定制行程</button>
+  </div>
+</section>
+
+<!-- ⑪ 商城 -->
+<section class="shop-2">
+  <div class="wrap">
+    <h2 class="serif">礼物商城 · 附属业务</h2>
+    <div class="shop-2__row">
+      <a href="#">全部商品</a><a href="#">每日秒杀</a><a href="#">拼团优惠</a><a href="#">优惠券</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">© 2024-2034 iswink Travel · 私人定制中国之旅 · <a href="#">服务条款</a> · <a href="#">隐私政策</a></div></footer>
+
+<div class="float">
+  <button class="float__chat">在线咨询</button>
+  <button class="float__cta">免费定制</button>
+</div>
+
+</body>
+</html>

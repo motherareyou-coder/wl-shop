@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iswink 旅游首页 - 东方意境版（B版对比）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+/* ============ B版：东方意境风（水墨墨色 + 朱砂赭石 + 留白意境）============ */
+:root {
+  --ink: #18181B;           /* 墨黑 */
+  --ink-deep: #0F0F11;      /* 浓墨 */
+  --ink-soft: #52525B;      /* 淡墨 */
+  --cinnabar: #C5392B;      /* 朱砂红 */
+  --cinnabar-dark: #A02B20;
+  --ochre: #A0522D;         /* 赭石 */
+  --rice: #F7F4ED;          /* 宣纸色 */
+  --rice-warm: #EFEADD;
+  --line: #D8D0BE;          /* 旧绢线 */
+  --shadow-ink: 0 8px 32px rgba(15,15,17,0.12);
+  --shadow-cinnabar: 0 8px 32px rgba(197,57,43,0.25);
+  --serif: 'Noto Serif SC', 'Songti SC', serif;
+  --brush: 'Ma Shan Zheng', cursive;
+  --transition: all 0.5s ease;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--serif); background: var(--rice); color: var(--ink); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+.serif { font-family: var(--serif); }
+.brush { font-family: var(--brush); }
+.seal {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cinnabar); color: var(--rice);
+  font-size: 16px; padding: 6px 14px; border-radius: 2px; letter-spacing: 4px;
+  writing-mode: vertical-rl; font-weight: 500;
+}
+.vline { writing-mode: vertical-rl; text-orientation: upright; letter-spacing: 8px; }
+
+.preview-banner { background: var(--cinnabar); color: var(--rice); text-align: center; padding: 10px; font-size: 14px; letter-spacing: 2px; }
+
+/* ============ 导航 ============ */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(247,244,237,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; max-width: 1200px; margin: 0 auto; }
+.nav__logo { font-family: var(--brush); font-size: 30px; color: var(--ink); letter-spacing: 2px; }
+.nav__logo b { color: var(--cinnabar); }
+.nav__links { display: flex; gap: 36px; list-style: none; }
+.nav__links a { font-size: 16px; color: var(--ink-soft); letter-spacing: 2px; transition: var(--transition); }
+.nav__links a:hover { color: var(--cinnabar); }
+.nav__cta { padding: 10px 28px; border: 1px solid var(--ink); font-size: 15px; letter-spacing: 3px; transition: var(--transition); }
+.nav__cta:hover { background: var(--ink); color: var(--rice); }
+
+/* ============ ① Banner（水墨意境）============ */
+.hero { position: relative; min-height: 640px; background: var(--ink-deep); overflow: hidden; display: flex; align-items: center; }
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 40%, rgba(197,57,43,0.18), transparent 55%),
+              radial-gradient(ellipse at 80% 70%, rgba(160,82,45,0.12), transparent 50%);
+}
+.hero::after {
+  content: '山'; position: absolute; right: -40px; bottom: -80px;
+  font-family: var(--brush); font-size: 480px; color: rgba(247,244,237,0.04); line-height: 1;
+}
+.hero__inner { position: relative; z-index: 2; color: var(--rice); padding: 0 40px; max-width: 1200px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; }
+.hero__text { max-width: 640px; }
+.hero__eyebrow { font-size: 14px; letter-spacing: 6px; color: var(--cinnabar); margin-bottom: 24px; opacity: 0.9; }
+.hero__title { font-family: var(--brush); font-size: 88px; line-height: 1.15; margin-bottom: 28px; letter-spacing: 4px; }
+.hero__title em { color: var(--cinnabar); font-style: normal; }
+.hero__sub { font-size: 18px; opacity: 0.75; line-height: 2; margin-bottom: 40px; max-width: 480px; letter-spacing: 1px; }
+.hero__seal-col { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+.hero__ctas { display: flex; gap: 16px; }
+.btn-seal { padding: 16px 40px; background: var(--cinnabar); color: var(--rice); font-size: 17px; letter-spacing: 4px; transition: var(--transition); box-shadow: var(--shadow-cinnabar); }
+.btn-seal:hover { background: var(--cinnabar-dark); transform: translateY(-2px); }
+.btn-ink { padding: 16px 40px; border: 1px solid rgba(247,244,237,0.3); color: var(--rice); font-size: 17px; letter-spacing: 4px; transition: var(--transition); }
+.btn-ink:hover { background: rgba(247,244,237,0.1); }
+
+/* ============ 区块通用 ============ */
+.section { padding: 100px 0; }
+.section__head { text-align: center; margin-bottom: 72px; }
+.section__head .seal { margin-bottom: 20px; }
+.section__head h2 { font-family: var(--brush); font-size: 52px; color: var(--ink); letter-spacing: 4px; line-height: 1.3; }
+.section__head p { font-size: 17px; color: var(--ink-soft); margin-top: 16px; letter-spacing: 2px; }
+
+/* 水墨分隔 */
+.ink-divider { text-align: center; padding: 32px 0; position: relative; }
+.ink-divider::before, .ink-divider::after { content: ''; display: inline-block; width: 80px; height: 1px; background: var(--line); vertical-align: middle; margin: 0 16px; }
+.ink-divider span { color: var(--cinnabar); font-size: 14px; letter-spacing: 4px; }
+
+/* ============ ② 优势（中式三联）============ */
+.triptych { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.triptych__col { text-align: center; padding: 0 40px; position: relative; }
+.triptych__col:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px; background: var(--line); }
+.triptych__num { font-family: var(--brush); font-size: 64px; color: var(--cinnabar); opacity: 0.2; line-height: 1; margin-bottom: -16px; }
+.triptych__title { font-size: 24px; font-weight: 600; color: var(--ink); margin: 16px 0; letter-spacing: 2px; }
+.triptych__desc { font-size: 15px; color: var(--ink-soft); line-height: 2; }
+
+/* ============ ③ 业务A（墨色长卷）============ */
+.scroll-section { background: var(--ink); color: var(--rice); }
+.scroll-section .section__head h2 { color: var(--rice); }
+.scroll-section .section__head p { color: rgba(247,244,237,0.6); }
+.scroll { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.scroll__panel { aspect-ratio: 4/5; background: linear-gradient(160deg, #2A2A2E, #18181B); position: relative; overflow: hidden; }
+.scroll__panel::before { content: '行'; position: absolute; top: 32px; left: 32px; font-family: var(--brush); font-size: 120px; color: rgba(197,57,43,0.15); }
+.scroll__panel::after { content: 'JOURNEY'; position: absolute; bottom: 24px; right: 24px; font-size: 11px; letter-spacing: 4px; color: rgba(247,244,237,0.3); }
+.scroll__points { list-style: none; margin-bottom: 40px; }
+.scroll__points li { display: flex; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(247,244,237,0.1); }
+.scroll__points li::before { content: '◆'; color: var(--cinnabar); font-size: 12px; }
+.scroll__points li span { color: rgba(247,244,237,0.85); font-size: 16px; letter-spacing: 1px; }
+.scroll__points li b { color: var(--cinnabar); font-weight: 500; margin-left: auto; letter-spacing: 2px; font-size: 14px; }
+
+/* ============ ④ 业务B（四方印章）============ */
+.quad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.quad__item { text-align: center; padding: 48px 24px; background: var(--rice-warm); border: 1px solid var(--line); transition: var(--transition); position: relative; }
+.quad__item:hover { background: var(--ink); color: var(--rice); transform: translateY(-6px); box-shadow: var(--shadow-ink); }
+.quad__item:hover .quad__char { color: var(--cinnabar); border-color: var(--cinnabar); }
+.quad__char { width: 72px; height: 72px; margin: 0 auto 20px; border: 2px solid var(--cinnabar); display: flex; align-items: center; justify-content: center; font-family: var(--brush); font-size: 36px; color: var(--cinnabar); transition: var(--transition); }
+.quad__item h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; letter-spacing: 2px; }
+.quad__item p { font-size: 14px; opacity: 0.8; line-height: 1.7; }
+
+/* ============ ⑤ 玩法（画卷）============ */
+.painted { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.painting { transition: var(--transition); }
+.painting:hover { transform: translateY(-8px); }
+.painting__frame { aspect-ratio: 3/4; background: linear-gradient(180deg, #2A2A2E, #0F0F11); position: relative; margin-bottom: 24px; overflow: hidden; border: 1px solid var(--line); }
+.painting__frame::after { content: attr(data-ch); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--brush); font-size: 140px; color: rgba(247,244,237,0.08); }
+.painting__day { position: absolute; bottom: 20px; left: 20px; font-family: var(--brush); color: var(--cinnabar); font-size: 24px; }
+.painting__day small { font-size: 13px; letter-spacing: 2px; opacity: 0.7; margin-left: 4px; }
+.painting h3 { font-family: var(--brush); font-size: 30px; margin-bottom: 8px; letter-spacing: 2px; }
+.painting__sub { font-size: 15px; color: var(--ink-soft); margin-bottom: 16px; letter-spacing: 1px; }
+.painting__more { display: inline-block; padding-bottom: 4px; border-bottom: 1px solid var(--cinnabar); color: var(--cinnabar); font-size: 14px; letter-spacing: 3px; }
+
+/* ============ ⑥ 流程（章回）============ */
+.chapters-bg { background: var(--rice-warm); }
+.chapters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.chapter { text-align: center; }
+.chapter__circle { width: 80px; height: 80px; margin: 0 auto 24px; border-radius: 50%; background: var(--ink); color: var(--cinnabar); display: flex; align-items: center; justify-content: center; font-family: var(--brush); font-size: 32px; transition: var(--transition); }
+.chapter:hover .chapter__circle { background: var(--cinnabar); color: var(--rice); }
+.chapter h3 { font-family: var(--brush); font-size: 26px; margin-bottom: 12px; letter-spacing: 2px; }
+.chapter p { font-size: 14px; color: var(--ink-soft); line-height: 1.8; }
+
+/* ============ ⑦ 信任 ============ */
+.guarantees { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.guarantee { text-align: center; padding: 40px 20px; border: 1px solid var(--line); transition: var(--transition); background: var(--rice); }
+.guarantee:hover { border-color: var(--cinnabar); box-shadow: var(--shadow-ink); }
+.guarantee__ch { font-family: var(--brush); font-size: 40px; color: var(--cinnabar); margin-bottom: 12px; }
+.guarantee h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; letter-spacing: 2px; }
+.guarantee p { font-size: 13px; color: var(--ink-soft); }
+
+/* ============ ⑧ 指南（书页）============ */
+.pages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.page-item__cover { aspect-ratio: 4/3; background: linear-gradient(135deg, #2A2A2E, #0F0F11); margin-bottom: 16px; display: flex; align-items: center; justify-content: center; font-family: var(--brush); font-size: 56px; color: rgba(247,244,237,0.2); transition: var(--transition); }
+.page-item:hover .page-item__cover { color: rgba(197,57,43,0.4); }
+.page-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; letter-spacing: 1px; line-height: 1.4; }
+.page-item p { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+
+/* ============ ⑨ FAQ（问答）============ */
+.qa-bg { background: var(--rice-warm); }
+.qa-list { max-width: 760px; margin: 0 auto; }
+.qa { border-bottom: 1px solid var(--line); }
+.qa summary { padding: 28px 0; font-family: var(--serif); font-size: 19px; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; letter-spacing: 1px; transition: var(--transition); }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary:hover { color: var(--cinnabar); }
+.qa summary::before { content: '问'; color: var(--cinnabar); font-family: var(--brush); font-size: 22px; margin-right: 12px; }
+.qa summary::after { content: '＋'; color: var(--cinnabar); font-size: 18px; }
+.qa[open] summary::after { content: '－'; }
+.qa__a { padding: 0 0 28px 34px; font-size: 16px; color: var(--ink-soft); line-height: 2; }
+.qa__a::before { content: '答　'; color: var(--ochre); font-weight: 600; }
+
+/* ============ ⑩ CTA（意境收尾）============ */
+.cta-zen { background: var(--ink-deep); color: var(--rice); padding: 120px 0; text-align: center; position: relative; overflow: hidden; }
+.cta-zen::before { content: '行'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: var(--brush); font-size: 600px; color: rgba(197,57,43,0.04); line-height: 1; }
+.cta-zen__inner { position: relative; z-index: 1; }
+.cta-zen__title { font-family: var(--brush); font-size: 72px; margin-bottom: 24px; letter-spacing: 8px; }
+.cta-zen__title em { color: var(--cinnabar); font-style: normal; }
+.cta-zen__sub { font-size: 18px; opacity: 0.7; margin-bottom: 48px; letter-spacing: 2px; }
+
+/* ============ ⑪ 商城 ============ */
+.shop-zen { padding: 64px 0; background: var(--rice-warm); text-align: center; }
+.shop-zen h2 { font-family: var(--brush); font-size: 24px; color: var(--ink-soft); margin-bottom: 28px; letter-spacing: 2px; }
+.shop-zen__row { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+.shop-zen__row a { font-size: 16px; color: var(--ink-soft); letter-spacing: 3px; padding-bottom: 3px; border-bottom: 1px solid transparent; transition: var(--transition); }
+.shop-zen__row a:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
+
+/* ============ 页脚 ============ */
+.foot-zen { background: var(--ink-deep); color: rgba(247,244,237,0.4); padding: 48px 0; text-align: center; font-size: 14px; letter-spacing: 1px; }
+.foot-zen a { color: var(--cinnabar); }
+
+/* ============ 悬浮（印章按钮）============ */
+.float-zen { position: fixed; right: 32px; bottom: 32px; z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+.float-zen button { padding: 16px 28px; font-size: 16px; letter-spacing: 3px; transition: var(--transition); }
+.float-zen__chat { background: var(--rice); color: var(--ink); border: 1px solid var(--line); }
+.float-zen__cta { background: var(--cinnabar); color: var(--rice); box-shadow: var(--shadow-cinnabar); }
+.float-zen button:hover { transform: translateY(-2px); }
+
+@media (max-width: 1024px) {
+  .triptych, .quad, .painted, .guarantees, .pages, .chapters { grid-template-columns: repeat(2, 1fr); }
+  .scroll, .hero__inner { grid-template-columns: 1fr; }
+  .hero__title { font-size: 60px; }
+  .triptych__col::after { display: none; }
+}
+@media (max-width: 720px) {
+  .wrap { padding: 0 20px; }
+  .section { padding: 64px 0; }
+  .triptych, .quad, .painted, .guarantees, .pages, .chapters, .shop-zen__row { grid-template-columns: 1fr; }
+  .hero { min-height: 520px; }
+  .hero__title { font-size: 44px; }
+  .section__head h2 { font-size: 36px; }
+  .nav__links { display: none; }
+  .hero__seal-col { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-banner">中国风 · B版 · 东方意境（水墨墨色 + 朱砂赭石 + 留白）· 三个版本对比</div>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <div class="nav__logo">游<b>心</b></div>
+    <ul class="nav__links">
+      <li><a href="#">行程定制</a></li>
+      <li><a href="#">情感陪伴</a></li>
+      <li><a href="#">目的地指南</a></li>
+      <li><a href="#">常见问答</a></li>
+    </ul>
+    <button class="nav__cta">免费咨询</button>
+  </div>
+</nav>
+
+<!-- ① Banner -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__text">
+      <div class="hero__eyebrow">中　国　·　私　人　定　制　旅　行</div>
+      <h1 class="hero__title brush">行至<em>远方</em><br>心归<em>故乡</em></h1>
+      <p class="hero__sub">自行程规划至落地接待，联结神州大地最胜之本地行旅，为君定制一段独一无二的山河之旅。</p>
+      <div class="hero__ctas">
+        <button class="btn-seal">免费定制行程</button>
+        <button class="btn-ink">预约情感陪伴</button>
+      </div>
+    </div>
+    <div class="hero__seal-col">
+      <span class="seal">游心定制</span>
+    </div>
+  </div>
+</section>
+
+<!-- ② 优势 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">为何选我</span>
+      <h2>值得托付的同行者</h2>
+      <p>十年专注，只为每一次远行都值得回味</p>
+    </div>
+    <div class="triptych">
+      <div class="triptych__col"><div class="triptych__num brush">壹</div><h3 class="triptych__title">五百家本地行旅</h3><p class="triptych__desc">直连神州两百馀城之优质本地资源，去中间之隔，令价归透明，令体验直达本真。</p></div>
+      <div class="triptych__col"><div class="triptych__num brush">贰</div><h3 class="triptych__title">八载资深定制师</h3><p class="triptych__desc">平均八年从业之行程规划师，一对一倾听君之所期，量身设计只属於您之专属路线。</p></div>
+      <div class="triptych__col"><div class="triptych__num brush">叁</div><h3 class="triptych__title">全程管家守护</h3><p class="triptych__desc">自行前规划至落地接待，二十四时中文管家全程相随，令远方不再陌生，令旅途始终安心。</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="ink-divider"><span>定　制　之　旅</span></div>
+
+<!-- ③ 业务A -->
+<section class="section scroll-section">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">私人定制</span>
+      <h2>私人行程定制</h2>
+      <p>专属规划师一对一服务，打造独一无二的中国之旅</p>
+    </div>
+    <div class="scroll">
+      <div class="scroll__panel"></div>
+      <div>
+        <ul class="scroll__points">
+          <li><span>免费咨询，不收取规划费用</span><b>免费</b></li>
+          <li><span>本地直连，比市面价格低二三成</span><b>实惠</b></li>
+          <li><span>全天候中文管家全程跟进</span><b>二十四时</b></li>
+          <li><span>行前无忧退改，保障您的权益</span><b>安心</b></li>
+        </ul>
+        <button class="btn-seal">免费定制行程</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 业务B -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">情感陪伴</span>
+      <h2>情感陪伴服务</h2>
+      <p>专业团队，让每段旅程都充满温度</p>
+    </div>
+    <div class="quad">
+      <div class="quad__item"><div class="quad__char brush">情</div><h3>浪漫时刻</h3><p>纪念日、求婚、蜜月之专属陪伴策划</p></div>
+      <div class="quad__item"><div class="quad__char brush">商</div><h3>商务陪同</h3><p>高端商务活动之专业陪同服务</p></div>
+      <div class="quad__item"><div class="quad__char brush">文</div><h3>文化导览</h3><p>深度本地文化体验之私人向导</p></div>
+      <div class="quad__item"><div class="quad__char brush">特</div><h3>特色体验</h3><p>为特殊时刻定制之个性化服务</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 玩法 -->
+<section class="section chapters-bg">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">特色玩法</span>
+      <h2>特色玩法套餐</h2>
+      <p>精选热门路线，可直接定制或作为灵感参考</p>
+    </div>
+    <div class="painted">
+      <div class="painting"><div class="painting__frame" data-ch="丝"><span class="painting__day brush">十二<small>日</small></span></div><h3>丝绸之路文化之旅</h3><p class="painting__sub">西安至敦煌，穿越千年丝路文明</p><span class="painting__more">定制此路线</span></div>
+      <div class="painting"><div class="painting__frame" data-ch="滇"><span class="painting__day brush">八<small>日</small></span></div><h3>云南秘境探索</h3><p class="painting__sub">昆明大理丽江，感受少数民族风情</p><span class="painting__more">定制此路线</span></div>
+      <div class="painting"><div class="painting__frame" data-ch="藏"><span class="painting__day brush">十<small>日</small></span></div><h3>西藏心灵朝圣</h3><p class="painting__sub">拉萨林芝，高原圣境的心灵洗礼</p><span class="painting__more">定制此路线</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 流程 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">定制流程</span>
+      <h2>四章，启程</h2>
+      <p>自需求至出发，全程从容</p>
+    </div>
+    <div class="chapters">
+      <div class="chapter"><div class="chapter__circle brush">一</div><h3>提交需求</h3><p>在线填写旅行偏好、人数、预算等信息</p></div>
+      <div class="chapter"><div class="chapter__circle brush">二</div><h3>匹配方案</h3><p>资深规划师二十四时内联系您</p></div>
+      <div class="chapter"><div class="chapter__circle brush">三</div><h3>确认行程</h3><p>沟通调整至满意，确认细节并预订</p></div>
+      <div class="chapter"><div class="chapter__circle brush">四</div><h3>落地服务</h3><p>管家全程跟进，无忧出行</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 信任 -->
+<section class="section chapters-bg">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">安心保障</span>
+      <h2>安心出行保障</h2>
+      <p>多重保障，让远方始终可托付</p>
+    </div>
+    <div class="guarantees">
+      <div class="guarantee"><div class="guarantee__ch brush">证</div><h3>正规资质</h3><p>持牌旅行社经营许可</p></div>
+      <div class="guarantee"><div class="guarantee__ch brush">安</div><h3>安全保障</h3><p>资金第三方托管</p></div>
+      <div class="guarantee"><div class="guarantee__ch brush">守</div><h3>全天支持</h3><p>7×24 中文管家</p></div>
+      <div class="guarantee"><div class="guarantee__ch brush">退</div><h3>灵活退改</h3><p>行前无忧退改政策</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ 指南 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">旅行指南</span>
+      <h2>中国旅行指南</h2>
+      <p>深度目的地攻略，让旅行更有底气</p>
+    </div>
+    <div class="pages">
+      <div class="page-item"><div class="page-item__cover brush">京</div><h3>北京故宫深度游览指南</h3><p>紫禁城六百年，一文读懂游览精华</p></div>
+      <div class="page-item"><div class="page-item__cover brush">滇</div><h3>云南大理丽江自由行攻略</h3><p>风花雪月，少数民族风情全体验</p></div>
+      <div class="page-item"><div class="page-item__cover brush">藏</div><h3>西藏高原旅行注意事项</h3><p>高反预防与最佳旅行季节详解</p></div>
+      <div class="page-item"><div class="page-item__cover brush">丝</div><h3>丝绸之路历史文化全解</h3><p>从西安到敦煌，重走千年丝路</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ FAQ -->
+<section class="section qa-bg">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="seal">常见问答</span>
+      <h2>常见问题</h2>
+      <p>关于私人定制旅行的常见疑问解答</p>
+    </div>
+    <div class="qa-list">
+      <details class="qa" open><summary>私人定制旅行怎么收费？</summary><div class="qa__a">iswink 提供免费的行程规划咨询服务，仅在您确认行程后收取实际的服务费用。由于直连本地旅行社，我们的价格通常比市面低 20-30%，且全程透明无隐藏费用。</div></details>
+      <details class="qa"><summary>定制行程一般需要多久？</summary><div class="qa__a">提交需求后，规划师会在二十四小时内联系您。一般两到三天内即可完成初版方案，通常三到七天可敲定最终行程。</div></details>
+      <details class="qa"><summary>情感陪伴服务包含什么？</summary><div class="qa__a">涵盖浪漫时刻策划、商务活动陪同、文化导览、特色体验等。所有服务人员经过严格筛选培训，注重隐私与品质。</div></details>
+      <details class="qa"><summary>如何保证旅行安全？</summary><div class="qa__a">资金第三方托管、7×24 小时中文管家支持、持牌正规资质、灵活退改政策。出行期间任何问题都可即时联系管家处理。</div></details>
+      <details class="qa"><summary>支持哪些目的地？</summary><div class="qa__a">覆盖中国两百多座城市，重点包括北京、云南、西藏、丝绸之路沿线、江浙沪、川渝等，欢迎咨询特定目的地。</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ⑩ CTA -->
+<section class="cta-zen">
+  <div class="cta-zen__inner wrap">
+    <h2 class="cta-zen__title brush">行至<em>远方</em>　心归<em>故乡</em></h2>
+    <p class="cta-zen__sub">立即填写需求，资深规划师二十四时内为您定制专属行程方案</p>
+    <button class="btn-seal">免费定制行程</button>
+  </div>
+</section>
+
+<!-- ⑪ 商城 -->
+<section class="shop-zen">
+  <div class="wrap">
+    <h2 class="brush">礼物商城 · 附属业务</h2>
+    <div class="shop-zen__row">
+      <a href="#">全部商品</a><a href="#">每日秒杀</a><a href="#">拼团优惠</a><a href="#">优惠券</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot-zen"><div class="wrap">© 2024-2034 游心 · iswink Travel · 私人定制中国之旅 · <a href="#">服务条款</a> · <a href="#">隐私政策</a></div></footer>
+
+<div class="float-zen">
+  <button class="float-zen__chat">在线咨询</button>
+  <button class="float-zen__cta">免费定制</button>
+</div>
+
+</body>
+</html>

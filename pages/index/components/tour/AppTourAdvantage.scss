@@ -1,0 +1,95 @@
+.tour-advantage {
+	text-align: center;
+
+	&__header {
+		margin-bottom: var(--title-content-gap);
+	}
+
+	&__title {
+		font-size: var(--large-font-size);
+		font-weight: 700;
+		margin: 0 0 var(--small-gap);
+		color: var(--text-base);
+	}
+
+	&__subtitle {
+		font-size: var(--default-font-size);
+		color: var(--text-secondary);
+		margin: 0;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--large-gap);
+	}
+
+	&__card {
+		padding: var(--large-gap);
+		background: var(--background-white);
+		border-radius: 16px;
+		text-align: left;
+		transition: all 0.3s;
+
+		&:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 12px 32px var(--shadow-black-a10);
+		}
+	}
+
+	&__icon {
+		width: 48px;
+		height: 48px;
+		color: var(--brand-orange);
+		margin-bottom: var(--mid-gap);
+	}
+
+	&__card-title {
+		font-size: var(--mid-font-size);
+		font-weight: 600;
+		margin: 0 0 var(--small-gap);
+		color: var(--text-base);
+	}
+
+	&__card-desc {
+		font-size: var(--default-font-size);
+		line-height: 1.6;
+		color: var(--text-secondary);
+		margin: 0;
+	}
+}
+
+// 响应式
+@media screen and (max-width: 1024px) {
+	.tour-advantage {
+		&__grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: var(--mid-gap);
+		}
+
+		&__card {
+			padding: var(--mid-gap);
+		}
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.tour-advantage {
+		&__grid {
+			grid-template-columns: 1fr;
+			gap: var(--mid-gap);
+		}
+
+		&__card {
+			text-align: center;
+		}
+
+		&__icon {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+}

@@ -1,3 +1,5 @@
+/* Element Plus 主题变量（通过 additionalData 注入每个 SCSS 文件，供组件按需使用变量）
+   注意：全量组件样式不在此引入（避免每个文件重复编译 2MB），改为在 index.scss 全局引入一次 */
 @forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
 	$namespace: 'mi'
 );
@@ -6,51 +8,12 @@
 	$colors:
 		(
 			'primary': (
-				'base': #ff6900,
+				'base': #A16207,
 			),
-			// 'success': (
-			// 	'base': #13ce66,
-			// ),
-			// 'warning': (
-			// 	'base': #ff6900,
-			// ),
-			// 'danger': (
-			// 	'base': #ff4949,
-			// ),
-			// 'error': (
-			// 	'base': #db2828,
-			// ),
 			'info':
 				(
 					'base': #191919,
 				)
 		),
 	$text-color: ('primary': '#191919'),
-	// $font-size: (
-	// 	'extra-large': 20px,
-	// 	'large': 18px,
-	// 	'medium': 16px,
-	// 	'base': var(--mi-color-primary),
-	// 	'small': 13px,
-	// 	'extra-small': 12px
-	// )
-	// $border-radius: (
-	// 'base': 12px,
-	// 'small': 8px,
-	//  'round': 20px,
-	//  'circle': 100%,
-	// )
 );
-
-@use 'element-plus/theme-chalk/src/index.scss' as *;
-
-// .mi-checkbox.is-checked .mi-checkbox__inner::before{
-// 	content: "\e609";
-// 	font-family: "micon" !important;
-// 	font-size: var(--action-icon);
-// }
-// .mi-checkbox .mi-checkbox__inner::before{
-// 	content: "\e60a";
-// 	font-family: "micon" !important;
-// 	font-size: var(--action-icon);
-// }

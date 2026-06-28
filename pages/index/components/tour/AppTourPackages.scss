@@ -1,0 +1,125 @@
+.tour-packages {
+	&__header {
+		text-align: center;
+		margin-bottom: var(--title-content-gap);
+	}
+
+	&__title {
+		font-size: var(--large-font-size);
+		font-weight: 700;
+		margin: 0 0 var(--small-gap);
+		color: var(--text-base);
+	}
+
+	&__subtitle {
+		font-size: var(--default-font-size);
+		color: var(--text-secondary);
+		margin: 0;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--large-gap);
+	}
+
+	&__card {
+		background: var(--background-white);
+		border-radius: 16px;
+		overflow: hidden;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&:hover {
+			transform: translateY(-6px);
+			box-shadow: 0 16px 40px var(--shadow-black-a10);
+
+			.tour-packages__image {
+				transform: scale(1.05);
+			}
+		}
+	}
+
+	&__image-wrap {
+		position: relative;
+		overflow: hidden;
+		aspect-ratio: 4 / 3;
+	}
+
+	&__image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.4s;
+	}
+
+	&__days {
+		position: absolute;
+		top: var(--small-gap);
+		right: var(--small-gap);
+		padding: var(--mini-gap) var(--small-gap);
+		background: rgba(0, 0, 0, 0.6);
+		color: #fff;
+		color: var(--text-reverse);
+		border-radius: 999px;
+		font-size: var(--small-font-size);
+	}
+
+	&__info {
+		padding: var(--mid-gap);
+	}
+
+	&__card-title {
+		font-size: var(--mid-font-size);
+		font-weight: 600;
+		margin: 0 0 var(--small-gap);
+		color: var(--text-base);
+	}
+
+	&__card-desc {
+		font-size: var(--default-font-size);
+		color: var(--text-secondary);
+		margin: 0 0 var(--mid-gap);
+		line-height: 1.6;
+	}
+
+	&__link {
+		color: var(--brand-orange);
+		font-size: var(--default-font-size);
+		font-weight: 600;
+	}
+
+	/* 渐变色块占位（图片就绪后可移除） */
+	&__image-wrap--placeholder {
+		background: linear-gradient(135deg, #44403C, #1C1917);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__placeholder-text {
+		color: rgba(202, 138, 4, 0.5);
+		font-size: 14px;
+		font-weight: 500;
+		text-align: center;
+		padding: 0 var(--small-gap);
+		line-height: 1.5;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.tour-packages {
+		&__grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.tour-packages {
+		&__grid {
+			grid-template-columns: 1fr;
+			gap: var(--mid-gap);
+		}
+	}
+}

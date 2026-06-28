@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iswink 旅游首页 - 黑金高端版（对比预览）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============ 设计系统：黑金高端定制风（Liquid Glass + 沉浸式）============ */
+:root {
+  --color-primary: #1C1917;        /* 高级黑 */
+  --color-on-primary: #FFFFFF;
+  --color-secondary: #44403C;      /* 深灰 */
+  --color-accent: #A16207;          /* 金色点缀 */
+  --color-accent-light: #CA8A04;
+  --color-background: #FAFAF9;      /* 米白底 */
+  --color-foreground: #0C0A09;
+  --color-muted: #E8ECF0;
+  --color-border: #D6D3D1;
+  --color-surface: #FFFFFF;
+  --shadow-soft: 0 4px 24px rgba(28,25,23,0.08);
+  --shadow-elevated: 0 16px 48px rgba(28,25,23,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --font: 'Noto Sans SC', -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--color-background);
+  color: var(--color-foreground);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; }
+img { max-width: 100%; display: block; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* 预览标识条 */
+.preview-banner {
+  background: var(--color-accent);
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ============ 顶部导航 ============ */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(250,250,249,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+}
+.nav__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 32px; max-width: 1200px; margin: 0 auto;
+}
+.nav__logo { font-size: 22px; font-weight: 700; color: var(--color-primary); letter-spacing: -0.5px; }
+.nav__logo span { color: var(--color-accent); }
+.nav__links { display: flex; gap: 32px; list-style: none; }
+.nav__links a { color: var(--color-secondary); font-size: 15px; font-weight: 500; transition: var(--transition); }
+.nav__links a:hover { color: var(--color-accent); }
+.nav__cta {
+  padding: 10px 24px; background: var(--color-primary); color: #fff;
+  border-radius: 999px; font-size: 14px; font-weight: 500; transition: var(--transition);
+}
+.nav__cta:hover { background: var(--color-accent); transform: translateY(-1px); }
+
+/* ============ ① Banner ============ */
+.banner {
+  position: relative; height: 600px; overflow: hidden;
+  background: linear-gradient(135deg, #1C1917 0%, #292524 50%, #1C1917 100%);
+  display: flex; align-items: center;
+}
+.banner::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(161,98,7,0.25), transparent 50%);
+}
+.banner__content { position: relative; z-index: 2; color: #fff; max-width: 1200px; margin: 0 auto; padding: 0 32px; width: 100%; }
+.banner__badge {
+  display: inline-block; padding: 6px 16px;
+  background: rgba(202,138,4,0.15); border: 1px solid rgba(202,138,4,0.4);
+  border-radius: 999px; color: var(--color-accent-light); font-size: 13px; font-weight: 500;
+  margin-bottom: 24px;
+}
+.banner__title { font-size: 52px; font-weight: 700; line-height: 1.2; margin-bottom: 20px; max-width: 700px; letter-spacing: -1px; }
+.banner__title span { color: var(--color-accent-light); }
+.banner__subtitle { font-size: 18px; opacity: 0.8; max-width: 560px; margin-bottom: 36px; line-height: 1.7; }
+.banner__cta-group { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  padding: 16px 36px; background: var(--color-accent); color: #fff;
+  border-radius: 999px; font-size: 16px; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 8px 24px rgba(161,98,7,0.4);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(161,98,7,0.5); background: var(--color-accent-light); }
+.btn-ghost {
+  padding: 16px 36px; background: transparent; color: #fff;
+  border: 1px solid rgba(255,255,255,0.3); border-radius: 999px; font-size: 16px; font-weight: 500; transition: var(--transition);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+
+/* ============ ② 核心优势 ============ */
+.section { padding: 96px 0; }
+.section__header { text-align: center; margin-bottom: 56px; }
+.section__label { color: var(--color-accent); font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.section__title { font-size: 38px; font-weight: 700; color: var(--color-primary); letter-spacing: -0.5px; }
+.section__subtitle { font-size: 17px; color: var(--color-secondary); margin-top: 12px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+.advantages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.advantage-card {
+  padding: 40px 32px; background: var(--color-surface); border-radius: var(--radius);
+  border: 1px solid var(--color-border); transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.advantage-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+  transform: scaleX(0); transform-origin: left; transition: var(--transition);
+}
+.advantage-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-elevated); border-color: transparent; }
+.advantage-card:hover::before { transform: scaleX(1); }
+.advantage-card__num { font-size: 14px; color: var(--color-accent); font-weight: 600; margin-bottom: 16px; }
+.advantage-card__title { font-size: 20px; font-weight: 700; color: var(--color-primary); margin-bottom: 12px; }
+.advantage-card__desc { font-size: 15px; color: var(--color-secondary); line-height: 1.7; }
+
+/* ============ ③ 业务A 行程定制 ============ */
+.split-section { background: var(--color-primary); color: #fff; }
+.split-section .section__title { color: #fff; }
+.split-section .section__subtitle { color: rgba(255,255,255,0.7); }
+.custom-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+.custom-intro__feature { display: flex; gap: 16px; margin-bottom: 20px; }
+.custom-intro__feature-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); margin-top: 10px; flex-shrink: 0; }
+.custom-intro__feature-text { color: rgba(255,255,255,0.9); font-size: 15px; line-height: 1.7; }
+.custom-intro__feature-text strong { color: var(--color-accent-light); }
+.custom-form {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius); padding: 40px; backdrop-filter: blur(20px);
+}
+.custom-form__title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.custom-form__desc { font-size: 14px; opacity: 0.7; margin-bottom: 28px; }
+.custom-form__field { margin-bottom: 18px; }
+.custom-form__field label { display: block; font-size: 13px; opacity: 0.7; margin-bottom: 6px; }
+.custom-form__field input {
+  width: 100%; padding: 14px 16px; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius-sm);
+  color: #fff; font-size: 15px; font-family: inherit; transition: var(--transition);
+}
+.custom-form__field input:focus { outline: none; border-color: var(--color-accent); background: rgba(255,255,255,0.12); }
+.custom-form__field input::placeholder { color: rgba(255,255,255,0.4); }
+.custom-form__submit {
+  width: 100%; padding: 16px; background: var(--color-accent); color: #fff;
+  border-radius: var(--radius-sm); font-size: 16px; font-weight: 600; transition: var(--transition); margin-top: 8px;
+}
+.custom-form__submit:hover { background: var(--color-accent-light); }
+
+/* ============ ④ 业务B 情感陪伴 ============ */
+.companion-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.companion-card {
+  padding: 32px 24px; background: var(--color-surface); border-radius: var(--radius);
+  border: 1px solid var(--color-border); transition: var(--transition); text-align: center;
+}
+.companion-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-elevated); border-color: var(--color-accent); }
+.companion-card__icon {
+  width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;
+}
+.companion-card__title { font-size: 17px; font-weight: 600; color: var(--color-primary); margin-bottom: 8px; }
+.companion-card__desc { font-size: 14px; color: var(--color-secondary); line-height: 1.6; }
+
+/* ============ ⑤ 特色玩法 ============ */
+.packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.package-card {
+  background: var(--color-surface); border-radius: var(--radius); overflow: hidden;
+  transition: var(--transition); border: 1px solid var(--color-border);
+}
+.package-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-elevated); }
+.package-card__img {
+  height: 240px; background: linear-gradient(135deg, #44403C, #1C1917);
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.package-card__img::after { content: '🏔'; font-size: 48px; opacity: 0.4; }
+.package-card__days {
+  position: absolute; top: 16px; right: 16px; padding: 6px 14px;
+  background: rgba(28,25,23,0.8); backdrop-filter: blur(10px); color: #fff;
+  border-radius: 999px; font-size: 13px; font-weight: 500;
+}
+.package-card__body { padding: 28px; }
+.package-card__title { font-size: 20px; font-weight: 700; color: var(--color-primary); margin-bottom: 10px; }
+.package-card__desc { font-size: 15px; color: var(--color-secondary); margin-bottom: 20px; }
+.package-card__link { color: var(--color-accent); font-size: 14px; font-weight: 600; }
+
+/* ============ ⑥ 定制流程 ============ */
+.process-section { background: var(--color-muted); }
+.process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; position: relative; }
+.process::before {
+  content: ''; position: absolute; top: 32px; left: 12%; right: 12%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent); z-index: 0;
+}
+.process__step { text-align: center; position: relative; z-index: 1; }
+.process__num {
+  width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%;
+  background: var(--color-surface); border: 2px solid var(--color-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: var(--color-accent);
+  box-shadow: 0 4px 16px rgba(161,98,7,0.2);
+}
+.process__title { font-size: 18px; font-weight: 700; color: var(--color-primary); margin-bottom: 8px; }
+.process__desc { font-size: 14px; color: var(--color-secondary); line-height: 1.6; }
+
+/* ============ ⑦ 信任背书 ============ */
+.trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.trust__item {
+  padding: 32px 24px; text-align: center; background: var(--color-surface);
+  border-radius: var(--radius-sm); border: 1px solid var(--color-border);
+}
+.trust__icon {
+  width: 48px; height: 48px; margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: var(--color-accent);
+}
+.trust__title { font-size: 16px; font-weight: 600; color: var(--color-primary); margin-bottom: 6px; }
+.trust__desc { font-size: 13px; color: var(--color-secondary); }
+
+/* ============ ⑧ 目的地指南 ============ */
+.guides { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.guide-card {
+  background: var(--color-surface); border-radius: var(--radius); overflow: hidden;
+  transition: var(--transition); border: 1px solid var(--color-border);
+}
+.guide-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+.guide-card__img { height: 160px; background: linear-gradient(135deg, #44403C, #1C1917); display: flex; align-items: center; justify-content: center; font-size: 36px; opacity: 0.5; }
+.guide-card__body { padding: 20px; }
+.guide-card__title { font-size: 16px; font-weight: 600; color: var(--color-primary); margin-bottom: 6px; }
+.guide-card__desc { font-size: 13px; color: var(--color-secondary); line-height: 1.5; }
+
+/* ============ ⑨ FAQ ============ */
+.faq-section { background: var(--color-muted); }
+.faq { max-width: 800px; margin: 0 auto; }
+.faq__item {
+  background: var(--color-surface); border-radius: var(--radius-sm);
+  margin-bottom: 12px; border: 1px solid var(--color-border); overflow: hidden;
+}
+.faq__item summary {
+  padding: 24px 28px; font-size: 16px; font-weight: 600; color: var(--color-primary);
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after { content: '+'; font-size: 22px; color: var(--color-accent); transition: var(--transition); }
+.faq__item[open] summary::after { transform: rotate(45deg); }
+.faq__answer { padding: 0 28px 24px; font-size: 15px; color: var(--color-secondary); line-height: 1.7; }
+
+/* ============ ⑩ CTA ============ */
+.cta-section { background: var(--color-primary); color: #fff; text-align: center; padding: 96px 0; position: relative; overflow: hidden; }
+.cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(161,98,7,0.2), transparent 60%); }
+.cta-section__inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 0 32px; }
+.cta-section__title { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+.cta-section__desc { font-size: 17px; opacity: 0.8; margin-bottom: 36px; }
+
+/* ============ ⑪ 商城入口 ============ */
+.shop-section { padding: 64px 0; background: var(--color-muted); }
+.shop__title { text-align: center; font-size: 18px; color: var(--color-secondary); margin-bottom: 32px; }
+.shop__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; padding: 0 32px; }
+.shop__link {
+  display: flex; align-items: center; gap: 12px; padding: 20px 24px;
+  background: var(--color-surface); border-radius: var(--radius-sm); border: 1px solid var(--color-border);
+  transition: var(--transition); color: var(--color-secondary); font-size: 15px; font-weight: 500;
+}
+.shop__link:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-2px); }
+
+/* ============ 页脚 ============ */
+.footer { background: var(--color-primary); color: rgba(255,255,255,0.6); padding: 48px 0; text-align: center; font-size: 14px; }
+.footer a { color: var(--color-accent-light); }
+
+/* ============ 悬浮CTA ============ */
+.float-cta { position: fixed; right: 32px; bottom: 32px; z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+.float-cta__btn {
+  display: flex; align-items: center; gap: 8px; padding: 14px 24px;
+  border-radius: 999px; font-size: 14px; font-weight: 600; transition: var(--transition);
+  box-shadow: var(--shadow-elevated);
+}
+.float-cta__btn--chat { background: rgba(255,255,255,0.95); color: var(--color-primary); border: 1px solid var(--color-border); backdrop-filter: blur(10px); }
+.float-cta__btn--custom { background: var(--color-accent); color: #fff; }
+.float-cta__btn:hover { transform: translateY(-2px) scale(1.03); }
+
+/* ============ 响应式 ============ */
+@media (max-width: 1024px) {
+  .advantages, .companion-grid, .packages, .trust, .guides { grid-template-columns: repeat(2, 1fr); }
+  .process { grid-template-columns: repeat(2, 1fr); }
+  .process::before { display: none; }
+  .custom-grid { grid-template-columns: 1fr; }
+  .banner__title { font-size: 38px; }
+}
+@media (max-width: 720px) {
+  .container { padding: 0 20px; }
+  .section { padding: 64px 0; }
+  .advantages, .companion-grid, .packages, .trust, .guides, .shop__grid { grid-template-columns: 1fr; }
+  .process { grid-template-columns: 1fr; }
+  .banner { height: 500px; }
+  .banner__title { font-size: 28px; }
+  .banner__subtitle { font-size: 15px; }
+  .section__title { font-size: 26px; }
+  .nav__links { display: none; }
+  .float-cta { right: 16px; bottom: 16px; }
+  .float-cta__btn { padding: 12px 18px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 预览标识 -->
+<div class="preview-banner">🎨 黑金高端版预览 · 与当前橙色电商版对比 · 滚动查看完整效果</div>
+
+<!-- 导航 -->
+<nav class="nav">
+  <div class="nav__inner">
+    <div class="nav__logo">iswink<span>.</span> Travel</div>
+    <ul class="nav__links">
+      <li><a href="#">行程定制</a></li>
+      <li><a href="#">情感陪伴</a></li>
+      <li><a href="#">目的地指南</a></li>
+      <li><a href="#">关于我们</a></li>
+    </ul>
+    <button class="nav__cta">免费咨询</button>
+  </div>
+</nav>
+
+<!-- ① Banner -->
+<section class="banner">
+  <div class="banner__content">
+    <div class="banner__badge">✦ 中国私人定制旅行专家</div>
+    <h1 class="banner__title">尊享<span>私人定制</span><br>中国深度之旅</h1>
+    <p class="banner__subtitle">从行程规划到落地接待，我们连接中国最优质的本地旅行社，为您打造独一无二的尊贵旅行体验</p>
+    <div class="banner__cta-group">
+      <button class="btn-primary">免费定制行程 →</button>
+      <button class="btn-ghost">预约情感陪伴服务</button>
+    </div>
+  </div>
+</section>
+
+<!-- ② 核心优势 -->
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">WHY ISWINK</div>
+      <h2 class="section__title">为什么选择我们</h2>
+      <p class="section__subtitle">10 年专注中国私人定制旅行，让每一次出行都成为难忘体验</p>
+    </div>
+    <div class="advantages">
+      <div class="advantage-card">
+        <div class="advantage-card__num">01</div>
+        <h3 class="advantage-card__title">500+ 本地旅行社</h3>
+        <p class="advantage-card__desc">直连中国 200+ 城市的优质本地旅行社，剔除中间环节，价格更透明</p>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-card__num">02</div>
+        <h3 class="advantage-card__title">资深定制师</h3>
+        <p class="advantage-card__desc">平均 8 年从业经验的行程规划师，1 对 1 为您量身设计专属路线</p>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-card__num">03</div>
+        <h3 class="advantage-card__title">全程管家服务</h3>
+        <p class="advantage-card__desc">从行前规划到落地接待，24 小时中文管家全程跟进，无忧出行</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 业务A 行程定制 -->
+<section class="section split-section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">PRIVATE CUSTOM</div>
+      <h2 class="section__title">私人行程定制</h2>
+      <p class="section__subtitle">专属规划师 1 对 1 服务，打造您的独一无二的中国之旅</p>
+    </div>
+    <div class="custom-grid">
+      <div>
+        <div class="custom-intro__feature">
+          <div class="custom-intro__feature-dot"></div>
+          <div class="custom-intro__feature-text"><strong>免费咨询</strong> · 不收取任何规划费用，先看方案再决定</div>
+        </div>
+        <div class="custom-intro__feature">
+          <div class="custom-intro__feature-dot"></div>
+          <div class="custom-intro__feature-text"><strong>本地直连</strong> · 比市面价格低 20-30%，全程透明无隐藏费用</div>
+        </div>
+        <div class="custom-intro__feature">
+          <div class="custom-intro__feature-dot"></div>
+          <div class="custom-intro__feature-text"><strong>7×24 管家</strong> · 出行期间中文管家全程跟进，紧急情况即时响应</div>
+        </div>
+        <div class="custom-intro__feature">
+          <div class="custom-intro__feature-dot"></div>
+          <div class="custom-intro__feature-text"><strong>灵活退改</strong> · 行前无忧退改政策，保障您的权益</div>
+        </div>
+      </div>
+      <div class="custom-form">
+        <h3 class="custom-form__title">免费定制您的行程</h3>
+        <p class="custom-form__desc">填写需求，规划师 24 小时内联系您</p>
+        <div class="custom-form__field"><label>您的称呼</label><input placeholder="请输入您的称呼"></div>
+        <div class="custom-form__field"><label>联系方式</label><input placeholder="微信 / 邮箱 / 手机"></div>
+        <div class="custom-form__field"><label>心仪目的地</label><input placeholder="如：北京、云南、西藏"></div>
+        <button class="custom-form__submit">立即免费咨询</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 业务B 情感陪伴 -->
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">COMPANION SERVICE</div>
+      <h2 class="section__title">情感陪伴服务</h2>
+      <p class="section__subtitle">专业陪侍团队，让您的旅程更有温度</p>
+    </div>
+    <div class="companion-grid">
+      <div class="companion-card">
+        <div class="companion-card__icon">❤</div>
+        <h3 class="companion-card__title">浪漫时刻</h3>
+        <p class="companion-card__desc">纪念日、求婚、蜜月的专属陪伴策划</p>
+      </div>
+      <div class="companion-card">
+        <div class="companion-card__icon">★</div>
+        <h3 class="companion-card__title">商务陪同</h3>
+        <p class="companion-card__desc">高端商务活动的专业陪同服务</p>
+      </div>
+      <div class="companion-card">
+        <div class="companion-card__icon">◆</div>
+        <h3 class="companion-card__title">文化导览</h3>
+        <p class="companion-card__desc">深度本地文化体验的私人向导</p>
+      </div>
+      <div class="companion-card">
+        <div class="companion-card__icon">✦</div>
+        <h3 class="companion-card__title">特色体验</h3>
+        <p class="companion-card__desc">为特殊时刻定制的个性化服务</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 特色玩法 -->
+<section class="section process-section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">SIGNATURE TOURS</div>
+      <h2 class="section__title">特色玩法套餐</h2>
+      <p class="section__subtitle">精选热门路线，可直接定制或作为灵感参考</p>
+    </div>
+    <div class="packages">
+      <div class="package-card">
+        <div class="package-card__img"><span class="package-card__days">12 天</span></div>
+        <div class="package-card__body">
+          <h3 class="package-card__title">丝绸之路文化之旅</h3>
+          <p class="package-card__desc">西安至敦煌，穿越千年丝路文明</p>
+          <a href="#" class="package-card__link">定制此路线 →</a>
+        </div>
+      </div>
+      <div class="package-card">
+        <div class="package-card__img"><span class="package-card__days">8 天</span></div>
+        <div class="package-card__body">
+          <h3 class="package-card__title">云南秘境探索</h3>
+          <p class="package-card__desc">昆明大理丽江，感受少数民族风情</p>
+          <a href="#" class="package-card__link">定制此路线 →</a>
+        </div>
+      </div>
+      <div class="package-card">
+        <div class="package-card__img"><span class="package-card__days">10 天</span></div>
+        <div class="package-card__body">
+          <h3 class="package-card__title">西藏心灵朝圣</h3>
+          <p class="package-card__desc">拉萨林芝，高原圣境的心灵洗礼</p>
+          <a href="#" class="package-card__link">定制此路线 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 定制流程 -->
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">HOW IT WORKS</div>
+      <h2 class="section__title">四步轻松定制</h2>
+      <p class="section__subtitle">从需求提交到落地服务，全程无忧</p>
+    </div>
+    <div class="process">
+      <div class="process__step">
+        <div class="process__num">01</div>
+        <h3 class="process__title">提交需求</h3>
+        <p class="process__desc">在线填写旅行偏好、人数、预算等需求信息</p>
+      </div>
+      <div class="process__step">
+        <div class="process__num">02</div>
+        <h3 class="process__title">匹配方案</h3>
+        <p class="process__desc">资深规划师 24 小时内联系您，定制专属方案</p>
+      </div>
+      <div class="process__step">
+        <div class="process__num">03</div>
+        <h3 class="process__title">确认行程</h3>
+        <p class="process__desc">沟通调整至满意，确认行程细节并预订</p>
+      </div>
+      <div class="process__step">
+        <div class="process__num">04</div>
+        <h3 class="process__title">落地服务</h3>
+        <p class="process__desc">出行后 24 小时管家全程跟进，无忧出行</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 信任背书 -->
+<section class="section process-section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">TRUST & SAFETY</div>
+      <h2 class="section__title">安心出行保障</h2>
+      <p class="section__subtitle">多重保障，让您放心定制每一次旅程</p>
+    </div>
+    <div class="trust">
+      <div class="trust__item"><div class="trust__icon">☑</div><h3 class="trust__title">正规资质</h3><p class="trust__desc">持牌旅行社经营许可，合规合法</p></div>
+      <div class="trust__item"><div class="trust__icon">🏧</div><h3 class="trust__title">安全保障</h3><p class="trust__desc">资金第三方托管，满意才付款</p></div>
+      <div class="trust__item"><div class="trust__icon">⏱</div><h3 class="trust__title">7×24 支持</h3><p class="trust__desc">全程中文管家，紧急情况即时响应</p></div>
+      <div class="trust__item"><div class="trust__icon">↩</div><h3 class="trust__title">灵活退改</h3><p class="trust__desc">行前无忧退改，保障您的权益</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ 目的地指南 -->
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">TRAVEL GUIDES</div>
+      <h2 class="section__title">中国旅行指南</h2>
+      <p class="section__subtitle">深度目的地攻略，让旅行更有底气</p>
+    </div>
+    <div class="guides">
+      <div class="guide-card"><div class="guide-card__img">🏯</div><div class="guide-card__body"><h3 class="guide-card__title">北京故宫深度游览指南</h3><p class="guide-card__desc">紫禁城 600 年，一文读懂游览精华</p></div></div>
+      <div class="guide-card"><div class="guide-card__img">🏔</div><div class="guide-card__body"><h3 class="guide-card__title">云南大理丽江自由行攻略</h3><p class="guide-card__desc">风花雪月，少数民族风情全体验</p></div></div>
+      <div class="guide-card"><div class="guide-card__img">⛰</div><div class="guide-card__body"><h3 class="guide-card__title">西藏高原旅行注意事项</h3><p class="guide-card__desc">高反预防与最佳旅行季节详解</p></div></div>
+      <div class="guide-card"><div class="guide-card__img">🐪</div><div class="guide-card__body"><h3 class="guide-card__title">丝绸之路历史文化全解</h3><p class="guide-card__desc">从西安到敦煌，重走千年丝路</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ FAQ -->
+<section class="section faq-section">
+  <div class="container">
+    <div class="section__header">
+      <div class="section__label">FAQ</div>
+      <h2 class="section__title">常见问题</h2>
+      <p class="section__subtitle">关于私人定制旅行的常见疑问解答</p>
+    </div>
+    <div class="faq">
+      <details class="faq__item" open>
+        <summary>私人定制旅行怎么收费？</summary>
+        <div class="faq__answer">iswink 提供免费的行程规划咨询服务，仅在您确认行程后收取实际的服务费用。由于直连本地旅行社，我们的价格通常比市面低 20-30%，且全程透明无隐藏费用。</div>
+      </details>
+      <details class="faq__item">
+        <summary>定制行程一般需要多久？</summary>
+        <div class="faq__answer">提交需求后，规划师会在 24 小时内联系您。一般 2-3 天内即可完成初版方案，根据您的反馈调整至满意为止，通常 3-7 天可敲定最终行程。</div>
+      </details>
+      <details class="faq__item">
+        <summary>情感陪伴服务包含什么？</summary>
+        <div class="faq__answer">情感陪伴服务提供专业的陪侍团队，涵盖浪漫时刻策划、商务活动陪同、文化导览、特色体验等。所有服务人员经过严格筛选培训，注重隐私与品质。</div>
+      </details>
+      <details class="faq__item">
+        <summary>如何保证旅行安全？</summary>
+        <div class="faq__answer">我们提供多重安全保障：资金第三方托管、7×24 小时中文管家支持、持牌正规资质、灵活退改政策。出行期间任何问题都可即时联系管家处理。</div>
+      </details>
+      <details class="faq__item">
+        <summary>支持哪些目的地？</summary>
+        <div class="faq__answer">目前覆盖中国 200+ 城市，重点目的地包括北京、云南、西藏、丝绸之路沿线、江浙沪、川渝等。我们持续拓展新的本地合作资源，欢迎咨询特定目的地。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ⑩ CTA -->
+<section class="cta-section">
+  <div class="cta-section__inner">
+    <h2 class="cta-section__title">开启您的专属中国之旅</h2>
+    <p class="cta-section__desc">立即填写需求，资深规划师 24 小时内为您定制专属行程方案</p>
+    <button class="btn-primary">免费定制行程 →</button>
+  </div>
+</section>
+
+<!-- ⑪ 商城入口 -->
+<section class="shop-section">
+  <h2 class="shop__title">🎁 礼物商城（附属业务）</h2>
+  <div class="shop__grid">
+    <a href="#" class="shop__link">📦 全部商品 →</a>
+    <a href="#" class="shop__link">⚡ 每日秒杀 →</a>
+    <a href="#" class="shop__link">👥 拼团优惠 →</a>
+    <a href="#" class="shop__link">🎫 优惠券 →</a>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="container">
+    © 2024-2034 iswink Travel · 私人定制中国之旅 · <a href="#">服务条款</a> · <a href="#">隐私政策</a>
+  </div>
+</footer>
+
+<!-- ⑫ 悬浮CTA -->
+<div class="float-cta">
+  <button class="float-cta__btn float-cta__btn--chat">💬 在线咨询</button>
+  <button class="float-cta__btn float-cta__btn--custom">免费定制 →</button>
+</div>
+
+</body>
+</html>
