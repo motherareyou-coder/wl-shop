@@ -4,6 +4,9 @@
 
 @use './common.scss';
 
+/* Element Plus 全量组件样式（全局只引入一次，不通过 additionalData 注入每个文件） */
+@use './element-full.scss';
+
 @use './flex.scss';
 @use './modal.scss';
 @use './button.scss';

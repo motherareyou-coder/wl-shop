@@ -46,6 +46,12 @@ function handleOpen() {
 	status.value === 'CONNECTING' || open()
 }
 
+// 监听跨组件的"打开聊天"信号（如首页悬浮咨询按钮触发）
+watch(() => chatStore.openSignal, (n) => {
+	if (n > 0)
+		handleOpen()
+})
+
 function handleSend({ type, value }: Pick<Message, 'type' | 'value'>) {
 	// console.log('handleSend:', type, value)
 	const obj = {

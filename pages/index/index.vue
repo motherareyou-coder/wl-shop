@@ -1,173 +1,81 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
+import AppTourAdvantage from './components/tour/AppTourAdvantage.vue'
+import AppTourBanner from './components/tour/AppTourBanner.vue'
+import AppTourCompanion from './components/tour/AppTourCompanion.vue'
+import AppTourCustom from './components/tour/AppTourCustom.vue'
+import AppTourFaq from './components/tour/AppTourFaq.vue'
+import AppTourFloatCta from './components/tour/AppTourFloatCta.vue'
+import AppTourGuide from './components/tour/AppTourGuide.vue'
+import AppTourPackages from './components/tour/AppTourPackages.vue'
+import AppTourProcess from './components/tour/AppTourProcess.vue'
+import AppTourShopEntry from './components/tour/AppTourShopEntry.vue'
+import AppTourTrust from './components/tour/AppTourTrust.vue'
 
-// 异步加载非首屏组件
-const AppExclusive = defineAsyncComponent(() => import('./components/AppExclusive.vue'))
-const AppFeature = defineAsyncComponent(() => import('./components/AppFeature.vue'))
-const AppSpecial = defineAsyncComponent(() => import('./components/AppSpecial.vue'))
-// 首屏组件保持同步加载
-import AppSwiper from './components/AppSwiper.vue'
-
-defineOptions({ name: 'Home' })
+defineOptions({ name: 'TourHome' })
 
 const { domain } = useRuntimeConfig().public
 
+// SEO：首页核心关键词围绕「中国私人定制旅行」
 useSEO({
 	routeKey: 'home',
-	breadcrumbs: [
-		{ name: 'Home', url: domain },
-	],
+	breadcrumbs: [{ name: 'Home', url: domain }],
 })
 </script>
 
 <template>
-	<main class="site-main">
-		<section class="site-grid site-grid--small-top site-grid--full">
-			<AppSwiper />
-		</section>
-		<section class="site-grid site-grid--vertical-100 site-grid--full">
-			<Suspense>
-				<template #default>
-					<AppFeature />
-				</template>
-				<template #fallback>
-					<div class="skeleton-container">
-						<div class="skeleton-title" />
-						<div class="skeleton-tabs">
-							<div v-for="i in 5" :key="i" class="skeleton-tab" />
-						</div>
-						<div class="skeleton-content">
-							<div class="skeleton-main" />
-							<div class="skeleton-items">
-								<div v-for="i in 4" :key="i" class="skeleton-item" />
-							</div>
-						</div>
-					</div>
-				</template>
-			</Suspense>
-		</section>
-		<Suspense>
-			<template #default>
-				<AppSpecial />
-			</template>
-			<template #fallback>
-				<div class="skeleton-container">
-					<div class="skeleton-title" />
-					<div class="skeleton-grid">
-						<div v-for="i in 6" :key="i" class="skeleton-card" />
-					</div>
-				</div>
-			</template>
-		</Suspense>
-		<section class="site-grid site-grid--vertical-100 site-grid--full">
-			<Suspense>
-				<template #default>
-					<AppExclusive />
-				</template>
-				<template #fallback>
-					<div class="skeleton-container">
-						<div class="skeleton-title" />
-						<div class="skeleton-grid">
-							<div v-for="i in 4" :key="i" class="skeleton-card" />
-						</div>
-					</div>
-				</template>
-			</Suspense>
-		</section>
-	</main>
+	<div class="tour-home">
+		<!-- 唯一 h1：视觉隐藏，SEO 可读，含核心关键词 -->
+		<h1 class="sr-only">
+			{{ $t('China Private Custom Travel & Companion Service') }} | iswink
+		</h1>
+
+		<!-- ① Banner 轮播（双业务：行程定制 + 情感陪伴） -->
+		<AppTourBanner />
+
+		<!-- ② 核心优势（3列·建立信任） -->
+		<AppTourAdvantage />
+
+		<!-- ③ 需求定制（左文案+右深黑渐变表单）+ 客户案例（4列网格）
+		     保留 site-grid 背景风格，位于原自定义行程块位置 -->
+		<AppTourCustom />
+
+		<!-- ④ 业务B：情感陪伴服务 -->
+		<AppTourCompanion />
+
+		<!-- ⑤ 特色玩法套餐（3-4卡片） -->
+		<AppTourPackages />
+
+		<!-- ⑥ 定制流程（HowTo schema） -->
+		<AppTourProcess />
+
+		<!-- ⑦ 信任背书（资质4列） -->
+		<AppTourTrust />
+
+		<!-- ⑧ 目的地指南（对接文章体系，SEO长尾） -->
+		<AppTourGuide />
+
+		<!-- ⑨ FAQ（FAQPage schema·AI引用率高） -->
+		<AppTourFaq />
+
+		<!-- ⑩ 礼物商城入口（附属业务，次要） -->
+		<AppTourShopEntry />
+
+		<!-- ⑫ 悬浮"立即定制"按钮（全程常驻） -->
+		<AppTourFloatCta />
+	</div>
 </template>
 
 <style lang="scss">
+/* 引入首页专用栅格规则（--full / --special-half-quarter 等），
+   原 index.vue 通过 @import url('./index.scss') 引入，改版时误删导致布局失效 */
 @import url('./index.scss');
 </style>
 
-<style scoped lang="scss">
-.site-main {
-  margin: 0 auto;
-  max-width: 2560px;
-  width: 100%;
-}
-
-// 骨架屏样式
-.skeleton-container {
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.skeleton-title {
-  height: 32px;
-  width: 200px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  margin-bottom: 24px;
-  border-radius: 4px;
-}
-
-.skeleton-tabs {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.skeleton-tab {
-  height: 40px;
-  width: 100px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 4px;
-}
-
-.skeleton-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.skeleton-main {
-  height: 400px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 8px;
-}
-
-.skeleton-items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.skeleton-item {
-  height: 190px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 8px;
-}
-
-.skeleton-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.skeleton-card {
-  height: 300px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 8px;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+<style lang="scss" scoped>
+.tour-home {
+	width: 100%;
+	/* Banner 用 100vw 全宽突破父容器，100vw 含垂直滚动条宽度会多出十几像素，
+	   这里 overflow-x:hidden 兜底截断，消除底部水平滚动条 */
+	overflow-x: hidden;
 }
 </style>

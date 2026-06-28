@@ -25,7 +25,7 @@ const cartCount = computed(() => cartStore.cartCount)
 const validList = computed(() => cartStore.validList)
 
 const showMobileMenu = computed(
-	() => appStore.bodyWidth && appStore.bodyWidth <= 1024,
+	() => appStore.isMobile || (!!appStore.bodyWidth && appStore.bodyWidth <= 1024),
 )
 const route = useRoute()
 const router = useRouter()
@@ -54,6 +54,15 @@ function handleDelete(p: CartItem) {
 	<MobileMenu v-if="showMobileMenu" v-model="sideShow" :data="categories" />
 	<header class="site-header site-header--sticky">
 		<nav class="site-container site-header__navigation">
+			<!-- 移动端汉堡菜单按钮 -->
+			<button
+				v-if="showMobileMenu"
+				class="navigation__menu-btn"
+				:aria-label="$t('Menu')"
+				@click="sideShow = true"
+			>
+				<i class="micon micon-menu"></i>
+			</button>
 			<div class="navigation__logo">
 				<nuxt-link class="logo__link" :to="$path('/')" aria-label="loginLink">
 					<Icon name="icon:shop" size="32px" class="logo__mi" />
@@ -86,65 +95,70 @@ function handleDelete(p: CartItem) {
 					</div>
 				</li>
 				<li class="navigation__item shortcut__item">
-					<el-popover
-						placement="top-end"
-						popper-class="shortcut__view shortcut__view-cart"
-						:disabled="appStore.isMobile || isCart"
-						:show-arrow="false"
-						:offset="0"
-						@show="getCartList"
-					>
-						<div v-if="cartCount" v-loading="loading">
-							<ul class="cart__list">
-								<li v-for="p in validList" :key="p.id" class="cart__item">
+					<!-- el-popover 内部用 <Teleport> 到 #mi-popper-container，SSR 下该容器不存在
+						 会触发 hydration mismatch。整体包 ClientOnly，SSR 用 fallback 渲染图标，避免闪烁 -->
+					<ClientOnly>
+						<el-popover
+							placement="top-end"
+							popper-class="shortcut__view shortcut__view-cart"
+							:disabled="appStore.isMobile || isCart"
+							:show-arrow="false"
+							:offset="0"
+							@show="getCartList"
+						>
+					<!-- 购物车数据依赖 client store/接口，SSR 时 cartCount=0 与客户端可能不一致，
+						 整个 el-popover 已被外层 ClientOnly 包裹，内容无需再包 -->
+							<div v-if="cartCount" v-loading="loading">
+								<ul class="cart__list">
+									<li v-for="p in validList" :key="p.id" class="cart__item">
+										<nuxt-link
+											:to="$path(`/product/${p.spu?.id}`)"
+											class="cart__item-link"
+										>
+											<app-image
+												class="cart__item-image"
+												:src="p.spu?.picUrl"
+												:alt="p.spu?.name"
+											/>
+											<div class="cart__item-info">
+												<span class="cart__item-detail cart__item-name">
+													{{ p.spu?.name }}
+												</span>
+												<span
+													class="cart__item-detail cart__font--muted cart__item-price notranslate"
+												>
+													<ProductPrice :data="p.sku?.price" />
+												</span>
+												<span
+													class="cart__item-detail cart__font--muted cart__item-quantity"
+												>{{ $t('Quantity') }}: {{ p.count }}</span>
+											</div>
+											<el-icon
+												class="micon micon-delete cart__font--muted cart__item-delete"
+												@click.prevent.stop="handleDelete(p)"
+											/>
+										</nuxt-link>
+									</li>
+								</ul>
+								<div class="cart__summary">
+									<div class="cart__summary-info">
+										<span class="cart__font--muted cart__summary-count">
+											{{
+												`${$t('Subtotal')} (${validList.length}${$t('items')})`
+											}}
+										</span>
+									</div>
 									<nuxt-link
-										:to="$path(`/product/${p.spu?.id}`)"
-										class="cart__item-link"
+										:to="$path('/user/cart')"
+										class="mi-button mi-btn mi-btn--primary cart-footer__submit cart__jump-cart w-full"
+										alt="userCart"
+										aria-label="userCart"
 									>
-										<app-image
-											class="cart__item-image"
-											:src="p.spu?.picUrl"
-											:alt="p.spu?.name"
-										/>
-										<div class="cart__item-info">
-											<span class="cart__item-detail cart__item-name">
-												{{ p.spu?.name }}
-											</span>
-											<span
-												class="cart__item-detail cart__font--muted cart__item-price notranslate"
-											>
-												<ProductPrice :data="p.sku?.price" />
-											</span>
-											<span
-												class="cart__item-detail cart__font--muted cart__item-quantity"
-											>{{ $t('Quantity') }}: {{ p.count }}</span>
-										</div>
-										<el-icon
-											class="micon micon-delete cart__font--muted cart__item-delete"
-											@click.prevent.stop="handleDelete(p)"
-										/>
+										{{ $t('Checkout') }}
 									</nuxt-link>
-								</li>
-							</ul>
-							<div class="cart__summary">
-								<div class="cart__summary-info">
-									<span class="cart__font--muted cart__summary-count">
-										{{
-											`${$t('Subtotal')} (${validList.length}${$t('items')})`
-										}}
-									</span>
 								</div>
-								<nuxt-link
-									:to="$path('/user/cart')"
-									class="mi-button mi-btn mi-btn--primary cart-footer__submit cart__jump-cart w-full"
-									alt="userCart"
-									aria-label="userCart"
-								>
-									{{ $t('Checkout') }}
-								</nuxt-link>
 							</div>
-						</div>
-						<span v-else>{{ $t('Your cart is empty') }}</span>
+							<span v-else>{{ $t('Your cart is empty') }}</span>
 						<template #reference>
 							<nuxt-link class="navigation__link" :to="$path('/user/cart')">
 								<!-- ssr模式下刷新页面角标消失，暂时用client-only解决 -->
@@ -153,7 +167,7 @@ function handleDelete(p: CartItem) {
 										:show-zero="false"
 										:is-dot="appStore.isMobile"
 										:value="cartCount"
-										color="#ff6700"
+										color="#A16207"
 										class="shortcut__item--wrapper"
 									>
 										<i class="micon micon-shopping-cart shortcut__icon"></i>
@@ -161,56 +175,75 @@ function handleDelete(p: CartItem) {
 								</client-only>
 							</nuxt-link>
 						</template>
-					</el-popover>
+						</el-popover>
+						<!-- SSR 降级：直接渲染购物车图标，保证首屏可见、客户端接管后升级为 popover -->
+						<template #fallback>
+							<nuxt-link class="navigation__link" :to="$path('/user/cart')" :aria-label="$t('Checkout')">
+								<i class="micon micon-shopping-cart shortcut__icon"></i>
+							</nuxt-link>
+						</template>
+					</ClientOnly>
 				</li>
-				<el-popover
-					v-if="appStore.isPC"
-					class="navigation__item shortcut__item"
-					popper-class="shortcut__view shortcut__view-account view-account"
-					:show-arrow="false"
-					:offset="0"
-					popper-style="padding:0;width: -webkit-max-content;width: -moz-max-content;width: max-content;min-width:0;"
-					width="max-content"
-				>
-					<template #reference>
-						<li class="navigation__item shortcut__item">
-							<nuxt-link class="navigation__link outline-none" :to="$path('/user')">
+				<!-- el-popover 内部 <Teleport> 在 SSR 下无目标容器，触发 hydration mismatch。
+					 整体包 ClientOnly，SSR 用 fallback 渲染账号图标，客户端接管后升级为 popover -->
+				<ClientOnly>
+					<el-popover
+						v-if="appStore.isPC"
+						class="navigation__item shortcut__item"
+						popper-class="shortcut__view shortcut__view-account view-account"
+						:show-arrow="false"
+						:offset="0"
+						popper-style="padding:0;width: -webkit-max-content;width: -moz-max-content;width: max-content;min-width:0;"
+						width="max-content"
+					>
+						<template #reference>
+							<li class="navigation__item shortcut__item">
+								<nuxt-link class="navigation__link outline-none" :to="$path('/user')" :aria-label="$t('My account')">
+									<i class="micon micon-account shortcut__icon"></i>
+								</nuxt-link>
+							</li>
+						</template>
+						<ul class="view-account__list">
+							<template v-if="userStore.id">
+								<li class="view-account__item">
+									<a :href="$path('/user')" :aria-label="$t('My account')" class="view-account__link">
+										{{ $t('My account') }}
+									</a>
+								</li>
+								<li class="view-account__item">
+									<a :href="$path('/user/orderlist')" :aria-label="$t('My orders')" class="view-account__link">
+										{{ $t('My orders') }}
+									</a>
+								</li>
+								<li class="view-account__item">
+									<a class="view-account__link cursor-pointer" :aria-label="$t('Sign out')" @click="logout">
+										{{ $t('Sign out') }}
+									</a>
+								</li>
+							</template>
+							<template v-else>
+								<li class="view-account__item">
+									<a class="view-account__link" :href="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`" :aria-label="$t('Sign in')">
+										{{ $t('Sign in') }}
+									</a>
+								</li>
+								<li class="view-account__item">
+									<a class="view-account__link" :href="`${$path(`/login?type=1`)}&redirect=${encodeURIComponent(route.fullPath)}`" :aria-label="$t('Sign up')">
+										{{ $t('Sign up') }}
+									</a>
+								</li>
+							</template>
+						</ul>
+					</el-popover>
+					<!-- SSR 降级：PC 端直接渲染账号图标，保证首屏可见 -->
+					<template #fallback>
+						<li v-if="appStore.isPC" class="navigation__item shortcut__item">
+							<nuxt-link class="navigation__link outline-none" :to="$path('/user')" :aria-label="$t('My account')">
 								<i class="micon micon-account shortcut__icon"></i>
 							</nuxt-link>
 						</li>
 					</template>
-					<ul class="view-account__list">
-						<template v-if="userStore.id">
-							<li class="view-account__item">
-								<a :href="$path('/user')" :aria-label="$t('My account')" class="view-account__link">
-									{{ $t('My account') }}
-								</a>
-							</li>
-							<li class="view-account__item">
-								<a :href="$path('/user/orderlist')" :aria-label="$t('My orders')" class="view-account__link">
-									{{ $t('My orders') }}
-								</a>
-							</li>
-							<li class="view-account__item">
-								<a class="view-account__link cursor-pointer" :aria-label="$t('Sign out')" @click="logout">
-									{{ $t('Sign out') }}
-								</a>
-							</li>
-						</template>
-						<template v-else>
-							<li class="view-account__item">
-								<a class="view-account__link" :href="`${$path(`/login`)}?redirect=${encodeURIComponent(route.fullPath)}`" :aria-label="$t('Sign in')">
-									{{ $t('Sign in') }}
-								</a>
-							</li>
-							<li class="view-account__item">
-								<a class="view-account__link" :href="`${$path(`/login?type=1`)}&redirect=${encodeURIComponent(route.fullPath)}`" :aria-label="$t('Sign up')">
-									{{ $t('Sign up') }}
-								</a>
-							</li>
-						</template>
-					</ul>
-				</el-popover>
+				</ClientOnly>
 			</ul>
 		</nav>
 	</header>
@@ -222,6 +255,23 @@ function handleDelete(p: CartItem) {
 </style>
 
 <style lang="scss" scoped>
+.navigation__menu-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--text-base);
+	flex-shrink: 0;
+
+	i {
+		font-size: 22px;
+	}
+}
+
 .skeleton-menu {
 	display: flex;
 	align-items: center;

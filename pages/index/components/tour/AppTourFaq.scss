@@ -1,0 +1,111 @@
+.tour-faq {
+	background: var(--background-light-grey);
+
+	&__header {
+		text-align: center;
+		margin-bottom: var(--title-content-gap);
+	}
+
+	&__title {
+		font-size: var(--large-font-size);
+		font-weight: 700;
+		margin: 0 0 var(--small-gap);
+		color: var(--text-base);
+	}
+
+	&__subtitle {
+		font-size: var(--default-font-size);
+		color: var(--text-secondary);
+		margin: 0;
+	}
+
+	&__list {
+		/* 固定宽度 100%，避免收起时 list 因内容变窄而收缩偏移（margin:auto 居中失效） */
+		width: 100%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	&__item {
+		background: var(--background-white);
+		border-radius: 12px;
+		margin-bottom: var(--small-gap);
+		transition: box-shadow 0.3s;
+
+		&--open {
+			box-shadow: 0 4px 16px var(--shadow-black-a8);
+		}
+	}
+
+	&__question {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: var(--mid-gap);
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-align: left;
+		font-size: var(--default-font-size);
+		font-weight: 600;
+		color: var(--text-base);
+		min-height: 44px;
+
+		&:hover {
+			color: var(--brand-orange);
+		}
+	}
+
+	&__arrow {
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+		transition: transform 0.3s;
+		color: var(--text-secondary);
+
+		&--down {
+			transform: rotate(180deg);
+		}
+	}
+
+	&__answer {
+		padding: 0 var(--mid-gap) var(--mid-gap);
+
+		p {
+			margin: 0;
+			font-size: var(--default-font-size);
+			line-height: 1.7;
+			color: var(--text-secondary);
+		}
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.tour-faq {
+		&__question {
+			padding: var(--small-gap);
+			font-size: var(--small-font-size);
+		}
+
+		&__answer {
+			padding: 0 var(--small-gap) var(--small-gap);
+
+			p {
+				font-size: var(--small-font-size);
+			}
+		}
+	}
+}
+
+/* FAQ 平滑展开/收起过渡：高度由 JS 钩子动态设置（scrollHeight），不裁剪长答案 */
+.faq-slide-enter-active,
+.faq-slide-leave-active {
+	transition: height 0.3s ease, opacity 0.3s ease;
+	overflow: hidden;
+}
+
+.faq-slide-enter-from,
+.faq-slide-leave-to {
+	opacity: 0;
+}

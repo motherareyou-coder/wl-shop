@@ -1,0 +1,4 @@
+/* Element Plus 全量组件样式（全局引入一次）
+   使用 element.scss 里 @forward 的变量配置（namespace: mi, primary: #A16207） */
+@use './element.scss' as *;
+@use 'element-plus/theme-chalk/src/index.scss' as *;

@@ -34,16 +34,23 @@ const items = [
 </script>
 
 <template>
-	<el-dropdown :popper="{ placement: 'bottom-start' }" :hide-on-click="true">
-		<i class="micon micon-language-earth" v-bind="$attrs" :title="$t('language')"></i>
-		<template #dropdown>
-			<el-dropdown-menu>
-				<SwitchLocalePathLink v-for="o in items" :key="o.value" :locale="o.value" style="width:100%">
-					<el-dropdown-item>
-						{{ o.label }}
-					</el-dropdown-item>
-				</SwitchLocalePathLink>
-			</el-dropdown-menu>
+	<!-- el-dropdown 内部用 <Teleport> 到 #mi-popper-container，SSR 下该容器不存在会触发
+		 hydration mismatch。整体包 ClientOnly，SSR 用 fallback 渲染语言图标 -->
+	<ClientOnly>
+		<el-dropdown :popper="{ placement: 'bottom-start' }" :hide-on-click="true">
+			<i class="micon micon-language-earth" v-bind="$attrs" :title="$t('language')"></i>
+			<template #dropdown>
+				<el-dropdown-menu>
+					<SwitchLocalePathLink v-for="o in items" :key="o.value" :locale="o.value" style="width:100%">
+						<el-dropdown-item>
+							{{ o.label }}
+						</el-dropdown-item>
+					</SwitchLocalePathLink>
+				</el-dropdown-menu>
+			</template>
+		</el-dropdown>
+		<template #fallback>
+			<i class="micon micon-language-earth" v-bind="$attrs" :title="$t('language')"></i>
 		</template>
-	</el-dropdown>
+	</ClientOnly>
 </template>

@@ -737,3 +737,38 @@
         margin-top: 1px
     }
 }
+
+/* ===== 移动端：tour section header/content 水平内边距 =====
+   site-grid--vertical-100 在 ≤720px 下 padding 被覆盖为 0（左右），
+   而 tour 组件的 header 不在 site-container 内，导致文字贴边。
+   这里统一给 tour section 加水平 padding 修复。 */
+@media screen and (max-width: 720px) {
+    .tour-advantage__header,
+    .tour-packages__header,
+    .tour-process__header,
+    .tour-trust__header,
+    .tour-guide__header,
+    .tour-faq__header,
+    .tour-shop__header {
+        padding: 0 var(--site-horizontal-padding);
+    }
+
+    /* 内容网格（site-container 在移动端无水平 padding，补上避免贴边）
+       注意：guide 的 grid 由 site-container 居中，不需要额外 padding */
+    .tour-advantage__grid,
+    .tour-process__grid,
+    .tour-trust__grid,
+    .tour-faq__list,
+    .tour-shop__grid,
+    .tour-packages__grid {
+        padding: 0 var(--site-horizontal-padding);
+    }
+
+    /* guide grid 的 site-container 在移动端会收缩到内容宽度，需撑满并加 padding */
+    .tour-guide__grid {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 var(--site-horizontal-padding);
+        box-sizing: border-box;
+    }
+}
