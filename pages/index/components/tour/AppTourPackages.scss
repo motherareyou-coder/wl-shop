@@ -21,6 +21,9 @@
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		gap: var(--large-gap);
+		/* grid item 上的 margin:auto 会使元素收缩到内容宽度，
+		   导致 zh/en 文字长短不同时容器宽度不一致，需显式撑满 */
+		width: 100%;
 	}
 
 	&__card {

@@ -1,0 +1,36 @@
+/**
+ * 我的旅行服务 - PC 样式
+ * 复用 user/orderlist 的 .user-order-list / .order-list__nav / .order-item 全局样式
+ * 仅补充 loading、empty CTA 等 travel 专属表现
+ */
+
+/* 引入 orderlist 的全局样式（.user-order-list / .user-layout__container / .user-main / .order-list__nav / .order-item 等） */
+@import url('../../orderlist/components/PC.scss');
+
+
+.my-travel-loading,
+.travel-loading {
+	align-items: center;
+	color: #b0b0b0;
+	display: flex;
+	font-size: 14px;
+	justify-content: center;
+	margin: 50px auto;
+}
+
+.travel-empty {
+	margin-top: 50px;
+	text-align: center;
+
+	p {
+		color: #b0b0b0;
+		font-size: 14px;
+		margin: 0 0 16px;
+	}
+
+	/* 按钮：宽度随文字自适应，不换行 */
+	.travel-empty__btn {
+		white-space: nowrap;
+		width: auto;
+	}
+}

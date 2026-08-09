@@ -1,0 +1,44 @@
+/**
+ * 我的旅行服务 - Mobile 样式
+ * 复用 user/orderlist/components/Mobile.scss 的 .order-list / .order-item 全局样式
+ * 仅补充 loading、empty、sub text 等 travel 专属表现
+ */
+
+/* 引入 orderlist Mobile 的全局样式（.order-list-wrapper--mobile / .order-list / .order-item / .commodity-item 等） */
+@import url('../../orderlist/components/Mobile.scss');
+
+.order-list-wrapper--mobile {
+	.travel-m-loading {
+		align-items: center;
+		color: #b0b0b0;
+		display: flex;
+		font-size: 14px;
+		justify-content: center;
+		margin: 60px auto;
+		width: 100%;
+	}
+
+	.travel-m-empty {
+		margin: 50px 16px;
+		text-align: center;
+		width: 100%;
+
+		p {
+			color: #b0b0b0;
+			font-size: 14px;
+			margin: 0 0 16px;
+		}
+
+		/* 按钮：宽度随文字自适应，不换行 */
+		.travel-empty__btn {
+			white-space: nowrap;
+			width: auto;
+		}
+	}
+
+	.travel-m-sub {
+		color: #b0b0b0;
+		font-size: 13px;
+		margin-top: 4px;
+	}
+}

@@ -1,0 +1,1263 @@
+/* ============================================
+ * 行程定制展示页 - 黑金奢华风
+ * BEM: custom- 前缀
+ * 11 sections
+ * ============================================ */
+
+/* ===== 通用变量 ===== */
+$gold: #A16207;
+$gold-light: #CA8A04;
+$gold-lighter: #D4A437;
+$gold-bg: #FAF2E0;
+$dark-bg: #1C1917;
+$dark-bg-2: #292524;
+$text-base: #191919;
+$text-secondary: #6b6b6b;
+$text-tertiary: #898989;
+$border-warm: #f0ebe0;
+$bg-light-grey: #f5f5f5;
+
+.custom-page {
+	overflow-x: hidden;
+}
+
+/* ===== ① Hero 区 ===== */
+.custom-hero {
+	position: relative;
+	padding: 100px 0 80px;
+	text-align: center;
+	overflow: hidden;
+
+	&__bg {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, #1C1917 0%, #292524 50%, #1C1917 100%);
+
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at 50% 30%, rgba(161, 98, 7, 0.25), transparent 50%);
+		}
+	}
+
+	&__inner {
+		position: relative;
+		z-index: 1;
+	}
+
+	&__title {
+		font-size: clamp(28px, 5vw, 42px);
+		font-weight: 800;
+		color: #fff;
+		margin: 0 0 16px;
+		letter-spacing: 0.02em;
+	}
+
+	&__subtitle {
+		font-size: clamp(15px, 2.5vw, 18px);
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0 auto 32px;
+		max-width: 600px;
+		line-height: 1.6;
+	}
+
+	&__badges {
+		display: flex;
+		justify-content: center;
+		gap: 24px;
+		flex-wrap: wrap;
+		margin-bottom: 40px;
+	}
+
+	&__badge {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+	}
+
+	&__badge-num {
+		font-size: clamp(24px, 4vw, 32px);
+		font-weight: 800;
+		color: $gold-lighter;
+		line-height: 1;
+	}
+
+	&__badge-label {
+		font-size: 13px;
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	&__cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 14px 40px;
+		font-size: 16px;
+		font-weight: 600;
+		border-radius: 999px;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s;
+		text-decoration: none;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(161, 98, 7, 0.4);
+		}
+	}
+}
+
+/* ===== ② 定制 vs 跟团 vs 自助 对比条 ===== */
+.custom-compare {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 40px;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+	}
+
+	&__col {
+		background: #fff;
+		border: 2px solid $border-warm;
+		border-radius: 12px;
+		padding: 32px 24px;
+		transition: all 0.3s;
+
+		&--highlight {
+			border-color: $gold;
+			background: $gold-bg;
+			transform: scale(1.03);
+			box-shadow: 0 8px 24px rgba(161, 98, 7, 0.15);
+		}
+	}
+
+	&__col-title {
+		font-size: 18px;
+		font-weight: 700;
+		margin: 0 0 20px;
+		text-align: center;
+		color: $text-base;
+
+		&--highlight {
+			color: $gold;
+		}
+	}
+
+	&__item {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+		font-size: 14px;
+		line-height: 1.6;
+		margin-bottom: 12px;
+		color: $text-secondary;
+
+		&--bad {
+			color: $text-tertiary;
+		}
+
+		&--good {
+			color: $text-base;
+			font-weight: 500;
+		}
+	}
+
+	&__icon {
+		flex-shrink: 0;
+		font-size: 16px;
+		line-height: 1.6;
+
+		&--bad {
+			color: #dc2626;
+		}
+
+		&--good {
+			color: $gold;
+		}
+	}
+}
+
+/* ===== ③ 服务流程透明化 ===== */
+.custom-process {
+	padding: 60px 0;
+	background: $bg-light-grey;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 48px;
+	}
+
+	&__timeline {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+		position: relative;
+	}
+
+	&__step {
+		flex: 1;
+		min-width: 160px;
+		max-width: 200px;
+		text-align: center;
+		position: relative;
+
+		&::after {
+			content: '→';
+			position: absolute;
+			right: -6px;
+			top: 28px;
+			color: $gold;
+			font-size: 20px;
+			font-weight: 700;
+		}
+
+		&:last-child::after,
+		&:nth-child(4)::after {
+			display: none;
+		}
+	}
+
+	&__step-num {
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		font-size: 20px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 16px;
+		box-shadow: 0 4px 12px rgba(161, 98, 7, 0.3);
+	}
+
+	&__step-title {
+		font-size: 15px;
+		font-weight: 600;
+		color: $text-base;
+		margin: 0 0 6px;
+	}
+
+	&__step-desc {
+		font-size: 13px;
+		color: $text-secondary;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	&__row2 {
+		margin-top: 32px;
+		justify-content: center;
+	}
+}
+
+/* ===== ④ 旅行风格探索器 ===== */
+.custom-explorer {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 24px;
+		text-align: center;
+	}
+
+	&__heading {
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 32px;
+	}
+
+	&__question {
+		font-size: 16px;
+		font-weight: 600;
+		color: $text-secondary;
+		margin: 0 0 16px;
+	}
+
+	&__options {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+		margin-bottom: 32px;
+	}
+
+	&__option {
+		padding: 10px 20px;
+		border: 2px solid $border-warm;
+		border-radius: 999px;
+		background: #fff;
+		font-size: 14px;
+		color: $text-secondary;
+		cursor: pointer;
+		transition: all 0.3s;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+
+		&:hover {
+			border-color: $gold-light;
+			color: $gold;
+		}
+
+		&--active {
+			border-color: $gold;
+			background: $gold-bg;
+			color: $gold;
+			font-weight: 600;
+		}
+	}
+
+	&__result {
+		margin-top: 32px;
+		padding: 24px;
+		background: $gold-bg;
+		border-radius: 12px;
+		border: 1px solid $gold;
+
+		&-title {
+			font-size: 16px;
+			font-weight: 600;
+			color: $gold;
+			margin: 0 0 8px;
+		}
+
+		&-desc {
+			font-size: 14px;
+			color: $text-secondary;
+			margin: 0 0 16px;
+			line-height: 1.6;
+		}
+	}
+
+	&__result-btn {
+		display: inline-flex;
+		padding: 10px 28px;
+		font-size: 14px;
+		font-weight: 600;
+		border-radius: 999px;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s;
+		text-decoration: none;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 16px rgba(161, 98, 7, 0.3);
+		}
+	}
+}
+
+/* ===== ⑤ 精选目的地灵感 ===== */
+.custom-destinations {
+	padding: 60px 0;
+	background: $bg-light-grey;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 24px;
+	}
+
+	&__filters {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+		margin-bottom: 40px;
+	}
+
+	&__filter {
+		padding: 6px 16px;
+		border: 1px solid $border-warm;
+		border-radius: 999px;
+		background: #fff;
+		font-size: 13px;
+		color: $text-secondary;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&--active {
+			border-color: $gold;
+			background: $gold-bg;
+			color: $gold;
+			font-weight: 600;
+		}
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+	}
+
+	&__card {
+		background: #fff;
+		border-radius: 12px;
+		overflow: hidden;
+		cursor: pointer;
+		transition: all 0.3s;
+		border: 1px solid $border-warm;
+
+		&:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+
+			.custom-destinations__card-img {
+				&::after {
+					opacity: 0.3;
+				}
+			}
+		}
+	}
+
+	&__card-img {
+		position: relative;
+		aspect-ratio: 4 / 3;
+		background: linear-gradient(135deg, #44403C, #1C1917);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at 50% 50%, rgba(161, 98, 7, 0.3), transparent 60%);
+			opacity: 0.2;
+			transition: opacity 0.3s;
+		}
+	}
+
+	&__card-name {
+		position: relative;
+		z-index: 1;
+		font-size: 24px;
+		font-weight: 700;
+		color: #fff;
+	}
+
+	&__card-info {
+		padding: 16px;
+	}
+
+	&__card-desc {
+		font-size: 13px;
+		color: $text-secondary;
+		margin: 0 0 8px;
+		line-height: 1.5;
+	}
+
+	&__card-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 12px;
+	}
+
+	&__card-days {
+		color: $text-tertiary;
+	}
+
+	&__card-price {
+		color: $gold;
+		font-weight: 600;
+	}
+
+	&__card-link {
+		display: block;
+		margin-top: 10px;
+		font-size: 13px;
+		color: $gold;
+		font-weight: 600;
+		text-decoration: none;
+		text-align: center;
+	}
+}
+
+/* ===== ⑥ 行程类型深度展示 ===== */
+.custom-types {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 40px;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 24px;
+	}
+
+	&__card {
+		background: #fff;
+		border: 2px solid $border-warm;
+		border-radius: 12px;
+		padding: 28px;
+		transition: all 0.3s;
+		cursor: pointer;
+
+		&:hover {
+			border-color: $gold;
+			transform: translateY(-3px);
+			box-shadow: 0 8px 24px rgba(161, 98, 7, 0.1);
+		}
+	}
+
+	&__card-header {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 16px;
+	}
+
+	&__card-icon {
+		font-size: 28px;
+		color: $gold;
+	}
+
+	&__card-title {
+		font-size: 18px;
+		font-weight: 700;
+		color: $text-base;
+		margin: 0;
+	}
+
+	&__card-desc {
+		font-size: 14px;
+		color: $text-secondary;
+		margin: 0 0 16px;
+		line-height: 1.6;
+	}
+
+	&__card-includes {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 16px;
+
+		li {
+			font-size: 13px;
+			color: $text-base;
+			margin-bottom: 6px;
+			display: flex;
+			align-items: flex-start;
+			gap: 6px;
+
+			&::before {
+				content: '✓';
+				color: $gold;
+				font-weight: 700;
+			}
+		}
+	}
+
+	&__card-suitable {
+		font-size: 13px;
+		color: $text-tertiary;
+		margin: 0 0 12px;
+	}
+
+	&__card-link {
+		font-size: 14px;
+		color: $gold;
+		font-weight: 600;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+/* ===== ⑦ 定制师介绍 ===== */
+.custom-planners {
+	padding: 60px 0;
+	background: $bg-light-grey;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+		text-align: center;
+	}
+
+	&__heading {
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 40px;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+		margin-bottom: 32px;
+	}
+
+	&__card {
+		background: #fff;
+		border-radius: 12px;
+		padding: 28px 20px;
+		border: 1px solid $border-warm;
+		transition: all 0.3s;
+
+		&:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+		}
+	}
+
+	&__avatar {
+		width: 64px;
+		height: 64px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		font-size: 24px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 16px;
+	}
+
+	&__name {
+		font-size: 17px;
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 4px;
+	}
+
+	&__meta {
+		font-size: 13px;
+		color: $text-secondary;
+		margin: 0 0 8px;
+	}
+
+	&__specialty {
+		font-size: 13px;
+		color: $gold;
+		font-weight: 500;
+		margin: 0 0 8px;
+	}
+
+	&__stats {
+		display: flex;
+		justify-content: center;
+		gap: 16px;
+		font-size: 13px;
+		color: $text-tertiary;
+	}
+
+	&__rating {
+		color: $gold;
+		font-weight: 600;
+	}
+
+	&__sub {
+		font-size: 14px;
+		color: $text-secondary;
+		line-height: 1.6;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+}
+
+/* ===== ⑧ 定制需求表单 ===== */
+.custom-form-section {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: 700px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+}
+
+.custom-form {
+	background: #fff;
+	border: 1px solid $border-warm;
+	border-radius: 16px;
+	padding: 40px;
+	box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+
+	&__heading {
+		font-size: 22px;
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 24px;
+		text-align: center;
+	}
+
+	&__group {
+		margin-bottom: 24px;
+	}
+
+	&__group-title {
+		font-size: 15px;
+		font-weight: 600;
+		color: $gold;
+		margin: 0 0 12px;
+		padding-left: 10px;
+		border-left: 3px solid $gold;
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+	}
+
+	&__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	&__tag {
+		padding: 6px 16px;
+		border: 1px solid #d6d0c0;
+		border-radius: 999px;
+		background: #fff;
+		font-size: 14px;
+		color: $text-secondary;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&--active {
+			background: $gold;
+			color: #fff;
+			border-color: $gold;
+		}
+	}
+
+	&__themes {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 12px;
+	}
+
+	&__theme-card {
+		padding: 16px 12px;
+		border: 2px solid #ece5d3;
+		border-radius: 10px;
+		text-align: center;
+		cursor: pointer;
+		transition: all 0.3s;
+		background: #fff;
+
+		&--active {
+			border-color: $gold;
+			background: $gold-bg;
+		}
+
+		&:hover {
+			border-color: $gold-light;
+		}
+	}
+
+	&__theme-icon {
+		font-size: 24px;
+		color: $gold;
+		margin-bottom: 8px;
+	}
+
+	&__theme-label {
+		font-size: 13px;
+		font-weight: 600;
+		color: $text-base;
+	}
+
+	&__addons {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 12px;
+	}
+
+	&__addon {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 8px 12px;
+		border: 1px solid #d6d0c0;
+		border-radius: 8px;
+		font-size: 14px;
+		color: $text-secondary;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&--active {
+			border-color: $gold;
+			background: $gold-bg;
+			color: $gold;
+		}
+	}
+
+	&__submit {
+		width: 100%;
+		padding: 14px;
+		font-size: 16px;
+		font-weight: 600;
+		border-radius: 999px;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s;
+		margin-top: 8px;
+
+		&:hover:not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(161, 98, 7, 0.4);
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+	}
+
+	&__tip {
+		text-align: center;
+		font-size: 13px;
+		color: $text-tertiary;
+		margin: 16px 0 0;
+		line-height: 1.8;
+	}
+}
+
+/* ===== ⑨ 客户评价轮播 ===== */
+.custom-reviews {
+	padding: 60px 0;
+	background: $bg-light-grey;
+
+	&__inner {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 24px;
+		text-align: center;
+	}
+
+	&__heading {
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 32px;
+	}
+
+	&__carousel {
+		position: relative;
+		overflow: hidden;
+	}
+
+	&__track {
+		display: flex;
+		transition: transform 0.4s ease;
+	}
+
+	&__item {
+		min-width: 100%;
+		padding: 0 16px;
+	}
+
+	&__quote {
+		background: #fff;
+		border-radius: 12px;
+		padding: 32px;
+		border: 1px solid $border-warm;
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+
+		&-text {
+			font-size: 16px;
+			line-height: 1.8;
+			color: $text-base;
+			margin: 0 0 16px;
+			font-style: italic;
+		}
+
+		&-author {
+			font-size: 14px;
+			color: $text-secondary;
+
+			strong {
+				color: $text-base;
+				margin-right: 8px;
+			}
+		}
+
+		&-verified {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			font-size: 12px;
+			color: $gold;
+			margin-left: 8px;
+		}
+	}
+
+	&__dots {
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+		margin-top: 24px;
+	}
+
+	&__dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: #d6d0c0;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		&--active {
+			background: $gold;
+			width: 24px;
+			border-radius: 4px;
+		}
+	}
+}
+
+/* ===== ⑩ 服务保障矩阵 ===== */
+.custom-trust {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 40px;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 24px;
+	}
+
+	&__item {
+		text-align: center;
+		padding: 28px 20px;
+		background: #fff;
+		border: 1px solid $border-warm;
+		border-radius: 12px;
+		transition: all 0.3s;
+
+		&:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+		}
+	}
+
+	&__icon {
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background: $gold-bg;
+		color: $gold;
+		font-size: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 16px;
+	}
+
+	&__item-title {
+		font-size: 16px;
+		font-weight: 600;
+		color: $text-base;
+		margin: 0 0 8px;
+	}
+
+	&__item-desc {
+		font-size: 13px;
+		color: $text-secondary;
+		line-height: 1.6;
+		margin: 0;
+	}
+}
+
+/* ===== ⑪ 底部CTA ===== */
+.custom-bottom-cta {
+	padding: 60px 0;
+	background: linear-gradient(135deg, $dark-bg, $dark-bg-2);
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at 50% 50%, rgba(161, 98, 7, 0.2), transparent 50%);
+	}
+
+	&__inner {
+		position: relative;
+		z-index: 1;
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__title {
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 700;
+		color: #fff;
+		margin: 0 0 12px;
+	}
+
+	&__desc {
+		font-size: 15px;
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0 0 24px;
+		line-height: 1.6;
+	}
+
+	&__btn {
+		display: inline-flex;
+		padding: 14px 40px;
+		font-size: 16px;
+		font-weight: 600;
+		border-radius: 999px;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s;
+		text-decoration: none;
+		margin-bottom: 16px;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(161, 98, 7, 0.4);
+		}
+	}
+
+	&__wechat {
+		font-size: 14px;
+		color: rgba(255, 255, 255, 0.5);
+	}
+}
+
+/* ===== 提交成功状态 ===== */
+.custom-success {
+	text-align: center;
+	padding: 60px 40px;
+	background: #fff;
+	border-radius: 16px;
+	border: 1px solid $border-warm;
+
+	&__icon {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background: $gold-bg;
+		color: $gold;
+		font-size: 40px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 24px;
+	}
+
+	&__title {
+		font-size: 24px;
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 12px;
+	}
+
+	&__desc {
+		font-size: 15px;
+		color: $text-secondary;
+		line-height: 1.8;
+		margin: 0 0 24px;
+	}
+
+	&__btn {
+		display: inline-flex;
+		padding: 12px 32px;
+		font-size: 15px;
+		font-weight: 600;
+		border-radius: 999px;
+		text-decoration: none;
+		cursor: pointer;
+		transition: all 0.3s;
+		margin: 0 8px;
+
+		&--primary {
+			background: linear-gradient(135deg, $gold, $gold-light);
+			color: #fff;
+			border: none;
+
+			&:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 16px rgba(161, 98, 7, 0.3);
+			}
+		}
+
+		&--secondary {
+			background: #fff;
+			color: $gold;
+			border: 1px solid $gold;
+		}
+	}
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 1024px) {
+	.custom-compare__grid {
+		grid-template-columns: 1fr;
+	}
+	.custom-compare__col--highlight {
+		transform: none;
+	}
+	.custom-destinations__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.custom-types__grid {
+		grid-template-columns: 1fr;
+	}
+	.custom-planners__grid {
+		grid-template-columns: 1fr;
+	}
+	.custom-form__themes {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.custom-form__addons {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.custom-trust__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.custom-process__step {
+		min-width: 140px;
+	}
+}
+
+@media (max-width: 720px) {
+	.custom-hero {
+		padding: 60px 0 48px;
+
+		&__badges {
+			gap: 16px;
+		}
+	}
+
+	.custom-compare,
+	.custom-process,
+	.custom-explorer,
+	.custom-destinations,
+	.custom-types,
+	.custom-planners,
+	.custom-form-section,
+	.custom-reviews,
+	.custom-trust,
+	.custom-bottom-cta {
+		padding: 40px 0;
+	}
+
+	.custom-process__step {
+		min-width: 120px;
+
+		&::after {
+			display: none;
+		}
+	}
+
+	.custom-destinations__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.custom-form {
+		padding: 24px 16px;
+	}
+
+	.custom-form__row {
+		grid-template-columns: 1fr;
+	}
+
+	.custom-form__themes {
+		grid-template-columns: 1fr;
+	}
+
+	.custom-form__addons {
+		grid-template-columns: 1fr;
+	}
+
+	.custom-trust__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.custom-reviews__quote {
+		padding: 20px;
+	}
+}

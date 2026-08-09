@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
+import { tourCases } from '~/config/tour-cases'
 
 defineOptions({ name: 'AppTourCustom' })
 
@@ -35,47 +36,10 @@ const tripTypes = [
 	},
 ]
 
-// 客户真实案例（静态，4 条）
-const cases = [
-	{
-		avatar: '张',
-		avatarCls: 'tour-custom__case-avatar--1',
-		name: '张先生',
-		meta: '来自上海 · 家庭出行',
-		route: '丝绸之路 · 西安到敦煌 · 12天',
-		sharing: '从西安兵马俑到敦煌莫高窟，规划师安排的本地向导特别专业，孩子全程听得津津有味。最惊喜的是参加了壁画画坊，亲手体验了千年技艺。全程专车接送，比跟团游深度太多。',
-		date: '2024年10月',
-	},
-	{
-		avatar: 'L',
-		avatarCls: 'tour-custom__case-avatar--2',
-		name: 'Linda Chen',
-		meta: '来自新加坡 · 情侣出行',
-		route: '云南秘境 · 昆明大理丽江 · 8天',
-		sharing: 'The trip was perfectly customized for us. We stayed in a Bai minority courtyard home, learned traditional tie-dye, and visited a Pu\'er tea farm. Our concierge handled everything — even last-minute changes.',
-		date: '2024年9月',
-	},
-	{
-		avatar: '王',
-		avatarCls: 'tour-custom__case-avatar--3',
-		name: '王先生夫妇',
-		meta: '来自北京 · 夫妻出行',
-		route: '西藏朝圣 · 拉萨林芝 · 10天',
-		sharing: '最担心的高反问题，规划师提前安排了氧气瓶随车和预防方案。持牌导游对藏传佛教文化讲解深入，布达拉宫的清晨参观完全没人挤。林芝的桃花和南迦巴瓦峰，这一趟值了。',
-		date: '2024年4月',
-	},
-	{
-		avatar: 'M',
-		avatarCls: 'tour-custom__case-avatar--4',
-		name: 'Michael Wang',
-		meta: '某科技公司 · 商务出行',
-		route: '企业团建 · 上海及周边 · 5天',
-		sharing: '为 30 人年会团队定制，从专车接送到高端餐饮、会议场地全部安排妥当。特别赞的是朱家角古镇的团建活动设计，融合了江南文化体验，团队反馈非常好。报价透明无隐藏费用。',
-		date: '2024年11月',
-	},
-]
+// 客户真实案例（从共享数据加载，首页 + 详情页共用；首页只展示前 4 条）
+const cases = tourCases.slice(0, 4)
 
-// 表单状态（复用现有线索收集思路）
+// 表单状态（对接 travel/inquiry/create，与独立定制页一致）
 const formRef = ref<FormInstance>()
 const form = reactive({
 	name: '',
@@ -96,22 +60,27 @@ async function submit() {
 	if (!formRef.value)
 		return
 	await formRef.value.validate(async (valid) => {
-		if (!valid)
+		if (!valid) {
+			ElMessage.info($t('Please fill in the required fields'))
 			return
+		}
 		submitting.value = true
 		try {
-			// 复用现有线索收集接口（SEO 规范：禁止裸 $fetch，用 $api）
-			await $api('crm/clue/create-email-subscription', {
+			// 对接 /travel/inquiry/create（匿名可提交，邮箱作为身份标识）
+			await $api('travel/inquiry/create', {
 				method: 'post',
 				body: {
-					name: form.name,
-					contact: form.contact,
-					destination: form.destination,
-					people: form.people,
-					requirement: form.requirement,
+					email: form.contact,
+					destination: form.destination || '未指定',
+					startDate: new Date().toISOString().split('T')[0],
+					travelerCount: parseInt(form.people) || 1,
+					specialRequirements: [
+						`称呼：${form.name}`,
+						form.requirement ? `需求：${form.requirement}` : '',
+					].filter(Boolean).join('\n') || undefined,
 				},
 			})
-			ElMessage.success('提交成功，规划师会尽快联系您！')
+			ElMessage.info($t('Submitted successfully, a planner will contact you soon!'))
 			formRef.value?.resetFields()
 		}
 		catch {
@@ -130,7 +99,7 @@ function tr(key: string, fallback: string) {
 
 <template>
 	<!-- 整块：需求定制（左文案+右深黑渐变表单）+ 案例分享（4列网格）
-	     保留原 AppTourCustom 的 site-grid 背景风格 -->
+	保留原 AppTourCustom 的 site-grid 背景风格 -->
 	<section class="tour-custom site-grid site-grid--vertical-100 site-grid--full">
 		<div class="tour-custom__module site-container">
 			<!-- ===== 上：需求定制（左文案 + 右表单），白色背景块包住 ===== -->
@@ -209,6 +178,7 @@ function tr(key: string, fallback: string) {
 						/>
 					</el-form-item>
 					<button
+						type="button"
 						class="tour-custom__submit mi-button mi-btn mi-btn--primary"
 						:disabled="submitting"
 						@click="submit"
@@ -225,9 +195,10 @@ function tr(key: string, fallback: string) {
 					<span class="tour-custom__cases-subtitle">— 他们都选择了 iswink 定制专属行程</span>
 				</h3>
 				<div class="tour-custom__cases-grid">
-					<article
+					<NuxtLink
 						v-for="item in cases"
-						:key="item.name"
+						:key="item.id"
+						:to="$path(`/case/${item.id}`)"
 						class="tour-custom__case"
 					>
 						<div class="tour-custom__case-user">
@@ -254,9 +225,9 @@ function tr(key: string, fallback: string) {
 						</p>
 						<div class="tour-custom__case-date">
 							<span>{{ item.date }}</span>
-							<span class="tour-custom__case-verified">✓ 真实订单</span>
+							<span class="tour-custom__case-verified">✓ {{ $t('tour.caseDetail.verifiedOrder') }}</span>
 						</div>
-					</article>
+					</NuxtLink>
 				</div>
 			</div>
 		</div>

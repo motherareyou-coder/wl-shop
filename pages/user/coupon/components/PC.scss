@@ -1,0 +1,78 @@
+/**
+ * 优惠券 - PC 样式
+ * 复用 user/orderlist/components/PC.scss 的 .user-order-list / .order-list__nav / .order-item 全局样式
+ * 仅补充优惠券卡片专属布局（左金额 / 右信息+按钮）
+ */
+.user-order-list .coupon-card {
+	align-items: stretch;
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+
+	/* 左侧金额区：金色背景 + 右侧虚线分割，呼应金黑主题 */
+	.coupon-card__amount {
+		align-items: center;
+		background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+		border-right: 2px dashed rgba(161, 98, 7, .5);
+		box-sizing: border-box;
+		color: #fbbf24;
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		justify-content: center;
+		padding: 23px 30px;
+		width: 200px;
+	}
+
+	.coupon-card__value {
+		align-items: baseline;
+		color: #fbbf24;
+		display: flex;
+		font-size: 28px;
+		font-weight: 700;
+		line-height: 1.2;
+		margin: 0 0 8px;
+
+		small {
+			font-size: 14px;
+			font-weight: 400;
+			margin-left: 4px;
+		}
+	}
+
+	.coupon-card__threshold {
+		color: rgba(251, 191, 36, .8);
+		font-size: 12px;
+		margin: 0;
+	}
+
+	/* 右侧信息 + 按钮 */
+	.coupon-card__info {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 23px 28px 23px 30px;
+	}
+
+	.coupon-card__info .order-item-header {
+		margin-bottom: 16px;
+	}
+
+	/* 已使用/已过期：置灰 */
+	&.coupon-card--disabled {
+		.coupon-card__amount {
+			background: linear-gradient(135deg, #d4d4d4 0%, #a3a3a3 100%);
+		}
+
+		.coupon-card__value,
+		.coupon-card__threshold {
+			color: rgba(255, 255, 255, .7);
+		}
+
+		.order-item-header--title,
+		.info {
+			color: #b0b0b0;
+		}
+	}
+}

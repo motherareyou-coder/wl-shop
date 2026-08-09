@@ -203,7 +203,15 @@ onBeforeUnmount(() => {
 })
 
 const router = useRouter()
+const route = useRoute()
+const userStore = useUserStore()
+
 function goToForm() {
+	// 未登录先跳登录页，登录后跳回陪侍服务页
+	if (!userStore.accessToken) {
+		router.push($path(`/login?redirect=${encodeURIComponent(route.fullPath)}`))
+		return
+	}
 	router.push($path('/companion'))
 }
 
@@ -332,11 +340,15 @@ function tr(key: string, fallback: string) {
 					<h3 class="tour-companion__staff-title">
 						专属<em>服务团队</em>
 						<span class="tour-companion__staff-subtitle">— 经过严格筛选的专业陪伴师</span>
+						<NuxtLink :to="$path('/staff')" class="tour-companion__staff-more">
+							{{ tr('tour.guide.viewAll', '查看全部') }} →
+						</NuxtLink>
 					</h3>
 					<div class="tour-companion__staff-grid">
-						<article
+						<NuxtLink
 							v-for="item in staff"
-							:key="item.name"
+							:key="item.id"
+							:to="$path(`/staff/${item.id}`)"
 							class="tour-companion__staff-card"
 						>
 							<!-- 图片占位区域（后续接入真实照片） -->
@@ -371,7 +383,7 @@ function tr(key: string, fallback: string) {
 									{{ item.bio }}
 								</p>
 							</div>
-						</article>
+						</NuxtLink>
 						</div>
 					</div>
 				</div>

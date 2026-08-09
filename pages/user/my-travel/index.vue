@@ -2,17 +2,17 @@
 import Mobile from './components/Mobile.vue'
 import PC from './components/PC.vue'
 
-defineOptions({ name: 'CouponCache' })
+defineOptions({ name: 'MyTravelCache' })
 const route = useRoute()
 const { domain } = useRuntimeConfig().public
 definePageMeta({
-	name: 'CouponCache',
-	title: 'Coupons',
+	name: 'MyTravelCache',
+	title: 'My Travel Service',
 	showBread: true,
 })
 useHead({
 	link: [{ rel: 'canonical', href: `${domain}${route.path}` }],
-	title: `${$t('Coupons')} ${$t('appTitle')}`,
+	title: `${$t('My Travel Service')} ${$t('appTitle')}`,
 })
 
 const appStore = useAppStore()

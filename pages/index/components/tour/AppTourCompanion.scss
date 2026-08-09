@@ -382,6 +382,20 @@
 		color: var(--text-secondary);
 	}
 
+	&__staff-more {
+		margin-left: auto;
+		font-size: var(--small-font-size);
+		font-weight: 600;
+		color: var(--brand-orange);
+		text-decoration: none;
+		white-space: nowrap;
+		transition: opacity 0.2s;
+
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+
 	&__staff-grid {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
@@ -397,6 +411,8 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
 
 		&:hover {
 			transform: translateY(-3px);

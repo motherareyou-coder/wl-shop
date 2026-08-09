@@ -11,7 +11,9 @@ defineOptions({
 		</noscript>
 		<AppHeader />
 		<UserBreadcrumb />
-		<slot></slot>
+		<main class="app-container__main">
+			<slot></slot>
+		</main>
 		<AppFooter />
 		<AppChat />
 	</div>
@@ -21,6 +23,13 @@ defineOptions({
 .app-container {
 	display: flex;
     flex-flow: column nowrap;
-    min-height: 100%;
+    min-height: 100vh;
+}
+
+.app-container__main {
+	display: flex;
+	flex: 1 1 auto;
+	flex-flow: column nowrap;
+	width: 100%;
 }
 </style>

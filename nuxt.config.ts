@@ -116,7 +116,7 @@ export default defineNuxtConfig({
 				console.log('【Sitemap】商品ID:', productIds, '文章ID:', articleIds)
 				// 3. 使用i18n.locales生成多语言路由
 				// const locales = ['zh', 'en', 'pt', 'ru', 'el', 'fr', 'es', 'de', 'it', 'pl', 'ar', 'tr', 'ja', 'id', 'sv']
-				const locales = ['en']
+				const locales = ['en', 'zh']
 				const generateRoutes = (type: string, ids: number[]) =>
 					ids.flatMap(id =>
 						locales.map(locale => ({
@@ -176,8 +176,7 @@ export default defineNuxtConfig({
 		},
 	},
 	dayjs: {
-		// locales: ['en', 'zh'],
-		locales: ['en'],
+		locales: ['en', 'zh'],
 		plugins: ['relativeTime', 'utc', 'timezone', 'duration'],
 		// defaultLocale: 'zh',
 		defaultLocale: 'en',
@@ -192,13 +191,13 @@ export default defineNuxtConfig({
 			alwaysRedirect: false,
 		},
 		locales: [
-			// {
-			//     name: '简体中文',
-			//     code: 'zh',
-			//     iso: 'zh-CN',
-			//     language: 'zh-CN',
-			//     // file: './locales/zh.ts',
-			// },
+			{
+				name: '简体中文',
+				code: 'zh',
+				iso: 'zh-CN',
+				language: 'zh-CN',
+				// file: './locales/zh.ts',
+			},
 			{
 				// 英语
 				name: 'English',

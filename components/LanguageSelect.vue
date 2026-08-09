@@ -2,7 +2,7 @@
 defineOptions({ name: 'LanguageSelect' })
 
 const items = [
-	// { label: '中文', value: 'zh' },
+	{ label: '中文', value: 'zh' },
 	{ label: 'English', value: 'en' },
   //   //葡萄牙语
 	// { label: 'Portugal', value: 'pt' },

@@ -48,8 +48,20 @@ const { data: favCount } = await useAPI(
 const { data: wallet } = await useAPI<PayWallet>('pay/wallet/get')
 
 const linkList = [
+	// ===== 旅行服务入口（合并为一个，置顶突出） =====
+	// 移动端顶部已有"三宫格旅行快捷入口"（旅行诉求/随行诉求/预订单），
+	// 列表里再放纯文字 My Travel Service 会重复，故移动端隐藏此条目
+	{
+		title: $t('My Travel Service'),
+		type: 'mobile-travel',
+		icon: myOrdersIcon,
+		url: '/user/my-travel',
+	},
 	{
 		title: $t('My Orders'),
+		// 移动端顶部已有"四宫格订单快捷入口"（Unpaid/Shipping/Reviews/Returns），
+		// 列表里再放一个纯文字 My Orders 会重复，故移动端隐藏此条目
+		type: 'mobile-orders',
 		// icon: 'https://i05.appmifile.com/102_operatorx_operatorx_opx/06/06/2024/f49e629f0207ee1bccb2fbd9b7712318.png',
 		icon: myOrdersIcon,
 		url: '/user/orderlist',
@@ -324,6 +336,62 @@ function logout() {
 		</section>
 		<section
 			v-if="appStore.isMobile"
+			class="user-account__orders user-center__section user-account__travel"
+		>
+			<div class="orders__header">
+				<span class="container__title">{{ $t('My Travel Service') }}</span>
+				<nuxt-link
+					:to="$path('/user/my-travel')"
+					style="display: flex !important"
+					class="flex items-center"
+				>
+					<span class="mi-btn__text">{{ $t('All orders') }}</span>
+					<i class="micon micon-link-arrow"></i>
+				</nuxt-link>
+			</div>
+			<section class="orders-swiper-container">
+				<ul class="orders-nav flex justify-around">
+					<li class="orders-nav__item">
+						<nuxt-link :to="$path('/user/my-travel?tab=travel')">
+							<img
+								class="orders-nav__icon"
+								:src="myOrdersIcon"
+								:alt="$t('Travel Inquiry')"
+							>
+							<span class="orders-item__title">
+								{{ $t('Travel Inquiry') }}
+							</span>
+						</nuxt-link>
+					</li>
+					<li class="orders-nav__item">
+						<nuxt-link :to="$path('/user/my-travel?tab=escort')">
+							<img
+								class="orders-nav__icon"
+								:src="myOrdersIcon"
+								:alt="$t('Escort Inquiry')"
+							>
+							<span class="orders-item__title">
+								{{ $t('Escort Inquiry') }}
+							</span>
+						</nuxt-link>
+					</li>
+					<li class="orders-nav__item">
+						<nuxt-link :to="$path('/user/my-travel?tab=preorder')">
+							<img
+								class="orders-nav__icon"
+								:src="myOrdersIcon"
+								:alt="$t('Pre-Order')"
+							>
+							<span class="orders-item__title">
+								{{ $t('Pre-Order') }}
+							</span>
+						</nuxt-link>
+					</li>
+				</ul>
+			</section>
+		</section>
+		<section
+			v-if="appStore.isMobile"
 			class="user-account__orders user-center__section"
 		>
 			<div class="orders__header">
@@ -393,7 +461,7 @@ function logout() {
 		<section class="use-center-nav__entries user-center__section">
 			<nuxt-link
 				v-for="l in linkList"
-				v-show="!(l.type === 'points' && appStore.isPC) "
+				v-show="!(l.type === 'points' && appStore.isPC) && !((l.type === 'mobile-orders' || l.type === 'mobile-travel') && appStore.isMobile)"
 				:key="l.url"
 				class="use-center-nav__item"
 				:to="$path(l.url)"

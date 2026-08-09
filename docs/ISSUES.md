@@ -200,6 +200,56 @@
 
 ---
 
+## 五-2、功能完整性类问题（业务闭环相关）
+
+> 这类问题不阻塞主流程，但影响功能可用性或业务闭环，需后端配合或后续迭代处理。
+
+### F-01 旅行订单分享功能失效（后端缺匿名接口）⬜
+- **位置**：`pages/share/travel-order/[id].vue:19-25` + 后端 `yudao-module-travel`
+- **现状**：
+  - 分享页调用 `useTravelOrderApi().get(id)` → `travel/order/get`，这是**用户私域接口**（需登录态 + 归属校验）
+  - 但分享场景是**匿名访问**（对方收到链接直接打开，无 token）
+  - 代码注释已标注该问题（`[id].vue:23-24`："分享页不要求登录，但后端需要归属校验——匿名访问可能返回空。后续后端需提供匿名可访问的分享详情接口"）
+- **影响**：
+  - 用户在 `pages/user/travel-order/[id].vue` 点"分享"生成的链接，对方打开后**永远命中 fallback 兜底页**（`[id].vue:35-40` 的"精彩的旅行行程"通用文案），看不到实际行程内容
+  - 分享功能实际不可用，影响拉新转化
+- **触发路径**：旅行订单详情页 → 点"分享" → 复制 `/share/travel-order/{id}` 链接 → 对方打开 → fallback 页（非真实行程）
+- **修复方向**：
+  1. **后端**：新增匿名可访问的分享详情接口，如 `GET /travel/order/share-get?id={id}`，返回**脱敏后**的订单信息（行程概览/目的地/日期，**不含**金额/用户隐私/联系方式），需后端 `yudao-module-travel` 开发
+  2. **前端**：`pages/share/travel-order/[id].vue` 改调新接口；确认脱敏字段后调整展示
+- **临时措施**：暂不处理，分享按钮可保留（不报错），但用户分享出去的链接为兜底页
+- **关联文件**：`pages/user/travel-order/[id].vue:69-73`（shareOrder 生成链接）、`pages/share/travel-order/[id].vue`（分享页）
+
+### F-02 客户案例详情接口（当前用静态数据兜底）🔄
+- **位置**：`pages/case/[id].vue` + `config/tour-cases.ts` + 后端 `yudao-module-travel`
+- **现状**：
+  - 详情页 `pages/case/[id].vue` 当前从本地静态数据 `config/tour-cases.ts` 的 `getCaseById(id)` 取数据
+  - 首页 `AppTourCustom.vue` 也从同一份静态数据 `tourCases` 渲染卡片列表
+  - 代码中已预留 API 调用位（注释 `// const { data: detail } = await useAPI<TourCase>('travel/case/get', { params: { id } })`）
+- **影响**：案例内容目前不可后台编辑，需改代码发版才能更新
+- **修复方向**：
+  1. **后端**：新增案例管理接口，建议复用 `promotion/article` 文章体系（新增"客户案例"分类 categoryId），或独立 `travel/case` 模块：
+     - `GET /travel/case/page`（列表，首页用）
+     - `GET /travel/case/get?id={id}`（详情，详情页用）
+  2. **前端**：`AppTourCustom.vue` 和 `pages/case/[id].vue` 改调新接口，`config/tour-cases.ts` 保留作 SSR 兜底
+- **关联文件**：`pages/case/[id].vue`、`pages/index/components/tour/AppTourCustom.vue`、`config/tour-cases.ts`
+
+### F-03 服务团队详情接口（当前用静态数据兜底）🔄
+- **位置**：`pages/staff/[id].vue` + `config/tour-staff.ts` + 后端 `yudao-module-travel`
+- **现状**：
+  - 详情页 `pages/staff/[id].vue` 当前从本地静态数据 `config/tour-staff.ts` 的 `getStaffById(id)` 取数据
+  - 首页 `AppTourCompanion.vue` 也从同一份静态数据 `tourStaff` 渲染卡片列表
+  - 代码中已预留 API 调用位（注释 `// const { data: detail } = await useAPI<TourStaff>('travel/staff/get', { params: { id } })`）
+- **影响**：团队成员信息目前不可后台编辑，需改代码发版才能更新
+- **修复方向**：
+  1. **后端**：新增服务团队管理接口，建议独立 `travel/staff` 模块（团队成员有 rating/orders/skills 等专属字段，不适合复用 article）：
+     - `GET /travel/staff/page`（列表，首页用）
+     - `GET /travel/staff/get?id={id}`（详情，详情页用）
+  2. **前端**：`AppTourCompanion.vue` 和 `pages/staff/[id].vue` 改调新接口，`config/tour-staff.ts` 保留作 SSR 兜底
+- **关联文件**：`pages/staff/[id].vue`、`pages/index/components/tour/AppTourCompanion.vue`、`config/tour-staff.ts`
+
+---
+
 ## 六、待处理优先级建议
 
 按 **SEO 影响 × 改动成本** 排序，建议处理顺序：
@@ -214,6 +264,8 @@
 | 🟠 本期 | R-03, R-04 | 响应式数据一致性、平板断点对齐 |
 | 🟡 后续 | S-07, P-01, P-02, P-03 | 性能优化 |
 | 🟡 后续 | C-01, C-03 ~ C-08 | 代码规范，改版时顺带处理 |
+| 🔵 待后端 | F-01 | 旅行订单分享功能，需后端新增匿名分享接口，前端无法单独修复 |
+| 🔵 待后端 | F-02, F-03 | 案例/团队详情接口，当前前端已用静态数据兜底，接口就绪后切换 |
 | 🟢 按需 | I-01 | 业务驱动，需业务决策 |
 | ✅ 已完成 | R-01 | 响应式规范已建立 |
 
@@ -232,4 +284,4 @@
 - **修复方向**：怎么改
 ```
 
-编号规则：`S-XX`（SEO）/ `C-XX`（代码规范）/ `P-XX`（性能）/ `I-XX`（i18n）/ `R-XX`（响应式）。
+编号规则：`S-XX`（SEO）/ `C-XX`（代码规范）/ `P-XX`（性能）/ `I-XX`（i18n）/ `R-XX`（响应式）/ `F-XX`（功能完整性，业务闭环相关）。

@@ -1,0 +1,926 @@
+/* ============================================
+ * 灵活订购展示页 - 黑金奢华风
+ * BEM: pkg- 前缀
+ * 7 sections
+ * ============================================ */
+
+/* ===== 通用变量 ===== */
+$gold: #A16207;
+$gold-light: #CA8A04;
+$gold-lighter: #D4A437;
+$gold-bg: #FAF2E0;
+$dark-bg: #1C1917;
+$dark-bg-2: #292524;
+$text-base: #191919;
+$text-secondary: #6b6b6b;
+$text-tertiary: #898989;
+$border-warm: #f0ebe0;
+$bg-light-grey: #f5f5f5;
+
+.pkg-page {
+	overflow-x: hidden;
+}
+
+/* ===== ① Hero 区 ===== */
+.pkg-hero {
+	position: relative;
+	padding: 100px 0 80px;
+	text-align: center;
+	overflow: hidden;
+
+	&__bg {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, #1C1917 0%, #292524 50%, #1C1917 100%);
+
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at 50% 30%, rgba(161, 98, 7, 0.25), transparent 50%);
+		}
+	}
+
+	&__inner {
+		position: relative;
+		z-index: 1;
+	}
+
+	&__title {
+		font-size: clamp(28px, 5vw, 42px);
+		font-weight: 800;
+		color: #fff;
+		margin: 0 0 16px;
+		letter-spacing: 0.02em;
+	}
+
+	&__subtitle {
+		font-size: clamp(15px, 2.5vw, 18px);
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0 auto 36px;
+		max-width: 620px;
+		line-height: 1.6;
+	}
+
+	&__anchors {
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	&__anchor {
+		padding: 10px 24px;
+		font-size: 14px;
+		font-weight: 600;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.08);
+		color: #fff;
+		border: 1px solid rgba(202, 138, 4, 0.4);
+		cursor: pointer;
+		transition: all 0.3s;
+		backdrop-filter: blur(4px);
+
+		&:hover {
+			background: linear-gradient(135deg, $gold, $gold-light);
+			border-color: transparent;
+			transform: translateY(-2px);
+			box-shadow: 0 6px 16px rgba(161, 98, 7, 0.4);
+		}
+	}
+}
+
+/* ===== ② 三大订购模式 ===== */
+.pkg-plans {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 30px);
+		font-weight: 800;
+		color: $text-base;
+		margin: 0 0 12px;
+	}
+
+	&__sub {
+		text-align: center;
+		font-size: 15px;
+		color: $text-secondary;
+		margin: 0 0 48px;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+		align-items: start;
+	}
+
+	&__card {
+		position: relative;
+		background: #fff;
+		border: 2px solid $border-warm;
+		border-radius: 16px;
+		padding: 36px 28px;
+		transition: all 0.3s;
+		display: flex;
+		flex-direction: column;
+
+		&:hover {
+			border-color: $gold-light;
+			transform: translateY(-4px);
+			box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+		}
+
+		&--popular {
+			border-color: $gold;
+			background: $gold-bg;
+			transform: scale(1.03);
+			box-shadow: 0 12px 32px rgba(161, 98, 7, 0.18);
+			z-index: 1;
+
+			&:hover {
+				transform: scale(1.03) translateY(-4px);
+			}
+		}
+	}
+
+	&__popular {
+		position: absolute;
+		top: -14px;
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 6px 18px;
+		font-size: 13px;
+		font-weight: 700;
+		border-radius: 999px;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		white-space: nowrap;
+		box-shadow: 0 4px 12px rgba(161, 98, 7, 0.3);
+	}
+
+	&__icon {
+		width: 60px;
+		height: 60px;
+		border-radius: 14px;
+		background: $gold-bg;
+		color: $gold;
+		font-size: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 20px;
+	}
+
+	&__name {
+		font-size: 22px;
+		font-weight: 800;
+		color: $text-base;
+		margin: 0 0 8px;
+		display: flex;
+		align-items: baseline;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	&__name-en {
+		font-size: 14px;
+		font-weight: 600;
+		color: $gold;
+		letter-spacing: 0.05em;
+	}
+
+	&__subtitle {
+		font-size: 15px;
+		font-weight: 600;
+		color: $gold;
+		margin: 0 0 8px;
+	}
+
+	&__suitable {
+		font-size: 13px;
+		color: $text-tertiary;
+		margin: 0 0 24px;
+		line-height: 1.6;
+		min-height: 42px;
+	}
+
+	&__steps {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 28px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__step {
+		display: flex;
+		align-items: flex-start;
+		gap: 12px;
+	}
+
+	&__step-num {
+		flex-shrink: 0;
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		font-size: 13px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__step-body {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	&__step-title {
+		font-size: 14px;
+		font-weight: 600;
+		color: $text-base;
+	}
+
+	&__step-desc {
+		font-size: 12px;
+		color: $text-secondary;
+		line-height: 1.5;
+	}
+
+	&__price {
+		display: flex;
+		align-items: baseline;
+		gap: 6px;
+		padding: 16px 0;
+		border-top: 1px dashed $border-warm;
+		margin-bottom: 16px;
+		margin-top: auto;
+	}
+
+	&__price-label {
+		font-size: 12px;
+		color: $text-tertiary;
+	}
+
+	&__price-num {
+		font-size: 28px;
+		font-weight: 800;
+		color: $gold;
+		line-height: 1;
+	}
+
+	&__price-unit {
+		font-size: 13px;
+		color: $text-secondary;
+	}
+
+	&__cta {
+		display: block;
+		text-align: center;
+		padding: 12px 24px;
+		font-size: 15px;
+		font-weight: 600;
+		border-radius: 999px;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		text-decoration: none;
+		transition: all 0.3s;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(161, 98, 7, 0.4);
+		}
+	}
+}
+
+/* ===== ③ 服务对比矩阵 ===== */
+.pkg-compare {
+	padding: 60px 0;
+	background: $bg-light-grey;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 30px);
+		font-weight: 800;
+		color: $text-base;
+		margin: 0 0 12px;
+	}
+
+	&__sub {
+		text-align: center;
+		font-size: 15px;
+		color: $text-secondary;
+		margin: 0 0 40px;
+	}
+
+	&__table-wrap {
+		overflow-x: auto;
+		border-radius: 16px;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+		-webkit-overflow-scrolling: touch;
+	}
+
+	&__table {
+		width: 100%;
+		border-collapse: collapse;
+		background: #fff;
+		min-width: 600px;
+	}
+
+	&__th {
+		padding: 18px 12px;
+		font-size: 15px;
+		font-weight: 700;
+		color: $text-base;
+		text-align: center;
+		background: #fff;
+		border-bottom: 2px solid $border-warm;
+
+		&--name {
+			text-align: left;
+			padding-left: 24px;
+		}
+
+		&--premium {
+			color: $gold;
+			background: $gold-bg;
+		}
+	}
+
+	&__td {
+		padding: 16px 12px;
+		text-align: center;
+		font-size: 14px;
+		border-bottom: 1px solid $border-warm;
+		color: $text-base;
+
+		&--name {
+			text-align: left;
+			padding-left: 24px;
+			font-weight: 500;
+		}
+
+		&--premium {
+			background: rgba(250, 242, 224, 0.5);
+		}
+	}
+
+	&__group-row td {
+		padding: 12px 24px;
+		background: $bg-light-grey;
+		font-size: 13px;
+		font-weight: 700;
+		color: $gold;
+		letter-spacing: 0.05em;
+		border-top: 2px solid $border-warm;
+	}
+
+	&__mark {
+		font-weight: 600;
+		font-size: 14px;
+
+		&--check {
+			color: $gold;
+			font-size: 18px;
+			font-weight: 800;
+		}
+
+		&--dash {
+			color: $text-tertiary;
+			font-size: 18px;
+		}
+
+		&--opt {
+			color: $gold;
+			font-size: 13px;
+			padding: 3px 10px;
+			background: $gold-bg;
+			border-radius: 999px;
+		}
+	}
+}
+
+/* ===== ④ 热门路线套餐推荐 ===== */
+.pkg-routes {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 30px);
+		font-weight: 800;
+		color: $text-base;
+		margin: 0 0 12px;
+	}
+
+	&__sub {
+		text-align: center;
+		font-size: 15px;
+		color: $text-secondary;
+		margin: 0 0 48px;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+	}
+
+	&__card {
+		background: #fff;
+		border: 1px solid $border-warm;
+		border-radius: 14px;
+		overflow: hidden;
+		text-decoration: none;
+		transition: all 0.3s;
+		display: flex;
+		flex-direction: column;
+
+		&:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+
+			.pkg-routes__card-img::after {
+				opacity: 0.4;
+			}
+
+			.pkg-routes__card-name {
+				transform: scale(1.05);
+			}
+		}
+	}
+
+	&__card-img {
+		position: relative;
+		aspect-ratio: 4 / 3;
+		background: linear-gradient(135deg, #44403C, #1C1917);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at 50% 50%, rgba(161, 98, 7, 0.35), transparent 60%);
+			opacity: 0.25;
+			transition: opacity 0.3s;
+		}
+	}
+
+	&__card-name {
+		position: relative;
+		z-index: 1;
+		font-size: 20px;
+		font-weight: 700;
+		color: #fff;
+		text-align: center;
+		padding: 0 12px;
+		transition: transform 0.3s;
+	}
+
+	&__card-body {
+		padding: 18px;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	&__card-title {
+		font-size: 16px;
+		font-weight: 700;
+		color: $text-base;
+		margin: 0 0 6px;
+	}
+
+	&__card-subtitle {
+		font-size: 13px;
+		color: $gold;
+		margin: 0 0 10px;
+	}
+
+	&__card-meta {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 12px;
+		margin-bottom: 12px;
+	}
+
+	&__card-days {
+		padding: 2px 8px;
+		background: $gold-bg;
+		color: $gold;
+		font-weight: 600;
+		border-radius: 4px;
+	}
+
+	&__card-range {
+		color: $text-tertiary;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__card-includes {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 16px;
+		flex: 1;
+
+		li {
+			font-size: 12px;
+			color: $text-secondary;
+			margin-bottom: 4px;
+			display: flex;
+			align-items: flex-start;
+			gap: 4px;
+
+			&::before {
+				content: '✓';
+				color: $gold;
+				font-weight: 700;
+				flex-shrink: 0;
+			}
+		}
+	}
+
+	&__card-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 12px;
+		border-top: 1px solid $border-warm;
+	}
+
+	&__card-price {
+		font-size: 15px;
+		font-weight: 700;
+		color: $gold;
+	}
+
+	&__card-link {
+		font-size: 13px;
+		font-weight: 600;
+		color: $gold;
+	}
+}
+
+/* ===== ⑤ A la carte 加购模块 ===== */
+.pkg-addons {
+	padding: 60px 0;
+	background: $bg-light-grey;
+
+	&__inner {
+		max-width: var(--max-width-1400);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 30px);
+		font-weight: 800;
+		color: $text-base;
+		margin: 0 0 12px;
+	}
+
+	&__sub {
+		text-align: center;
+		font-size: 15px;
+		color: $gold;
+		font-weight: 600;
+		margin: 0 0 40px;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 16px;
+	}
+
+	&__item {
+		display: flex;
+		gap: 12px;
+		padding: 18px;
+		background: #fff;
+		border: 2px solid $border-warm;
+		border-radius: 12px;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		input[type='checkbox'] {
+			flex-shrink: 0;
+			width: 20px;
+			height: 20px;
+			margin-top: 2px;
+			accent-color: $gold;
+			cursor: pointer;
+		}
+
+		&:hover {
+			border-color: $gold-light;
+		}
+
+		&--active {
+			border-color: $gold;
+			background: $gold-bg;
+		}
+	}
+
+	&__item-body {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__item-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 8px;
+		margin-bottom: 6px;
+	}
+
+	&__item-name {
+		font-size: 15px;
+		font-weight: 700;
+		color: $text-base;
+	}
+
+	&__item-price {
+		font-size: 16px;
+		font-weight: 800;
+		color: $gold;
+		white-space: nowrap;
+
+		small {
+			font-size: 12px;
+			font-weight: 500;
+			color: $text-tertiary;
+		}
+	}
+
+	&__item-desc {
+		font-size: 13px;
+		color: $text-secondary;
+		margin: 0;
+		line-height: 1.5;
+	}
+}
+
+/* ===== ⑥ FAQ ===== */
+.pkg-faq {
+	padding: 60px 0;
+	background: #fff;
+
+	&__inner {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__heading {
+		text-align: center;
+		font-size: clamp(22px, 3.5vw, 30px);
+		font-weight: 800;
+		color: $text-base;
+		margin: 0 0 40px;
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	&__item {
+		background: #fff;
+		border: 1px solid $border-warm;
+		border-radius: 12px;
+		overflow: hidden;
+		transition: all 0.3s;
+
+		&--open {
+			border-color: $gold;
+			box-shadow: 0 4px 16px rgba(161, 98, 7, 0.1);
+		}
+	}
+
+	&__q {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 16px;
+		padding: 18px 24px;
+		background: none;
+		border: none;
+		text-align: left;
+		font-size: 15px;
+		font-weight: 600;
+		color: $text-base;
+		cursor: pointer;
+		transition: color 0.2s;
+
+		&:hover {
+			color: $gold;
+		}
+	}
+
+	&__icon {
+		flex-shrink: 0;
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		background: $gold-bg;
+		color: $gold;
+		font-size: 18px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+	}
+
+	&__a {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.3s ease;
+
+		p {
+			padding: 0 24px 20px;
+			font-size: 14px;
+			line-height: 1.8;
+			color: $text-secondary;
+			margin: 0;
+		}
+	}
+
+	&__item--open &__a {
+		max-height: 300px;
+	}
+}
+
+/* ===== ⑦ 底部CTA ===== */
+.pkg-bottom-cta {
+	padding: 60px 0;
+	background: linear-gradient(135deg, $dark-bg, $dark-bg-2);
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at 50% 50%, rgba(161, 98, 7, 0.2), transparent 50%);
+	}
+
+	&__inner {
+		position: relative;
+		z-index: 1;
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	&__title {
+		font-size: clamp(22px, 3.5vw, 28px);
+		font-weight: 800;
+		color: #fff;
+		margin: 0 0 12px;
+	}
+
+	&__desc {
+		font-size: 15px;
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0 0 24px;
+		line-height: 1.6;
+	}
+
+	&__btn {
+		display: inline-flex;
+		padding: 14px 40px;
+		font-size: 16px;
+		font-weight: 600;
+		border-radius: 999px;
+		background: linear-gradient(135deg, $gold, $gold-light);
+		color: #fff;
+		text-decoration: none;
+		transition: all 0.3s;
+		margin-bottom: 16px;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(161, 98, 7, 0.4);
+		}
+	}
+
+	&__wechat {
+		font-size: 14px;
+		color: rgba(255, 255, 255, 0.5);
+	}
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 1024px) {
+	.pkg-plans__grid {
+		grid-template-columns: 1fr;
+		max-width: 480px;
+		margin: 0 auto;
+	}
+
+	.pkg-plans__card--popular {
+		transform: none;
+
+		&:hover {
+			transform: translateY(-4px);
+		}
+	}
+
+	.pkg-routes__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.pkg-addons__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 720px) {
+	.pkg-hero {
+		padding: 60px 0 48px;
+
+		&__anchors {
+			gap: 8px;
+		}
+
+		&__anchor {
+			padding: 8px 18px;
+			font-size: 13px;
+		}
+	}
+
+	.pkg-plans,
+	.pkg-compare,
+	.pkg-routes,
+	.pkg-addons,
+	.pkg-faq,
+	.pkg-bottom-cta {
+		padding: 40px 0;
+	}
+
+	.pkg-plans__card {
+		padding: 28px 20px;
+	}
+
+	.pkg-routes__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.pkg-addons__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.pkg-compare__th,
+	.pkg-compare__td {
+		padding: 12px 8px;
+		font-size: 13px;
+	}
+
+	.pkg-faq__q {
+		padding: 16px 18px;
+		font-size: 14px;
+	}
+
+	.pkg-faq__a p {
+		padding: 0 18px 16px;
+		font-size: 13px;
+	}
+}

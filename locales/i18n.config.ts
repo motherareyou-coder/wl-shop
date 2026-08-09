@@ -19,7 +19,8 @@ export default defineI18nConfig(() => ({
 	// locale: 'zh',
 	locale: 'en',
 	messages: {
-		en
+		en,
+		zh,
 	}
 	// messages: {
 	// 	en,

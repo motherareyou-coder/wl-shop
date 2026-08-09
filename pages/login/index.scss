@@ -266,9 +266,8 @@
         border-left-color: #333
     }
 
-    [dir] .mi-layout__card {
-        background-color: #242424
-    }
+    /* 登录页强制保持白色卡片，不跟随系统深色模式（项目已设 colorMode: light） */
+    /* [dir] .mi-layout__card { background-color: #242424 } */
 
     .mi-layout .mi-tabs .mi-tabs__nav .mi-tabs-tab-active .mi-tabs__item>a {
         color: #ddd

@@ -1,0 +1,90 @@
+/**
+ * 优惠券 - Mobile 样式
+ * 复用 user/orderlist/components/Mobile.scss 的 .order-list / .order-item 全局样式
+ * 仅补充优惠券卡片专属布局
+ */
+.order-list-wrapper--mobile {
+	.coupon-m-card {
+		align-items: stretch;
+		display: flex !important;
+		flex-direction: row;
+		padding: 0 !important;
+
+		.coupon-m-card__amount {
+			align-items: center;
+			background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+			border-right: 2px dashed rgba(161, 98, 7, .5);
+			box-sizing: border-box;
+			color: #fbbf24;
+			display: flex;
+			flex-direction: column;
+			flex-shrink: 0;
+			justify-content: center;
+			padding: 18px 12px;
+			width: 110px;
+		}
+
+		.coupon-m-card__value {
+			color: #fbbf24;
+			font-size: 20px;
+			font-weight: 700;
+			line-height: 1.2;
+			margin: 0 0 4px;
+		}
+
+		.coupon-m-card__threshold {
+			color: rgba(251, 191, 36, .8);
+			font-size: 11px;
+			margin: 0;
+		}
+
+		.coupon-m-card__info {
+			display: flex;
+			flex: 1;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 14px 16px;
+		}
+
+		.coupon-m-card__name {
+			color: #2e2323;
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 1.4;
+			margin: 0 0 6px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.coupon-m-card__time {
+			color: #b0b0b0;
+			font-size: 12px;
+			margin: 0;
+		}
+
+		.coupon-m-card__info .order-item__header {
+			border-bottom: 0;
+			padding-bottom: 0;
+		}
+
+		.coupon-m-card__info .order-item__footer {
+			margin-top: 8px;
+		}
+
+		&.coupon-m-card--disabled {
+			.coupon-m-card__amount {
+				background: linear-gradient(135deg, #d4d4d4 0%, #a3a3a3 100%);
+			}
+
+			.coupon-m-card__value,
+			.coupon-m-card__threshold {
+				color: rgba(255, 255, 255, .7);
+			}
+
+			.coupon-m-card__name {
+				color: #b0b0b0;
+			}
+		}
+	}
+}

@@ -79,7 +79,7 @@ async function submit() {
 					requirement: form.requirement,
 				},
 			})
-			ElMessage.success('提交成功，规划师会尽快联系您！')
+			ElMessage.info($t('Submitted successfully, a planner will contact you soon!'))
 			formRef.value?.resetFields()
 		}
 		catch {
@@ -159,6 +159,7 @@ function tr(key: string, fallback: string) {
 						/>
 					</el-form-item>
 					<button
+						type="button"
 						class="tour-cta__submit mi-button mi-btn mi-btn--primary"
 						:disabled="submitting"
 						@click="submit"
